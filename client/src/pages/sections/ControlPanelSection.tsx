@@ -660,7 +660,6 @@ Plaques Détectées
                             src="/figmaAssets/i-5.svg"
                           />
 <div className="flex items-center justify-center gap-1 mb-2">
-<span
                             <span className="text-lg font-bold text-white [font-family:'Inter',Helvetica]">47</span>
 <span className="text-xs font-bold text-white [font-family:'Inter',Helvetica]">km/h</span>
 </div>
