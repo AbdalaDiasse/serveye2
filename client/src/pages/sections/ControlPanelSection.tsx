@@ -62,6 +62,12 @@ export const ControlPanelSection = (): JSX.Element => {
 
   // Data for zone monitoring
   const zoneMonitoring = [
+    { name: "Intrusion", count: 23, icon: "/figmaAssets/i-22.svg", progress: "+15% aujourd'hui" },
+    { name: "Line Crossing", count: 67, icon: "/figmaAssets/i-2.svg" }
+  ];
+
+  // Data for behavior analysis
+  const behaviorAnalysis = [
     { name: "Bagarre", count: 12, icon: "/figmaAssets/div-17.svg" },
     { name: "Smoke", count: 28, icon: "/figmaAssets/div-4.svg" },
     { name: "Fall", count: 7, icon: "/figmaAssets/div-23.svg" },
@@ -560,46 +566,96 @@ Reconnaissance faciale
 </CardContent>
 </Card>
 </div>
+{/* Zone Monitoring and Behavior Row */}
+                <div className="grid grid-cols-2 gap-6">
 {/* Zone Monitoring */}
-                <Card className="bg-white/10 border-0">
+                  <Card className="bg-white/10 border-0">
 <CardContent className="p-5">
 <div className="flex items-center justify-between mb-6">
 <div className="flex items-center gap-3">
 <img
-                          className="w-10 h-10"
-                          alt="Zone"
-                          src="/figmaAssets/div-8.svg"
-                        />
+                            className="w-6 h-10"
+                            alt="Zone Alert"
+                            src="/figmaAssets/i-20.svg"
+                          />
 <div>
 <h4 className="font-bold text-white [font-family:'Inter',Helvetica]">Zone Monitoring</h4>
 <p className="text-xs text-white/70 [font-family:'Inter',Helvetica]">
 Surveillance de zones
-                          </p>
+                            </p>
+</div>
+</div>
+<span className="text-2xl font-bold text-cyan-500 [font-family:'Inter',Helvetica]">89</span>
+</div>
+<div className="space-y-4">
+{zoneMonitoring.map((item, index) => (
+                          <div key={index} className="space-y-2">
+<div className="flex items-center justify-between">
+<div className="flex items-center gap-2">
+<img
+                                    className="w-6 h-6"
+                                    alt={item.name}
+                                    src={item.icon}
+                                  />
+<span className="text-sm text-white/80 [font-family:'Inter',Helvetica]">
+{item.name}
+                                  </span>
+</div>
+<span className="text-base font-semibold text-white [font-family:'Inter',Helvetica]">
+{item.count}
+                                </span>
+</div>
+{item.progress && (
+                              <p className="text-xs text-emerald-500 [font-family:'Inter',Helvetica]">
+{item.progress}
+                              </p>
+                            )}
+</div>
+))}
+                      </div>
+</CardContent>
+</Card>
+{/* Behavior Analysis */}
+                  <Card className="bg-white/10 border-0">
+<CardContent className="p-5">
+<div className="flex items-center justify-between mb-6">
+<div className="flex items-center gap-3">
+<img
+                            className="w-6 h-10"
+                            alt="Behavior"
+                            src="/figmaAssets/div-8.svg"
+                          />
+<div>
+<h4 className="font-bold text-white [font-family:'Inter',Helvetica]">Behavior</h4>
+<p className="text-xs text-white/70 [font-family:'Inter',Helvetica]">
+Analyse comportementale
+                            </p>
 </div>
 </div>
 <span className="text-2xl font-bold text-cyan-500 [font-family:'Inter',Helvetica]">89</span>
 </div>
 <div className="grid grid-cols-6 gap-4 mb-4">
-{zoneMonitoring.map((item, index) => (
-                        <div key={index} className="text-center">
+{behaviorAnalysis.map((item, index) => (
+                          <div key={index} className="text-center">
 <img
-                            className="w-12 h-12 mx-auto mb-2"
-                            alt={item.name}
-                            src={item.icon}
-                          />
+                              className="w-8 h-8 mx-auto mb-2"
+                              alt={item.name}
+                              src={item.icon}
+                            />
 <span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
 {item.count}
-                          </span>
+                            </span>
 <p className="text-xs text-white/70 [font-family:'Inter',Helvetica]">
 {item.name}
-                          </p>
+                            </p>
 </div>
 ))}
-                    </div>
+                      </div>
 <Separator className="bg-white/20 mb-4" />
 <p className="text-xs text-white/70 text-center [font-family:'Inter',Helvetica]">Critique</p>
 </CardContent>
 </Card>
+</div>
 {/* Vehicles Section */}
                 <Card className="bg-white/10 border-0">
 <CardContent className="p-4">
