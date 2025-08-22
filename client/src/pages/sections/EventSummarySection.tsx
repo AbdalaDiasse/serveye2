@@ -1,0 +1,125 @@
+import React from "react";
+import { Card, CardContent } from "@/components/ui/card";
+
+const navigationItems = [
+  {
+    name: "Dashboard",
+    icon: "/figmaAssets/i-13.svg",
+    isActive: true,
+  },
+  {
+    name: "Cameras",
+    icon: "/figmaAssets/frame.svg",
+    isActive: false,
+  },
+  {
+    name: "Boxes",
+    icon: "/figmaAssets/frame-5.svg",
+    isActive: false,
+  },
+  {
+    name: "Reconnaissance",
+    icon: "/figmaAssets/frame-2.svg",
+    hasDropdown: true,
+    isActive: false,
+  },
+  {
+    name: "Captures",
+    icon: "/figmaAssets/frame-1.svg",
+    isActive: false,
+  },
+  {
+    name: "Vehicules",
+    icon: "/figmaAssets/frame-6.svg",
+    isActive: false,
+  },
+  {
+    name: "Évènements",
+    icon: "/figmaAssets/frame-4.svg",
+    isActive: false,
+  },
+  {
+    name: "Sites",
+    icon: "/figmaAssets/frame-3.svg",
+    isActive: false,
+  },
+];
+
+export const EventSummarySection = (): JSX.Element => {
+  return (
+    <aside className="w-72 h-full bg-[#ffffffcc] border-r border-[#ffffff33] shadow-[0px_25px_50px_#00000040] flex flex-col">
+      <header className="h-20 border-b border-[#f1f5f980] flex items-center px-6">
+        <div className="flex items-center gap-3">
+          <img
+            className="w-10 h-10"
+            alt="SYRATE Logo"
+            src="/figmaAssets/div-36.svg"
+          />
+          <div>
+            <div className="[font-family:'Inter',Helvetica] font-bold text-[#0d1a2b] text-lg tracking-[0] leading-7">
+              SYRATE
+            </div>
+            <div className="[font-family:'Inter',Helvetica] font-normal text-slate-500 text-xs tracking-[0] leading-4">
+              Security Platform
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <nav className="flex-1 p-4">
+        <div className="space-y-2">
+          {navigationItems.map((item, index) => (
+            <div key={index} className="relative">
+              {item.isActive ? (
+                <div className="h-12 rounded-xl shadow-[0px_10px_15px_#0000001a,0px_4px_6px_#0000001a] bg-gradient-to-r from-blue-600 to-blue-500 flex items-center px-4">
+                  <img
+                    className="w-5 h-6 mr-3"
+                    alt={item.name}
+                    src={item.icon}
+                  />
+                  <span className="[font-family:'Inter',Helvetica] font-semibold text-white text-base tracking-[0] leading-[normal]">
+                    {item.name}
+                  </span>
+                </div>
+              ) : (
+                <div className="h-12 flex items-center px-4 hover:bg-gray-50 rounded-xl cursor-pointer">
+                  <img
+                    className="w-4 h-4 mr-3"
+                    alt={item.name}
+                    src={item.icon}
+                  />
+                  <span className="[font-family:'Inter',Helvetica] font-normal text-slate-600 text-base tracking-[0] leading-6">
+                    {item.name}
+                  </span>
+                  {item.hasDropdown && (
+                    <img
+                      className="w-3 h-3 ml-auto"
+                      alt="Dropdown"
+                      src="/figmaAssets/frame-7.svg"
+                    />
+                  )}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </nav>
+
+      <div className="p-4">
+        <Card className="rounded-xl border border-[#10b98133] bg-[linear-gradient(90deg,rgba(16,185,129,0.1)_0%,rgba(6,182,212,0.1)_100%)]">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="w-2 h-2 bg-emerald-500 rounded-full opacity-90" />
+              <span className="[font-family:'Inter',Helvetica] font-semibold text-emerald-500 text-sm tracking-[0] leading-5">
+                Système Actif
+              </span>
+            </div>
+            <div className="[font-family:'Inter',Helvetica] font-normal text-slate-600 text-xs tracking-[0] leading-4">
+              Surveillance en cours
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </aside>
+  );
+};
