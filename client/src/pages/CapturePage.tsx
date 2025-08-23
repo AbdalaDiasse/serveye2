@@ -14,7 +14,7 @@ import casualManPhoto from "@assets/generated_images/Security_capture_casual_man
 import elderlyWomanPhoto from "@assets/generated_images/Security_capture_elderly_woman_37bac27b.png";
 import youngManPhoto from "@assets/generated_images/Security_capture_young_man_e6e7c093.png";
 
-// Données des captures de visages
+// Données des captures de visages et corps
 const captureGallery = [
   {
     id: 1,
@@ -111,6 +111,54 @@ const captureGallery = [
     image: casualManPhoto,
     attributes: ["Lunettes", "Cheveux longs", "Sans barbe"],
     today: "Aujourd'hui 14:09"
+  },
+  {
+    id: 9,
+    type: "Corps",
+    timestamp: "14:06:22",
+    camera: "Caméra 01",
+    gender: "Homme",
+    age: 42,
+    confidence: 85,
+    image: businessmanPhoto,
+    attributes: ["Costume", "Taille moyenne", "Posture droite"],
+    today: "Aujourd'hui 14:06"
+  },
+  {
+    id: 10,
+    type: "Corps",
+    timestamp: "14:03:11",
+    camera: "Caméra 03",
+    gender: "Femme",
+    age: 30,
+    confidence: 92,
+    image: womanPhoto,
+    attributes: ["Robe", "Taille petite", "Démarche rapide"],
+    today: "Aujourd'hui 14:03"
+  },
+  {
+    id: 11,
+    type: "Corps",
+    timestamp: "14:00:45",
+    camera: "Caméra 02",
+    gender: "Homme",
+    age: 28,
+    confidence: 78,
+    image: casualManPhoto,
+    attributes: ["Jeans", "Taille grande", "Sac à dos"],
+    today: "Aujourd'hui 14:00"
+  },
+  {
+    id: 12,
+    type: "Corps",
+    timestamp: "13:58:17",
+    camera: "Caméra 05",
+    gender: "Femme",
+    age: 52,
+    confidence: 86,
+    image: elderlyWomanPhoto,
+    attributes: ["Manteau", "Taille moyenne", "Canne"],
+    today: "Aujourd'hui 13:58"
   }
 ];
 
@@ -128,8 +176,8 @@ export const CapturePage = (): JSX.Element => {
   const [viewMode, setViewMode] = useState("grid");
   
   // États pour les filtres
-  const [filterType, setFilterType] = useState("all");
-  const [filterStatus, setFilterStatus] = useState("all");
+  const [filterAge, setFilterAge] = useState("all");
+  const [filterGender, setFilterGender] = useState("all");
   const [clothingType, setClothingType] = useState("all");
   const [hairType, setHairType] = useState("all");
   const [activeFilterMode, setActiveFilterMode] = useState("tous"); // tous, visage, corps
@@ -139,10 +187,19 @@ export const CapturePage = (): JSX.Element => {
                          capture.camera.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          capture.gender.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          capture.attributes.some(attr => attr.toLowerCase().includes(searchQuery.toLowerCase()));
-    const matchesFilter = selectedFilter === "all" || 
-                         (selectedFilter === "authorized" && capture.confidence > 80) ||
-                         (selectedFilter === "unknown" && capture.confidence <= 80);
-    return matchesSearch && matchesFilter;
+    
+    const matchesAge = filterAge === "all" || 
+                      (filterAge === "young" && capture.age < 30) ||
+                      (filterAge === "middle" && capture.age >= 30 && capture.age < 50) ||
+                      (filterAge === "senior" && capture.age >= 50);
+    
+    const matchesGender = filterGender === "all" || capture.gender === filterGender;
+    
+    const matchesConfidence = selectedFilter === "all" || 
+                             (selectedFilter === "authorized" && capture.confidence > 80) ||
+                             (selectedFilter === "unknown" && capture.confidence <= 80);
+    
+    return matchesSearch && matchesAge && matchesGender && matchesConfidence;
   });
 
   return (
@@ -330,49 +387,33 @@ export const CapturePage = (): JSX.Element => {
                 <div className="space-y-4">
                   <div>
                     <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                      Tous les types
+                      Age
                     </label>
-                    <Select value={filterType} onValueChange={setFilterType}>
+                    <Select value={filterAge} onValueChange={setFilterAge}>
                       <SelectTrigger className="w-full bg-white border-slate-200">
-                        <SelectValue placeholder="Sélectionner" />
+                        <SelectValue placeholder="Tous les âges" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="all">Tous les types</SelectItem>
-                        <SelectItem value="employee">Employés</SelectItem>
-                        <SelectItem value="visitor">Visiteurs</SelectItem>
-                        <SelectItem value="unknown">Inconnus</SelectItem>
+                        <SelectItem value="all">Tous les âges</SelectItem>
+                        <SelectItem value="young">Jeune (moins de 30 ans)</SelectItem>
+                        <SelectItem value="middle">Adulte (30-50 ans)</SelectItem>
+                        <SelectItem value="senior">Senior (plus de 50 ans)</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
 
                   <div>
                     <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                      Tous les statuts
+                      Sexe
                     </label>
-                    <Select value={filterStatus} onValueChange={setFilterStatus}>
+                    <Select value={filterGender} onValueChange={setFilterGender}>
                       <SelectTrigger className="w-full bg-white border-slate-200">
-                        <SelectValue placeholder="Sélectionner" />
+                        <SelectValue placeholder="Tous les sexes" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="all">Tous les statuts</SelectItem>
-                        <SelectItem value="authorized">Autorisé</SelectItem>
-                        <SelectItem value="unauthorized">Non autorisé</SelectItem>
-                        <SelectItem value="pending">En attente</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div>
-                    <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                      Statut
-                    </label>
-                    <Select>
-                      <SelectTrigger className="w-full bg-white border-slate-200">
-                        <SelectValue placeholder="Sélectionner" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="active">Actif</SelectItem>
-                        <SelectItem value="inactive">Inactif</SelectItem>
+                        <SelectItem value="all">Tous les sexes</SelectItem>
+                        <SelectItem value="Homme">Homme</SelectItem>
+                        <SelectItem value="Femme">Femme</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -614,10 +655,14 @@ export const CapturePage = (): JSX.Element => {
                             className="w-full h-32 object-cover group-hover:scale-105 transition-transform duration-300"
                           />
                           
-                          {/* Badge Visage */}
+                          {/* Badge Type */}
                           <div className="absolute top-2 left-2">
-                            <Badge className="bg-blue-500 text-white px-2 py-1 text-xs font-medium">
-                              Visage
+                            <Badge className={`${
+                              capture.type === "Visage" 
+                                ? "bg-blue-500 text-white" 
+                                : "bg-purple-500 text-white"
+                            } px-2 py-1 text-xs font-medium`}>
+                              {capture.type}
                             </Badge>
                           </div>
 
@@ -642,7 +687,7 @@ export const CapturePage = (): JSX.Element => {
                           <div className="space-y-3">
                             <div>
                               <h3 className="font-bold text-slate-800 [font-family:'Inter',Helvetica] text-sm">
-                                Visage
+                                {capture.type}
                               </h3>
                               <p className="text-slate-600 [font-family:'Inter',Helvetica] text-sm">
                                 {capture.gender}, {capture.age} ans
