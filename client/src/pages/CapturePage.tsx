@@ -132,6 +132,7 @@ export const CapturePage = (): JSX.Element => {
   const [filterStatus, setFilterStatus] = useState("all");
   const [clothingType, setClothingType] = useState("all");
   const [hairType, setHairType] = useState("all");
+  const [activeFilterMode, setActiveFilterMode] = useState("tous"); // tous, visage, corps
 
   const filteredCaptures = captureGallery.filter(capture => {
     const matchesSearch = capture.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -289,23 +290,38 @@ export const CapturePage = (): JSX.Element => {
                     <Button 
                       variant="outline" 
                       size="sm" 
-                      className="flex-1 bg-teal-600 text-white border-teal-600 hover:bg-teal-700"
+                      className={`flex-1 ${
+                        activeFilterMode === "tous" 
+                          ? "bg-teal-600 text-white border-teal-600 hover:bg-teal-700" 
+                          : "border-slate-300 text-slate-600 hover:bg-slate-50"
+                      }`}
+                      onClick={() => setActiveFilterMode("tous")}
                     >
-                      Sauvegarder
+                      Tous
                     </Button>
                     <Button 
                       variant="outline" 
                       size="sm" 
-                      className="flex-1 border-slate-300 text-slate-600 hover:bg-slate-50"
+                      className={`flex-1 ${
+                        activeFilterMode === "visage" 
+                          ? "bg-teal-600 text-white border-teal-600 hover:bg-teal-700" 
+                          : "border-slate-300 text-slate-600 hover:bg-slate-50"
+                      }`}
+                      onClick={() => setActiveFilterMode("visage")}
                     >
                       Visage
                     </Button>
                     <Button 
                       variant="outline" 
                       size="sm" 
-                      className="flex-1 border-slate-300 text-slate-600 hover:bg-slate-50"
+                      className={`flex-1 ${
+                        activeFilterMode === "corps" 
+                          ? "bg-teal-600 text-white border-teal-600 hover:bg-teal-700" 
+                          : "border-slate-300 text-slate-600 hover:bg-slate-50"
+                      }`}
+                      onClick={() => setActiveFilterMode("corps")}
                     >
-                      Objet
+                      Corps
                     </Button>
                   </div>
                 </div>
@@ -397,135 +413,139 @@ export const CapturePage = (): JSX.Element => {
                 </div>
 
                 {/* Attributs Corporels */}
-                <div className="pt-4 border-t border-slate-200">
-                  <h4 className="text-sm font-bold text-slate-800 [font-family:'Inter',Helvetica] mb-3">
-                    Attributs Corporels
-                  </h4>
-                  <div className="space-y-3">
-                    <div>
-                      <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                        Tenue vestimentaire
-                      </label>
-                      <Select value={clothingType} onValueChange={setClothingType}>
-                        <SelectTrigger className="w-full bg-white border-slate-200">
-                          <SelectValue placeholder="Sélectionner" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="all">Toutes</SelectItem>
-                          <SelectItem value="formal">Formelle</SelectItem>
-                          <SelectItem value="casual">Décontractée</SelectItem>
-                          <SelectItem value="uniform">Uniforme</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
+                {(activeFilterMode === "tous" || activeFilterMode === "corps") && (
+                  <div className="pt-4 border-t border-slate-200">
+                    <h4 className="text-sm font-bold text-slate-800 [font-family:'Inter',Helvetica] mb-3">
+                      Attributs Corporels
+                    </h4>
+                    <div className="space-y-3">
+                      <div>
+                        <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                          Tenue vestimentaire
+                        </label>
+                        <Select value={clothingType} onValueChange={setClothingType}>
+                          <SelectTrigger className="w-full bg-white border-slate-200">
+                            <SelectValue placeholder="Sélectionner" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="all">Toutes</SelectItem>
+                            <SelectItem value="formal">Formelle</SelectItem>
+                            <SelectItem value="casual">Décontractée</SelectItem>
+                            <SelectItem value="uniform">Uniforme</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
 
-                    <div>
-                      <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                        Taille standard
-                      </label>
-                      <Select>
-                        <SelectTrigger className="w-full bg-white border-slate-200">
-                          <SelectValue placeholder="Sélectionner" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="small">Petite</SelectItem>
-                          <SelectItem value="medium">Moyenne</SelectItem>
-                          <SelectItem value="large">Grande</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <div>
+                        <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                          Taille standard
+                        </label>
+                        <Select>
+                          <SelectTrigger className="w-full bg-white border-slate-200">
+                            <SelectValue placeholder="Sélectionner" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="small">Petite</SelectItem>
+                            <SelectItem value="medium">Moyenne</SelectItem>
+                            <SelectItem value="large">Grande</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
 
                 {/* Attributs Faciaux */}
-                <div className="pt-4 border-t border-slate-200">
-                  <h4 className="text-sm font-bold text-slate-800 [font-family:'Inter',Helvetica] mb-3">
-                    Attributs Faciaux
-                  </h4>
-                  <div className="space-y-3">
-                    <div>
-                      <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                        Cheveux
-                      </label>
-                      <Select value={hairType} onValueChange={setHairType}>
-                        <SelectTrigger className="w-full bg-white border-slate-200">
-                          <SelectValue placeholder="Sélectionner" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="all">Tous</SelectItem>
-                          <SelectItem value="blond">Blond</SelectItem>
-                          <SelectItem value="brun">Brun</SelectItem>
-                          <SelectItem value="noir">Noir</SelectItem>
-                          <SelectItem value="roux">Roux</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
+                {(activeFilterMode === "tous" || activeFilterMode === "visage") && (
+                  <div className="pt-4 border-t border-slate-200">
+                    <h4 className="text-sm font-bold text-slate-800 [font-family:'Inter',Helvetica] mb-3">
+                      Attributs Faciaux
+                    </h4>
+                    <div className="space-y-3">
+                      <div>
+                        <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                          Cheveux
+                        </label>
+                        <Select value={hairType} onValueChange={setHairType}>
+                          <SelectTrigger className="w-full bg-white border-slate-200">
+                            <SelectValue placeholder="Sélectionner" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="all">Tous</SelectItem>
+                            <SelectItem value="blond">Blond</SelectItem>
+                            <SelectItem value="brun">Brun</SelectItem>
+                            <SelectItem value="noir">Noir</SelectItem>
+                            <SelectItem value="roux">Roux</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
 
-                    <div>
-                      <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                        Lunettes
-                      </label>
-                      <Select>
-                        <SelectTrigger className="w-full bg-white border-slate-200">
-                          <SelectValue placeholder="Sélectionner" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="none">Aucune</SelectItem>
-                          <SelectItem value="glasses">Lunettes</SelectItem>
-                          <SelectItem value="sunglasses">Lunettes de soleil</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
+                      <div>
+                        <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                          Lunettes
+                        </label>
+                        <Select>
+                          <SelectTrigger className="w-full bg-white border-slate-200">
+                            <SelectValue placeholder="Sélectionner" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="none">Aucune</SelectItem>
+                            <SelectItem value="glasses">Lunettes</SelectItem>
+                            <SelectItem value="sunglasses">Lunettes de soleil</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
 
-                    <div>
-                      <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                        Barbe
-                      </label>
-                      <Select>
-                        <SelectTrigger className="w-full bg-white border-slate-200">
-                          <SelectValue placeholder="Sélectionner" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="none">Aucune</SelectItem>
-                          <SelectItem value="light">Légère</SelectItem>
-                          <SelectItem value="full">Complète</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
+                      <div>
+                        <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                          Barbe
+                        </label>
+                        <Select>
+                          <SelectTrigger className="w-full bg-white border-slate-200">
+                            <SelectValue placeholder="Sélectionner" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="none">Aucune</SelectItem>
+                            <SelectItem value="light">Légère</SelectItem>
+                            <SelectItem value="full">Complète</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
 
-                    <div>
-                      <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                        Coiffure
-                      </label>
-                      <Select>
-                        <SelectTrigger className="w-full bg-white border-slate-200">
-                          <SelectValue placeholder="Sélectionner" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="short">Courte</SelectItem>
-                          <SelectItem value="medium">Moyenne</SelectItem>
-                          <SelectItem value="long">Longue</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
+                      <div>
+                        <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                          Coiffure
+                        </label>
+                        <Select>
+                          <SelectTrigger className="w-full bg-white border-slate-200">
+                            <SelectValue placeholder="Sélectionner" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="short">Courte</SelectItem>
+                            <SelectItem value="medium">Moyenne</SelectItem>
+                            <SelectItem value="long">Longue</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
 
-                    <div>
-                      <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                        Port
-                      </label>
-                      <Select>
-                        <SelectTrigger className="w-full bg-white border-slate-200">
-                          <SelectValue placeholder="Sélectionner" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="normal">Normal</SelectItem>
-                          <SelectItem value="confident">Confiant</SelectItem>
-                          <SelectItem value="nervous">Nerveux</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <div>
+                        <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                          Port
+                        </label>
+                        <Select>
+                          <SelectTrigger className="w-full bg-white border-slate-200">
+                            <SelectValue placeholder="Sélectionner" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="normal">Normal</SelectItem>
+                            <SelectItem value="confident">Confiant</SelectItem>
+                            <SelectItem value="nervous">Nerveux</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
 
                 {/* Boutons d'action */}
                 <div className="pt-4 space-y-3">
