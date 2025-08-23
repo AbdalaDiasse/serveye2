@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 // Import des images générées
 import businessmanPhoto from "@assets/generated_images/Security_capture_businessman_photo_2feb92d4.png";
@@ -133,6 +134,12 @@ export const CapturePage = (): JSX.Element => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFilter, setSelectedFilter] = useState("all");
   const [viewMode, setViewMode] = useState("grid");
+  
+  // États pour les filtres
+  const [filterType, setFilterType] = useState("all");
+  const [filterStatus, setFilterStatus] = useState("all");
+  const [clothingType, setClothingType] = useState("all");
+  const [hairType, setHairType] = useState("all");
 
   const filteredCaptures = captureGallery.filter(capture => {
     const matchesSearch = capture.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -271,47 +278,271 @@ export const CapturePage = (): JSX.Element => {
       <div className="px-8 py-6">
         {/* Section principale avec layout 3 colonnes */}
         <div className="grid grid-cols-12 gap-6">
-          {/* Sidebar Gauche - Flux Live */}
+          {/* Sidebar Gauche - Panneau de Filtres */}
           <div className="col-span-3">
             <Card className="bg-white/70 backdrop-blur-sm border-slate-200/60 shadow-lg">
               <CardHeader className="pb-4">
                 <CardTitle className="text-lg font-bold text-slate-800 [font-family:'Inter',Helvetica] flex items-center gap-2">
-                  <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-                  Flux en Direct
+                  <svg className="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                  </svg>
+                  Filtres
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <ScrollArea className="h-96">
-                  <div className="space-y-3">
-                    {liveFeeds.map((feed) => (
-                      <div 
-                        key={feed.id}
-                        className="p-4 rounded-xl bg-gradient-to-r from-slate-50 to-blue-50 border border-slate-200 hover:shadow-md transition-all cursor-pointer"
-                      >
-                        <div className="flex items-center justify-between mb-2">
-                          <Badge className={`${
-                            feed.status === 'recording' 
-                              ? 'bg-red-100 text-red-700' 
-                              : 'bg-amber-100 text-amber-700'
-                          } text-xs px-2 py-1`}>
-                            {feed.status === 'recording' ? '🔴 REC' : '⏸ PAUSE'}
-                          </Badge>
-                          <span className="text-xs text-slate-500 font-medium">{feed.quality}</span>
-                        </div>
-                        <h4 className="font-semibold text-sm text-slate-800 [font-family:'Inter',Helvetica] mb-1">
-                          {feed.id}
-                        </h4>
-                        <p className="text-xs text-slate-600 [font-family:'Inter',Helvetica] mb-2">
-                          {feed.name}
-                        </p>
-                        <div className="flex items-center justify-between text-xs text-slate-500">
-                          <span>👥 {feed.persons} personnes</span>
-                          <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                        </div>
-                      </div>
-                    ))}
+              <CardContent className="space-y-4">
+                {/* Boutons Type de Recherche */}
+                <div className="space-y-3">
+                  <div className="flex gap-2">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="flex-1 bg-teal-600 text-white border-teal-600 hover:bg-teal-700"
+                    >
+                      Sauvegarder
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="flex-1 border-slate-300 text-slate-600 hover:bg-slate-50"
+                    >
+                      Visage
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="flex-1 border-slate-300 text-slate-600 hover:bg-slate-50"
+                    >
+                      Objet
+                    </Button>
                   </div>
-                </ScrollArea>
+                </div>
+
+                {/* Filtres Principaux */}
+                <div className="space-y-4">
+                  <div>
+                    <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                      Tous les types
+                    </label>
+                    <Select value={filterType} onValueChange={setFilterType}>
+                      <SelectTrigger className="w-full bg-white border-slate-200">
+                        <SelectValue placeholder="Sélectionner" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">Tous les types</SelectItem>
+                        <SelectItem value="employee">Employés</SelectItem>
+                        <SelectItem value="visitor">Visiteurs</SelectItem>
+                        <SelectItem value="unknown">Inconnus</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div>
+                    <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                      Tous les statuts
+                    </label>
+                    <Select value={filterStatus} onValueChange={setFilterStatus}>
+                      <SelectTrigger className="w-full bg-white border-slate-200">
+                        <SelectValue placeholder="Sélectionner" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">Tous les statuts</SelectItem>
+                        <SelectItem value="authorized">Autorisé</SelectItem>
+                        <SelectItem value="unauthorized">Non autorisé</SelectItem>
+                        <SelectItem value="pending">En attente</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div>
+                    <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                      Statut
+                    </label>
+                    <Select>
+                      <SelectTrigger className="w-full bg-white border-slate-200">
+                        <SelectValue placeholder="Sélectionner" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="active">Actif</SelectItem>
+                        <SelectItem value="inactive">Inactif</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div>
+                    <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                      Période
+                    </label>
+                    <Select>
+                      <SelectTrigger className="w-full bg-white border-slate-200">
+                        <SelectValue placeholder="Sélectionner" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="today">Aujourd'hui</SelectItem>
+                        <SelectItem value="week">Cette semaine</SelectItem>
+                        <SelectItem value="month">Ce mois</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {/* Dates */}
+                  <div className="flex gap-2">
+                    <div className="flex-1">
+                      <Input 
+                        type="date" 
+                        placeholder="min 08/07/26"
+                        className="text-xs bg-white border-slate-200"
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <Input 
+                        type="date" 
+                        placeholder="max 08/07/26"
+                        className="text-xs bg-white border-slate-200"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Attributs Corporels */}
+                <div className="pt-4 border-t border-slate-200">
+                  <h4 className="text-sm font-bold text-slate-800 [font-family:'Inter',Helvetica] mb-3">
+                    Attributs Corporels
+                  </h4>
+                  <div className="space-y-3">
+                    <div>
+                      <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                        Tenue vestimentaire
+                      </label>
+                      <Select value={clothingType} onValueChange={setClothingType}>
+                        <SelectTrigger className="w-full bg-white border-slate-200">
+                          <SelectValue placeholder="Sélectionner" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="all">Toutes</SelectItem>
+                          <SelectItem value="formal">Formelle</SelectItem>
+                          <SelectItem value="casual">Décontractée</SelectItem>
+                          <SelectItem value="uniform">Uniforme</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div>
+                      <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                        Taille standard
+                      </label>
+                      <Select>
+                        <SelectTrigger className="w-full bg-white border-slate-200">
+                          <SelectValue placeholder="Sélectionner" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="small">Petite</SelectItem>
+                          <SelectItem value="medium">Moyenne</SelectItem>
+                          <SelectItem value="large">Grande</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Attributs Faciaux */}
+                <div className="pt-4 border-t border-slate-200">
+                  <h4 className="text-sm font-bold text-slate-800 [font-family:'Inter',Helvetica] mb-3">
+                    Attributs Faciaux
+                  </h4>
+                  <div className="space-y-3">
+                    <div>
+                      <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                        Cheveux
+                      </label>
+                      <Select value={hairType} onValueChange={setHairType}>
+                        <SelectTrigger className="w-full bg-white border-slate-200">
+                          <SelectValue placeholder="Sélectionner" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="all">Tous</SelectItem>
+                          <SelectItem value="blond">Blond</SelectItem>
+                          <SelectItem value="brun">Brun</SelectItem>
+                          <SelectItem value="noir">Noir</SelectItem>
+                          <SelectItem value="roux">Roux</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div>
+                      <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                        Lunettes
+                      </label>
+                      <Select>
+                        <SelectTrigger className="w-full bg-white border-slate-200">
+                          <SelectValue placeholder="Sélectionner" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="none">Aucune</SelectItem>
+                          <SelectItem value="glasses">Lunettes</SelectItem>
+                          <SelectItem value="sunglasses">Lunettes de soleil</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div>
+                      <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                        Barbe
+                      </label>
+                      <Select>
+                        <SelectTrigger className="w-full bg-white border-slate-200">
+                          <SelectValue placeholder="Sélectionner" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="none">Aucune</SelectItem>
+                          <SelectItem value="light">Légère</SelectItem>
+                          <SelectItem value="full">Complète</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div>
+                      <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                        Coiffure
+                      </label>
+                      <Select>
+                        <SelectTrigger className="w-full bg-white border-slate-200">
+                          <SelectValue placeholder="Sélectionner" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="short">Courte</SelectItem>
+                          <SelectItem value="medium">Moyenne</SelectItem>
+                          <SelectItem value="long">Longue</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div>
+                      <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                        Port
+                      </label>
+                      <Select>
+                        <SelectTrigger className="w-full bg-white border-slate-200">
+                          <SelectValue placeholder="Sélectionner" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="normal">Normal</SelectItem>
+                          <SelectItem value="confident">Confiant</SelectItem>
+                          <SelectItem value="nervous">Nerveux</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Boutons d'action */}
+                <div className="pt-4 space-y-3">
+                  <Button className="w-full bg-teal-600 hover:bg-teal-700 text-white">
+                    ✓ Appliquer les filtres
+                  </Button>
+                  <Button variant="outline" className="w-full border-slate-300 text-slate-600 hover:bg-slate-50">
+                    ↻ Réinitialiser
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           </div>
