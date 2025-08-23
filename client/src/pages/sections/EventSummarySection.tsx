@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 
 const navigationItems = [
@@ -58,11 +58,21 @@ interface EventSummarySectionProps {
 }
 
 export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage }: EventSummarySectionProps): JSX.Element => {
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(
+    // Ouvrir automatiquement le dropdown "Personnes" si on est sur capture ou reconnaissance
+    (currentPage === "capture" || currentPage === "reconnaissance") ? "Personnes" : null
+  );
 
   const toggleDropdown = (itemName: string) => {
     setOpenDropdown(openDropdown === itemName ? null : itemName);
   };
+
+  // Effet pour ouvrir automatiquement le dropdown quand on navigue vers capture/reconnaissance
+  useEffect(() => {
+    if (currentPage === "capture" || currentPage === "reconnaissance") {
+      setOpenDropdown("Personnes");
+    }
+  }, [currentPage]);
 
   const handleNavigation = (page: string) => {
     if (setCurrentPage) {
