@@ -279,15 +279,21 @@ export const CapturePage = (): JSX.Element => {
                       onChange={(e) => setSearchQuery(e.target.value)}
                       className="w-full bg-transparent border-none outline-none text-slate-700 placeholder:text-slate-400 min-h-[60px] resize-none [font-family:'Inter',Helvetica] text-sm"
                     />
-                    <div className="mt-2 text-slate-500 [font-family:'Inter',Helvetica] text-xs">
-                      <div className="mb-1">Exemples:</div>
-                      <div className="space-y-1">
-                        <div>• 'Montre-moi toutes les femmes avec veste rouge détectées hier'</div>
-                        <div>• 'Hommes âgés de 25-40 ans avec barbe ce matin'</div>
+                    {searchQuery === '' && (
+                      <div className="mt-2 text-slate-500 [font-family:'Inter',Helvetica] text-xs">
+                        <div className="mb-1">Exemples:</div>
+                        <div className="space-y-1">
+                          <div>• 'Montre-moi toutes les femmes avec veste rouge détectées hier'</div>
+                          <div>• 'Hommes âgés de 25-40 ans avec barbe ce matin'</div>
+                        </div>
                       </div>
-                    </div>
+                    )}
                     <Button
                       className="absolute bottom-4 right-4 bg-teal-500 hover:bg-teal-600 text-white [font-family:'Inter',Helvetica] text-sm px-4 py-2 rounded-lg"
+                      onClick={() => {
+                        // Ici on peut ajouter la logique de recherche
+                        console.log('Recherche lancée:', searchQuery);
+                      }}
                     >
                       🔍 Rechercher
                     </Button>
