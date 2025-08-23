@@ -254,23 +254,44 @@ export const CapturePage = (): JSX.Element => {
           
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             <div className="lg:col-span-3">
+              {/* Onglets Texte/Visage */}
+              <div className="flex gap-2 mb-4">
+                <Button
+                  className="bg-teal-500 hover:bg-teal-600 text-white [font-family:'Inter',Helvetica] text-sm px-4 py-2 rounded-lg"
+                >
+                  📝 Texte
+                </Button>
+                <Button
+                  variant="outline"
+                  className="border-teal-200 text-teal-600 hover:bg-teal-50 [font-family:'Inter',Helvetica] text-sm px-4 py-2 rounded-lg"
+                >
+                  👤 Visage
+                </Button>
+              </div>
+
               {/* Champ de recherche en langage naturel */}
               <div className="mb-4">
                 <div className="relative">
-                  <textarea
-                    placeholder="Effectuez une recherche dans toutes les données de sécurité stockées.&#10;Recherchez par nom, fonction, localisation, horodatage, niveau de confiance et plus encore.&#10;• Recherche rapide par ID ou nom d'employé&#10;• Filtres avancés par date et zone de détection&#10;• Analyse des patterns de comportement anormaux"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-12 pr-4 py-3 bg-white/90 border-cyan-200 focus:border-teal-400 focus:ring-2 focus:ring-teal-100 rounded-lg text-slate-700 placeholder:text-slate-400 min-h-[80px] resize-none"
-                  />
-                  <svg 
-                    className="absolute left-4 top-4 w-5 h-5 text-teal-500" 
-                    fill="none" 
-                    stroke="currentColor" 
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
+                  <div className="bg-white/90 border border-cyan-200 rounded-lg p-4">
+                    <textarea
+                      placeholder="Décrivez ce que vous cherchez en langage naturel..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="w-full bg-transparent border-none outline-none text-slate-700 placeholder:text-slate-400 min-h-[60px] resize-none [font-family:'Inter',Helvetica] text-sm"
+                    />
+                    <div className="mt-2 text-slate-500 [font-family:'Inter',Helvetica] text-xs">
+                      <div className="mb-1">Exemples:</div>
+                      <div className="space-y-1">
+                        <div>• 'Montre-moi toutes les femmes avec veste rouge détectées hier'</div>
+                        <div>• 'Hommes âgés de 25-40 ans avec barbe ce matin'</div>
+                      </div>
+                    </div>
+                    <Button
+                      className="absolute bottom-4 right-4 bg-teal-500 hover:bg-teal-600 text-white [font-family:'Inter',Helvetica] text-sm px-4 py-2 rounded-lg"
+                    >
+                      🔍 Rechercher
+                    </Button>
+                  </div>
                 </div>
               </div>
               
@@ -282,36 +303,27 @@ export const CapturePage = (): JSX.Element => {
                   variant="outline" 
                   size="sm" 
                   className="bg-white/80 border-cyan-200 text-teal-700 hover:bg-cyan-50 hover:border-teal-300"
-                  onClick={() => setSearchQuery("Jean Dupont")}
+                  onClick={() => setSearchQuery("Personnes suspectes")}
                 >
-                  Jean Dupont
+                  Personnes suspectes
                 </Button>
                 <Button 
                   variant="outline" 
                   size="sm" 
                   className="bg-white/80 border-cyan-200 text-teal-700 hover:bg-cyan-50 hover:border-teal-300"
-                  onClick={() => setSearchQuery("Entrée Principale")}
+                  onClick={() => setSearchQuery("Visiteurs récurrents")}
                 >
-                  Entrée Principale
+                  Visiteurs récurrents
                 </Button>
                 <Button 
                   variant="outline" 
                   size="sm" 
                   className="bg-white/80 border-cyan-200 text-teal-700 hover:bg-cyan-50 hover:border-teal-300"
-                  onClick={() => setSelectedFilter("unknown")}
+                  onClick={() => setSearchQuery("Personnel autorisé")}
                 >
-                  Personnes inconnues
+                  Personnel autorisé
                 </Button>
               </div>
-            </div>
-            
-            <div className="flex justify-end items-start">
-              <Button className="bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 shadow-lg font-medium">
-                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-                Rechercher
-              </Button>
             </div>
           </div>
         </div>
