@@ -181,6 +181,41 @@ export const CapturePage = (): JSX.Element => {
   const [clothingType, setClothingType] = useState("all");
   const [hairType, setHairType] = useState("all");
   const [activeFilterMode, setActiveFilterMode] = useState("tous"); // tous, visage, corps
+  
+  // États pour la recherche par visage
+  const [searchMode, setSearchMode] = useState("texte");
+  const [similarity, setSimilarity] = useState(80);
+  const [period, setPeriod] = useState("24h");
+  const [cameras, setCameras] = useState("toutes");
+  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setUploadedImage(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    const files = e.dataTransfer.files;
+    if (files.length > 0 && files[0].type.startsWith('image/')) {
+      const file = files[0];
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setUploadedImage(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const filteredCaptures = captureGallery.filter(capture => {
     const matchesSearch = capture.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -257,40 +292,178 @@ export const CapturePage = (): JSX.Element => {
               {/* Onglets Texte/Visage */}
               <div className="flex gap-2 mb-4">
                 <Button
-                  className="bg-teal-500 hover:bg-teal-600 text-white [font-family:'Inter',Helvetica] text-sm px-4 py-2 rounded-lg"
+                  className={`[font-family:'Inter',Helvetica] text-sm px-4 py-2 rounded-lg ${
+                    searchMode === "texte" 
+                      ? "bg-teal-500 hover:bg-teal-600 text-white" 
+                      : "bg-white border border-teal-200 text-teal-600 hover:bg-teal-50"
+                  }`}
+                  onClick={() => setSearchMode("texte")}
                 >
                   📝 Texte
                 </Button>
                 <Button
-                  variant="outline"
-                  className="border-teal-200 text-teal-600 hover:bg-teal-50 [font-family:'Inter',Helvetica] text-sm px-4 py-2 rounded-lg"
+                  className={`[font-family:'Inter',Helvetica] text-sm px-4 py-2 rounded-lg ${
+                    searchMode === "visage" 
+                      ? "bg-teal-500 hover:bg-teal-600 text-white" 
+                      : "bg-white border border-teal-200 text-teal-600 hover:bg-teal-50"
+                  }`}
+                  onClick={() => setSearchMode("visage")}
                 >
                   👤 Visage
                 </Button>
               </div>
 
-              {/* Champ de recherche en langage naturel */}
-              <div className="mb-4">
-                <div className="relative">
-                  <div className="bg-white/90 border border-cyan-200 rounded-lg p-4">
-                    <textarea
-                      placeholder="Décrivez ce que vous cherchez en langage naturel...&#10;Exemples:&#10;• 'Montre-moi toutes les femmes avec veste rouge détectées hier'&#10;• 'Hommes âgés de 25-40 ans avec barbe ce matin'"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full bg-transparent border-none outline-none text-slate-700 placeholder:text-slate-400 min-h-[60px] resize-none [font-family:'Inter',Helvetica] text-sm"
-                    />
-                    <Button
-                      className="absolute bottom-4 right-4 bg-teal-500 hover:bg-teal-600 text-white [font-family:'Inter',Helvetica] text-sm px-4 py-2 rounded-lg"
-                      onClick={() => {
-                        // Ici on peut ajouter la logique de recherche
-                        console.log('Recherche lancée:', searchQuery);
-                      }}
-                    >
-                      🔍 Rechercher
-                    </Button>
+              {/* Contenu selon le mode de recherche */}
+              {searchMode === "texte" ? (
+                <div className="mb-4">
+                  <div className="relative">
+                    <div className="bg-white/90 border border-cyan-200 rounded-lg p-4">
+                      <textarea
+                        placeholder="Décrivez ce que vous cherchez en langage naturel...&#10;Exemples:&#10;• 'Montre-moi toutes les femmes avec veste rouge détectées hier'&#10;• 'Hommes âgés de 25-40 ans avec barbe ce matin'"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="w-full bg-transparent border-none outline-none text-slate-700 placeholder:text-slate-400 min-h-[60px] resize-none [font-family:'Inter',Helvetica] text-sm"
+                      />
+                      <Button
+                        className="absolute bottom-4 right-4 bg-teal-500 hover:bg-teal-600 text-white [font-family:'Inter',Helvetica] text-sm px-4 py-2 rounded-lg"
+                        onClick={() => {
+                          // Ici on peut ajouter la logique de recherche
+                          console.log('Recherche lancée:', searchQuery);
+                        }}
+                      >
+                        🔍 Rechercher
+                      </Button>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ) : (
+                <div className="mb-4">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    {/* Zone d'upload d'image */}
+                    <div 
+                      className="border-2 border-dashed border-cyan-200 rounded-lg p-8 text-center bg-white/90 hover:border-teal-300 transition-colors cursor-pointer"
+                      onDragOver={handleDragOver}
+                      onDrop={handleDrop}
+                      onClick={() => document.getElementById('image-upload')?.click()}
+                    >
+                      <input
+                        id="image-upload"
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageUpload}
+                        className="hidden"
+                      />
+                      <div className="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg className="w-8 h-8 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                        </svg>
+                      </div>
+                      {uploadedImage ? (
+                        <div>
+                          <img src={uploadedImage} alt="Image uploadée" className="w-32 h-32 object-cover rounded-lg mx-auto mb-2" />
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setUploadedImage(null);
+                            }}
+                            className="text-slate-600"
+                          >
+                            Changer l'image
+                          </Button>
+                        </div>
+                      ) : (
+                        <div>
+                          <h3 className="font-semibold text-slate-800 [font-family:'Inter',Helvetica] mb-2">
+                            Glissez une photo ici
+                          </h3>
+                          <p className="text-slate-500 [font-family:'Inter',Helvetica] text-sm mb-4">
+                            ou cliquez pour parcourir
+                          </p>
+                          <p className="text-slate-400 [font-family:'Inter',Helvetica] text-xs">
+                            JPG, PNG jusqu'à 10MB
+                          </p>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Contrôles de recherche */}
+                    <div className="space-y-4">
+                      {/* Similarité */}
+                      <div>
+                        <label className="block text-slate-700 [font-family:'Inter',Helvetica] font-medium mb-2">
+                          Similarité
+                        </label>
+                        <div className="flex items-center gap-3">
+                          <input
+                            type="range"
+                            min="0"
+                            max="100"
+                            value={similarity}
+                            onChange={(e) => setSimilarity(parseInt(e.target.value))}
+                            className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
+                            style={{
+                              background: `linear-gradient(to right, #14b8a6 0%, #14b8a6 ${similarity}%, #e5e7eb ${similarity}%, #e5e7eb 100%)`
+                            }}
+                          />
+                          <span className="text-teal-600 font-semibold [font-family:'Inter',Helvetica] text-sm min-w-[40px]">
+                            {similarity}%
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Période */}
+                      <div>
+                        <label className="block text-slate-700 [font-family:'Inter',Helvetica] font-medium mb-2">
+                          Période
+                        </label>
+                        <Select value={period} onValueChange={setPeriod}>
+                          <SelectTrigger className="w-full">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="24h">Dernières 24h</SelectItem>
+                            <SelectItem value="48h">Dernières 48h</SelectItem>
+                            <SelectItem value="7j">Derniers 7 jours</SelectItem>
+                            <SelectItem value="30j">Derniers 30 jours</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      {/* Caméras */}
+                      <div>
+                        <label className="block text-slate-700 [font-family:'Inter',Helvetica] font-medium mb-2">
+                          Caméras
+                        </label>
+                        <Select value={cameras} onValueChange={setCameras}>
+                          <SelectTrigger className="w-full">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="toutes">Toutes les caméras</SelectItem>
+                            <SelectItem value="cam01">Caméra 01 - Entrée</SelectItem>
+                            <SelectItem value="cam02">Caméra 02 - Hall</SelectItem>
+                            <SelectItem value="cam03">Caméra 03 - Bureau</SelectItem>
+                            <SelectItem value="cam05">Caméra 05 - Parking</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      {/* Bouton de recherche */}
+                      <Button
+                        className="w-full bg-teal-500 hover:bg-teal-600 text-white [font-family:'Inter',Helvetica] text-sm py-3"
+                        disabled={!uploadedImage}
+                        onClick={() => {
+                          console.log('Recherche par visage:', { uploadedImage, similarity, period, cameras });
+                        }}
+                      >
+                        👤 Rechercher ce visage
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              )}
               
               <div className="flex items-center gap-3">
                 <span className="text-slate-500 [font-family:'Inter',Helvetica] text-sm">
