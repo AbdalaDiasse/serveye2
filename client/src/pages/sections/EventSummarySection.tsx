@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 
 const navigationItems = [
@@ -18,15 +18,22 @@ const navigationItems = [
     isActive: false,
   },
   {
-    name: "Reconnaissance",
+    name: "Personnes",
     icon: "/figmaAssets/frame-2.svg",
     hasDropdown: true,
     isActive: false,
-  },
-  {
-    name: "Captures",
-    icon: "/figmaAssets/frame-1.svg",
-    isActive: false,
+    subItems: [
+      {
+        name: "Capture",
+        icon: "/figmaAssets/frame-1.svg",
+        isActive: false,
+      },
+      {
+        name: "Reconnaissance",
+        icon: "/figmaAssets/frame-2.svg",
+        isActive: false,
+      },
+    ],
   },
   {
     name: "Vehicules",
@@ -46,6 +53,12 @@ const navigationItems = [
 ];
 
 export const EventSummarySection = (): JSX.Element => {
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+
+  const toggleDropdown = (itemName: string) => {
+    setOpenDropdown(openDropdown === itemName ? null : itemName);
+  };
+
   return (
     <aside className="w-72 h-full bg-[#ffffffcc] border-r border-[#ffffff33] shadow-[0px_25px_50px_#00000040] flex flex-col">
       <header className="h-20 border-b border-[#f1f5f980] flex items-center px-6">
@@ -82,23 +95,49 @@ export const EventSummarySection = (): JSX.Element => {
                   </span>
                 </div>
               ) : (
-                <div className="h-12 flex items-center px-4 hover:bg-gray-50 rounded-xl cursor-pointer">
-                  <img
-                    className="w-4 h-4 mr-3"
-                    alt={item.name}
-                    src={item.icon}
-                  />
-                  <span className="[font-family:'Inter',Helvetica] font-normal text-slate-600 text-base tracking-[0] leading-6">
-                    {item.name}
-                  </span>
-                  {item.hasDropdown && (
+                <>
+                  <div 
+                    className="h-12 flex items-center px-4 hover:bg-gray-50 rounded-xl cursor-pointer"
+                    onClick={() => item.hasDropdown && toggleDropdown(item.name)}
+                  >
                     <img
-                      className="w-3 h-3 ml-auto"
-                      alt="Dropdown"
-                      src="/figmaAssets/frame-7.svg"
+                      className="w-4 h-4 mr-3"
+                      alt={item.name}
+                      src={item.icon}
                     />
+                    <span className="[font-family:'Inter',Helvetica] font-normal text-slate-600 text-base tracking-[0] leading-6">
+                      {item.name}
+                    </span>
+                    {item.hasDropdown && (
+                      <img
+                        className={`w-3 h-3 ml-auto transition-transform duration-200 ${
+                          openDropdown === item.name ? 'rotate-180' : ''
+                        }`}
+                        alt="Dropdown"
+                        src="/figmaAssets/frame-7.svg"
+                      />
+                    )}
+                  </div>
+                  {item.subItems && openDropdown === item.name && (
+                    <div className="ml-6 mt-1 space-y-1">
+                      {item.subItems.map((subItem, subIndex) => (
+                        <div
+                          key={subIndex}
+                          className="h-10 flex items-center px-4 hover:bg-gray-50 rounded-lg cursor-pointer"
+                        >
+                          <img
+                            className="w-3 h-3 mr-3"
+                            alt={subItem.name}
+                            src={subItem.icon}
+                          />
+                          <span className="[font-family:'Inter',Helvetica] font-normal text-slate-500 text-sm tracking-[0] leading-5">
+                            {subItem.name}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
                   )}
-                </div>
+                </>
               )}
             </div>
           ))}
