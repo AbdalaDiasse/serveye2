@@ -266,7 +266,7 @@ export const CapturePage = (): JSX.Element => {
               <div className="mb-4">
                 <div className="relative">
                   <Input
-                    placeholder="Recherchez en langage naturel : 'Montrez-moi les captures de Jean hier soir' ou 'Personnes inconnues entrée principale'"
+                    placeholder="Rechercher en langage naturel : 'Montrez-moi les captures de Jean hier soir' ou 'Personnes inconnues entrée principale'"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="w-full pl-12 pr-4 py-3 bg-white/90 border-cyan-200 focus:border-teal-400 focus:ring-2 focus:ring-teal-100 rounded-lg text-slate-700 placeholder:text-slate-400"
