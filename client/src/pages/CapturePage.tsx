@@ -274,20 +274,11 @@ export const CapturePage = (): JSX.Element => {
                 <div className="relative">
                   <div className="bg-white/90 border border-cyan-200 rounded-lg p-4">
                     <textarea
-                      placeholder="Décrivez ce que vous cherchez en langage naturel..."
+                      placeholder="Décrivez ce que vous cherchez en langage naturel...&#10;Exemples:&#10;• 'Montre-moi toutes les femmes avec veste rouge détectées hier'&#10;• 'Hommes âgés de 25-40 ans avec barbe ce matin'"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       className="w-full bg-transparent border-none outline-none text-slate-700 placeholder:text-slate-400 min-h-[60px] resize-none [font-family:'Inter',Helvetica] text-sm"
                     />
-                    {searchQuery === '' && (
-                      <div className="text-slate-500 [font-family:'Inter',Helvetica] text-xs">
-                        <div>Exemples:</div>
-                        <div className="space-y-1">
-                          <div>• 'Montre-moi toutes les femmes avec veste rouge détectées hier'</div>
-                          <div>• 'Hommes âgés de 25-40 ans avec barbe ce matin'</div>
-                        </div>
-                      </div>
-                    )}
                     <Button
                       className="absolute bottom-4 right-4 bg-teal-500 hover:bg-teal-600 text-white [font-family:'Inter',Helvetica] text-sm px-4 py-2 rounded-lg"
                       onClick={() => {
