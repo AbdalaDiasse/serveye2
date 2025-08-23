@@ -14,111 +14,103 @@ import casualManPhoto from "@assets/generated_images/Security_capture_casual_man
 import elderlyWomanPhoto from "@assets/generated_images/Security_capture_elderly_woman_37bac27b.png";
 import youngManPhoto from "@assets/generated_images/Security_capture_young_man_e6e7c093.png";
 
-// Données des captures selon le design Figma
+// Données des captures de visages
 const captureGallery = [
   {
     id: 1,
-    name: "Jean Dupont",
+    type: "Visage",
     timestamp: "14:32:15",
-    date: "23 Août 2025",
-    camera: "CAM-001",
-    zone: "Entrée Principale",
+    camera: "Caméra 01",
+    gender: "Homme",
+    age: 45,
     confidence: 98,
-    status: "authorized",
     image: businessmanPhoto,
-    employee_id: "EMP-0001",
-    department: "Direction"
+    attributes: ["Sans barbe", "Cheveux courts", "Sans lunettes"],
+    today: "Aujourd'hui 14:32"
   },
   {
     id: 2,
-    name: "Marie Laurent",
+    type: "Visage", 
     timestamp: "14:28:42",
-    date: "23 Août 2025", 
-    camera: "CAM-002",
-    zone: "Hall Réception",
+    camera: "Caméra 03",
+    gender: "Femme",
+    age: 28,
     confidence: 94,
-    status: "authorized",
     image: womanPhoto,
-    employee_id: "EMP-0245",
-    department: "RH"
+    attributes: ["Cheveux longs", "Sans lunettes", "Sans casquette"],
+    today: "Aujourd'hui 14:28"
   },
   {
     id: 3,
-    name: "Pierre Martin",
+    type: "Visage",
     timestamp: "14:25:18",
-    date: "23 Août 2025",
-    camera: "CAM-003", 
-    zone: "Bureau Étage 2",
+    camera: "Caméra 02",
+    gender: "Homme",
+    age: 35,
     confidence: 91,
-    status: "authorized",
     image: casualManPhoto,
-    employee_id: "EMP-0156",
-    department: "IT"
+    attributes: ["Barbe", "Cheveux courts", "Sans lunettes"],
+    today: "Aujourd'hui 14:25"
   },
   {
     id: 4,
-    name: "Sylvie Moreau",
+    type: "Visage",
     timestamp: "14:22:03",
-    date: "23 Août 2025",
-    camera: "CAM-004",
-    zone: "Salle de Conférence",
+    camera: "Caméra 05",
+    gender: "Femme",
+    age: 55,
     confidence: 89,
-    status: "authorized",
     image: elderlyWomanPhoto,
-    employee_id: "EMP-0078",
-    department: "Finance"
+    attributes: ["Cheveux courts", "Lunettes", "Sans casquette"],
+    today: "Aujourd'hui 14:22"
   },
   {
     id: 5,
-    name: "Thomas Bernard", 
+    type: "Visage",
     timestamp: "14:18:29",
-    date: "23 Août 2025",
-    camera: "CAM-001",
-    zone: "Entrée Principale",
+    camera: "Caméra 01",
+    gender: "Homme",
+    age: 25,
     confidence: 96,
-    status: "authorized",
     image: youngManPhoto,
-    employee_id: "EMP-0312",
-    department: "Marketing"
+    attributes: ["Sans barbe", "Cheveux courts", "Sans lunettes"],
+    today: "Aujourd'hui 14:18"
   },
   {
     id: 6,
-    name: "Personne Inconnue",
+    type: "Visage",
     timestamp: "14:15:47",
-    date: "23 Août 2025",
-    camera: "CAM-002",
-    zone: "Hall Réception", 
+    camera: "Caméra 04",
+    gender: "Homme",
+    age: 40,
     confidence: 67,
-    status: "unknown",
     image: businessmanPhoto,
-    employee_id: "N/A",
-    department: "Visiteur"
+    attributes: ["Barbe", "Cheveux courts", "Sans lunettes"],
+    today: "Aujourd'hui 14:15"
   },
   {
     id: 7,
-    name: "Claire Dubois",
+    type: "Visage",
     timestamp: "14:12:33",
-    date: "23 Août 2025",
-    camera: "CAM-005",
-    zone: "Parking Souterrain",
+    camera: "Caméra 06",
+    gender: "Femme",
+    age: 32,
     confidence: 93,
-    status: "authorized", 
     image: womanPhoto,
-    employee_id: "EMP-0089",
-    department: "Juridique"
+    attributes: ["Cheveux longs", "Sans lunettes", "Sans barbe"],
+    today: "Aujourd'hui 14:12"
   },
   {
     id: 8,
-    name: "Michel Rousseau",
+    type: "Visage",
     timestamp: "14:09:15",
-    date: "23 Août 2025",
-    camera: "CAM-003",
-    zone: "Bureau Étage 2",
+    camera: "Caméra 02",
+    gender: "Homme",
+    age: 38,
     confidence: 88,
-    status: "authorized",
     image: casualManPhoto,
-    employee_id: "EMP-0203",
-    department: "Production"
+    attributes: ["Lunettes", "Cheveux longs", "Sans barbe"],
+    today: "Aujourd'hui 14:09"
   }
 ];
 
@@ -142,12 +134,13 @@ export const CapturePage = (): JSX.Element => {
   const [hairType, setHairType] = useState("all");
 
   const filteredCaptures = captureGallery.filter(capture => {
-    const matchesSearch = capture.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         capture.zone.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         capture.department.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = capture.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         capture.camera.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         capture.gender.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         capture.attributes.some(attr => attr.toLowerCase().includes(searchQuery.toLowerCase()));
     const matchesFilter = selectedFilter === "all" || 
-                         (selectedFilter === "authorized" && capture.status === "authorized") ||
-                         (selectedFilter === "unknown" && capture.status === "unknown");
+                         (selectedFilter === "authorized" && capture.confidence > 80) ||
+                         (selectedFilter === "unknown" && capture.confidence <= 80);
     return matchesSearch && matchesFilter;
   });
 
@@ -588,79 +581,79 @@ export const CapturePage = (): JSX.Element => {
 
               <CardContent className="p-6">
                 <ScrollArea className="h-[600px]">
-                  <div className="grid grid-cols-3 gap-6">
+                  <div className="grid grid-cols-4 gap-4">
                     {filteredCaptures.map((capture) => (
                       <Card 
                         key={capture.id} 
-                        className="group hover:shadow-xl transition-all duration-300 border-slate-200/60 bg-white/80 backdrop-blur-sm overflow-hidden"
+                        className="group hover:shadow-xl transition-all duration-300 border-slate-200/60 bg-white/90 backdrop-blur-sm overflow-hidden"
                       >
                         <div className="relative">
                           <img
                             src={capture.image}
-                            alt={capture.name}
-                            className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                            alt={capture.type}
+                            className="w-full h-32 object-cover group-hover:scale-105 transition-transform duration-300"
                           />
                           
-                          {/* Overlays */}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                          
+                          {/* Badge Visage */}
+                          <div className="absolute top-2 left-2">
+                            <Badge className="bg-blue-500 text-white px-2 py-1 text-xs font-medium">
+                              Visage
+                            </Badge>
+                          </div>
+
                           {/* Badge confiance */}
-                          <div className="absolute top-3 right-3">
+                          <div className="absolute top-2 right-2">
                             <Badge className={`${
-                              capture.status === 'authorized' 
-                                ? 'bg-emerald-500/90 text-white' 
-                                : 'bg-red-500/90 text-white'
+                              capture.confidence > 80 
+                                ? 'bg-emerald-500 text-white' 
+                                : 'bg-red-500 text-white'
                             } px-2 py-1 text-xs font-bold shadow-lg`}>
                               {capture.confidence}%
                             </Badge>
                           </div>
 
-                          {/* Timestamp */}
-                          <div className="absolute bottom-3 left-3 bg-black/70 text-white text-xs px-2 py-1 rounded font-mono">
-                            {capture.timestamp}
-                          </div>
-
-                          {/* Status */}
-                          <div className="absolute bottom-3 right-3">
-                            <Badge className={`${
-                              capture.status === 'authorized' 
-                                ? 'bg-emerald-500/90 text-white' 
-                                : 'bg-red-500/90 text-white'
-                            } text-xs px-2 py-1 shadow-lg`}>
-                              {capture.status === 'authorized' ? '✓' : '⚠'}
-                            </Badge>
+                          {/* Caméra */}
+                          <div className="absolute bottom-2 left-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                            {capture.camera}
                           </div>
                         </div>
 
-                        <CardContent className="p-4">
+                        <CardContent className="p-3">
                           <div className="space-y-3">
                             <div>
-                              <h3 className="font-bold text-slate-800 [font-family:'Inter',Helvetica] text-base truncate">
-                                {capture.name}
+                              <h3 className="font-bold text-slate-800 [font-family:'Inter',Helvetica] text-sm">
+                                Visage
                               </h3>
-                              <p className="text-slate-500 [font-family:'Inter',Helvetica] text-sm">
-                                {capture.employee_id} • {capture.department}
+                              <p className="text-slate-600 [font-family:'Inter',Helvetica] text-sm">
+                                {capture.gender}, {capture.age} ans
                               </p>
                             </div>
 
-                            <div className="grid grid-cols-2 gap-2 text-xs">
-                              <div>
-                                <span className="text-slate-400 block">Caméra:</span>
-                                <span className="font-medium text-slate-700">{capture.camera}</span>
-                              </div>
-                              <div>
-                                <span className="text-slate-400 block">Zone:</span>
-                                <span className="font-medium text-slate-700 truncate">{capture.zone}</span>
-                              </div>
+                            {/* Attributs physiques */}
+                            <div className="flex flex-wrap gap-1">
+                              {capture.attributes.map((attribute, index) => (
+                                <Badge 
+                                  key={index}
+                                  variant="outline" 
+                                  className={`text-xs px-2 py-0.5 ${
+                                    attribute.includes('Barbe') ? 'bg-yellow-100 text-yellow-700 border-yellow-200' :
+                                    attribute.includes('Cheveux') ? 'bg-purple-100 text-purple-700 border-purple-200' :
+                                    attribute.includes('Lunettes') ? 'bg-blue-100 text-blue-700 border-blue-200' :
+                                    attribute.includes('Sans') ? 'bg-gray-100 text-gray-700 border-gray-200' :
+                                    'bg-green-100 text-green-700 border-green-200'
+                                  }`}
+                                >
+                                  {attribute}
+                                </Badge>
+                              ))}
                             </div>
 
-                            <div className="flex gap-2 pt-2">
-                              <Button variant="outline" size="sm" className="flex-1 text-xs">
-                                👁 Détails
-                              </Button>
-                              <Button variant="outline" size="sm" className="flex-1 text-xs">
-                                📤 Export
-                              </Button>
+                            {/* Timestamp */}
+                            <div className="flex items-center text-xs text-slate-500 pt-2 border-t border-slate-100">
+                              <svg className="w-3 h-3 mr-1 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <circle cx="10" cy="10" r="4"></circle>
+                              </svg>
+                              {capture.today}
                             </div>
                           </div>
                         </CardContent>
