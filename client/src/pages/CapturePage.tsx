@@ -265,14 +265,14 @@ export const CapturePage = (): JSX.Element => {
               {/* Champ de recherche en langage naturel */}
               <div className="mb-4">
                 <div className="relative">
-                  <Input
-                    placeholder="Rechercher en langage naturel : 'Montrez-moi les captures de Jean hier soir' ou 'Personnes inconnues entrée principale'"
+                  <textarea
+                    placeholder="Effectuez une recherche dans toutes les données de sécurité stockées.&#10;Recherchez par nom, fonction, localisation, horodatage, niveau de confiance et plus encore.&#10;• Recherche rapide par ID ou nom d'employé&#10;• Filtres avancés par date et zone de détection&#10;• Analyse des patterns de comportement anormaux"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-12 pr-4 py-3 bg-white/90 border-cyan-200 focus:border-teal-400 focus:ring-2 focus:ring-teal-100 rounded-lg text-slate-700 placeholder:text-slate-400"
+                    className="w-full pl-12 pr-4 py-3 bg-white/90 border-cyan-200 focus:border-teal-400 focus:ring-2 focus:ring-teal-100 rounded-lg text-slate-700 placeholder:text-slate-400 min-h-[80px] resize-none"
                   />
                   <svg 
-                    className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-teal-500" 
+                    className="absolute left-4 top-4 w-5 h-5 text-teal-500" 
                     fill="none" 
                     stroke="currentColor" 
                     viewBox="0 0 24 24"
