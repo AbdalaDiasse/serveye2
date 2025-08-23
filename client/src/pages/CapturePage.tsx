@@ -280,7 +280,7 @@ export const CapturePage = (): JSX.Element => {
                       className="w-full bg-transparent border-none outline-none text-slate-700 placeholder:text-slate-400 min-h-[60px] resize-none [font-family:'Inter',Helvetica] text-sm"
                     />
                     {searchQuery === '' && (
-                      <div className="mt-1 text-slate-500 [font-family:'Inter',Helvetica] text-xs">
+                      <div className="text-slate-500 [font-family:'Inter',Helvetica] text-xs">
                         <div className="mb-1">Exemples:</div>
                         <div className="space-y-1">
                           <div>• 'Montre-moi toutes les femmes avec veste rouge détectées hier'</div>
