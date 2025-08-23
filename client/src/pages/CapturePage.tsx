@@ -254,14 +254,6 @@ export const CapturePage = (): JSX.Element => {
           
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             <div className="lg:col-span-3">
-              <p className="text-slate-600 [font-family:'Inter',Helvetica] text-sm mb-4 leading-relaxed">
-                Effectuez une recherche dans toutes les données de sécurité stockées.<br />
-                Recherchez par nom, fonction, localisation, horodatage, niveau de confiance et plus encore.<br />
-                • Recherche rapide par ID ou nom d'employé<br />
-                • Filtres avancés par date et zone de détection<br />
-                • Analyse des patterns de comportement anormaux
-              </p>
-              
               {/* Champ de recherche en langage naturel */}
               <div className="mb-4">
                 <div className="relative">
