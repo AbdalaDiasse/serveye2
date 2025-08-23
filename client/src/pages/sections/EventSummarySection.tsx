@@ -52,11 +52,22 @@ const navigationItems = [
   },
 ];
 
-export const EventSummarySection = (): JSX.Element => {
+interface EventSummarySectionProps {
+  currentPage?: string;
+  setCurrentPage?: (page: string) => void;
+}
+
+export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage }: EventSummarySectionProps): JSX.Element => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   const toggleDropdown = (itemName: string) => {
     setOpenDropdown(openDropdown === itemName ? null : itemName);
+  };
+
+  const handleNavigation = (page: string) => {
+    if (setCurrentPage) {
+      setCurrentPage(page);
+    }
   };
 
   return (
@@ -98,7 +109,13 @@ export const EventSummarySection = (): JSX.Element => {
                 <>
                   <div 
                     className="h-12 flex items-center px-4 hover:bg-gray-50 rounded-xl cursor-pointer"
-                    onClick={() => item.hasDropdown && toggleDropdown(item.name)}
+                    onClick={() => {
+                      if (item.hasDropdown) {
+                        toggleDropdown(item.name);
+                      } else {
+                        handleNavigation(item.name.toLowerCase());
+                      }
+                    }}
                   >
                     <img
                       className="w-4 h-4 mr-3"
@@ -123,14 +140,23 @@ export const EventSummarySection = (): JSX.Element => {
                       {item.subItems.map((subItem, subIndex) => (
                         <div
                           key={subIndex}
-                          className="h-10 flex items-center px-4 hover:bg-gray-50 rounded-lg cursor-pointer"
+                          className={`h-10 flex items-center px-4 rounded-lg cursor-pointer transition-colors ${
+                            currentPage === subItem.name.toLowerCase()
+                              ? 'bg-blue-50 border-l-2 border-blue-500'
+                              : 'hover:bg-gray-50'
+                          }`}
+                          onClick={() => handleNavigation(subItem.name.toLowerCase())}
                         >
                           <img
                             className="w-3 h-3 mr-3"
                             alt={subItem.name}
                             src={subItem.icon}
                           />
-                          <span className="[font-family:'Inter',Helvetica] font-normal text-slate-500 text-sm tracking-[0] leading-5">
+                          <span className={`[font-family:'Inter',Helvetica] text-sm tracking-[0] leading-5 ${
+                            currentPage === subItem.name.toLowerCase()
+                              ? 'font-semibold text-blue-600'
+                              : 'font-normal text-slate-500'
+                          }`}>
                             {subItem.name}
                           </span>
                         </div>
