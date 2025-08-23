@@ -3,7 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
@@ -14,460 +13,386 @@ import casualManPhoto from "@assets/generated_images/Security_capture_casual_man
 import elderlyWomanPhoto from "@assets/generated_images/Security_capture_elderly_woman_37bac27b.png";
 import youngManPhoto from "@assets/generated_images/Security_capture_young_man_e6e7c093.png";
 
-// Données des captures avec les vraies images générées
-const captureData = [
+// Données des captures - Design Figma exact
+const capturesData = [
   {
     id: 1,
     name: "Jean Dupont",
-    time: "14:32",
-    date: "23 Août 2025",
+    timestamp: "14:32:15",
+    date: "Aujourd'hui",
     camera: "CAM-01",
-    location: "Entrée Principale",
+    location: "Entrée Principale", 
     confidence: 98,
-    status: "recognized",
+    status: "Reconnu",
     image: businessmanPhoto,
-    activity: "Entrée autorisée"
+    badgeColor: "bg-green-500"
   },
   {
     id: 2,
-    name: "Marie Martin",
-    time: "14:28",
-    date: "23 Août 2025",
+    name: "Marie Laurent",
+    timestamp: "14:28:42",
+    date: "Aujourd'hui",
     camera: "CAM-02",
     location: "Hall Principal",
-    confidence: 92,
-    status: "recognized",
+    confidence: 94,
+    status: "Reconnu",
     image: womanPhoto,
-    activity: "Passage normal"
+    badgeColor: "bg-green-500"
   },
   {
     id: 3,
-    name: "Pierre Leclerc",
-    time: "14:25",
-    date: "23 Août 2025",
+    name: "Pierre Martin",
+    timestamp: "14:25:18",
+    date: "Aujourd'hui", 
     camera: "CAM-03",
-    location: "Bureau",
-    confidence: 87,
-    status: "recognized",
+    location: "Bureau Étage 2",
+    confidence: 91,
+    status: "Reconnu",
     image: casualManPhoto,
-    activity: "Travail en cours"
+    badgeColor: "bg-green-500"
   },
   {
     id: 4,
     name: "Sylvie Moreau",
-    time: "14:22",
-    date: "23 Août 2025",
+    timestamp: "14:22:03",
+    date: "Aujourd'hui",
     camera: "CAM-04",
     location: "Réception",
-    confidence: 94,
-    status: "recognized",
+    confidence: 89,
+    status: "Reconnu",
     image: elderlyWomanPhoto,
-    activity: "Visite client"
+    badgeColor: "bg-green-500"
   },
   {
     id: 5,
     name: "Thomas Bernard",
-    time: "14:18",
-    date: "23 Août 2025",
+    timestamp: "14:18:29",
+    date: "Aujourd'hui",
     camera: "CAM-01",
     location: "Entrée Principale",
-    confidence: 89,
-    status: "recognized",
+    confidence: 96,
+    status: "Reconnu",
     image: youngManPhoto,
-    activity: "Arrivée matinale"
+    badgeColor: "bg-green-500"
   },
   {
     id: 6,
-    name: "Personne Inconnue",
-    time: "14:15",
-    date: "23 Août 2025",
+    name: "Inconnu",
+    timestamp: "14:15:47",
+    date: "Aujourd'hui",
     camera: "CAM-02",
     location: "Hall Principal",
     confidence: 67,
-    status: "unknown",
+    status: "Non Reconnu",
     image: businessmanPhoto,
-    activity: "Visiteur non-identifié"
-  }
-];
-
-const cameraFeeds = [
-  {
-    id: "CAM-01",
-    name: "Entrée Principale",
-    status: "active",
-    quality: "1080p",
-    fps: "30 FPS",
-    lastActivity: "Il y a 2 min"
-  },
-  {
-    id: "CAM-02",
-    name: "Hall Principal",
-    status: "active",
-    quality: "1080p",
-    fps: "25 FPS",
-    lastActivity: "Il y a 1 min"
-  },
-  {
-    id: "CAM-03",
-    name: "Bureau",
-    status: "active",
-    quality: "720p",
-    fps: "30 FPS",
-    lastActivity: "Il y a 5 min"
-  },
-  {
-    id: "CAM-04",
-    name: "Réception",
-    status: "active",
-    quality: "1080p",
-    fps: "25 FPS",
-    lastActivity: "Il y a 3 min"
+    badgeColor: "bg-red-500"
   }
 ];
 
 export const CapturePage = (): JSX.Element => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filterStatus, setFilterStatus] = useState("all");
-  const [selectedCapture, setSelectedCapture] = useState<number | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeFilter, setActiveFilter] = useState("Tous");
 
-  const filteredCaptures = captureData.filter(capture => {
-    const matchesSearch = capture.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         capture.location.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesFilter = filterStatus === "all" || capture.status === filterStatus;
+  const filteredCaptures = capturesData.filter(capture => {
+    const matchesSearch = capture.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         capture.location.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesFilter = activeFilter === "Tous" || 
+                         (activeFilter === "Reconnus" && capture.status === "Reconnu") ||
+                         (activeFilter === "Non Reconnus" && capture.status === "Non Reconnu");
     return matchesSearch && matchesFilter;
   });
 
   return (
-    <div className="flex-1 bg-gray-50 min-h-screen">
-      {/* Header Section */}
-      <div className="bg-white border-b border-gray-200 px-6 py-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
+    <div className="flex-1 bg-[#f8fafc] min-h-screen">
+      {/* En-tête principal */}
+      <div className="bg-white shadow-sm border-b">
+        <div className="px-8 py-6">
+          <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900 [font-family:'Inter',Helvetica]">
-                Capture de Personnes
+              <h1 className="text-3xl font-bold text-[#0f172a] [font-family:'Inter',Helvetica]">
+                Captures de Surveillance
               </h1>
-              <p className="text-sm text-gray-600 [font-family:'Inter',Helvetica]">
-                Système de surveillance et reconnaissance faciale en temps réel
+              <p className="text-[#64748b] [font-family:'Inter',Helvetica] mt-1 text-base">
+                Système de reconnaissance faciale en temps réel
               </p>
             </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <Badge className="bg-green-100 text-green-800 px-3 py-1">
-              ● LIVE • 4 caméras actives
-            </Badge>
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white">
-              <img
-                className="w-4 h-4 mr-2"
-                alt="Capture"
-                src="/figmaAssets/frame-1.svg"
-              />
-              Nouvelle Capture
-            </Button>
+            <div className="flex items-center gap-4">
+              <Badge className="bg-[#dcfce7] text-[#166534] px-4 py-2 text-sm font-medium">
+                ● ACTIF • 4 caméras en ligne
+              </Badge>
+              <Button className="bg-[#3b82f6] hover:bg-[#2563eb] text-white px-6 py-2 font-medium">
+                + Nouvelle Capture
+              </Button>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Stats Cards */}
-      <div className="px-6 py-6">
-        <div className="grid grid-cols-4 gap-6 mb-6">
-          <Card className="bg-white shadow-sm border-0">
+      {/* Section des métriques */}
+      <div className="px-8 py-6">
+        <div className="grid grid-cols-4 gap-6 mb-8">
+          {/* Carte Captures Totales */}
+          <Card className="bg-white shadow-sm border-[#e2e8f0]">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600 [font-family:'Inter',Helvetica]">
-                    Captures Aujourd'hui
+                  <p className="text-[#64748b] [font-family:'Inter',Helvetica] text-sm font-medium uppercase tracking-wide">
+                    CAPTURES TOTALES
                   </p>
-                  <p className="text-3xl font-bold text-gray-900 [font-family:'Inter',Helvetica] mt-2">
-                    147
+                  <p className="text-3xl font-bold text-[#0f172a] [font-family:'Inter',Helvetica] mt-2">
+                    1,247
                   </p>
-                  <p className="text-sm text-green-600 [font-family:'Inter',Helvetica] mt-1">
-                    +12% vs hier
+                  <p className="text-[#10b981] [font-family:'Inter',Helvetica] text-sm mt-1">
+                    +18% ce mois
                   </p>
                 </div>
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <img className="w-6 h-6" alt="Camera" src="/figmaAssets/frame.svg" />
+                <div className="w-14 h-14 bg-[#dbeafe] rounded-xl flex items-center justify-center">
+                  <svg className="w-7 h-7 text-[#3b82f6]" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+                  </svg>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-white shadow-sm border-0">
+          {/* Carte Reconnus */}
+          <Card className="bg-white shadow-sm border-[#e2e8f0]">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600 [font-family:'Inter',Helvetica]">
-                    Personnes Reconnues
+                  <p className="text-[#64748b] [font-family:'Inter',Helvetica] text-sm font-medium uppercase tracking-wide">
+                    PERSONNES RECONNUES
                   </p>
-                  <p className="text-3xl font-bold text-gray-900 [font-family:'Inter',Helvetica] mt-2">
-                    89%
+                  <p className="text-3xl font-bold text-[#0f172a] [font-family:'Inter',Helvetica] mt-2">
+                    92%
                   </p>
-                  <p className="text-sm text-green-600 [font-family:'Inter',Helvetica] mt-1">
-                    Taux élevé
+                  <p className="text-[#10b981] [font-family:'Inter',Helvetica] text-sm mt-1">
+                    Taux excellent
                   </p>
                 </div>
-                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                  <img className="w-6 h-6" alt="Recognition" src="/figmaAssets/frame-2.svg" />
+                <div className="w-14 h-14 bg-[#dcfce7] rounded-xl flex items-center justify-center">
+                  <svg className="w-7 h-7 text-[#10b981]" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                  </svg>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-white shadow-sm border-0">
+          {/* Carte Alertes */}
+          <Card className="bg-white shadow-sm border-[#e2e8f0]">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600 [font-family:'Inter',Helvetica]">
-                    Alertes Actives
+                  <p className="text-[#64748b] [font-family:'Inter',Helvetica] text-sm font-medium uppercase tracking-wide">
+                    ALERTES ACTIVES
                   </p>
-                  <p className="text-3xl font-bold text-gray-900 [font-family:'Inter',Helvetica] mt-2">
-                    3
+                  <p className="text-3xl font-bold text-[#0f172a] [font-family:'Inter',Helvetica] mt-2">
+                    5
                   </p>
-                  <p className="text-sm text-orange-600 [font-family:'Inter',Helvetica] mt-1">
-                    À traiter
+                  <p className="text-[#f59e0b] [font-family:'Inter',Helvetica] text-sm mt-1">
+                    Attention requise
                   </p>
                 </div>
-                <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
-                  <img className="w-6 h-6" alt="Alert" src="/figmaAssets/frame-4.svg" />
+                <div className="w-14 h-14 bg-[#fef3c7] rounded-xl flex items-center justify-center">
+                  <svg className="w-7 h-7 text-[#f59e0b]" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                  </svg>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-white shadow-sm border-0">
+          {/* Carte Stockage */}
+          <Card className="bg-white shadow-sm border-[#e2e8f0]">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600 [font-family:'Inter',Helvetica]">
-                    Stockage
+                  <p className="text-[#64748b] [font-family:'Inter',Helvetica] text-sm font-medium uppercase tracking-wide">
+                    STOCKAGE UTILISÉ
                   </p>
-                  <p className="text-3xl font-bold text-gray-900 [font-family:'Inter',Helvetica] mt-2">
-                    67%
+                  <p className="text-3xl font-bold text-[#0f172a] [font-family:'Inter',Helvetica] mt-2">
+                    74%
                   </p>
-                  <p className="text-sm text-gray-600 [font-family:'Inter',Helvetica] mt-1">
-                    2.4 TB utilisés
+                  <p className="text-[#64748b] [font-family:'Inter',Helvetica] text-sm mt-1">
+                    3.2 TB / 4.3 TB
                   </p>
                 </div>
-                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                  <img className="w-6 h-6" alt="Storage" src="/figmaAssets/div-6.svg" />
+                <div className="w-14 h-14 bg-[#f3e8ff] rounded-xl flex items-center justify-center">
+                  <svg className="w-7 h-7 text-[#8b5cf6]" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
+                  </svg>
                 </div>
               </div>
             </CardContent>
           </Card>
         </div>
 
-        {/* Main Content Layout */}
-        <div className="grid grid-cols-12 gap-6">
-          {/* Left Sidebar - Camera Feeds */}
-          <div className="col-span-3">
-            <Card className="bg-white shadow-sm border-0">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-lg font-semibold text-gray-900 [font-family:'Inter',Helvetica]">
-                  Flux Caméras
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {cameraFeeds.map((feed) => (
-                    <div 
-                      key={feed.id}
-                      className="p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition-colors"
+        {/* Section principale - Galerie de captures */}
+        <Card className="bg-white shadow-sm border-[#e2e8f0]">
+          <CardHeader className="border-b border-[#e2e8f0] pb-4">
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-xl font-bold text-[#0f172a] [font-family:'Inter',Helvetica]">
+                Captures Récentes
+              </CardTitle>
+              <div className="flex items-center gap-4">
+                {/* Barre de recherche */}
+                <div className="relative">
+                  <Input
+                    placeholder="Rechercher une personne..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-80 pl-10 border-[#e2e8f0] focus:border-[#3b82f6]"
+                  />
+                  <svg 
+                    className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[#64748b]" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </div>
+
+                {/* Filtres */}
+                <div className="flex gap-2">
+                  {["Tous", "Reconnus", "Non Reconnus"].map((filter) => (
+                    <Button
+                      key={filter}
+                      variant={activeFilter === filter ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setActiveFilter(filter)}
+                      className={`${
+                        activeFilter === filter 
+                          ? "bg-[#3b82f6] text-white" 
+                          : "border-[#e2e8f0] text-[#64748b] hover:bg-[#f8fafc]"
+                      }`}
                     >
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="flex items-center gap-2">
-                          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                          <span className="font-medium text-sm text-gray-900 [font-family:'Inter',Helvetica]">
-                            {feed.id}
-                          </span>
-                        </div>
-                        <Badge className="bg-red-100 text-red-700 text-xs px-2 py-1">
-                          REC
-                        </Badge>
-                      </div>
-                      <h4 className="font-medium text-sm text-gray-900 [font-family:'Inter',Helvetica] mb-1">
-                        {feed.name}
-                      </h4>
-                      <div className="text-xs text-gray-600 [font-family:'Inter',Helvetica] space-y-1">
-                        <div className="flex justify-between">
-                          <span>Qualité:</span>
-                          <span>{feed.quality}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>FPS:</span>
-                          <span>{feed.fps}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Activité:</span>
-                          <span>{feed.lastActivity}</span>
-                        </div>
-                      </div>
-                    </div>
+                      {filter}
+                    </Button>
                   ))}
                 </div>
-              </CardContent>
-            </Card>
-          </div>
+              </div>
+            </div>
+          </CardHeader>
 
-          {/* Center - Capture Gallery */}
-          <div className="col-span-9">
-            <Card className="bg-white shadow-sm border-0">
-              <CardHeader className="pb-3">
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-lg font-semibold text-gray-900 [font-family:'Inter',Helvetica]">
-                    Captures Récentes ({filteredCaptures.length})
-                  </CardTitle>
-                  <div className="flex items-center gap-3">
-                    <div className="relative">
-                      <Input
-                        placeholder="Rechercher..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-64 pl-10"
-                      />
-                      <img
-                        className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400"
-                        alt="Search"
-                        src="/figmaAssets/button.svg"
-                      />
-                    </div>
-                    <div className="flex gap-2">
-                      <Button
-                        variant={filterStatus === "all" ? "default" : "outline"}
-                        size="sm"
-                        onClick={() => setFilterStatus("all")}
-                      >
-                        Tous
-                      </Button>
-                      <Button
-                        variant={filterStatus === "recognized" ? "default" : "outline"}
-                        size="sm"
-                        onClick={() => setFilterStatus("recognized")}
-                      >
-                        Reconnus
-                      </Button>
-                      <Button
-                        variant={filterStatus === "unknown" ? "default" : "outline"}
-                        size="sm"
-                        onClick={() => setFilterStatus("unknown")}
-                      >
-                        Inconnus
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <ScrollArea className="h-[600px]">
-                  <div className="grid grid-cols-3 gap-4">
-                    {filteredCaptures.map((capture) => (
-                      <div
-                        key={capture.id}
-                        className={`p-4 rounded-xl border-2 cursor-pointer transition-all hover:shadow-lg ${
-                          capture.status === 'recognized'
-                            ? 'bg-green-50 border-green-200 hover:border-green-300'
-                            : 'bg-orange-50 border-orange-200 hover:border-orange-300'
-                        } ${selectedCapture === capture.id ? 'ring-2 ring-blue-500' : ''}`}
-                        onClick={() => setSelectedCapture(capture.id)}
-                      >
-                        {/* Image de capture */}
-                        <div className="relative mb-3">
-                          <img
-                            src={capture.image}
-                            alt={capture.name}
-                            className="w-full h-32 object-cover rounded-lg border-2 border-white shadow-sm"
-                          />
-                          <div className="absolute top-2 right-2">
-                            <Badge 
-                              className={`text-xs px-2 py-1 ${
-                                capture.status === 'recognized'
-                                  ? 'bg-green-600 text-white'
-                                  : 'bg-orange-600 text-white'
-                              }`}
-                            >
-                              {capture.confidence}%
-                            </Badge>
-                          </div>
-                          <div className="absolute bottom-2 left-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded">
-                            {capture.time}
-                          </div>
+          <CardContent className="p-6">
+            <ScrollArea className="h-[700px]">
+              <div className="grid grid-cols-4 gap-6">
+                {filteredCaptures.map((capture) => (
+                  <Card 
+                    key={capture.id} 
+                    className="border-[#e2e8f0] hover:shadow-lg transition-all duration-200 cursor-pointer group"
+                  >
+                    <CardContent className="p-4">
+                      {/* Image de capture avec overlay */}
+                      <div className="relative mb-4 overflow-hidden rounded-lg">
+                        <img
+                          src={capture.image}
+                          alt={capture.name}
+                          className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-200"
+                        />
+                        
+                        {/* Overlay informations */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                        
+                        {/* Badge de confiance */}
+                        <div className="absolute top-3 right-3">
+                          <Badge className={`${capture.badgeColor} text-white px-2 py-1 text-xs font-medium`}>
+                            {capture.confidence}%
+                          </Badge>
                         </div>
 
-                        {/* Informations */}
-                        <div className="space-y-2">
-                          <h3 className="font-semibold text-sm text-gray-900 [font-family:'Inter',Helvetica] truncate">
-                            {capture.name}
-                          </h3>
-                          <div className="flex items-center justify-between text-xs text-gray-600 [font-family:'Inter',Helvetica]">
-                            <span>{capture.camera}</span>
-                            <span>{capture.date}</span>
-                          </div>
-                          <p className="text-xs text-gray-600 [font-family:'Inter',Helvetica]">
-                            📍 {capture.location}
-                          </p>
-                          <p className="text-xs text-gray-700 [font-family:'Inter',Helvetica] italic">
-                            {capture.activity}
-                          </p>
-                          <div className="flex items-center justify-between pt-2">
-                            <Badge 
-                              className={`text-xs ${
-                                capture.status === 'recognized'
-                                  ? 'bg-green-100 text-green-700'
-                                  : 'bg-orange-100 text-orange-700'
-                              }`}
-                            >
-                              {capture.status === 'recognized' ? '✓ Reconnu' : '⚠ Inconnu'}
-                            </Badge>
-                            <Button variant="ghost" size="sm" className="h-6 px-2">
-                              <img
-                                className="w-3 h-3"
-                                alt="Actions"
-                                src="/figmaAssets/button.svg"
-                              />
-                            </Button>
-                          </div>
+                        {/* Timestamp */}
+                        <div className="absolute bottom-3 left-3 text-white text-xs font-medium">
+                          {capture.timestamp}
+                        </div>
+
+                        {/* Status badge */}
+                        <div className="absolute bottom-3 right-3">
+                          <Badge className={`${
+                            capture.status === "Reconnu" 
+                              ? "bg-green-500/90 text-white" 
+                              : "bg-red-500/90 text-white"
+                          } text-xs px-2 py-1`}>
+                            {capture.status}
+                          </Badge>
                         </div>
                       </div>
-                    ))}
-                  </div>
-                </ScrollArea>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
 
-        {/* Bottom Action Bar */}
-        <div className="mt-6">
-          <Card className="bg-white shadow-sm border-0">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-6">
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-green-500 rounded-full" />
-                    <span className="text-sm text-gray-600 [font-family:'Inter',Helvetica]">
-                      Reconnus: {captureData.filter(c => c.status === 'recognized').length}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-orange-500 rounded-full" />
-                    <span className="text-sm text-gray-600 [font-family:'Inter',Helvetica]">
-                      Inconnus: {captureData.filter(c => c.status === 'unknown').length}
-                    </span>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Button variant="outline" size="sm">
-                    <img className="w-4 h-4 mr-2" alt="Export" src="/figmaAssets/frame-1.svg" />
-                    Exporter
-                  </Button>
-                  <Button variant="outline" size="sm">
-                    <img className="w-4 h-4 mr-2" alt="Archive" src="/figmaAssets/frame-5.svg" />
-                    Archiver
-                  </Button>
-                  <Button variant="outline" size="sm">
-                    <img className="w-4 h-4 mr-2" alt="Settings" src="/figmaAssets/button.svg" />
-                    Paramètres
-                  </Button>
-                </div>
+                      {/* Informations détaillées */}
+                      <div className="space-y-3">
+                        <div>
+                          <h3 className="font-semibold text-[#0f172a] [font-family:'Inter',Helvetica] text-base truncate">
+                            {capture.name}
+                          </h3>
+                          <p className="text-[#64748b] [font-family:'Inter',Helvetica] text-sm">
+                            {capture.date}
+                          </p>
+                        </div>
+
+                        <div className="space-y-2 text-sm">
+                          <div className="flex items-center justify-between">
+                            <span className="text-[#64748b] [font-family:'Inter',Helvetica]">Caméra:</span>
+                            <span className="font-medium text-[#0f172a] [font-family:'Inter',Helvetica]">{capture.camera}</span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="text-[#64748b] [font-family:'Inter',Helvetica]">Lieu:</span>
+                            <span className="font-medium text-[#0f172a] [font-family:'Inter',Helvetica] text-right max-w-[120px] truncate">
+                              {capture.location}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Actions */}
+                        <div className="flex gap-2 pt-2">
+                          <Button variant="outline" size="sm" className="flex-1 text-xs">
+                            Détails
+                          </Button>
+                          <Button variant="outline" size="sm" className="flex-1 text-xs">
+                            Export
+                          </Button>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </ScrollArea>
+          </CardContent>
+        </Card>
+
+        {/* Footer avec statistiques */}
+        <div className="mt-6 grid grid-cols-3 gap-6">
+          <Card className="bg-white shadow-sm border-[#e2e8f0]">
+            <CardContent className="p-4 text-center">
+              <div className="text-2xl font-bold text-[#10b981] [font-family:'Inter',Helvetica]">
+                {capturesData.filter(c => c.status === "Reconnu").length}
+              </div>
+              <div className="text-[#64748b] [font-family:'Inter',Helvetica] text-sm">
+                Personnes Reconnues
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-white shadow-sm border-[#e2e8f0]">
+            <CardContent className="p-4 text-center">
+              <div className="text-2xl font-bold text-[#ef4444] [font-family:'Inter',Helvetica]">
+                {capturesData.filter(c => c.status === "Non Reconnu").length}
+              </div>
+              <div className="text-[#64748b] [font-family:'Inter',Helvetica] text-sm">
+                Personnes Inconnues
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-white shadow-sm border-[#e2e8f0]">
+            <CardContent className="p-4 text-center">
+              <div className="text-2xl font-bold text-[#3b82f6] [font-family:'Inter',Helvetica]">
+                {capturesData.length}
+              </div>
+              <div className="text-[#64748b] [font-family:'Inter',Helvetica] text-sm">
+                Total Captures
               </div>
             </CardContent>
           </Card>
