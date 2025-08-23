@@ -185,25 +185,82 @@ export const ReconnaissancePage = (): JSX.Element => {
 
   return (
     <div className="flex-1 bg-gradient-to-br from-slate-50 to-blue-50 min-h-screen">
-      {/* Header */}
-      <div className="bg-white/80 backdrop-blur-sm border-b border-slate-200/60 sticky top-0 z-10">
-        <div className="px-8 py-6">
+      {/* Header Uniforme SYRATE */}
+      <div className="bg-white border-b border-gray-200 sticky top-0 z-10">
+        <div className="px-6 py-3">
           <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-slate-800 [font-family:'Inter',Helvetica]">
-                Reconnaissance Faciale
-              </h1>
-              <p className="text-slate-600 [font-family:'Inter',Helvetica] text-sm">
-                Gestion des identités et reconnaissance
-              </p>
+            {/* Logo et Branding */}
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3">
+                <img
+                  className="w-8 h-8"
+                  alt="SYRATE Logo"
+                  src="/figmaAssets/div-36.svg"
+                />
+                <div>
+                  <div className="[font-family:'Inter',Helvetica] font-bold text-[#0d1a2b] text-lg tracking-[0] leading-7">
+                    SYRATE
+                  </div>
+                  <div className="[font-family:'Inter',Helvetica] font-normal text-slate-500 text-xs tracking-[0] leading-4">
+                    Security Platform
+                  </div>
+                </div>
+              </div>
+              
+              {/* Titre de la page */}
+              <div className="ml-8">
+                <h1 className="[font-family:'Inter',Helvetica] font-bold text-slate-800 text-xl">
+                  Reconnaissance Faciale
+                </h1>
+                <p className="[font-family:'Inter',Helvetica] font-normal text-slate-500 text-sm">
+                  Gestion des identités et reconnaissance
+                </p>
+              </div>
             </div>
-            <div className="flex gap-3">
-              <Button className="bg-emerald-500 hover:bg-emerald-600 text-white">
-                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+
+            {/* Actions droite */}
+            <div className="flex items-center gap-4">
+              {/* Barre de recherche */}
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </div>
+                <input
+                  type="text"
+                  placeholder="Rechercher..."
+                  className="pl-10 pr-4 py-2 w-64 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 [font-family:'Inter',Helvetica]"
+                />
+              </div>
+
+              {/* Notification */}
+              <div className="relative">
+                <svg className="w-6 h-6 text-gray-600 hover:text-gray-800 cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-5-5V7a6 6 0 10-12 0v5l-5 5h5m5 0v1a3 3 0 11-6 0v-1m6 0H9" />
                 </svg>
-                Ajouter une identité
-              </Button>
+                <span className="absolute -top-1 -right-1 h-4 w-4 bg-red-500 rounded-full flex items-center justify-center text-xs text-white font-bold">
+                  1
+                </span>
+              </div>
+
+              {/* Profil utilisateur */}
+              <div className="flex items-center gap-3 cursor-pointer hover:bg-gray-50 rounded-lg px-3 py-2">
+                <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                  <span className="text-white text-sm font-semibold">A</span>
+                </div>
+                <div className="text-left">
+                  <div className="[font-family:'Inter',Helvetica] font-semibold text-slate-800 text-sm">
+                    admin admin
+                  </div>
+                  <div className="[font-family:'Inter',Helvetica] font-normal text-slate-500 text-xs">
+                    Administrateur
+                  </div>
+                </div>
+                <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
             </div>
           </div>
         </div>
