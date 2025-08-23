@@ -109,7 +109,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                 <>
                   <div 
                     className={`h-12 flex items-center px-4 rounded-xl cursor-pointer transition-colors ${
-                      item.name === "Personnes" 
+                      (item.name === "Personnes" && (currentPage === "capture" || currentPage === "reconnaissance"))
                         ? 'bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600' 
                         : 'hover:bg-gray-50'
                     }`}
@@ -127,7 +127,9 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                       src={item.icon}
                     />
                     <span className={`[font-family:'Inter',Helvetica] font-normal text-base tracking-[0] leading-6 ${
-                      item.name === "Personnes" ? 'text-white font-semibold' : 'text-slate-600'
+                      (item.name === "Personnes" && (currentPage === "capture" || currentPage === "reconnaissance"))
+                        ? 'text-white font-semibold' 
+                        : 'text-slate-600'
                     }`}>
                       {item.name}
                     </span>
@@ -135,7 +137,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                       <img
                         className={`w-3 h-3 ml-auto transition-transform duration-200 ${
                           openDropdown === item.name ? 'rotate-180' : ''
-                        } ${item.name === "Personnes" ? 'filter brightness-0 invert' : ''}`}
+                        } ${(item.name === "Personnes" && (currentPage === "capture" || currentPage === "reconnaissance")) ? 'filter brightness-0 invert' : ''}`}
                         alt="Dropdown"
                         src="/figmaAssets/frame-7.svg"
                       />
@@ -149,7 +151,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                           className={`h-10 flex items-center px-4 rounded-lg cursor-pointer transition-colors ${
                             currentPage === subItem.name.toLowerCase()
                               ? 'bg-gradient-to-r from-teal-400 to-cyan-400'
-                              : 'bg-teal-50 hover:bg-teal-100'
+                              : 'hover:bg-gray-50'
                           }`}
                           onClick={() => handleNavigation(subItem.name.toLowerCase())}
                         >
@@ -161,7 +163,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                           <span className={`[font-family:'Inter',Helvetica] text-sm tracking-[0] leading-5 ${
                             currentPage === subItem.name.toLowerCase()
                               ? 'font-semibold text-white'
-                              : 'font-normal text-teal-700'
+                              : 'font-normal text-slate-500'
                           }`}>
                             {subItem.name}
                           </span>
