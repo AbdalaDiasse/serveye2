@@ -108,7 +108,11 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
               ) : (
                 <>
                   <div 
-                    className="h-12 flex items-center px-4 hover:bg-gray-50 rounded-xl cursor-pointer"
+                    className={`h-12 flex items-center px-4 rounded-xl cursor-pointer transition-colors ${
+                      item.name === "Personnes" 
+                        ? 'bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600' 
+                        : 'hover:bg-gray-50'
+                    }`}
                     onClick={() => {
                       if (item.hasDropdown) {
                         toggleDropdown(item.name);
@@ -122,14 +126,16 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                       alt={item.name}
                       src={item.icon}
                     />
-                    <span className="[font-family:'Inter',Helvetica] font-normal text-slate-600 text-base tracking-[0] leading-6">
+                    <span className={`[font-family:'Inter',Helvetica] font-normal text-base tracking-[0] leading-6 ${
+                      item.name === "Personnes" ? 'text-white font-semibold' : 'text-slate-600'
+                    }`}>
                       {item.name}
                     </span>
                     {item.hasDropdown && (
                       <img
                         className={`w-3 h-3 ml-auto transition-transform duration-200 ${
                           openDropdown === item.name ? 'rotate-180' : ''
-                        }`}
+                        } ${item.name === "Personnes" ? 'filter brightness-0 invert' : ''}`}
                         alt="Dropdown"
                         src="/figmaAssets/frame-7.svg"
                       />
@@ -142,8 +148,8 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                           key={subIndex}
                           className={`h-10 flex items-center px-4 rounded-lg cursor-pointer transition-colors ${
                             currentPage === subItem.name.toLowerCase()
-                              ? 'bg-blue-50 border-l-2 border-blue-500'
-                              : 'hover:bg-gray-50'
+                              ? 'bg-gradient-to-r from-teal-400 to-cyan-400'
+                              : 'bg-teal-50 hover:bg-teal-100'
                           }`}
                           onClick={() => handleNavigation(subItem.name.toLowerCase())}
                         >
@@ -154,8 +160,8 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                           />
                           <span className={`[font-family:'Inter',Helvetica] text-sm tracking-[0] leading-5 ${
                             currentPage === subItem.name.toLowerCase()
-                              ? 'font-semibold text-blue-600'
-                              : 'font-normal text-slate-500'
+                              ? 'font-semibold text-white'
+                              : 'font-normal text-teal-700'
                           }`}>
                             {subItem.name}
                           </span>
