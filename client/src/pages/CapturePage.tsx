@@ -181,10 +181,10 @@ export const CapturePage = (): JSX.Element => {
       </div>
 
       {/* Section Recherche Intelligente */}
-      <div className="bg-gradient-to-r from-blue-50 to-cyan-50 border-b border-blue-100">
+      <div className="bg-gradient-to-r from-cyan-50 to-blue-50 border-b border-cyan-100">
         <div className="px-8 py-6">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-teal-600 rounded-lg flex items-center justify-center">
               <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
               </svg>
@@ -194,8 +194,8 @@ export const CapturePage = (): JSX.Element => {
             </h2>
           </div>
           
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            <div className="lg:col-span-3">
               <p className="text-slate-600 [font-family:'Inter',Helvetica] text-sm mb-4 leading-relaxed">
                 Effectuez une recherche dans toutes les données de sécurité stockées.<br />
                 Recherchez par nom, fonction, localisation, horodatage, niveau de confiance et plus encore.<br />
@@ -203,6 +203,27 @@ export const CapturePage = (): JSX.Element => {
                 • Filtres avancés par date et zone de détection<br />
                 • Analyse des patterns de comportement anormaux
               </p>
+              
+              {/* Champ de recherche en langage naturel */}
+              <div className="mb-4">
+                <div className="relative">
+                  <Input
+                    placeholder="Recherchez en langage naturel : 'Montrez-moi les captures de Jean hier soir' ou 'Personnes inconnues entrée principale'"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full pl-12 pr-4 py-3 bg-white/90 border-cyan-200 focus:border-teal-400 focus:ring-2 focus:ring-teal-100 rounded-lg text-slate-700 placeholder:text-slate-400"
+                  />
+                  <svg 
+                    className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-teal-500" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </div>
+              </div>
+              
               <div className="flex items-center gap-3">
                 <span className="text-slate-500 [font-family:'Inter',Helvetica] text-sm">
                   Suggestions:
@@ -210,7 +231,7 @@ export const CapturePage = (): JSX.Element => {
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className="bg-white/80 border-blue-200 text-blue-700 hover:bg-blue-50"
+                  className="bg-white/80 border-cyan-200 text-teal-700 hover:bg-cyan-50 hover:border-teal-300"
                   onClick={() => setSearchQuery("Jean Dupont")}
                 >
                   Jean Dupont
@@ -218,7 +239,7 @@ export const CapturePage = (): JSX.Element => {
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className="bg-white/80 border-blue-200 text-blue-700 hover:bg-blue-50"
+                  className="bg-white/80 border-cyan-200 text-teal-700 hover:bg-cyan-50 hover:border-teal-300"
                   onClick={() => setSearchQuery("Entrée Principale")}
                 >
                   Entrée Principale
@@ -226,7 +247,7 @@ export const CapturePage = (): JSX.Element => {
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className="bg-white/80 border-blue-200 text-blue-700 hover:bg-blue-50"
+                  className="bg-white/80 border-cyan-200 text-teal-700 hover:bg-cyan-50 hover:border-teal-300"
                   onClick={() => setSelectedFilter("unknown")}
                 >
                   Personnes inconnues
@@ -234,8 +255,8 @@ export const CapturePage = (): JSX.Element => {
               </div>
             </div>
             
-            <div className="flex justify-end">
-              <Button className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 shadow-lg">
+            <div className="flex justify-end items-start">
+              <Button className="bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 shadow-lg font-medium">
                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
