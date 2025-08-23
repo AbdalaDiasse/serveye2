@@ -916,12 +916,12 @@ Tendance Quotidienne
 </div>
 {/* Bottom Lists Section */}
         <div className="grid grid-cols-3 gap-8">
-{/* Facial Recognition */}
+{/* Personnes */}
           <Card className="bg-white border-0 shadow-sm">
 <CardHeader>
 <div className="flex items-center justify-between">
 <CardTitle className="text-lg font-bold text-gray-900 [font-family:'Inter',Helvetica]">
-Reconnaissance Faciale
+Personnes
                 </CardTitle>
 <div className="flex items-center gap-2">
 <Badge className="bg-emerald-500/10 text-emerald-500 text-xs">
@@ -938,10 +938,47 @@ Reconnaissance Faciale
 </div>
 </CardHeader>
 <CardContent>
+<Tabs defaultValue="reconnaissance" className="w-full">
+<TabsList className="grid w-full grid-cols-2 mb-4">
+<TabsTrigger value="capture" className="text-sm">Capture</TabsTrigger>
+<TabsTrigger value="reconnaissance" className="text-sm">Reconnaissance</TabsTrigger>
+</TabsList>
+<TabsContent value="capture" className="mt-0">
+<ScrollArea className="h-64">
+<div className="space-y-3">
+<div className="text-center text-gray-500 py-8">
+<img
+                            className="w-12 h-12 mx-auto mb-3 opacity-50"
+                            alt="Camera"
+                            src="/figmaAssets/div-6.svg"
+                          />
+<p className="text-sm [font-family:'Inter',Helvetica]">Mode capture activé</p>
+<p className="text-xs text-gray-400 [font-family:'Inter',Helvetica]">
+En attente de nouvelles détections
+                          </p>
+</div>
+<div className="grid grid-cols-2 gap-3">
+<Card className="bg-blue-50 border border-blue-200">
+<CardContent className="p-3 text-center">
+<div className="text-lg font-bold text-blue-600 [font-family:'Inter',Helvetica]">45</div>
+<p className="text-xs text-gray-600 [font-family:'Inter',Helvetica]">Captures aujourd'hui</p>
+</CardContent>
+</Card>
+<Card className="bg-green-50 border border-green-200">
+<CardContent className="p-3 text-center">
+<div className="text-lg font-bold text-green-600 [font-family:'Inter',Helvetica]">89%</div>
+<p className="text-xs text-gray-600 [font-family:'Inter',Helvetica]">Qualité moyenne</p>
+</CardContent>
+</Card>
+</div>
+</div>
+</ScrollArea>
+</TabsContent>
+<TabsContent value="reconnaissance" className="mt-0">
 <ScrollArea className="h-64">
 <div className="space-y-3">
 {facialRecognitionData.map((person, index) => (
-                    <Card key={index} className={`${person.bgColor} border ${person.borderColor}`}>
+                        <Card key={index} className={`${person.bgColor} border ${person.borderColor}`}>
 <CardContent className="p-3">
 <div className="flex items-center gap-3">
 <Avatar className="w-10 h-10">
@@ -951,28 +988,30 @@ Reconnaissance Faciale
 <div className="flex-1">
 <h4 className="font-semibold text-gray-900 text-sm [font-family:'Inter',Helvetica]">
 {person.name}
-                            </h4>
+                                </h4>
 <p className="text-xs text-slate-500 [font-family:'Inter',Helvetica]">
 {person.role}
-                            </p>
+                                </p>
 </div>
 <div className="text-right">
 <div className="text-xs font-semibold text-right [font-family:'Inter',Helvetica]">
 {person.time}
-                            </div>
+                                </div>
 <div className="flex items-center gap-1 justify-end mt-1">
 <div className={`w-2 h-2 ${person.statusColor} rounded-full`} />
 <span className="text-xs text-slate-500 [font-family:'Inter',Helvetica]">
 {person.camera}
-                              </span>
+                                  </span>
 </div>
 </div>
 </div>
 </CardContent>
 </Card>
 ))}
-                </div>
+                    </div>
 </ScrollArea>
+</TabsContent>
+</Tabs>
 <Separator className="my-4" />
 <div className="flex items-center justify-between">
 <div className="flex items-center gap-4">
