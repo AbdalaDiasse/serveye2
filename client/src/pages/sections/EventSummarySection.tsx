@@ -5,7 +5,7 @@ const navigationItems = [
   {
     name: "Dashboard",
     icon: "/figmaAssets/i-13.svg",
-    isActive: true,
+    isActive: false,
   },
   {
     name: "Cameras",
@@ -94,7 +94,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
         <div className="space-y-2">
           {navigationItems.map((item, index) => (
             <div key={index} className="relative">
-              {item.isActive ? (
+              {currentPage === item.name.toLowerCase() ? (
                 <div className="h-12 rounded-xl shadow-[0px_10px_15px_#0000001a,0px_4px_6px_#0000001a] bg-gradient-to-r from-blue-600 to-blue-500 flex items-center px-4">
                   <img
                     className="w-5 h-6 mr-3"
