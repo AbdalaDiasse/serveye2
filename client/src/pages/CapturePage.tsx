@@ -281,7 +281,7 @@ export const CapturePage = (): JSX.Element => {
                     />
                     {searchQuery === '' && (
                       <div className="text-slate-500 [font-family:'Inter',Helvetica] text-xs">
-                        <div className="mb-1">Exemples:</div>
+                        <div>Exemples:</div>
                         <div className="space-y-1">
                           <div>• 'Montre-moi toutes les femmes avec veste rouge détectées hier'</div>
                           <div>• 'Hommes âgés de 25-40 ans avec barbe ce matin'</div>
