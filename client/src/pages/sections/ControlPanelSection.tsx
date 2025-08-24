@@ -301,6 +301,7 @@ export const ControlPanelSection = (): JSX.Element => {
               className="w-[18px] h-7"
               alt="Menu"
               src="/figmaAssets/button-4.svg"
+              style={{background: 'none'}}
             />
 <div>
 <h1 className="text-2xl font-bold text-transparent bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text [font-family:'Inter',Helvetica]">
@@ -322,6 +323,7 @@ Tableau de bord de sécurité
                   className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4"
                   alt="Search"
                   src="/figmaAssets/i-17.svg"
+                  style={{background: 'none'}}
                 />
 </div>
 <Button variant="ghost" size="sm" className="h-auto p-2">
@@ -329,6 +331,7 @@ Tableau de bord de sécurité
                   className="w-[50px] h-[59px]"
                   alt="Notifications"
                   src="/figmaAssets/button-3.svg"
+                  style={{background: 'none'}}
                 />
 </Button>
 </div>
@@ -350,6 +353,7 @@ Administrateur
                   className="w-3 h-6"
                   alt="Dropdown"
                   src="/figmaAssets/button-6.svg"
+                  style={{background: 'none'}}
                 />
 </Button>
 </div>
@@ -367,6 +371,7 @@ Administrateur
                     className="w-7 h-8"
                     alt="Icon"
                     src={card.icon}
+                    style={{background: 'none'}}
                   />
 <Badge className="bg-white/20 text-white text-xs px-2 py-1">
 {card.badge}
