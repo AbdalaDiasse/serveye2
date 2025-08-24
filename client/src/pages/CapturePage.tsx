@@ -243,33 +243,14 @@ export const CapturePage = (): JSX.Element => {
       <div className="bg-white border-b border-gray-200 sticky top-0 z-10">
         <div className="px-6 py-3">
           <div className="flex items-center justify-between">
-            {/* Logo et Branding */}
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-3">
-                <img
-                  className="w-8 h-8"
-                  alt="SYRATE Logo"
-                  src="/figmaAssets/div-36.svg"
-                />
-                <div>
-                  <div className="[font-family:'Inter',Helvetica] font-bold text-[#0d1a2b] text-lg tracking-[0] leading-7">
-                    SYRATE
-                  </div>
-                  <div className="[font-family:'Inter',Helvetica] font-normal text-slate-500 text-xs tracking-[0] leading-4">
-                    Security Platform
-                  </div>
-                </div>
-              </div>
-              
-              {/* Titre de la page */}
-              <div className="ml-8">
-                <h1 className="[font-family:'Inter',Helvetica] font-bold text-slate-800 text-xl">
-                  Capture
-                </h1>
-                <p className="[font-family:'Inter',Helvetica] font-normal text-slate-500 text-sm">
-                  Galerie des détections de sécurité
-                </p>
-              </div>
+            {/* Titre de la page */}
+            <div>
+              <h1 className="[font-family:'Inter',Helvetica] font-bold text-slate-800 text-xl">
+                Capture
+              </h1>
+              <p className="[font-family:'Inter',Helvetica] font-normal text-slate-500 text-sm">
+                Galerie des détections de sécurité
+              </p>
             </div>
 
             {/* Actions droite */}
