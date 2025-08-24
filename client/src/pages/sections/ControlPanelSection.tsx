@@ -423,7 +423,8 @@ IA ACTIVE
 189
                         </span>
 </div>
-<div className="space-y-4">
+<ScrollArea className="h-32">
+<div className="space-y-4 pr-2">
 {safetyEquipment.map((item, index) => (
                           <div key={index} className="space-y-2">
 <div className="flex items-center justify-between">
@@ -447,6 +448,7 @@ IA ACTIVE
 </div>
 ))}
                       </div>
+                      </ScrollArea>
 </CardContent>
 </Card>
 {/* People Counting */}
