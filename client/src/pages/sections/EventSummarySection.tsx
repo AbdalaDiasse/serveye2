@@ -98,7 +98,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
   };
 
   return (
-    <aside className="w-72 h-full bg-[#ffffffcc] border-r border-[#ffffff33] shadow-[0px_25px_50px_#00000040] flex flex-col">
+    <aside className="w-72 h-full bg-[#ffffffcc] border-r border-[#ffffff33] shadow-[0px_25px_50px_#00000040] flex flex-col overflow-hidden flex-shrink-0">
       <header className="h-20 border-b border-[#f1f5f980] flex items-center px-6">
         <div className="flex items-center gap-3">
           <img
@@ -117,7 +117,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
         </div>
       </header>
 
-      <nav className="flex-1 p-4">
+      <nav className="flex-1 p-4 overflow-hidden">
         <div className="space-y-2">
           {navigationItems.map((item, index) => {
             const isPersonnesActive = item.name === "Personnes" && (currentPage === "persons" || currentPage === "capture" || currentPage === "reconnaissance");
@@ -145,7 +145,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                   }}
                 >
                   {renderIcon(item.icon, `${(isPersonnesActive || isOtherActive) ? "w-4 h-4 mr-3 text-white" : "w-4 h-4 mr-3 text-slate-600"}`)}
-                  <span className={`[font-family:'Inter',Helvetica] text-base tracking-[0] ${
+                  <span className={`[font-family:'Inter',Helvetica] text-base tracking-[0] truncate ${
                     (isPersonnesActive || isOtherActive)
                       ? 'font-semibold text-white leading-[normal]'
                       : 'font-normal text-slate-600 leading-6'
@@ -179,7 +179,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                           alt={subItem.name}
                           src={subItem.icon}
                         />
-                        <span className={`[font-family:'Inter',Helvetica] text-sm tracking-[0] leading-5 ${
+                        <span className={`[font-family:'Inter',Helvetica] text-sm tracking-[0] leading-5 truncate ${
                           currentPage === subItem.name.toLowerCase()
                             ? 'font-semibold text-white'
                             : 'font-normal text-slate-500'
