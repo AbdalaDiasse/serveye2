@@ -70,8 +70,10 @@ export const ControlPanelSection = (): JSX.Element => {
 
   // Data for zone monitoring
   const zoneMonitoring = [
-    { name: "Intrusion", count: 23, icon: <AlertTriangle className="w-6 h-6 text-white" />, progress: "+15% aujourd'hui" },
-    { name: "Line Crossing", count: 67, icon: <Target className="w-6 h-6 text-white" /> }
+    { name: "Intrusion", count: 23, icon: <AlertTriangle className="w-6 h-6 text-white" />, progress: 75, color: "#ff7a00" },
+    { name: "Line Crossing", count: 67, icon: <Target className="w-6 h-6 text-white" />, progress: 85, color: "#06b6d4" },
+    { name: "Escalade de mur", count: 12, icon: <TrendingUp className="w-6 h-6 text-white" />, progress: 45, color: "#ef4444" },
+    { name: "Errance", count: 8, icon: <Move className="w-6 h-6 text-white" />, progress: 30, color: "#10b981" }
   ];
 
   // Data for behavior analysis
@@ -549,7 +551,8 @@ Surveillance de zones
 </div>
 <span className="text-2xl font-bold text-cyan-500 [font-family:'Inter',Helvetica]">89</span>
 </div>
-<div className="space-y-4">
+<ScrollArea className="h-24">
+<div className="space-y-4 pr-2">
 {zoneMonitoring.map((item, index) => (
                           <div key={index} className="space-y-2">
 <div className="flex items-center justify-between">
@@ -563,14 +566,17 @@ Surveillance de zones
 {item.count}
                                 </span>
 </div>
-{item.progress && (
-                              <p className="text-xs text-emerald-500 [font-family:'Inter',Helvetica]">
-{item.progress}
-                              </p>
-                            )}
+<Progress 
+                              value={item.progress} 
+                              className="h-1.5 bg-white/20"
+                              style={{
+                                '--progress-background': item.color || '#06b6d4'
+                              } as React.CSSProperties}
+                            />
 </div>
 ))}
                       </div>
+                      </ScrollArea>
 </CardContent>
 </Card>
 {/* Behavior Analysis */}
