@@ -83,7 +83,7 @@ export const ControlPanelSection = (): JSX.Element => {
     { name: "Fall", count: 7, icon: <UserX className="w-8 h-8 text-white" /> },
     { name: "Running", count: 19, icon: <Footprints className="w-8 h-8 text-white" /> },
     { name: "Gathering", count: 15, icon: <Users className="w-8 h-8 text-white" /> },
-    { name: "Gun", count: 8, icon: <Zap className="w-8 h-8 text-white" /> }
+    { name: "Gun", count: 8, icon: <AlertTriangle className="w-8 h-8 text-white" /> }
   ];
 
   // Data for vehicles
