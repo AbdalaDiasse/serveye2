@@ -128,9 +128,9 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                 <div 
                   className={`h-12 rounded-xl flex items-center px-4 cursor-pointer transition-all ${
                     isPersonnesActive
-                      ? "shadow-[0px_10px_15px_#0000001a,0px_4px_6px_#0000001a] bg-gradient-to-r from-teal-500 to-cyan-500"
+                      ? "shadow-md bg-gradient-to-r from-teal-500 to-cyan-500"
                       : isOtherActive
-                      ? "shadow-[0px_10px_15px_#0000001a,0px_4px_6px_#0000001a] bg-gradient-to-r from-blue-600 to-blue-500"
+                      ? "shadow-md bg-gradient-to-r from-blue-600 to-blue-500"
                       : "hover:bg-gray-50"
                   }`}
                   onClick={() => {
