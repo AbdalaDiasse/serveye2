@@ -238,68 +238,65 @@ export const CapturePage = (): JSX.Element => {
   });
 
   return (
-    <div className="flex-1 bg-gradient-to-br from-slate-50 to-blue-50">
-      {/* Header Uniforme SYRATE */}
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-10">
-        <div className="px-6 py-3">
-          <div className="flex items-center justify-between">
-            {/* Titre de la page */}
-            <div>
-              <h1 className="[font-family:'Inter',Helvetica] font-bold text-slate-800 text-xl">
-                Capture
-              </h1>
-              <p className="[font-family:'Inter',Helvetica] font-normal text-slate-500 text-sm">
-                Galerie des détections de sécurité
-              </p>
+    <div className="w-full min-h-screen relative">
+      {/* Header */}
+      <header className="w-full h-20 bg-white/80 backdrop-blur-sm border-b border-white/20 shadow-sm">
+        <div className="flex items-center justify-between h-full px-8">
+          <div className="flex items-center gap-6">
+            <h1 className="[font-family:'Inter',Helvetica] font-bold text-slate-800 text-2xl">
+              Capture
+            </h1>
+            <p className="[font-family:'Inter',Helvetica] font-normal text-slate-500 text-sm">
+              Galerie des détections de sécurité
+            </p>
+          </div>
+
+          {/* Actions droite */}
+          <div className="flex items-center gap-4">
+            {/* Barre de recherche */}
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+              <input
+                type="text"
+                placeholder="Rechercher..."
+                className="pl-10 pr-4 py-2 w-64 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 [font-family:'Inter',Helvetica]"
+              />
             </div>
 
-            {/* Actions droite */}
-            <div className="flex items-center gap-4">
-              {/* Barre de recherche */}
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                </div>
-                <input
-                  type="text"
-                  placeholder="Rechercher..."
-                  className="pl-10 pr-4 py-2 w-64 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 [font-family:'Inter',Helvetica]"
-                />
-              </div>
+            {/* Notification */}
+            <div className="relative">
+              <svg className="w-6 h-6 text-gray-600 hover:text-gray-800 cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-5-5V7a6 6 0 10-12 0v5l-5 5h5m5 0v1a3 3 0 11-6 0v-1m6 0H9" />
+              </svg>
+              <span className="absolute -top-1 -right-1 h-4 w-4 bg-red-500 rounded-full flex items-center justify-center text-xs text-white font-bold">
+                1
+              </span>
+            </div>
 
-              {/* Notification */}
-              <div className="relative">
-                <svg className="w-6 h-6 text-gray-600 hover:text-gray-800 cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-5-5V7a6 6 0 10-12 0v5l-5 5h5m5 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                </svg>
-                <span className="absolute -top-1 -right-1 h-4 w-4 bg-red-500 rounded-full flex items-center justify-center text-xs text-white font-bold">
-                  1
-                </span>
+            {/* Profil utilisateur */}
+            <div className="flex items-center gap-3 cursor-pointer hover:bg-gray-50 rounded-lg px-3 py-2">
+              <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                <span className="text-white text-sm font-semibold">A</span>
               </div>
-
-              {/* Profil utilisateur */}
-              <div className="flex items-center gap-3 cursor-pointer hover:bg-gray-50 rounded-lg px-3 py-2">
-                <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                  <span className="text-white text-sm font-semibold">A</span>
+              <div className="text-left">
+                <div className="[font-family:'Inter',Helvetica] font-semibold text-slate-800 text-sm">
+                  admin admin
                 </div>
-                <div className="text-left">
-                  <div className="[font-family:'Inter',Helvetica] font-semibold text-slate-800 text-sm">
-                    admin admin
-                  </div>
-                  <div className="[font-family:'Inter',Helvetica] font-normal text-slate-500 text-xs">
-                    Administrateur
-                  </div>
+                <div className="[font-family:'Inter',Helvetica] font-normal text-slate-500 text-xs">
+                  Administrateur
                 </div>
-                <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
               </div>
+              <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
             </div>
           </div>
         </div>
-      </div>
+      </header>
 
       {/* Section Recherche Intelligente */}
       <div className="bg-gradient-to-r from-cyan-50 to-blue-50 border-b border-cyan-100">
