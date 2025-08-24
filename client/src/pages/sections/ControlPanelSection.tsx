@@ -8,6 +8,13 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { 
+  Menu, Search, Bell, ChevronDown, TrendingUp, Settings, Shield, Users, 
+  ArrowDown, ArrowUp, User, AlertTriangle, Eye, Car, Hash, Gauge, 
+  AlertCircle, MoreVertical, MoreHorizontal, ChevronRight, HardHat,
+  Shirt, Zap, Flame, Wind, Droplet, Activity, Monitor, Target,
+  Truck, Bike, Bus, FileText, Wrench
+} from "lucide-react";
 
 export const ControlPanelSection = (): JSX.Element => {
   // Data for top metric cards
@@ -17,72 +24,72 @@ export const ControlPanelSection = (): JSX.Element => {
       subtitle: "Détections Actives",
       badge: "Live",
       gradient: "bg-gradient-to-r from-blue-500 to-blue-700",
-      icon: "/figmaAssets/i-23.svg"
+      icon: <Activity className="w-7 h-8 text-white" />
     },
     {
       title: "98.7%",
       subtitle: "Temps de Fonctionnement",
       badge: "24h",
       gradient: "bg-gradient-to-r from-emerald-500 to-cyan-500",
-      icon: "/figmaAssets/i-19.svg"
+      icon: <TrendingUp className="w-7 h-8 text-white" />
     },
     {
       title: "23",
       subtitle: "Alertes Critiques",
       badge: "Urgent",
       gradient: "bg-gradient-to-r from-orange-500 to-red-500",
-      icon: "/figmaAssets/i-18.svg"
+      icon: <AlertTriangle className="w-7 h-8 text-white" />
     },
     {
       title: "1,456",
       subtitle: "Personnes Reconnues",
       badge: "Today",
       gradient: "bg-gradient-to-r from-violet-500 to-blue-500",
-      icon: "/figmaAssets/i-16.svg"
+      icon: <Users className="w-7 h-8 text-white" />
     },
     {
       title: "87",
       subtitle: "Score de Sécurité",
       badge: "Score",
       gradient: "bg-gradient-to-r from-emerald-500 to-green-600",
-      icon: "/figmaAssets/i-21.svg",
+      icon: <Shield className="w-7 h-8 text-white" />,
       hasChart: true
     }
   ];
 
   // Data for safety equipment
   const safetyEquipment = [
-    { name: "Casque", count: 89, progress: 47, icon: "/figmaAssets/i-22.svg" },
-    { name: "Vest", count: 23, progress: 12, icon: "/figmaAssets/i-2.svg" },
-    { name: "Harnais", count: 15, progress: 8, icon: "/figmaAssets/i.svg" },
-    { name: "Fire", count: 34, progress: 18, icon: "/figmaAssets/i-20.svg", color: "bg-red-500" },
-    { name: "Smoke", count: 19, progress: 10, icon: "/figmaAssets/i-1.svg", color: "bg-gray-400" },
-    { name: "Leak", count: 9, progress: 5, icon: "/figmaAssets/i-4.svg", color: "bg-cyan-500" }
+    { name: "Casque", count: 89, progress: 47, icon: <HardHat className="w-4 h-5 text-white" /> },
+    { name: "Vest", count: 23, progress: 12, icon: <Shirt className="w-4 h-5 text-white" /> },
+    { name: "Harnais", count: 15, progress: 8, icon: <Zap className="w-4 h-5 text-white" /> },
+    { name: "Fire", count: 34, progress: 18, icon: <Flame className="w-4 h-5 text-white" />, color: "bg-red-500" },
+    { name: "Smoke", count: 19, progress: 10, icon: <Wind className="w-4 h-5 text-white" />, color: "bg-gray-400" },
+    { name: "Leak", count: 9, progress: 5, icon: <Droplet className="w-4 h-5 text-white" />, color: "bg-cyan-500" }
   ];
 
   // Data for zone monitoring
   const zoneMonitoring = [
-    { name: "Intrusion", count: 23, icon: "/figmaAssets/i-22.svg", progress: "+15% aujourd'hui" },
-    { name: "Line Crossing", count: 67, icon: "/figmaAssets/i-2.svg" }
+    { name: "Intrusion", count: 23, icon: <AlertTriangle className="w-6 h-6 text-white" />, progress: "+15% aujourd'hui" },
+    { name: "Line Crossing", count: 67, icon: <Target className="w-6 h-6 text-white" /> }
   ];
 
   // Data for behavior analysis
   const behaviorAnalysis = [
-    { name: "Bagarre", count: 12, icon: "/figmaAssets/div-17.svg" },
-    { name: "Smoke", count: 28, icon: "/figmaAssets/div-4.svg" },
-    { name: "Fall", count: 7, icon: "/figmaAssets/div-23.svg" },
-    { name: "Running", count: 19, icon: "/figmaAssets/div-13.svg" },
-    { name: "Gathering", count: 15, icon: "/figmaAssets/div-11.svg" },
-    { name: "Gun", count: 8, icon: "/figmaAssets/div-18.svg" }
+    { name: "Bagarre", count: 12, icon: <Activity className="w-8 h-8 text-white" /> },
+    { name: "Smoke", count: 28, icon: <Wind className="w-8 h-8 text-white" /> },
+    { name: "Fall", count: 7, icon: <ArrowDown className="w-8 h-8 text-white" /> },
+    { name: "Running", count: 19, icon: <Activity className="w-8 h-8 text-white" /> },
+    { name: "Gathering", count: 15, icon: <Users className="w-8 h-8 text-white" /> },
+    { name: "Gun", count: 8, icon: <AlertCircle className="w-8 h-8 text-white" /> }
   ];
 
   // Data for vehicles
   const vehicleTypes = [
-    { name: "Voitures", count: 234, icon: "/figmaAssets/div-31.svg" },
-    { name: "Camions", count: 67, icon: "/figmaAssets/div-39.svg" },
-    { name: "Motos", count: 89, icon: "/figmaAssets/div-3.svg" },
-    { name: "Trucks", count: 23, icon: "/figmaAssets/div-25.svg" },
-    { name: "Bus", count: 12, icon: "/figmaAssets/div-2.svg" }
+    { name: "Voitures", count: 234, icon: <Car className="w-6 h-6 text-white" /> },
+    { name: "Camions", count: 67, icon: <Truck className="w-6 h-6 text-white" /> },
+    { name: "Motos", count: 89, icon: <Bike className="w-6 h-6 text-white" /> },
+    { name: "Trucks", count: 23, icon: <Truck className="w-6 h-6 text-white" /> },
+    { name: "Bus", count: 12, icon: <Bus className="w-6 h-6 text-white" /> }
   ];
 
   // Data for live events
@@ -297,12 +304,7 @@ export const ControlPanelSection = (): JSX.Element => {
       <header className="w-full h-20 bg-white/80 backdrop-blur-sm border-b border-white/20 shadow-sm">
 <div className="flex items-center justify-between h-full px-8">
 <div className="flex items-center gap-6">
-<img
-              className="w-[18px] h-7"
-              alt="Menu"
-              src="/figmaAssets/button-4.svg"
-              style={{background: 'none'}}
-            />
+<Menu className="w-[18px] h-7 text-gray-700" />
 <div>
 <h1 className="text-2xl font-bold text-transparent bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text [font-family:'Inter',Helvetica]">
 Dashboard
@@ -319,20 +321,13 @@ Tableau de bord de sécurité
                   placeholder="Rechercher..."
                   className="w-[268px] h-[38px] bg-white/50 border-white/30 rounded-xl pl-10 text-sm text-gray-600 placeholder:text-gray-400"
                 />
-<img
-                  className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4"
-                  alt="Search"
-                  src="/figmaAssets/i-17.svg"
-                  style={{background: 'none'}}
-                />
+<Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
 </div>
 <Button variant="ghost" size="sm" className="h-auto p-2">
-<img
-                  className="w-[50px] h-[59px]"
-                  alt="Notifications"
-                  src="/figmaAssets/button-3.svg"
-                  style={{background: 'none'}}
-                />
+<div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center relative">
+                  <Bell className="w-6 h-6 text-gray-700" />
+                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></div>
+                </div>
 </Button>
 </div>
 <div className="flex items-center gap-3 bg-white/50 rounded-xl p-2">
@@ -349,12 +344,7 @@ Administrateur
                 </p>
 </div>
 <Button variant="ghost" size="sm" className="h-auto p-1">
-<img
-                  className="w-3 h-6"
-                  alt="Dropdown"
-                  src="/figmaAssets/button-6.svg"
-                  style={{background: 'none'}}
-                />
+<ChevronDown className="w-3 h-6 text-gray-700" />
 </Button>
 </div>
 </div>
@@ -367,12 +357,7 @@ Administrateur
             <Card key={index} className={`${card.gradient} text-white border-0 shadow-lg overflow-hidden`}>
 <CardContent className="p-6">
 <div className="flex items-center justify-between mb-4">
-<img
-                    className="w-7 h-8"
-                    alt="Icon"
-                    src={card.icon}
-                    style={{background: 'none'}}
-                  />
+{card.icon}
 <Badge className="bg-white/20 text-white text-xs px-2 py-1">
 {card.badge}
                   </Badge>
@@ -414,12 +399,7 @@ Centre de Contrôle Intelligent
 IA ACTIVE
                     </Badge>
 </div>
-<img
-                    className="w-[110px] h-10"
-                    alt="Controls"
-                    src="/figmaAssets/div-29.svg"
-                    style={{background: 'none'}}
-                  />
+<Settings className="w-8 h-8 text-white/80" />
 </div>
 </CardHeader>
 <CardContent className="space-y-8">
@@ -430,12 +410,7 @@ IA ACTIVE
 <CardContent className="p-5">
 <div className="flex items-center justify-between mb-6">
 <div className="flex items-center gap-3">
-<img
-                            className="w-6 h-10"
-                            alt="Safety"
-                            src="/figmaAssets/div-38.svg"
-                            style={{background: 'none'}}
-                          />
+<Shield className="w-6 h-10 text-white" />
 <div>
 <h4 className="font-bold text-white [font-family:'Inter',Helvetica]">Safety</h4>
 <p className="text-xs text-white/70 [font-family:'Inter',Helvetica]">
@@ -452,12 +427,7 @@ IA ACTIVE
                           <div key={index} className="space-y-2">
 <div className="flex items-center justify-between">
 <div className="flex items-center gap-2">
-<img
-                                  className="w-4 h-5"
-                                  alt={item.name}
-                                  src={item.icon}
-                                  style={{background: 'none'}}
-                                />
+{item.icon}
 <span className="text-sm text-white/80 [font-family:'Inter',Helvetica]">
 {item.name}
                                 </span>
@@ -482,12 +452,7 @@ IA ACTIVE
                   <Card className="bg-white/10 border-0">
 <CardContent className="p-5">
 <div className="flex items-center gap-3 mb-6">
-<img
-                          className="w-8 h-10"
-                          alt="People"
-                          src="/figmaAssets/div.svg"
-                          style={{background: 'none'}}
-                        />
+<Users className="w-8 h-10 text-white" />
 <div>
 <h4 className="font-bold text-white [font-family:'Inter',Helvetica]">People Counting</h4>
 <p className="text-xs text-white/70 [font-family:'Inter',Helvetica]">
@@ -499,12 +464,7 @@ Flux de personnes
 <div className="text-center">
 <div className="w-16 h-16 bg-emerald-500/20 rounded-full border-4 border-emerald-500 flex items-center justify-center mx-auto mb-2">
 <div>
-<img
-                                className="w-[35px] h-5 mx-auto mb-1"
-                                alt="In"
-                                src="/figmaAssets/i-6.svg"
-                                style={{background: 'none'}}
-                              />
+<ArrowDown className="w-8 h-5 mx-auto mb-1 text-white" />
 <span className="text-lg font-bold text-white [font-family:'Inter',Helvetica]">
 342
                               </span>
@@ -515,12 +475,7 @@ Flux de personnes
 <div className="text-center">
 <div className="w-16 h-16 bg-red-500/20 rounded-full border-4 border-red-500 flex items-center justify-center mx-auto mb-2">
 <div>
-<img
-                                className="w-[35px] h-5 mx-auto mb-1"
-                                alt="Out"
-                                src="/figmaAssets/i-8.svg"
-                                style={{background: 'none'}}
-                              />
+<ArrowUp className="w-8 h-5 mx-auto mb-1 text-white" />
 <span className="text-lg font-bold text-white [font-family:'Inter',Helvetica]">
 298
                               </span>
@@ -542,12 +497,7 @@ Personnes présentes
                   <Card className="bg-white/10 border-0">
 <CardContent className="p-5">
 <div className="flex items-center gap-3 mb-6">
-<img
-                          className="w-8 h-10"
-                          alt="Person"
-                          src="/figmaAssets/div-16.svg"
-                          style={{background: 'none'}}
-                        />
+<User className="w-8 h-10 text-white" />
 <div>
 <h4 className="font-bold text-white [font-family:'Inter',Helvetica]">Person</h4>
 <p className="text-xs text-white/70 [font-family:'Inter',Helvetica]">
@@ -586,12 +536,7 @@ Reconnaissance faciale
 <CardContent className="p-5">
 <div className="flex items-center justify-between mb-6">
 <div className="flex items-center gap-3">
-<img
-                            className="w-6 h-10"
-                            alt="Zone Alert"
-                            src="/figmaAssets/i-20.svg"
-                            style={{background: 'none'}}
-                          />
+<AlertTriangle className="w-6 h-10 text-white" />
 <div>
 <h4 className="font-bold text-white [font-family:'Inter',Helvetica]">Zone Monitoring</h4>
 <p className="text-xs text-white/70 [font-family:'Inter',Helvetica]">
@@ -606,12 +551,7 @@ Surveillance de zones
                           <div key={index} className="space-y-2">
 <div className="flex items-center justify-between">
 <div className="flex items-center gap-2">
-<img
-                                    className="w-6 h-6"
-                                    alt={item.name}
-                                    src={item.icon}
-                                    style={{background: 'none'}}
-                                  />
+{item.icon}
 <span className="text-sm text-white/80 [font-family:'Inter',Helvetica]">
 {item.name}
                                   </span>
@@ -635,12 +575,7 @@ Surveillance de zones
 <CardContent className="p-5">
 <div className="flex items-center justify-between mb-6">
 <div className="flex items-center gap-3">
-<img
-                            className="w-6 h-10"
-                            alt="Behavior"
-                            src="/figmaAssets/div-8.svg"
-                            style={{background: 'none'}}
-                          />
+<Eye className="w-6 h-10 text-white" />
 <div>
 <h4 className="font-bold text-white [font-family:'Inter',Helvetica]">Behavior</h4>
 <p className="text-xs text-white/70 [font-family:'Inter',Helvetica]">
@@ -653,12 +588,7 @@ Analyse comportementale
 <div className="grid grid-cols-6 gap-4 mb-4">
 {behaviorAnalysis.map((item, index) => (
                           <div key={index} className="text-center">
-<img
-                              className="w-8 h-8 mx-auto mb-2"
-                              alt={item.name}
-                              src={item.icon}
-                              style={{background: 'none'}}
-                            />
+{item.icon}
 <span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
 {item.count}
                             </span>
@@ -678,12 +608,7 @@ Analyse comportementale
 <CardContent className="p-4">
 <div className="flex items-center justify-between mb-4">
 <div className="flex items-center gap-2">
-<img
-                          className="w-3.5 h-5"
-                          alt="Vehicles"
-                          src="/figmaAssets/i-9.svg"
-                          style={{background: 'none'}}
-                        />
+<Car className="w-3.5 h-5 text-white" />
 <h4 className="font-bold text-white text-sm [font-family:'Inter',Helvetica]">Véhicules</h4>
 </div>
 <Badge className="bg-blue-500/30 text-blue-500 text-xs">ACTIF</Badge>
@@ -692,12 +617,7 @@ Analyse comportementale
 {vehicleTypes.map((vehicle, index) => (
                         <Card key={index} className="bg-white/5 border border-white/10">
 <CardContent className="p-3 text-center">
-<img
-                              className="w-6 h-6 mx-auto mb-2"
-                              alt={vehicle.name}
-                              src={vehicle.icon}
-                              style={{background: 'none'}}
-                            />
+{vehicle.icon}
 <span className="text-sm font-bold text-white block [font-family:'Inter',Helvetica]">
 {vehicle.count}
                             </span>
@@ -711,12 +631,7 @@ Analyse comportementale
 <div className="grid grid-cols-3 gap-4">
 <Card className="bg-white/5 border border-white/10">
 <CardContent className="p-4 text-center">
-<img
-                            className="w-4 h-5 mx-auto mb-2"
-                            alt="Plates"
-                            src="/figmaAssets/i-15.svg"
-                            style={{background: 'none'}}
-                          />
+<Hash className="w-4 h-5 mx-auto mb-2 text-white" />
 <span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
 1,847
                           </span>
@@ -730,12 +645,7 @@ Plaques Détectées
 </Card>
 <Card className="bg-white/5 border border-white/10">
 <CardContent className="p-4 text-center">
-<img
-                            className="w-3.5 h-5 mx-auto mb-2"
-                            alt="Speed"
-                            src="/figmaAssets/i-5.svg"
-                            style={{background: 'none'}}
-                          />
+<Gauge className="w-3.5 h-5 mx-auto mb-2 text-white" />
 <div className="flex items-center justify-center gap-1 mb-2">
                             <span className="text-lg font-bold text-white [font-family:'Inter',Helvetica]">47</span>
 <span className="text-xs font-bold text-white [font-family:'Inter',Helvetica]">km/h</span>
@@ -747,12 +657,7 @@ Vitesse Moyenne
 </Card>
 <Card className="bg-white/5 border border-white/10">
 <CardContent className="p-4 text-center">
-<img
-                            className="w-3.5 h-5 mx-auto mb-2"
-                            alt="Violations"
-                            src="/figmaAssets/i-7.svg"
-                            style={{background: 'none'}}
-                          />
+<AlertCircle className="w-3.5 h-5 mx-auto mb-2 text-white" />
 <span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
 34
                           </span>
