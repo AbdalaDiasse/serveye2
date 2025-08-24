@@ -310,6 +310,91 @@ export const EventsPage = (): JSX.Element => {
                 Filtres
               </h3>
 
+              {/* Caméras - DÉPLACÉ EN PREMIER */}
+              <div className="mb-4">
+                <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                  Caméras
+                </label>
+                <Select value={filterCamera} onValueChange={setFilterCamera}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Toutes les caméras" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">Toutes les caméras</SelectItem>
+                    <SelectItem value="cam1">Caméra 01</SelectItem>
+                    <SelectItem value="cam2">Caméra 02</SelectItem>
+                    <SelectItem value="cam3">Caméra 03</SelectItem>
+                    <SelectItem value="cam4">Caméra 04</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Sites */}
+              <div className="mb-4">
+                <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                  Sites
+                </label>
+                <Select value={filterSite} onValueChange={setFilterSite}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Tous les sites" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">Tous les sites</SelectItem>
+                    <SelectItem value="principal">Site Principal</SelectItem>
+                    <SelectItem value="secondaire">Site Secondaire</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Zones */}
+              <div className="mb-4">
+                <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                  Zones
+                </label>
+                <Select value={filterZone} onValueChange={setFilterZone}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Toutes les zones" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">Toutes les zones</SelectItem>
+                    <SelectItem value="production">Zone de production</SelectItem>
+                    <SelectItem value="stockage">Zone de stockage</SelectItem>
+                    <SelectItem value="entree">Entrée principale</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Période */}
+              <div className="mb-6">
+                <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                  Période
+                </label>
+                <div className="space-y-2">
+                  <div className="relative">
+                    <Input 
+                      type="date"
+                      value={startDate}
+                      onChange={(e) => setStartDate(e.target.value)}
+                      className="pl-3 pr-10"
+                      placeholder="mm / dd / yy"
+                    />
+                    <Calendar className="absolute right-3 top-2.5 h-4 w-4 text-gray-400" />
+                  </div>
+                  <div className="relative">
+                    <Input 
+                      type="date"
+                      value={endDate}
+                      onChange={(e) => setEndDate(e.target.value)}
+                      className="pl-3 pr-10"
+                      placeholder="mm / dd / yy"
+                    />
+                    <Calendar className="absolute right-3 top-2.5 h-4 w-4 text-gray-400" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="border-t border-gray-200 pt-4 mb-4"></div>
+
               {/* Surveillance de Zone */}
               <div className="mb-4">
                 <h4 className="text-sm font-medium text-slate-700 mb-2 [font-family:'Inter',Helvetica]">
@@ -459,7 +544,7 @@ export const EventsPage = (): JSX.Element => {
               </div>
 
               {/* Comportement */}
-              <div className="mb-4">
+              <div className="mb-6">
                 <h4 className="text-sm font-medium text-slate-700 mb-2 [font-family:'Inter',Helvetica]">
                   Comportement
                 </h4>
@@ -496,89 +581,6 @@ export const EventsPage = (): JSX.Element => {
                     />
                     <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Regroupement</span>
                   </label>
-                </div>
-              </div>
-
-              {/* Caméras */}
-              <div className="mb-4">
-                <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                  Caméras
-                </label>
-                <Select value={filterCamera} onValueChange={setFilterCamera}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Toutes les caméras" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">Toutes les caméras</SelectItem>
-                    <SelectItem value="cam1">Caméra 01</SelectItem>
-                    <SelectItem value="cam2">Caméra 02</SelectItem>
-                    <SelectItem value="cam3">Caméra 03</SelectItem>
-                    <SelectItem value="cam4">Caméra 04</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Sites */}
-              <div className="mb-4">
-                <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                  Sites
-                </label>
-                <Select value={filterSite} onValueChange={setFilterSite}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Tous les sites" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">Tous les sites</SelectItem>
-                    <SelectItem value="principal">Site Principal</SelectItem>
-                    <SelectItem value="secondaire">Site Secondaire</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Zones */}
-              <div className="mb-4">
-                <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                  Zones
-                </label>
-                <Select value={filterZone} onValueChange={setFilterZone}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Toutes les zones" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">Toutes les zones</SelectItem>
-                    <SelectItem value="production">Zone de production</SelectItem>
-                    <SelectItem value="stockage">Zone de stockage</SelectItem>
-                    <SelectItem value="entree">Entrée principale</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Période */}
-              <div className="mb-6">
-                <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                  Période
-                </label>
-                <div className="space-y-2">
-                  <div className="relative">
-                    <Input 
-                      type="date"
-                      value={startDate}
-                      onChange={(e) => setStartDate(e.target.value)}
-                      className="pl-3 pr-10"
-                      placeholder="mm / dd / yy"
-                    />
-                    <Calendar className="absolute right-3 top-2.5 h-4 w-4 text-gray-400" />
-                  </div>
-                  <div className="relative">
-                    <Input 
-                      type="date"
-                      value={endDate}
-                      onChange={(e) => setEndDate(e.target.value)}
-                      className="pl-3 pr-10"
-                      placeholder="mm / dd / yy"
-                    />
-                    <Calendar className="absolute right-3 top-2.5 h-4 w-4 text-gray-400" />
-                  </div>
                 </div>
               </div>
 
