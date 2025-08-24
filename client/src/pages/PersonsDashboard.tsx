@@ -21,34 +21,116 @@ export const PersonsDashboard = (): JSX.Element => {
   const [agePeriod, setAgePeriod] = useState("today");
   const [heatmapPeriod, setHeatmapPeriod] = useState("today");
 
-  // Données pour les graphiques
-  const entriesExitsData = [
-    { time: "08:00", entries: 45, exits: 12 },
-    { time: "09:00", entries: 78, exits: 23 },
-    { time: "10:00", entries: 102, exits: 45 },
-    { time: "11:00", entries: 156, exits: 67 },
-    { time: "12:00", entries: 234, exits: 89 },
-    { time: "13:00", entries: 189, exits: 145 },
-    { time: "14:00", entries: 267, exits: 178 },
-    { time: "15:00", entries: 312, exits: 234 },
-    { time: "16:00", entries: 289, exits: 267 },
-    { time: "17:00", entries: 245, exits: 312 },
-    { time: "18:00", entries: 178, exits: 345 },
-  ];
+  // Fonction pour générer des données selon la période
+  const generateEntriesExitsData = (period: string) => {
+    switch (period) {
+      case "today":
+        return [
+          { time: "08:00", entries: 45, exits: 12 },
+          { time: "09:00", entries: 78, exits: 23 },
+          { time: "10:00", entries: 102, exits: 45 },
+          { time: "11:00", entries: 156, exits: 67 },
+          { time: "12:00", entries: 234, exits: 89 },
+          { time: "13:00", entries: 189, exits: 145 },
+          { time: "14:00", entries: 267, exits: 178 },
+          { time: "15:00", entries: 312, exits: 234 },
+          { time: "16:00", entries: 289, exits: 267 },
+          { time: "17:00", entries: 245, exits: 312 },
+          { time: "18:00", entries: 178, exits: 345 },
+        ];
+      case "week":
+        return [
+          { time: "Lun", entries: 1245, exits: 1156 },
+          { time: "Mar", entries: 1367, exits: 1278 },
+          { time: "Mer", entries: 1489, exits: 1389 },
+          { time: "Jeu", entries: 1678, exits: 1567 },
+          { time: "Ven", entries: 1890, exits: 1789 },
+          { time: "Sam", entries: 987, exits: 945 },
+          { time: "Dim", entries: 567, exits: 534 },
+        ];
+      case "month":
+        return [
+          { time: "Sem 1", entries: 8945, exits: 8756 },
+          { time: "Sem 2", entries: 9267, exits: 9178 },
+          { time: "Sem 3", entries: 9489, exits: 9289 },
+          { time: "Sem 4", entries: 9678, exits: 9567 },
+        ];
+      case "year":
+        return [
+          { time: "Jan", entries: 45678, exits: 44567 },
+          { time: "Fév", entries: 47890, exits: 46789 },
+          { time: "Mar", entries: 52345, exits: 51234 },
+          { time: "Avr", entries: 48901, exits: 47890 },
+          { time: "Mai", entries: 56789, exits: 55678 },
+          { time: "Jun", entries: 54321, exits: 53210 },
+          { time: "Jul", entries: 61234, exits: 60123 },
+          { time: "Aoû", entries: 59876, exits: 58765 },
+          { time: "Sep", entries: 53456, exits: 52345 },
+          { time: "Oct", entries: 49876, exits: 48765 },
+          { time: "Nov", entries: 46789, exits: 45678 },
+          { time: "Déc", entries: 43210, exits: 42109 },
+        ];
+      default:
+        return [];
+    }
+  };
 
-  const detectionData = [
-    { time: "08:00", detections: 57 },
-    { time: "09:00", detections: 101 },
-    { time: "10:00", detections: 147 },
-    { time: "11:00", detections: 223 },
-    { time: "12:00", detections: 323 },
-    { time: "13:00", detections: 334 },
-    { time: "14:00", detections: 445 },
-    { time: "15:00", detections: 546 },
-    { time: "16:00", detections: 556 },
-    { time: "17:00", detections: 557 },
-    { time: "18:00", detections: 523 },
-  ];
+  const generateDetectionData = (period: string) => {
+    switch (period) {
+      case "today":
+        return [
+          { time: "08:00", detections: 57 },
+          { time: "09:00", detections: 101 },
+          { time: "10:00", detections: 147 },
+          { time: "11:00", detections: 223 },
+          { time: "12:00", detections: 323 },
+          { time: "13:00", detections: 334 },
+          { time: "14:00", detections: 445 },
+          { time: "15:00", detections: 546 },
+          { time: "16:00", detections: 556 },
+          { time: "17:00", detections: 557 },
+          { time: "18:00", detections: 523 },
+        ];
+      case "week":
+        return [
+          { time: "Lun", detections: 3457 },
+          { time: "Mar", detections: 3678 },
+          { time: "Mer", detections: 3890 },
+          { time: "Jeu", detections: 4123 },
+          { time: "Ven", detections: 4567 },
+          { time: "Sam", detections: 2345 },
+          { time: "Dim", detections: 1234 },
+        ];
+      case "month":
+        return [
+          { time: "Sem 1", detections: 23456 },
+          { time: "Sem 2", detections: 24567 },
+          { time: "Sem 3", detections: 25678 },
+          { time: "Sem 4", detections: 26789 },
+        ];
+      case "year":
+        return [
+          { time: "Jan", detections: 123456 },
+          { time: "Fév", detections: 134567 },
+          { time: "Mar", detections: 145678 },
+          { time: "Avr", detections: 135789 },
+          { time: "Mai", detections: 156890 },
+          { time: "Jun", detections: 148901 },
+          { time: "Jul", detections: 167012 },
+          { time: "Aoû", detections: 159123 },
+          { time: "Sep", detections: 142345 },
+          { time: "Oct", detections: 134567 },
+          { time: "Nov", detections: 125678 },
+          { time: "Déc", detections: 118901 },
+        ];
+      default:
+        return [];
+    }
+  };
+
+  // Données pour les graphiques
+  const entriesExitsData = generateEntriesExitsData(entriesExitsPeriod);
+  const detectionData = generateDetectionData(detectionsPeriod);
 
   const ageDistribution = [
     { range: "18-25", count: 234 },
@@ -223,49 +305,109 @@ export const PersonsDashboard = (): JSX.Element => {
               </Select>
             </CardHeader>
             <CardContent>
-              <div className="h-[200px] relative">
-                <svg viewBox="0 0 500 200" className="w-full h-full">
-                  {/* Grille */}
-                  {[0, 50, 100, 150, 200].map(y => (
-                    <line key={y} x1="40" y1={y} x2="480" y2={y} stroke="#e2e8f0" strokeWidth="1" />
+              <div className="h-[240px] relative bg-gradient-to-br from-slate-50 to-white rounded-lg p-4">
+                <svg viewBox="0 0 500 200" className="w-full h-full drop-shadow-sm">
+                  {/* Définition des gradients */}
+                  <defs>
+                    <linearGradient id="entriesGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stopColor="#10b981" stopOpacity="0.3" />
+                      <stop offset="100%" stopColor="#10b981" stopOpacity="0.05" />
+                    </linearGradient>
+                    <linearGradient id="exitsGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stopColor="#ef4444" stopOpacity="0.3" />
+                      <stop offset="100%" stopColor="#ef4444" stopOpacity="0.05" />
+                    </linearGradient>
+                    <filter id="glow">
+                      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                      <feMerge> 
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                      </feMerge>
+                    </filter>
+                  </defs>
+                  
+                  {/* Grille améliorée */}
+                  {[0, 40, 80, 120, 160, 200].map(y => (
+                    <line key={y} x1="40" y1={y} x2="480" y2={y} 
+                          stroke={y === 200 ? "#94a3b8" : "#e2e8f0"} 
+                          strokeWidth={y === 200 ? "1.5" : "0.5"} 
+                          strokeDasharray={y === 200 ? "none" : "2,2"} />
                   ))}
                   
-                  {/* Courbe Entrées */}
+                  {/* Zone sous la courbe Entrées */}
+                  <path
+                    d={`M 40,200 ${entriesExitsData.map((d, i) => 
+                      `L ${40 + (i * 440 / (entriesExitsData.length - 1))},${200 - (d.entries / maxEntry * 180)}`
+                    ).join(' ')} L 480,200 Z`}
+                    fill="url(#entriesGradient)"
+                  />
+                  
+                  {/* Zone sous la courbe Sorties */}
+                  <path
+                    d={`M 40,200 ${entriesExitsData.map((d, i) => 
+                      `L ${40 + (i * 440 / (entriesExitsData.length - 1))},${200 - (d.exits / maxEntry * 180)}`
+                    ).join(' ')} L 480,200 Z`}
+                    fill="url(#exitsGradient)"
+                  />
+                  
+                  {/* Courbe Entrées avec effet glow */}
                   <polyline
                     points={entriesExitsData.map((d, i) => 
                       `${40 + (i * 440 / (entriesExitsData.length - 1))},${200 - (d.entries / maxEntry * 180)}`
                     ).join(' ')}
                     fill="none"
                     stroke="#10b981"
-                    strokeWidth="2"
+                    strokeWidth="3"
+                    filter="url(#glow)"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                   
-                  {/* Courbe Sorties */}
+                  {/* Courbe Sorties avec effet glow */}
                   <polyline
                     points={entriesExitsData.map((d, i) => 
                       `${40 + (i * 440 / (entriesExitsData.length - 1))},${200 - (d.exits / maxEntry * 180)}`
                     ).join(' ')}
                     fill="none"
                     stroke="#ef4444"
-                    strokeWidth="2"
+                    strokeWidth="3"
+                    filter="url(#glow)"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                   
-                  {/* Labels */}
-                  {entriesExitsData.filter((_, i) => i % 2 === 0).map((d, i) => (
-                    <text key={i} x={40 + (i * 2 * 440 / (entriesExitsData.length - 1))} y="195" 
-                          className="text-xs fill-slate-600" textAnchor="middle">
-                      {d.time}
-                    </text>
+                  {/* Points de données */}
+                  {entriesExitsData.map((d, i) => (
+                    <g key={`point-${i}`}>
+                      <circle cx={40 + (i * 440 / (entriesExitsData.length - 1))} 
+                              cy={200 - (d.entries / maxEntry * 180)} 
+                              r="4" fill="white" stroke="#10b981" strokeWidth="2" />
+                      <circle cx={40 + (i * 440 / (entriesExitsData.length - 1))} 
+                              cy={200 - (d.exits / maxEntry * 180)} 
+                              r="4" fill="white" stroke="#ef4444" strokeWidth="2" />
+                    </g>
                   ))}
+                  
+                  {/* Labels améliorés */}
+                  {entriesExitsData.map((d, i) => {
+                    const showLabel = entriesExitsData.length <= 7 || i % Math.ceil(entriesExitsData.length / 6) === 0;
+                    return showLabel ? (
+                      <text key={i} x={40 + (i * 440 / (entriesExitsData.length - 1))} y="190" 
+                            className="text-xs fill-slate-500 font-medium" textAnchor="middle">
+                        {d.time}
+                      </text>
+                    ) : null;
+                  })}
                 </svg>
-                <div className="flex gap-4 justify-center mt-2">
+                
+                <div className="flex gap-6 justify-center mt-4 bg-white/60 backdrop-blur-sm rounded-lg p-2 border border-white/40">
                   <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-emerald-500 rounded-full"></div>
-                    <span className="text-xs text-slate-600">Entrées</span>
+                    <div className="w-3 h-3 bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full shadow-sm"></div>
+                    <span className="text-sm text-slate-700 font-medium">Entrées</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                    <span className="text-xs text-slate-600">Sorties</span>
+                    <div className="w-3 h-3 bg-gradient-to-r from-red-500 to-red-400 rounded-full shadow-sm"></div>
+                    <span className="text-sm text-slate-700 font-medium">Sorties</span>
                   </div>
                 </div>
               </div>
@@ -291,48 +433,125 @@ export const PersonsDashboard = (): JSX.Element => {
               </Select>
             </CardHeader>
             <CardContent>
-              <div className="h-[200px] relative">
-                <svg viewBox="0 0 500 200" className="w-full h-full">
-                  {/* Grille */}
-                  {[0, 50, 100, 150, 200].map(y => (
-                    <line key={y} x1="40" y1={y} x2="480" y2={y} stroke="#e2e8f0" strokeWidth="1" />
+              <div className="h-[240px] relative bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-4">
+                <svg viewBox="0 0 500 200" className="w-full h-full drop-shadow-sm">
+                  <defs>
+                    {/* Gradient principal */}
+                    <linearGradient id="detectionGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.4" />
+                      <stop offset="50%" stopColor="#60a5fa" stopOpacity="0.2" />
+                      <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.05" />
+                    </linearGradient>
+                    
+                    {/* Gradient pour la ligne */}
+                    <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#1e40af" />
+                      <stop offset="50%" stopColor="#3b82f6" />
+                      <stop offset="100%" stopColor="#60a5fa" />
+                    </linearGradient>
+                    
+                    {/* Filtre glow */}
+                    <filter id="blueGlow">
+                      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                      <feMerge> 
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                      </feMerge>
+                    </filter>
+                    
+                    {/* Motif pour la grille */}
+                    <pattern id="gridPattern" width="44" height="40" patternUnits="userSpaceOnUse">
+                      <path d="M 44 0 L 0 0 0 40" fill="none" stroke="#e0e7ff" strokeWidth="0.5" opacity="0.5"/>
+                    </pattern>
+                  </defs>
+                  
+                  {/* Grille avec motif */}
+                  <rect width="440" height="200" x="40" y="0" fill="url(#gridPattern)" />
+                  
+                  {/* Lignes de grille principales */}
+                  {[0, 40, 80, 120, 160, 200].map(y => (
+                    <line key={y} x1="40" y1={y} x2="480" y2={y} 
+                          stroke={y === 200 ? "#6366f1" : "#c7d2fe"} 
+                          strokeWidth={y === 200 ? "2" : "1"} 
+                          opacity={y === 200 ? "0.6" : "0.3"} />
                   ))}
                   
-                  {/* Zone sous la courbe */}
+                  {/* Zone sous la courbe avec gradient animé */}
                   <path
                     d={`M 40,200 ${detectionData.map((d, i) => 
                       `L ${40 + (i * 440 / (detectionData.length - 1))},${200 - (d.detections / maxDetection * 180)}`
                     ).join(' ')} L 480,200 Z`}
-                    fill="url(#gradient)"
-                    opacity="0.3"
+                    fill="url(#detectionGradient)"
+                    className="animate-pulse"
                   />
                   
-                  {/* Courbe */}
+                  {/* Courbe principale avec gradient et glow */}
                   <polyline
                     points={detectionData.map((d, i) => 
                       `${40 + (i * 440 / (detectionData.length - 1))},${200 - (d.detections / maxDetection * 180)}`
                     ).join(' ')}
                     fill="none"
-                    stroke="#3b82f6"
-                    strokeWidth="2"
+                    stroke="url(#lineGradient)"
+                    strokeWidth="4"
+                    filter="url(#blueGlow)"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                   
-                  {/* Gradient */}
-                  <defs>
-                    <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                      <stop offset="0%" stopColor="#3b82f6" />
-                      <stop offset="100%" stopColor="#3b82f6" stopOpacity="0" />
-                    </linearGradient>
-                  </defs>
-                  
-                  {/* Labels */}
-                  {detectionData.filter((_, i) => i % 2 === 0).map((d, i) => (
-                    <text key={i} x={40 + (i * 2 * 440 / (detectionData.length - 1))} y="195" 
-                          className="text-xs fill-slate-600" textAnchor="middle">
-                      {d.time}
-                    </text>
+                  {/* Points de données avec animation */}
+                  {detectionData.map((d, i) => (
+                    <g key={`detection-point-${i}`}>
+                      <circle cx={40 + (i * 440 / (detectionData.length - 1))} 
+                              cy={200 - (d.detections / maxDetection * 180)} 
+                              r="6" fill="#1e40af" opacity="0.2" className="animate-ping" />
+                      <circle cx={40 + (i * 440 / (detectionData.length - 1))} 
+                              cy={200 - (d.detections / maxDetection * 180)} 
+                              r="5" fill="white" stroke="#3b82f6" strokeWidth="3" 
+                              className="shadow-lg" />
+                      <circle cx={40 + (i * 440 / (detectionData.length - 1))} 
+                              cy={200 - (d.detections / maxDetection * 180)} 
+                              r="2" fill="#1e40af" />
+                    </g>
                   ))}
+                  
+                  {/* Labels adaptés selon la période */}
+                  {detectionData.map((d, i) => {
+                    const showLabel = detectionData.length <= 7 || i % Math.ceil(detectionData.length / 6) === 0;
+                    return showLabel ? (
+                      <text key={i} x={40 + (i * 440 / (detectionData.length - 1))} y="190" 
+                            className="text-xs fill-indigo-600 font-semibold" textAnchor="middle">
+                        {d.time}
+                      </text>
+                    ) : null;
+                  })}
+                  
+                  {/* Titre du graphique intégré */}
+                  <text x="260" y="15" className="text-sm fill-indigo-700 font-bold" textAnchor="middle">
+                    {maxDetection.toLocaleString()} détections max
+                  </text>
                 </svg>
+                
+                {/* Informations additionelles */}
+                <div className="flex justify-between mt-4 bg-white/70 backdrop-blur-sm rounded-lg p-3 border border-indigo-200/40">
+                  <div className="text-center">
+                    <div className="text-lg font-bold text-indigo-600">
+                      {detectionData.reduce((sum, d) => sum + d.detections, 0).toLocaleString()}
+                    </div>
+                    <div className="text-xs text-slate-600">Total période</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-lg font-bold text-blue-600">
+                      {Math.round(detectionData.reduce((sum, d) => sum + d.detections, 0) / detectionData.length).toLocaleString()}
+                    </div>
+                    <div className="text-xs text-slate-600">Moyenne</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-lg font-bold text-indigo-800">
+                      {maxDetection.toLocaleString()}
+                    </div>
+                    <div className="text-xs text-slate-600">Maximum</div>
+                  </div>
+                </div>
               </div>
             </CardContent>
           </Card>
