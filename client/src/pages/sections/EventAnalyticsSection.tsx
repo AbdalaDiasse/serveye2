@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -8,15 +9,26 @@ export function EventAnalyticsSection() {
   const [selectedMonth, setSelectedMonth] = useState("2024");
   const [selectedPeriod, setSelectedPeriod] = useState<"7" | "30">("7");
 
-  // Données pour le pie chart de distribution des événements
-  const eventDistribution = [
-    { name: "Intrusion", value: 245, color: "#ef4444" },
-    { name: "EPI manquant", value: 189, color: "#f97316" },
-    { name: "Fumée/Incendie", value: 156, color: "#eab308" },
-    { name: "Comportement", value: 123, color: "#22c55e" },
-    { name: "Zone Monitoring", value: 89, color: "#06b6d4" },
-    { name: "Autres", value: 67, color: "#8b5cf6" },
-  ];
+  // Données pour la distribution des événements
+  const eventDistribution = {
+    today: [
+      { hour: "00:00", count: 12 },
+      { hour: "04:00", count: 8 },
+      { hour: "08:00", count: 25 },
+      { hour: "12:00", count: 45 },
+      { hour: "16:00", count: 38 },
+      { hour: "20:00", count: 22 },
+    ],
+    week: [
+      { day: "Lun", count: 156 },
+      { day: "Mar", count: 189 },
+      { day: "Mer", count: 145 },
+      { day: "Jeu", count: 203 },
+      { day: "Ven", count: 178 },
+      { day: "Sam", count: 92 },
+      { day: "Dim", count: 67 },
+    ]
+  };
 
   // Données pour le calendrier mensuel
   const monthlyEvents = [
@@ -75,41 +87,12 @@ export function EventAnalyticsSection() {
     ]
   };
 
-  const total = eventDistribution.reduce((sum, item) => sum + item.value, 0);
-  
   const getMaxValue = (data: { count: number }[]) => {
     return Math.max(...data.map(item => item.count));
   };
 
   const getBarHeight = (value: number, max: number) => {
     return (value / max) * 100;
-  };
-
-  const calculatePieSlices = () => {
-    let currentAngle = -90; // Start from top
-    return eventDistribution.map(item => {
-      const percentage = (item.value / total) * 100;
-      const angle = (percentage / 100) * 360;
-      const startAngle = currentAngle;
-      const endAngle = currentAngle + angle;
-      currentAngle = endAngle;
-      
-      const largeArcFlag = angle > 180 ? 1 : 0;
-      
-      const startRadians = (startAngle * Math.PI) / 180;
-      const endRadians = (endAngle * Math.PI) / 180;
-      
-      const x1 = 50 + 40 * Math.cos(startRadians);
-      const y1 = 50 + 40 * Math.sin(startRadians);
-      const x2 = 50 + 40 * Math.cos(endRadians);
-      const y2 = 50 + 40 * Math.sin(endRadians);
-      
-      return {
-        ...item,
-        path: `M 50 50 L ${x1} ${y1} A 40 40 0 ${largeArcFlag} 1 ${x2} ${y2} Z`,
-        percentage: percentage.toFixed(1)
-      };
-    });
   };
 
   const getEventColor = (events: number) => {
@@ -121,7 +104,7 @@ export function EventAnalyticsSection() {
 
   return (
     <div className="grid grid-cols-3 gap-6">
-      {/* Distribution des Événements - Pie Chart */}
+      {/* Distribution des Événements */}
       <Card className="bg-white border-0 shadow-sm">
         <CardHeader className="pb-3">
           <CardTitle className="text-base font-semibold text-gray-900">
@@ -129,44 +112,52 @@ export function EventAnalyticsSection() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="relative">
-            {/* Pie Chart */}
-            <div className="flex justify-center mb-4">
-              <svg width="200" height="200" viewBox="0 0 100 100">
-                {calculatePieSlices().map((slice, index) => (
-                  <path
-                    key={index}
-                    d={slice.path}
-                    fill={slice.color}
-                    stroke="white"
-                    strokeWidth="0.5"
-                  />
-                ))}
-              </svg>
-            </div>
-            
-            {/* Legend */}
-            <div className="grid grid-cols-2 gap-2">
-              {eventDistribution.map((item, index) => (
-                <div key={index} className="flex items-center gap-2">
-                  <div 
-                    className="w-3 h-3 rounded-full" 
-                    style={{ backgroundColor: item.color }}
-                  />
-                  <div className="flex-1">
-                    <div className="text-xs text-gray-700">{item.name}</div>
-                    <div className="text-xs font-semibold text-gray-900">
-                      {item.value} ({((item.value / total) * 100).toFixed(1)}%)
+          <Tabs defaultValue="today" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 mb-4">
+              <TabsTrigger value="today">Today</TabsTrigger>
+              <TabsTrigger value="week">Week</TabsTrigger>
+            </TabsList>
+            <TabsContent value="today" className="space-y-4">
+              <div className="h-48 flex items-end justify-between gap-2">
+                {eventDistribution.today.map((item, index) => {
+                  const maxValue = getMaxValue(eventDistribution.today);
+                  const height = getBarHeight(item.count, maxValue);
+                  return (
+                    <div key={index} className="flex-1 flex flex-col items-center justify-end">
+                      <div className="text-xs text-gray-600 mb-1">{item.count}</div>
+                      <div 
+                        className="w-full bg-gradient-to-t from-cyan-500 to-cyan-400 rounded-t"
+                        style={{ height: `${height}%` }}
+                      />
+                      <div className="text-xs text-gray-500 mt-2">{item.hour}</div>
                     </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+                  );
+                })}
+              </div>
+            </TabsContent>
+            <TabsContent value="week" className="space-y-4">
+              <div className="h-48 flex items-end justify-between gap-2">
+                {eventDistribution.week.map((item, index) => {
+                  const maxValue = getMaxValue(eventDistribution.week);
+                  const height = getBarHeight(item.count, maxValue);
+                  return (
+                    <div key={index} className="flex-1 flex flex-col items-center justify-end">
+                      <div className="text-xs text-gray-600 mb-1">{item.count}</div>
+                      <div 
+                        className="w-full bg-gradient-to-t from-cyan-500 to-cyan-400 rounded-t"
+                        style={{ height: `${height}%` }}
+                      />
+                      <div className="text-xs text-gray-500 mt-2">{item.day}</div>
+                    </div>
+                  );
+                })}
+              </div>
+            </TabsContent>
+          </Tabs>
         </CardContent>
       </Card>
 
-      {/* Événements Mensuels - Histogram */}
+      {/* Événements Mensuels */}
       <Card className="bg-white border-0 shadow-sm">
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
@@ -193,40 +184,35 @@ export function EventAnalyticsSection() {
           </div>
         </CardHeader>
         <CardContent>
-          <div className="h-48 flex items-end justify-between gap-0.5">
-            {monthlyEvents.slice(0, 31).map((item, index) => {
-              const maxValue = Math.max(...monthlyEvents.map(d => d.events));
-              const height = (item.events / maxValue) * 100;
-              let barColor = '#22c55e'; // green
-              if (item.events > 100) barColor = '#ef4444'; // red
-              else if (item.events > 50) barColor = '#f97316'; // orange
-              else if (item.events > 20) barColor = '#eab308'; // yellow
-              
+          <div className="grid grid-cols-7 gap-1">
+            {/* Jours de la semaine */}
+            {["L", "M", "M", "J", "V", "S", "D"].map((day, index) => (
+              <div key={index} className="text-center text-xs font-medium text-gray-500 py-2">
+                {day}
+              </div>
+            ))}
+            {/* Jours du mois */}
+            {Array.from({ length: 31 }, (_, i) => {
+              const dayData = monthlyEvents.find(d => d.day === i + 1);
+              const events = dayData?.events || 0;
               return (
-                <div 
-                  key={index} 
-                  className="flex-1 flex flex-col items-center justify-end group relative"
+                <div
+                  key={i}
+                  className={`
+                    relative h-8 flex items-center justify-center text-xs rounded
+                    ${events > 0 ? getEventColor(events) + ' text-white' : 'bg-gray-50 text-gray-700'}
+                    ${i + 1 === 24 ? 'ring-2 ring-cyan-500' : ''}
+                  `}
                 >
-                  {/* Tooltip on hover */}
-                  <div className="absolute bottom-full mb-2 hidden group-hover:block bg-gray-900 text-white text-xs rounded px-2 py-1 whitespace-nowrap z-10">
-                    Jour {item.day}: {item.events} événements
-                  </div>
-                  <div 
-                    className="w-full rounded-t transition-all duration-300 hover:opacity-80"
-                    style={{ 
-                      height: `${height}%`,
-                      backgroundColor: barColor,
-                      minHeight: '2px'
-                    }}
-                  />
+                  {i + 1}
+                  {events > 0 && (
+                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-600 rounded-full text-[8px] flex items-center justify-center">
+                      {events > 99 ? '99+' : events}
+                    </div>
+                  )}
                 </div>
               );
             })}
-          </div>
-          <div className="flex justify-between mt-2">
-            <span className="text-xs text-gray-500">1</span>
-            <span className="text-xs text-gray-500">15</span>
-            <span className="text-xs text-gray-500">31</span>
           </div>
         </CardContent>
       </Card>
