@@ -121,7 +121,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
         <div className="space-y-2">
           {navigationItems.map((item, index) => (
             <div key={index} className="relative">
-              {currentPage === item.name.toLowerCase() ? (
+              {(currentPage === item.name.toLowerCase() || (item.name === "Personnes" && currentPage === "persons")) ? (
                 <div className="h-12 rounded-xl shadow-[0px_10px_15px_#0000001a,0px_4px_6px_#0000001a] bg-gradient-to-r from-blue-600 to-blue-500 flex items-center px-4">
                   {renderIcon(item.icon, "w-5 h-6 mr-3 text-white")}
                   <span className="[font-family:'Inter',Helvetica] font-semibold text-white text-base tracking-[0] leading-[normal]">
