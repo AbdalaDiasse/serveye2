@@ -219,18 +219,12 @@ export const CapturePage = (): JSX.Element => {
   const [hairType, setHairType] = useState("all");
   const [activeFilterMode, setActiveFilterMode] = useState("tous"); // tous, visage, corps
   
-  // États pour les filtres Corps
-  const [filterSex, setFilterSex] = useState("all");
-  const [filterPerson, setFilterPerson] = useState("all");
-  const [bodyAttributes, setBodyAttributes] = useState("all");
-  const [pantsType, setPantsType] = useState("all");
+  // États pour les filtres Corps et Visage
   const [topColor, setTopColor] = useState("all");
   const [bottomColor, setBottomColor] = useState("all");
-  const [shoesType, setShoesType] = useState("all");
   const [glassesType, setGlassesType] = useState("all");
-  const [bagType, setBagType] = useState("all");
+  const [beardType, setBeardType] = useState("all");
   const [hatType, setHatType] = useState("all");
-  const [footType, setFootType] = useState("all");
   
   // États pour la recherche par visage
   const [searchMode, setSearchMode] = useState("texte");
@@ -663,24 +657,13 @@ export const CapturePage = (): JSX.Element => {
                     </Select>
                   </div>
 
-                  {/* Filtres spécifiques au mode Visage */}
+                  {/* Attributs Faciaux - Mode Visage */}
                   {(activeFilterMode === "visage" || activeFilterMode === "tous") && (
                     <>
                       <div>
-                        <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                          Vêtements
-                        </label>
-                        <Select value={clothingType} onValueChange={setClothingType}>
-                          <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Tous types" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="all">Tous types</SelectItem>
-                            <SelectItem value="casual">Décontracté</SelectItem>
-                            <SelectItem value="formal">Formel</SelectItem>
-                            <SelectItem value="sportswear">Sportif</SelectItem>
-                          </SelectContent>
-                        </Select>
+                        <h4 className="text-sm font-semibold text-slate-800 [font-family:'Inter',Helvetica] mb-3 mt-4">
+                          Attributs Faciaux
+                        </h4>
                       </div>
 
                       <div>
@@ -689,88 +672,80 @@ export const CapturePage = (): JSX.Element => {
                         </label>
                         <Select value={hairType} onValueChange={setHairType}>
                           <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Tous types" />
+                            <SelectValue placeholder="Tous" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="all">Tous types</SelectItem>
+                            <SelectItem value="all">Tous</SelectItem>
                             <SelectItem value="short">Courts</SelectItem>
                             <SelectItem value="long">Longs</SelectItem>
                             <SelectItem value="bald">Chauve</SelectItem>
+                            <SelectItem value="curly">Bouclés</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <div>
+                        <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                          Lunettes
+                        </label>
+                        <Select value={glassesType} onValueChange={setGlassesType}>
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Tous" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="all">Tous</SelectItem>
+                            <SelectItem value="clear">Transparentes</SelectItem>
+                            <SelectItem value="dark">Sombres</SelectItem>
+                            <SelectItem value="none">Aucunes</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <div>
+                        <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                          Barbe
+                        </label>
+                        <Select value={beardType} onValueChange={setBeardType}>
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Tous" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="all">Tous</SelectItem>
+                            <SelectItem value="full">Barbe complète</SelectItem>
+                            <SelectItem value="mustache">Moustache</SelectItem>
+                            <SelectItem value="goatee">Bouc</SelectItem>
+                            <SelectItem value="none">Aucune</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <div>
+                        <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                          Casquette
+                        </label>
+                        <Select value={hatType} onValueChange={setHatType}>
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Tous" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="all">Tous</SelectItem>
+                            <SelectItem value="cap">Casquette</SelectItem>
+                            <SelectItem value="hat">Chapeau</SelectItem>
+                            <SelectItem value="beanie">Bonnet</SelectItem>
+                            <SelectItem value="none">Aucune</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
                     </>
                   )}
 
-                  {/* Filtres spécifiques au mode Corps */}
+                  {/* Attributs Corporels - Mode Corps */}
                   {(activeFilterMode === "corps" || activeFilterMode === "tous") && (
                     <>
                       <div>
-                        <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                          Sexe
-                        </label>
-                        <Select value={filterSex} onValueChange={setFilterSex}>
-                          <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Tous les sexes" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="all">Tous les sexes</SelectItem>
-                            <SelectItem value="male">Masculin</SelectItem>
-                            <SelectItem value="female">Féminin</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      <div>
-                        <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                          Personne
-                        </label>
-                        <Select value={filterPerson} onValueChange={setFilterPerson}>
-                          <SelectTrigger className="w-full">
-                            <SelectValue placeholder="min / M / max" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="all">min / M / max</SelectItem>
-                            <SelectItem value="small">Petite</SelectItem>
-                            <SelectItem value="medium">Moyenne</SelectItem>
-                            <SelectItem value="large">Grande</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      <div>
-                        <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                        <h4 className="text-sm font-semibold text-slate-800 [font-family:'Inter',Helvetica] mb-3 mt-4">
                           Attributs Corporels
-                        </label>
-                        <Select value={bodyAttributes} onValueChange={setBodyAttributes}>
-                          <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Toutes couleurs" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="all">Toutes couleurs</SelectItem>
-                            <SelectItem value="light">Claire</SelectItem>
-                            <SelectItem value="medium">Moyenne</SelectItem>
-                            <SelectItem value="dark">Foncée</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      <div>
-                        <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                          Pantalon/Legging
-                        </label>
-                        <Select value={pantsType} onValueChange={setPantsType}>
-                          <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Toutes couleurs" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="all">Toutes couleurs</SelectItem>
-                            <SelectItem value="black">Noir</SelectItem>
-                            <SelectItem value="blue">Bleu</SelectItem>
-                            <SelectItem value="white">Blanc</SelectItem>
-                            <SelectItem value="gray">Gris</SelectItem>
-                          </SelectContent>
-                        </Select>
+                        </h4>
                       </div>
 
                       <div>
@@ -787,6 +762,8 @@ export const CapturePage = (): JSX.Element => {
                             <SelectItem value="white">Blanc</SelectItem>
                             <SelectItem value="blue">Bleu</SelectItem>
                             <SelectItem value="red">Rouge</SelectItem>
+                            <SelectItem value="green">Vert</SelectItem>
+                            <SelectItem value="gray">Gris</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
@@ -805,90 +782,8 @@ export const CapturePage = (): JSX.Element => {
                             <SelectItem value="blue">Bleu</SelectItem>
                             <SelectItem value="white">Blanc</SelectItem>
                             <SelectItem value="gray">Gris</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      <div>
-                        <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                          Chaussures
-                        </label>
-                        <Select value={shoesType} onValueChange={setShoesType}>
-                          <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Toutes couleurs" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="all">Toutes couleurs</SelectItem>
-                            <SelectItem value="sneakers">Baskets</SelectItem>
-                            <SelectItem value="formal">Chaussures classiques</SelectItem>
-                            <SelectItem value="boots">Bottes</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      <div>
-                        <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                          Lunettes
-                        </label>
-                        <Select value={glassesType} onValueChange={setGlassesType}>
-                          <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Couleur/sombre" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="all">Couleur/sombre</SelectItem>
-                            <SelectItem value="clear">Transparentes</SelectItem>
-                            <SelectItem value="dark">Sombres</SelectItem>
-                            <SelectItem value="none">Aucunes</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      <div>
-                        <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                          Sac
-                        </label>
-                        <Select value={bagType} onValueChange={setBagType}>
-                          <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Sac" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="all">Sac</SelectItem>
-                            <SelectItem value="backpack">Sac à dos</SelectItem>
-                            <SelectItem value="handbag">Sac à main</SelectItem>
-                            <SelectItem value="none">Aucun</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      <div>
-                        <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                          Casquette
-                        </label>
-                        <Select value={hatType} onValueChange={setHatType}>
-                          <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Casquette" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="all">Casquette</SelectItem>
-                            <SelectItem value="cap">Casquette</SelectItem>
-                            <SelectItem value="hat">Chapeau</SelectItem>
-                            <SelectItem value="none">Aucune</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      <div>
-                        <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                          Pied
-                        </label>
-                        <Select value={footType} onValueChange={setFootType}>
-                          <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Pied" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="all">Pied</SelectItem>
-                            <SelectItem value="visible">Visible</SelectItem>
-                            <SelectItem value="hidden">Caché</SelectItem>
+                            <SelectItem value="brown">Marron</SelectItem>
+                            <SelectItem value="green">Vert</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
