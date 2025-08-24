@@ -456,22 +456,30 @@ export const CapturePage = (): JSX.Element => {
                 <div className="col-span-6 space-y-4">
                   {/* Similarité */}
                   <div>
-                    <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center justify-between mb-3">
                       <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica]">
                         Similarité
                       </label>
-                      <span className="text-sm font-bold text-teal-600 [font-family:'Inter',Helvetica]">
+                      <span className="text-sm font-bold text-emerald-500 [font-family:'Inter',Helvetica]">
                         {similarity}%
                       </span>
                     </div>
-                    <input
-                      type="range"
-                      min="50"
-                      max="99"
-                      value={similarity}
-                      onChange={(e) => setSimilarity(parseInt(e.target.value))}
-                      className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer slider-thumb:appearance-none slider-thumb:h-4 slider-thumb:w-4 slider-thumb:bg-teal-500 slider-thumb:rounded-full slider-thumb:cursor-pointer"
-                    />
+                    <div className="relative">
+                      <div className="relative h-2 bg-slate-300 rounded-full">
+                        <div
+                          className="absolute h-2 bg-emerald-500 rounded-full"
+                          style={{ width: `${((similarity - 50) / (99 - 50)) * 100}%` }}
+                        />
+                        <input
+                          type="range"
+                          min="50"
+                          max="99"
+                          value={similarity}
+                          onChange={(e) => setSimilarity(parseInt(e.target.value))}
+                          className="absolute inset-0 w-full h-2 bg-transparent appearance-none cursor-pointer focus:outline-none range-slider"
+                        />
+                      </div>
+                    </div>
                   </div>
 
                   {/* Période */}

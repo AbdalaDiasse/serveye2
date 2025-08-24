@@ -7,6 +7,29 @@
   }
 }
 
+/* Custom range slider styling */
+.range-slider::-webkit-slider-thumb {
+  appearance: none;
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  background: #6b7280;
+  cursor: pointer;
+  border: 3px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.range-slider::-moz-range-thumb {
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  background: #6b7280;
+  cursor: pointer;
+  border: 3px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: none;
+}
+
 :root {
   --animate-spin: spin 1s linear infinite;
 }
