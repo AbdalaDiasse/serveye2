@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Calendar } from "lucide-react";
+import { EventAnalyticsSection } from "./sections/EventAnalyticsSection";
 
 // Import des images depuis les assets générés
 import businessmanPhoto from "@assets/generated_images/Security_capture_businessman_photo_2feb92d4.png";
@@ -661,6 +662,11 @@ export const EventsPage = (): JSX.Element => {
 
           {/* Main Content */}
           <main className="flex-1">
+            {/* Section Analytics */}
+            <div className="mb-8">
+              <EventAnalyticsSection />
+            </div>
+
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-lg font-semibold text-slate-800 [font-family:'Inter',Helvetica]">
                 Événements Détectés
