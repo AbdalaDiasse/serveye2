@@ -119,95 +119,80 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
 
       <nav className="flex-1 p-4">
         <div className="space-y-2">
-          {navigationItems.map((item, index) => (
-            <div key={index} className="relative">
-              {(currentPage === item.name.toLowerCase() || (item.name === "Personnes" && (currentPage === "persons" || currentPage === "capture" || currentPage === "reconnaissance"))) ? (
-                <div className={`h-12 rounded-xl shadow-[0px_10px_15px_#0000001a,0px_4px_6px_#0000001a] flex items-center px-4 cursor-pointer ${
-                  item.name === "Personnes" 
-                    ? "bg-gradient-to-r from-teal-500 to-cyan-500" 
-                    : "bg-gradient-to-r from-blue-600 to-blue-500"
-                }`}
-                onClick={() => {
-                  if (item.hasDropdown) {
-                    toggleDropdown(item.name);
-                  }
-                }}>
-                  {renderIcon(item.icon, "w-5 h-6 mr-3 text-white")}
-                  <span className="[font-family:'Inter',Helvetica] font-semibold text-white text-base tracking-[0] leading-[normal]">
+          {navigationItems.map((item, index) => {
+            const isPersonnesActive = item.name === "Personnes" && (currentPage === "persons" || currentPage === "capture" || currentPage === "reconnaissance");
+            const isOtherActive = currentPage === item.name.toLowerCase() && item.name !== "Personnes";
+            
+            return (
+              <div key={index} className="relative">
+                <div 
+                  className={`h-12 rounded-xl flex items-center px-4 cursor-pointer transition-all ${
+                    isPersonnesActive
+                      ? "shadow-[0px_10px_15px_#0000001a,0px_4px_6px_#0000001a] bg-gradient-to-r from-teal-500 to-cyan-500"
+                      : isOtherActive
+                      ? "shadow-[0px_10px_15px_#0000001a,0px_4px_6px_#0000001a] bg-gradient-to-r from-blue-600 to-blue-500"
+                      : "hover:bg-gray-50"
+                  }`}
+                  onClick={() => {
+                    if (item.hasDropdown) {
+                      toggleDropdown(item.name);
+                      if (item.name === "Personnes" && openDropdown !== item.name) {
+                        handleNavigation("persons");
+                      }
+                    } else {
+                      handleNavigation(item.name.toLowerCase());
+                    }
+                  }}
+                >
+                  {renderIcon(item.icon, `${(isPersonnesActive || isOtherActive) ? "w-5 h-6 mr-3 text-white" : "w-4 h-4 mr-3 text-slate-600"}`)}
+                  <span className={`[font-family:'Inter',Helvetica] text-base tracking-[0] ${
+                    (isPersonnesActive || isOtherActive)
+                      ? 'font-semibold text-white leading-[normal]'
+                      : 'font-normal text-slate-600 leading-6'
+                  }`}>
                     {item.name}
                   </span>
                   {item.hasDropdown && (
                     <img
                       className={`w-3 h-3 ml-auto transition-transform duration-200 ${
                         openDropdown === item.name ? 'rotate-180' : ''
-                      } filter brightness-0 invert`}
+                      } ${(isPersonnesActive) ? 'filter brightness-0 invert' : ''}`}
                       alt="Dropdown"
                       src="/figmaAssets/frame-7.svg"
                     />
                   )}
                 </div>
-              ) : (
-                <>
-                  <div 
-                    className="h-12 flex items-center px-4 rounded-xl cursor-pointer transition-colors hover:bg-gray-50"
-                    onClick={() => {
-                      if (item.hasDropdown) {
-                        // Pour "Personnes", navigue vers le dashboard en plus de toggler le dropdown
-                        if (item.name === "Personnes") {
-                          handleNavigation("persons");
-                        }
-                        toggleDropdown(item.name);
-                      } else {
-                        handleNavigation(item.name.toLowerCase());
-                      }
-                    }}
-                  >
-                    {renderIcon(item.icon, "w-4 h-4 mr-3 text-slate-600")}
-                    <span className="[font-family:'Inter',Helvetica] font-normal text-slate-600 text-base tracking-[0] leading-6">
-                      {item.name}
-                    </span>
-                    {item.hasDropdown && (
-                      <img
-                        className={`w-3 h-3 ml-auto transition-transform duration-200 ${
-                          openDropdown === item.name ? 'rotate-180' : ''
+                {item.subItems && openDropdown === item.name && (
+                  <div className="ml-6 mt-1 space-y-1">
+                    {item.subItems.map((subItem, subIndex) => (
+                      <div
+                        key={subIndex}
+                        className={`flex items-center px-4 rounded-lg cursor-pointer transition-all duration-200 ${
+                          currentPage === subItem.name.toLowerCase()
+                            ? 'h-14 bg-gradient-to-r from-teal-400 to-cyan-400 shadow-lg transform scale-105'
+                            : 'h-10 hover:bg-gray-50'
                         }`}
-                        alt="Dropdown"
-                        src="/figmaAssets/frame-7.svg"
-                      />
-                    )}
+                        onClick={() => handleNavigation(subItem.name.toLowerCase())}
+                      >
+                        <img
+                          className="w-3 h-3 mr-3"
+                          alt={subItem.name}
+                          src={subItem.icon}
+                        />
+                        <span className={`[font-family:'Inter',Helvetica] text-sm tracking-[0] leading-5 ${
+                          currentPage === subItem.name.toLowerCase()
+                            ? 'font-semibold text-white'
+                            : 'font-normal text-slate-500'
+                        }`}>
+                          {subItem.name}
+                        </span>
+                      </div>
+                    ))}
                   </div>
-                  {item.subItems && openDropdown === item.name && (
-                    <div className="ml-6 mt-1 space-y-1">
-                      {item.subItems.map((subItem, subIndex) => (
-                        <div
-                          key={subIndex}
-                          className={`flex items-center px-4 rounded-lg cursor-pointer transition-all duration-200 ${
-                            currentPage === subItem.name.toLowerCase()
-                              ? 'h-14 bg-gradient-to-r from-teal-400 to-cyan-400 shadow-lg transform scale-105'
-                              : 'h-10 hover:bg-gray-50'
-                          }`}
-                          onClick={() => handleNavigation(subItem.name.toLowerCase())}
-                        >
-                          <img
-                            className="w-3 h-3 mr-3"
-                            alt={subItem.name}
-                            src={subItem.icon}
-                          />
-                          <span className={`[font-family:'Inter',Helvetica] text-sm tracking-[0] leading-5 ${
-                            currentPage === subItem.name.toLowerCase()
-                              ? 'font-semibold text-white'
-                              : 'font-normal text-slate-500'
-                          }`}>
-                            {subItem.name}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </>
-              )}
-            </div>
-          ))}
+                )}
+              </div>
+            );
+          })}
         </div>
       </nav>
 
