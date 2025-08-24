@@ -658,6 +658,7 @@ Reconnaissance faciale
 {/* Zone Monitoring and Behavior Row */}
                 <div className="grid grid-cols-2 gap-6">
 {/* Zone Monitoring */}
+                  {config.zoneMonitoring && (
                   <Card className="bg-white/10 border-0">
 <CardContent className="p-5">
 <div className="flex items-center justify-between mb-6">
@@ -700,7 +701,9 @@ Surveillance de zones
                       </ScrollArea>
 </CardContent>
 </Card>
+                  )}
 {/* Behavior Analysis */}
+                  {config.behaviorAnalysis && (
                   <Card className="bg-white/10 border-0">
 <CardContent className="p-5">
 <div className="flex items-center justify-between mb-6">
@@ -732,8 +735,10 @@ Analyse comportementale
 <p className="text-xs text-white/70 text-center [font-family:'Inter',Helvetica]">Critique</p>
 </CardContent>
 </Card>
+                  )}
 </div>
 {/* Vehicles Section */}
+                {config.vehicles && (
                 <Card className="bg-white/10 border-0">
 <CardContent className="p-4">
 <div className="flex items-center justify-between mb-4">
@@ -802,6 +807,7 @@ Vitesse excessive
 </div>
 </CardContent>
 </Card>
+                )}
 </CardContent>
 </Card>
 </div>
