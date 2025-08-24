@@ -700,8 +700,9 @@ Surveillance de zones
                       </ScrollArea>
 </CardContent>
 </Card>
+                  )}
 {/* Behavior Analysis */}
-                  <Card className="bg-white/10 border-0">
+                <Card className="bg-white/10 border-0">
 <CardContent className="p-5">
 <div className="flex items-center justify-between mb-6">
 <div className="flex items-center gap-3">
@@ -732,6 +733,7 @@ Analyse comportementale
 <p className="text-xs text-white/70 text-center [font-family:'Inter',Helvetica]">Critique</p>
 </CardContent>
 </Card>
+                  )}
 </div>
 {/* Vehicles Section */}
                 <Card className="bg-white/10 border-0">
@@ -802,9 +804,6 @@ Vitesse excessive
 </div>
 </CardContent>
 </Card>
-</CardContent>
-</Card>
-</div>
 {/* Live Events Panel */}
           <div className="col-span-4">
 <Card className="bg-white border-0 shadow-sm h-full">
@@ -892,7 +891,7 @@ Mise à jour automatique
 </CardContent>
 </Card>
 </div>
-</div>
+          )}
 {/* Bottom Charts Section */}
         <div className="grid grid-cols-3 gap-8">
 <Card className="bg-white border-0 shadow-sm">
@@ -1169,6 +1168,7 @@ Voir toutes
 </div>
 </CardContent>
 </Card>
+          )}
 {/* Site List */}
           <Card className="bg-white border-0 shadow-sm">
 <CardHeader>
