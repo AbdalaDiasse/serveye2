@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 const navigationItems = [
   {
     name: "Dashboard",
-    icon: "/figmaAssets/i-13.svg",
+    icon: "dashboard",
     isActive: false,
   },
   {
@@ -57,6 +57,23 @@ interface EventSummarySectionProps {
   setCurrentPage?: (page: string) => void;
 }
 
+const renderIcon = (icon: string, className: string) => {
+  if (icon === "dashboard") {
+    return (
+      <svg className={className} fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+      </svg>
+    );
+  }
+  return (
+    <img
+      className={className}
+      alt="Icon"
+      src={icon}
+    />
+  );
+};
+
 export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage }: EventSummarySectionProps): JSX.Element => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(
     // Ouvrir automatiquement le dropdown "Personnes" si on est sur capture ou reconnaissance
@@ -106,11 +123,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
             <div key={index} className="relative">
               {currentPage === item.name.toLowerCase() ? (
                 <div className="h-12 rounded-xl shadow-[0px_10px_15px_#0000001a,0px_4px_6px_#0000001a] bg-gradient-to-r from-blue-600 to-blue-500 flex items-center px-4">
-                  <img
-                    className="w-5 h-6 mr-3"
-                    alt={item.name}
-                    src={item.icon}
-                  />
+                  {renderIcon(item.icon, "w-5 h-6 mr-3 text-white")}
                   <span className="[font-family:'Inter',Helvetica] font-semibold text-white text-base tracking-[0] leading-[normal]">
                     {item.name}
                   </span>
@@ -131,11 +144,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                       }
                     }}
                   >
-                    <img
-                      className="w-4 h-4 mr-3"
-                      alt={item.name}
-                      src={item.icon}
-                    />
+                    {renderIcon(item.icon, "w-4 h-4 mr-3 text-slate-600")}
                     <span className={`[font-family:'Inter',Helvetica] font-normal text-base tracking-[0] leading-6 ${
                       (item.name === "Personnes" && (currentPage === "capture" || currentPage === "reconnaissance"))
                         ? 'text-white font-semibold' 
