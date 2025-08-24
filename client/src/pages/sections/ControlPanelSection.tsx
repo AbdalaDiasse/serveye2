@@ -9,17 +9,36 @@ import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
 import { 
   Menu, Search, Bell, ChevronDown, TrendingUp, Settings, Shield, Users, 
   ArrowDown, ArrowUp, User, AlertTriangle, Eye, Car, Hash, Gauge, 
   AlertCircle, MoreVertical, MoreHorizontal, ChevronRight, HardHat,
   Shirt, Zap, Flame, Wind, Droplet, Activity, Monitor, Target,
   Truck, Bike, Bus, FileText, Wrench, Swords, Cloud, TrendingDown,
-  Move, ShieldAlert, UserX, Cigarette, Gun, Footprints
+  Move, ShieldAlert, UserX, Cigarette, Footprints
 } from "lucide-react";
 
 export const ControlPanelSection = (): JSX.Element => {
   const [selectedPeriod, setSelectedPeriod] = useState("jour");
+  const [isConfigOpen, setIsConfigOpen] = useState(false);
+  
+  // Configuration state for which sections to show
+  const [config, setConfig] = useState({
+    safety: true,
+    peopleCountingnp: true,
+    personRecognition: true,
+    zoneMonitoring: true,
+    behaviorAnalysis: true,
+    vehicles: true,
+    recentActivity: true
+  });
+
+  const handleConfigChange = (section: string, checked: boolean) => {
+    setConfig(prev => ({...prev, [section]: checked}));
+  };
   // Data for top metric cards
   const metricCards = [
     {
@@ -416,7 +435,88 @@ IA ACTIVE
                       <SelectItem value="annee">Année</SelectItem>
                     </SelectContent>
                   </Select>
-<Settings className="w-8 h-8 text-white/80" />
+<Dialog open={isConfigOpen} onOpenChange={setIsConfigOpen}>
+                    <DialogTrigger asChild>
+                      <Button variant="ghost" size="icon" className="text-white/80 hover:text-white hover:bg-white/10">
+                        <Settings className="w-8 h-8" />
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-md">
+                      <DialogHeader>
+                        <DialogTitle>Configuration du Centre de Contrôle</DialogTitle>
+                      </DialogHeader>
+                      <div className="space-y-4">
+                        <div className="text-sm text-gray-600 mb-4">
+                          Choisissez les sections à afficher dans le centre de contrôle :
+                        </div>
+                        
+                        <div className="space-y-3">
+                          <div className="flex items-center space-x-2">
+                            <Checkbox 
+                              id="safety" 
+                              checked={config.safety}
+                              onCheckedChange={(checked) => handleConfigChange('safety', checked as boolean)}
+                            />
+                            <Label htmlFor="safety">Safety Equipment</Label>
+                          </div>
+                          
+                          <div className="flex items-center space-x-2">
+                            <Checkbox 
+                              id="peopleCountingnp" 
+                              checked={config.peopleCountingnp}
+                              onCheckedChange={(checked) => handleConfigChange('peopleCountingnp', checked as boolean)}
+                            />
+                            <Label htmlFor="peopleCountingnp">People Counting</Label>
+                          </div>
+                          
+                          <div className="flex items-center space-x-2">
+                            <Checkbox 
+                              id="personRecognition" 
+                              checked={config.personRecognition}
+                              onCheckedChange={(checked) => handleConfigChange('personRecognition', checked as boolean)}
+                            />
+                            <Label htmlFor="personRecognition">Person Recognition</Label>
+                          </div>
+                          
+                          <div className="flex items-center space-x-2">
+                            <Checkbox 
+                              id="zoneMonitoring" 
+                              checked={config.zoneMonitoring}
+                              onCheckedChange={(checked) => handleConfigChange('zoneMonitoring', checked as boolean)}
+                            />
+                            <Label htmlFor="zoneMonitoring">Zone Monitoring</Label>
+                          </div>
+                          
+                          <div className="flex items-center space-x-2">
+                            <Checkbox 
+                              id="behaviorAnalysis" 
+                              checked={config.behaviorAnalysis}
+                              onCheckedChange={(checked) => handleConfigChange('behaviorAnalysis', checked as boolean)}
+                            />
+                            <Label htmlFor="behaviorAnalysis">Behavior Analysis</Label>
+                          </div>
+                          
+                          <div className="flex items-center space-x-2">
+                            <Checkbox 
+                              id="vehicles" 
+                              checked={config.vehicles}
+                              onCheckedChange={(checked) => handleConfigChange('vehicles', checked as boolean)}
+                            />
+                            <Label htmlFor="vehicles">Vehicles Tracking</Label>
+                          </div>
+                          
+                          <div className="flex items-center space-x-2">
+                            <Checkbox 
+                              id="recentActivity" 
+                              checked={config.recentActivity}
+                              onCheckedChange={(checked) => handleConfigChange('recentActivity', checked as boolean)}
+                            />
+                            <Label htmlFor="recentActivity">Recent Activity</Label>
+                          </div>
+                        </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
                 </div>
 </div>
 </CardHeader>
@@ -424,6 +524,7 @@ IA ACTIVE
 {/* Top Row - Safety, People Counting, Person Recognition */}
                 <div className="grid grid-cols-3 gap-6">
 {/* Safety Equipment */}
+                  {config.safety && (
                   <Card className="bg-white/10 border-0">
 <CardContent className="p-5">
 <div className="flex items-center justify-between mb-6">
@@ -468,7 +569,9 @@ IA ACTIVE
                       </ScrollArea>
 </CardContent>
 </Card>
+                  )}
 {/* People Counting */}
+                  {config.peopleCountingnp && (
                   <Card className="bg-white/10 border-0">
 <CardContent className="p-5">
 <div className="flex items-center gap-3 mb-6">
@@ -513,7 +616,9 @@ Personnes présentes
 </div>
 </CardContent>
 </Card>
+                  )}
 {/* Person Recognition */}
+                  {config.personRecognition && (
                   <Card className="bg-white/10 border-0">
 <CardContent className="p-5">
 <div className="flex items-center gap-3 mb-6">
@@ -548,6 +653,7 @@ Reconnaissance faciale
 </div>
 </CardContent>
 </Card>
+                  )}
 </div>
 {/* Zone Monitoring and Behavior Row */}
                 <div className="grid grid-cols-2 gap-6">
