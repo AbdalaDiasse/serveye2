@@ -169,7 +169,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                         key={subIndex}
                         className={`flex items-center px-4 rounded-lg cursor-pointer transition-all duration-200 ${
                           currentPage === subItem.name.toLowerCase()
-                            ? 'h-14 bg-gradient-to-r from-teal-400 to-cyan-400 shadow-lg transform scale-105'
+                            ? 'h-12 bg-gradient-to-r from-teal-400 to-cyan-400 shadow-md'
                             : 'h-10 hover:bg-gray-50'
                         }`}
                         onClick={() => handleNavigation(subItem.name.toLowerCase())}
