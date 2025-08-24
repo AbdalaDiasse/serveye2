@@ -9,7 +9,6 @@ import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
-
 export const ControlPanelSection = (): JSX.Element => {
   // Data for top metric cards
   const metricCards = [
@@ -369,7 +368,7 @@ Administrateur
 <CardContent className="p-6">
 <div className="flex items-center justify-between mb-4">
 <img
-                    className="w-7 h-8 metric-card-icon"
+                    className="w-7 h-8"
                     alt="Icon"
                     src={card.icon}
                     style={{background: 'none'}}
