@@ -260,10 +260,10 @@ export const ReconnaissancePage = (): JSX.Element => {
             </div>
             <div className="space-y-3">
               <textarea
-                placeholder="Décrivez ce que vous cherchez en langage naturel...&#10;Exemples:&#10;• 'Personnes reconnues avec un score inférieur à 80%'&#10;• 'Intrusions détectées cette semaine'"
+                placeholder="Décrivez ce que vous cherchez en langage naturel...&#10;Exemples:&#10;• 'Personnes avec score &lt; 80%'&#10;• 'Intrusions cette semaine'"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-4 py-3 bg-white border border-cyan-200 rounded-lg text-slate-700 placeholder:text-slate-400 min-h-[80px] resize-none [font-family:'Inter',Helvetica] text-sm"
+                className="w-full px-4 py-3 bg-white border border-cyan-200 rounded-lg text-slate-700 placeholder:text-slate-400 placeholder:text-xs min-h-[80px] resize-none [font-family:'Inter',Helvetica] text-sm"
               />
               <div className="flex gap-3">
                 <Badge variant="outline" className="text-xs text-slate-600">

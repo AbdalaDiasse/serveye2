@@ -378,10 +378,10 @@ export const CapturePage = (): JSX.Element => {
             {searchMode === "texte" ? (
               <div className="space-y-3">
                 <textarea
-                  placeholder="Décrivez ce que vous cherchez en langage naturel...&#10;Exemples:&#10;• 'Montre-moi toutes les femmes avec veste rouge détectées hier'&#10;• 'Hommes âgés de 25-40 ans avec barbe ce matin'"
+                  placeholder="Décrivez ce que vous cherchez en langage naturel...&#10;Exemples:&#10;• 'Personnes avec veste rouge hier'&#10;• 'Hommes 25-40 ans avec barbe'"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full px-4 py-3 bg-white border border-cyan-200 rounded-lg text-slate-700 placeholder:text-slate-400 min-h-[80px] resize-none [font-family:'Inter',Helvetica] text-sm"
+                  className="w-full px-4 py-3 bg-white border border-cyan-200 rounded-lg text-slate-700 placeholder:text-slate-400 placeholder:text-xs min-h-[80px] resize-none [font-family:'Inter',Helvetica] text-sm"
                 />
                 <div className="flex gap-3">
                   <Badge variant="outline" className="text-xs text-slate-600">
@@ -402,49 +402,143 @@ export const CapturePage = (): JSX.Element => {
                 </Button>
               </div>
             ) : (
-              <div className="space-y-4">
-                <div
-                  className="border-2 border-dashed border-teal-300 rounded-lg p-8 text-center bg-teal-50/30 hover:bg-teal-50/50 transition-colors cursor-pointer"
-                  onDragOver={handleDragOver}
-                  onDrop={handleDrop}
-                  onClick={() => document.getElementById('image-upload')?.click()}
-                >
-                  {uploadedImage ? (
-                    <div className="space-y-4">
-                      <img 
-                        src={uploadedImage} 
-                        alt="Image uploadée" 
-                        className="w-32 h-32 object-cover rounded-lg mx-auto border-2 border-teal-200"
-                      />
-                      <p className="text-sm text-teal-700 [font-family:'Inter',Helvetica]">
-                        ✓ Image chargée - Cliquez pour changer
-                      </p>
-                    </div>
-                  ) : (
-                    <div className="space-y-3">
-                      <div className="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto">
-                        <svg className="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                      </div>
-                      <div>
-                        <p className="text-teal-700 [font-family:'Inter',Helvetica] font-medium">
-                          📸 Glissez une image ici ou cliquez pour sélectionner
-                        </p>
-                        <p className="text-xs text-slate-500 [font-family:'Inter',Helvetica] mt-1">
-                          JPG, PNG jusqu'à 10MB
+              <div className="grid grid-cols-12 gap-4">
+                {/* Zone de drop d'image */}
+                <div className="col-span-6">
+                  <div
+                    className="border-2 border-dashed border-teal-300 rounded-lg p-6 text-center bg-teal-50/30 hover:bg-teal-50/50 transition-colors cursor-pointer h-full flex flex-col justify-center"
+                    onDragOver={handleDragOver}
+                    onDrop={handleDrop}
+                    onClick={() => document.getElementById('image-upload')?.click()}
+                  >
+                    {uploadedImage ? (
+                      <div className="space-y-3">
+                        <img 
+                          src={uploadedImage} 
+                          alt="Image uploadée" 
+                          className="w-20 h-20 object-cover rounded-lg mx-auto border-2 border-teal-200"
+                        />
+                        <p className="text-sm text-teal-700 [font-family:'Inter',Helvetica]">
+                          ✓ Image chargée
                         </p>
                       </div>
-                    </div>
-                  )}
+                    ) : (
+                      <div className="space-y-2">
+                        <div className="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center mx-auto">
+                          <svg className="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          </svg>
+                        </div>
+                        <div>
+                          <p className="text-teal-700 [font-family:'Inter',Helvetica] font-medium text-sm">
+                            Glissez une photo ici
+                          </p>
+                          <p className="text-xs text-slate-500 [font-family:'Inter',Helvetica]">
+                            ou cliquez pour parcourir
+                          </p>
+                          <p className="text-xs text-slate-500 [font-family:'Inter',Helvetica] mt-1">
+                            JPG, PNG jusqu'à 10MB
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  <input
+                    id="image-upload"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    className="hidden"
+                  />
                 </div>
-                <input
-                  id="image-upload"
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageUpload}
-                  className="hidden"
-                />
+
+                {/* Contrôles de recherche */}
+                <div className="col-span-6 space-y-4">
+                  {/* Similarité */}
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica]">
+                        Similarité
+                      </label>
+                      <span className="text-sm font-bold text-teal-600 [font-family:'Inter',Helvetica]">
+                        {similarity}%
+                      </span>
+                    </div>
+                    <input
+                      type="range"
+                      min="50"
+                      max="99"
+                      value={similarity}
+                      onChange={(e) => setSimilarity(parseInt(e.target.value))}
+                      className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer slider-thumb:appearance-none slider-thumb:h-4 slider-thumb:w-4 slider-thumb:bg-teal-500 slider-thumb:rounded-full slider-thumb:cursor-pointer"
+                    />
+                  </div>
+
+                  {/* Période */}
+                  <div>
+                    <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                      Période
+                    </label>
+                    <Select value={period} onValueChange={setPeriod}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Période" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="24h">Dernières 24h</SelectItem>
+                        <SelectItem value="7d">Derniers 7 jours</SelectItem>
+                        <SelectItem value="30d">Derniers 30 jours</SelectItem>
+                        <SelectItem value="all">Toutes les périodes</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {/* Caméras */}
+                  <div>
+                    <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                      Caméras
+                    </label>
+                    <Select value={cameras} onValueChange={setCameras}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Caméras" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="toutes">Toutes les caméras</SelectItem>
+                        <SelectItem value="cam1">Caméra 01</SelectItem>
+                        <SelectItem value="cam2">Caméra 02</SelectItem>
+                        <SelectItem value="cam3">Caméra 03</SelectItem>
+                        <SelectItem value="cam4">Caméra 04</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                {/* Bouton de recherche et suggestions */}
+                <div className="col-span-12">
+                  <Button 
+                    className="w-full bg-slate-400 hover:bg-slate-500 text-white mb-3"
+                    disabled={!uploadedImage}
+                  >
+                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    Rechercher ce visage
+                  </Button>
+                  
+                  <div className="flex gap-3">
+                    <span className="text-xs text-slate-500 [font-family:'Inter',Helvetica]">
+                      Suggestions:
+                    </span>
+                    <Badge variant="outline" className="text-xs text-slate-600">
+                      Personnes suspectes
+                    </Badge>
+                    <Badge variant="outline" className="text-xs text-slate-600">
+                      Visiteurs récurrents
+                    </Badge>
+                    <Badge variant="outline" className="text-xs text-slate-600">
+                      Personnel autorisé
+                    </Badge>
+                  </div>
+                </div>
               </div>
             )}
           </CardContent>
