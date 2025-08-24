@@ -17,7 +17,7 @@ export const ControlPanelSection = (): JSX.Element => {
       subtitle: "Détections Actives",
       badge: "Live",
       gradient: "bg-gradient-to-r from-blue-500 to-blue-700",
-      icon: "/figmaAssets/i-23.svg"
+      icon: "/figmaAssets/i-23-new.png"
     },
     {
       title: "98.7%",
