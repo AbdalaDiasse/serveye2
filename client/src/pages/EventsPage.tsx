@@ -258,9 +258,301 @@ export const EventsPage = (): JSX.Element => {
         {/* Sidebar Filtres */}
         <aside className="w-80 bg-white border-r border-gray-200 h-[calc(100vh-5rem)] overflow-y-auto">
           <div className="p-6">
-            {/* Recherche intelligente */}
+            <h3 className="font-semibold text-gray-700 mb-4 flex items-center gap-2 [font-family:'Inter',Helvetica]">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+              </svg>
+              Filtres
+            </h3>
+
+            {/* Surveillance de Zone */}
+            <div className="mb-4">
+              <h4 className="text-sm font-medium text-slate-700 mb-2 [font-family:'Inter',Helvetica]">
+                Surveillance de Zone
+              </h4>
+              <div className="space-y-2">
+                <label className="flex items-center space-x-2 cursor-pointer">
+                  <Checkbox 
+                    checked={surveillanceFilters.intrusion}
+                    onCheckedChange={(checked) => setSurveillanceFilters({...surveillanceFilters, intrusion: !!checked})}
+                    className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
+                  />
+                  <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Intrusion</span>
+                </label>
+                <label className="flex items-center space-x-2 cursor-pointer">
+                  <Checkbox 
+                    checked={surveillanceFilters.escalade}
+                    onCheckedChange={(checked) => setSurveillanceFilters({...surveillanceFilters, escalade: !!checked})}
+                    className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
+                  />
+                  <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Escalade de mur</span>
+                </label>
+                <label className="flex items-center space-x-2 cursor-pointer">
+                  <Checkbox 
+                    checked={surveillanceFilters.lineCrossing}
+                    onCheckedChange={(checked) => setSurveillanceFilters({...surveillanceFilters, lineCrossing: !!checked})}
+                    className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
+                  />
+                  <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Line crossing</span>
+                </label>
+                <label className="flex items-center space-x-2 cursor-pointer">
+                  <Checkbox 
+                    checked={surveillanceFilters.errance}
+                    onCheckedChange={(checked) => setSurveillanceFilters({...surveillanceFilters, errance: !!checked})}
+                    className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
+                  />
+                  <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Errance</span>
+                </label>
+              </div>
+            </div>
+
+            {/* EPI */}
+            <div className="mb-4">
+              <h4 className="text-sm font-medium text-slate-700 mb-2 [font-family:'Inter',Helvetica]">
+                EPI
+              </h4>
+              <div className="space-y-2">
+                <label className="flex items-center space-x-2 cursor-pointer">
+                  <Checkbox 
+                    checked={epiFilters.casque}
+                    onCheckedChange={(checked) => setEpiFilters({...epiFilters, casque: !!checked})}
+                    className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
+                  />
+                  <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Casque</span>
+                </label>
+                <label className="flex items-center space-x-2 cursor-pointer">
+                  <Checkbox 
+                    checked={epiFilters.veste}
+                    onCheckedChange={(checked) => setEpiFilters({...epiFilters, veste: !!checked})}
+                    className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
+                  />
+                  <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Veste</span>
+                </label>
+                <label className="flex items-center space-x-2 cursor-pointer">
+                  <Checkbox 
+                    checked={epiFilters.harnais}
+                    onCheckedChange={(checked) => setEpiFilters({...epiFilters, harnais: !!checked})}
+                    className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
+                  />
+                  <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Harnais</span>
+                </label>
+                <label className="flex items-center space-x-2 cursor-pointer">
+                  <Checkbox 
+                    checked={epiFilters.uniforme}
+                    onCheckedChange={(checked) => setEpiFilters({...epiFilters, uniforme: !!checked})}
+                    className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
+                  />
+                  <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Uniforme</span>
+                </label>
+                <label className="flex items-center space-x-2 cursor-pointer">
+                  <Checkbox 
+                    checked={epiFilters.masque}
+                    onCheckedChange={(checked) => setEpiFilters({...epiFilters, masque: !!checked})}
+                    className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
+                  />
+                  <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Masque</span>
+                </label>
+              </div>
+            </div>
+
+            {/* Incendie */}
+            <div className="mb-4">
+              <h4 className="text-sm font-medium text-slate-700 mb-2 [font-family:'Inter',Helvetica]">
+                Incendie
+              </h4>
+              <div className="space-y-2">
+                <label className="flex items-center space-x-2 cursor-pointer">
+                  <Checkbox 
+                    checked={incendieFilters.feux}
+                    onCheckedChange={(checked) => setIncendieFilters({...incendieFilters, feux: !!checked})}
+                    className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
+                  />
+                  <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Feux</span>
+                </label>
+                <label className="flex items-center space-x-2 cursor-pointer">
+                  <Checkbox 
+                    checked={incendieFilters.fumee}
+                    onCheckedChange={(checked) => setIncendieFilters({...incendieFilters, fumee: !!checked})}
+                    className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
+                  />
+                  <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Fumée</span>
+                </label>
+                <label className="flex items-center space-x-2 cursor-pointer">
+                  <Checkbox 
+                    checked={incendieFilters.fuiteLiquide}
+                    onCheckedChange={(checked) => setIncendieFilters({...incendieFilters, fuiteLiquide: !!checked})}
+                    className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
+                  />
+                  <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Fuite de liquide</span>
+                </label>
+              </div>
+            </div>
+
+            {/* Productivité */}
+            <div className="mb-4">
+              <h4 className="text-sm font-medium text-slate-700 mb-2 [font-family:'Inter',Helvetica]">
+                Productivité
+              </h4>
+              <div className="space-y-2">
+                <label className="flex items-center space-x-2 cursor-pointer">
+                  <Checkbox 
+                    checked={productiviteFilters.surnombre}
+                    onCheckedChange={(checked) => setProductiviteFilters({...productiviteFilters, surnombre: !!checked})}
+                    className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
+                  />
+                  <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Surnombre</span>
+                </label>
+                <label className="flex items-center space-x-2 cursor-pointer">
+                  <Checkbox 
+                    checked={productiviteFilters.sousNombre}
+                    onCheckedChange={(checked) => setProductiviteFilters({...productiviteFilters, sousNombre: !!checked})}
+                    className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
+                  />
+                  <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Sous-nombre</span>
+                </label>
+              </div>
+            </div>
+
+            {/* Comportement */}
+            <div className="mb-4">
+              <h4 className="text-sm font-medium text-slate-700 mb-2 [font-family:'Inter',Helvetica]">
+                Comportement
+              </h4>
+              <div className="space-y-2">
+                <label className="flex items-center space-x-2 cursor-pointer">
+                  <Checkbox 
+                    checked={comportementFilters.bagarre}
+                    onCheckedChange={(checked) => setComportementFilters({...comportementFilters, bagarre: !!checked})}
+                    className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
+                  />
+                  <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Bagarre</span>
+                </label>
+                <label className="flex items-center space-x-2 cursor-pointer">
+                  <Checkbox 
+                    checked={comportementFilters.fumer}
+                    onCheckedChange={(checked) => setComportementFilters({...comportementFilters, fumer: !!checked})}
+                    className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
+                  />
+                  <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Fumer</span>
+                </label>
+                <label className="flex items-center space-x-2 cursor-pointer">
+                  <Checkbox 
+                    checked={comportementFilters.portArme}
+                    onCheckedChange={(checked) => setComportementFilters({...comportementFilters, portArme: !!checked})}
+                    className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
+                  />
+                  <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Port d'arme</span>
+                </label>
+                <label className="flex items-center space-x-2 cursor-pointer">
+                  <Checkbox 
+                    checked={comportementFilters.regroupement}
+                    onCheckedChange={(checked) => setComportementFilters({...comportementFilters, regroupement: !!checked})}
+                    className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
+                  />
+                  <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Regroupement</span>
+                </label>
+              </div>
+            </div>
+
+            {/* Caméras */}
+            <div className="mb-4">
+              <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                Caméras
+              </label>
+              <Select value={filterCamera} onValueChange={setFilterCamera}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Toutes les caméras" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Toutes les caméras</SelectItem>
+                  <SelectItem value="cam1">Caméra 01</SelectItem>
+                  <SelectItem value="cam2">Caméra 02</SelectItem>
+                  <SelectItem value="cam3">Caméra 03</SelectItem>
+                  <SelectItem value="cam4">Caméra 04</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Sites */}
+            <div className="mb-4">
+              <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                Sites
+              </label>
+              <Select value={filterSite} onValueChange={setFilterSite}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Tous les sites" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Tous les sites</SelectItem>
+                  <SelectItem value="principal">Site Principal</SelectItem>
+                  <SelectItem value="secondaire">Site Secondaire</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Zones */}
+            <div className="mb-4">
+              <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                Zones
+              </label>
+              <Select value={filterZone} onValueChange={setFilterZone}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Toutes les zones" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Toutes les zones</SelectItem>
+                  <SelectItem value="production">Zone de production</SelectItem>
+                  <SelectItem value="stockage">Zone de stockage</SelectItem>
+                  <SelectItem value="entree">Entrée principale</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Période */}
             <div className="mb-6">
-              <div className="flex items-center gap-2 mb-3">
+              <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                Période
+              </label>
+              <div className="space-y-2">
+                <div className="relative">
+                  <Input 
+                    type="date"
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
+                    className="pl-3 pr-10"
+                    placeholder="mm / dd / yy"
+                  />
+                  <Calendar className="absolute right-3 top-2.5 h-4 w-4 text-gray-400" />
+                </div>
+                <div className="relative">
+                  <Input 
+                    type="date"
+                    value={endDate}
+                    onChange={(e) => setEndDate(e.target.value)}
+                    className="pl-3 pr-10"
+                    placeholder="mm / dd / yy"
+                  />
+                  <Calendar className="absolute right-3 top-2.5 h-4 w-4 text-gray-400" />
+                </div>
+              </div>
+            </div>
+
+            {/* Bouton Appliquer */}
+            <Button className="w-full bg-red-500 hover:bg-red-600 text-white">
+              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+              </svg>
+              Appliquer les filtres
+            </Button>
+          </div>
+        </aside>
+
+        {/* Main Content */}
+        <main className="flex-1 p-6">
+          {/* Section Recherche Intelligente */}
+          <Card className="mb-6 bg-red-50/50 border-red-200">
+            <CardContent className="p-6">
+              <div className="flex items-center gap-2 mb-4">
                 <div className="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center">
                   <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
@@ -278,322 +570,37 @@ export const EventsPage = (): JSX.Element => {
                 <p className="pl-2">• "Montrer moi toutes les intrusions d'hier"</p>
                 <p className="pl-2">• "Événements sur feu et fumée cette semaine"</p>
               </div>
-              <Button className="w-full bg-red-500 hover:bg-red-600 text-white">
-                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-                Rechercher
-              </Button>
-            </div>
-
-            {/* Suggestions */}
-            <div className="mb-6">
-              <div className="flex gap-2 flex-wrap">
-                <Badge variant="outline" className="text-xs border-red-200 text-red-600">
-                  Intrusions récentes
-                </Badge>
-                <Badge variant="outline" className="text-xs border-red-200 text-red-600">
-                  EPI manquants
-                </Badge>
-                <Badge variant="outline" className="text-xs border-red-200 text-red-600">
-                  Incidents incendie
-                </Badge>
-              </div>
-            </div>
-
-            <div className="border-t border-gray-200 pt-4">
-              <h3 className="font-semibold text-gray-700 mb-4 flex items-center gap-2 [font-family:'Inter',Helvetica]">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
-                </svg>
-                Filtres
-              </h3>
-
-              {/* Surveillance de Zone */}
-              <div className="mb-4">
-                <h4 className="text-sm font-medium text-slate-700 mb-2 [font-family:'Inter',Helvetica]">
-                  Surveillance de Zone
-                </h4>
-                <div className="space-y-2">
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <Checkbox 
-                      checked={surveillanceFilters.intrusion}
-                      onCheckedChange={(checked) => setSurveillanceFilters({...surveillanceFilters, intrusion: !!checked})}
-                      className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
-                    />
-                    <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Intrusion</span>
-                  </label>
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <Checkbox 
-                      checked={surveillanceFilters.escalade}
-                      onCheckedChange={(checked) => setSurveillanceFilters({...surveillanceFilters, escalade: !!checked})}
-                      className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
-                    />
-                    <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Escalade de mur</span>
-                  </label>
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <Checkbox 
-                      checked={surveillanceFilters.lineCrossing}
-                      onCheckedChange={(checked) => setSurveillanceFilters({...surveillanceFilters, lineCrossing: !!checked})}
-                      className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
-                    />
-                    <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Line crossing</span>
-                  </label>
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <Checkbox 
-                      checked={surveillanceFilters.errance}
-                      onCheckedChange={(checked) => setSurveillanceFilters({...surveillanceFilters, errance: !!checked})}
-                      className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
-                    />
-                    <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Errance</span>
-                  </label>
-                </div>
-              </div>
-
-              {/* EPI */}
-              <div className="mb-4">
-                <h4 className="text-sm font-medium text-slate-700 mb-2 [font-family:'Inter',Helvetica]">
-                  EPI
-                </h4>
-                <div className="space-y-2">
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <Checkbox 
-                      checked={epiFilters.casque}
-                      onCheckedChange={(checked) => setEpiFilters({...epiFilters, casque: !!checked})}
-                      className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
-                    />
-                    <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Casque</span>
-                  </label>
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <Checkbox 
-                      checked={epiFilters.veste}
-                      onCheckedChange={(checked) => setEpiFilters({...epiFilters, veste: !!checked})}
-                      className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
-                    />
-                    <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Veste</span>
-                  </label>
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <Checkbox 
-                      checked={epiFilters.harnais}
-                      onCheckedChange={(checked) => setEpiFilters({...epiFilters, harnais: !!checked})}
-                      className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
-                    />
-                    <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Harnais</span>
-                  </label>
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <Checkbox 
-                      checked={epiFilters.uniforme}
-                      onCheckedChange={(checked) => setEpiFilters({...epiFilters, uniforme: !!checked})}
-                      className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
-                    />
-                    <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Uniforme</span>
-                  </label>
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <Checkbox 
-                      checked={epiFilters.masque}
-                      onCheckedChange={(checked) => setEpiFilters({...epiFilters, masque: !!checked})}
-                      className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
-                    />
-                    <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Masque</span>
-                  </label>
-                </div>
-              </div>
-
-              {/* Incendie */}
-              <div className="mb-4">
-                <h4 className="text-sm font-medium text-slate-700 mb-2 [font-family:'Inter',Helvetica]">
-                  Incendie
-                </h4>
-                <div className="space-y-2">
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <Checkbox 
-                      checked={incendieFilters.feux}
-                      onCheckedChange={(checked) => setIncendieFilters({...incendieFilters, feux: !!checked})}
-                      className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
-                    />
-                    <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Feux</span>
-                  </label>
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <Checkbox 
-                      checked={incendieFilters.fumee}
-                      onCheckedChange={(checked) => setIncendieFilters({...incendieFilters, fumee: !!checked})}
-                      className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
-                    />
-                    <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Fumée</span>
-                  </label>
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <Checkbox 
-                      checked={incendieFilters.fuiteLiquide}
-                      onCheckedChange={(checked) => setIncendieFilters({...incendieFilters, fuiteLiquide: !!checked})}
-                      className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
-                    />
-                    <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Fuite de liquide</span>
-                  </label>
-                </div>
-              </div>
-
-              {/* Productivité */}
-              <div className="mb-4">
-                <h4 className="text-sm font-medium text-slate-700 mb-2 [font-family:'Inter',Helvetica]">
-                  Productivité
-                </h4>
-                <div className="space-y-2">
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <Checkbox 
-                      checked={productiviteFilters.surnombre}
-                      onCheckedChange={(checked) => setProductiviteFilters({...productiviteFilters, surnombre: !!checked})}
-                      className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
-                    />
-                    <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Surnombre</span>
-                  </label>
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <Checkbox 
-                      checked={productiviteFilters.sousNombre}
-                      onCheckedChange={(checked) => setProductiviteFilters({...productiviteFilters, sousNombre: !!checked})}
-                      className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
-                    />
-                    <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Sous-nombre</span>
-                  </label>
-                </div>
-              </div>
-
-              {/* Comportement */}
-              <div className="mb-4">
-                <h4 className="text-sm font-medium text-slate-700 mb-2 [font-family:'Inter',Helvetica]">
-                  Comportement
-                </h4>
-                <div className="space-y-2">
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <Checkbox 
-                      checked={comportementFilters.bagarre}
-                      onCheckedChange={(checked) => setComportementFilters({...comportementFilters, bagarre: !!checked})}
-                      className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
-                    />
-                    <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Bagarre</span>
-                  </label>
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <Checkbox 
-                      checked={comportementFilters.fumer}
-                      onCheckedChange={(checked) => setComportementFilters({...comportementFilters, fumer: !!checked})}
-                      className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
-                    />
-                    <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Fumer</span>
-                  </label>
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <Checkbox 
-                      checked={comportementFilters.portArme}
-                      onCheckedChange={(checked) => setComportementFilters({...comportementFilters, portArme: !!checked})}
-                      className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
-                    />
-                    <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Port d'arme</span>
-                  </label>
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <Checkbox 
-                      checked={comportementFilters.regroupement}
-                      onCheckedChange={(checked) => setComportementFilters({...comportementFilters, regroupement: !!checked})}
-                      className="border-gray-300 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
-                    />
-                    <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">Regroupement</span>
-                  </label>
-                </div>
-              </div>
-
-              {/* Caméras */}
-              <div className="mb-4">
-                <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                  Caméras
-                </label>
-                <Select value={filterCamera} onValueChange={setFilterCamera}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Toutes les caméras" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">Toutes les caméras</SelectItem>
-                    <SelectItem value="cam1">Caméra 01</SelectItem>
-                    <SelectItem value="cam2">Caméra 02</SelectItem>
-                    <SelectItem value="cam3">Caméra 03</SelectItem>
-                    <SelectItem value="cam4">Caméra 04</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Sites */}
-              <div className="mb-4">
-                <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                  Sites
-                </label>
-                <Select value={filterSite} onValueChange={setFilterSite}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Tous les sites" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">Tous les sites</SelectItem>
-                    <SelectItem value="principal">Site Principal</SelectItem>
-                    <SelectItem value="secondaire">Site Secondaire</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Zones */}
-              <div className="mb-4">
-                <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                  Zones
-                </label>
-                <Select value={filterZone} onValueChange={setFilterZone}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Toutes les zones" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">Toutes les zones</SelectItem>
-                    <SelectItem value="production">Zone de production</SelectItem>
-                    <SelectItem value="stockage">Zone de stockage</SelectItem>
-                    <SelectItem value="entree">Entrée principale</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Période */}
-              <div className="mb-6">
-                <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                  Période
-                </label>
-                <div className="space-y-2">
-                  <div className="relative">
-                    <Input 
-                      type="date"
-                      value={startDate}
-                      onChange={(e) => setStartDate(e.target.value)}
-                      className="pl-3 pr-10"
-                      placeholder="mm / dd / yy"
-                    />
-                    <Calendar className="absolute right-3 top-2.5 h-4 w-4 text-gray-400" />
+              
+              <div className="space-y-3">
+                <textarea
+                  placeholder="Décrivez ce que vous cherchez en langage naturel..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full px-4 py-3 bg-white border border-red-200 rounded-lg text-slate-700 placeholder:text-slate-400 placeholder:text-sm min-h-[80px] resize-none [font-family:'Inter',Helvetica] text-sm"
+                />
+                <div className="flex items-center justify-between">
+                  <div className="flex gap-2 flex-wrap">
+                    <Badge variant="outline" className="text-xs border-red-200 text-red-600">
+                      Intrusions récentes
+                    </Badge>
+                    <Badge variant="outline" className="text-xs border-red-200 text-red-600">
+                      EPI manquants
+                    </Badge>
+                    <Badge variant="outline" className="text-xs border-red-200 text-red-600">
+                      Incidents incendie
+                    </Badge>
                   </div>
-                  <div className="relative">
-                    <Input 
-                      type="date"
-                      value={endDate}
-                      onChange={(e) => setEndDate(e.target.value)}
-                      className="pl-3 pr-10"
-                      placeholder="mm / dd / yy"
-                    />
-                    <Calendar className="absolute right-3 top-2.5 h-4 w-4 text-gray-400" />
-                  </div>
+                  <Button className="bg-red-500 hover:bg-red-600 text-white">
+                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    Rechercher
+                  </Button>
                 </div>
               </div>
+            </CardContent>
+          </Card>
 
-              {/* Bouton Appliquer */}
-              <Button className="w-full bg-red-500 hover:bg-red-600 text-white">
-                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
-                </svg>
-                Appliquer les filtres
-              </Button>
-            </div>
-          </div>
-        </aside>
-
-        {/* Main Content */}
-        <main className="flex-1 p-6">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-lg font-semibold text-slate-800 [font-family:'Inter',Helvetica]">
               Événements Détectés
