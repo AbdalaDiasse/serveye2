@@ -190,7 +190,72 @@ export const EventsPage = (): JSX.Element => {
     regroupement: false
   });
 
-  const totalEvents = eventsData.length;
+  // Fonction de filtrage des événements
+  const getFilteredEvents = () => {
+    return eventsData.filter(event => {
+      // Filtres par caméras
+      if (filterCamera !== "all") {
+        const cameraNumber = filterCamera.replace("cam", "").padStart(2, "0");
+        if (!event.camera.includes(cameraNumber)) return false;
+      }
+
+      // Filtres par sites (pour l'exemple, on associe selon la zone)
+      if (filterSite !== "all") {
+        if (filterSite === "principal" && !event.location.includes("production")) return false;
+        if (filterSite === "secondaire" && !event.location.includes("stockage")) return false;
+      }
+
+      // Filtres par zones
+      if (filterZone !== "all") {
+        if (filterZone === "production" && !event.location.includes("production")) return false;
+        if (filterZone === "stockage" && !event.location.includes("stockage")) return false;
+        if (filterZone === "entree" && !event.location.includes("Entrée")) return false;
+      }
+
+      // Vérifier si au moins un filtre de catégorie est sélectionné
+      const hasAnyFilterSelected = Object.values(surveillanceFilters).some(v => v) ||
+                                   Object.values(epiFilters).some(v => v) ||
+                                   Object.values(incendieFilters).some(v => v) ||
+                                   Object.values(productiviteFilters).some(v => v) ||
+                                   Object.values(comportementFilters).some(v => v);
+
+      // Si aucun filtre n'est sélectionné, afficher tous les événements
+      if (!hasAnyFilterSelected) return true;
+
+      // Filtres par surveillance de zone
+      if (surveillanceFilters.intrusion && event.type.includes("Intrusion")) return true;
+      if (surveillanceFilters.escalade && event.type.includes("Escalade")) return true;
+      if (surveillanceFilters.lineCrossing && event.type.includes("Franchissement")) return true;
+      if (surveillanceFilters.errance && event.type.includes("Errance")) return true;
+
+      // Filtres par EPI
+      if (epiFilters.casque && event.type.includes("Casque")) return true;
+      if (epiFilters.veste && event.type.includes("Veste")) return true;
+      if (epiFilters.harnais && event.type.includes("Harnais")) return true;
+      if (epiFilters.uniforme && event.type.includes("Uniforme")) return true;
+      if (epiFilters.masque && event.type.includes("Masque")) return true;
+
+      // Filtres par incendie
+      if (incendieFilters.feux && event.type.includes("Incendie")) return true;
+      if (incendieFilters.fumee && event.type.includes("Fumée")) return true;
+      if (incendieFilters.fuiteLiquide && event.type.includes("Fuite")) return true;
+
+      // Filtres par productivité
+      if (productiviteFilters.surnombre && event.type.includes("Surnombre")) return true;
+      if (productiviteFilters.sousNombre && event.type.includes("manquante")) return true;
+
+      // Filtres par comportement
+      if (comportementFilters.bagarre && event.type.includes("Bagarre")) return true;
+      if (comportementFilters.fumer && event.type.includes("Fumer")) return true;
+      if (comportementFilters.portArme && event.type.includes("Port d'arme")) return true;
+      if (comportementFilters.regroupement && event.type.includes("Regroupement")) return true;
+
+      return false;
+    });
+  };
+
+  const filteredEvents = getFilteredEvents();
+  const totalEvents = filteredEvents.length;
 
   return (
     <div className="w-full min-h-screen relative">
@@ -607,7 +672,7 @@ export const EventsPage = (): JSX.Element => {
 
             {/* Grid des événements */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {eventsData.map((event) => (
+              {filteredEvents.map((event) => (
                 <Card key={event.id} className="hover:shadow-lg transition-shadow cursor-pointer bg-white border border-gray-200">
                   <div className="relative">
                     <img 
