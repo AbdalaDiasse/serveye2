@@ -17,35 +17,35 @@ export const ControlPanelSection = (): JSX.Element => {
       subtitle: "Détections Actives",
       badge: "Live",
       gradient: "bg-gradient-to-r from-blue-500 to-blue-700",
-      icon: "/figmaAssets/i-23.svg"
+      icon: "/icons/surveillance-detection.png"
     },
     {
       title: "98.7%",
       subtitle: "Temps de Fonctionnement",
       badge: "24h",
       gradient: "bg-gradient-to-r from-emerald-500 to-cyan-500",
-      icon: "/figmaAssets/i-19.svg"
+      icon: "/icons/uptime-24h.png"
     },
     {
       title: "23",
       subtitle: "Alertes Critiques",
       badge: "Urgent",
       gradient: "bg-gradient-to-r from-orange-500 to-red-500",
-      icon: "/figmaAssets/i-18.svg"
+      icon: "/icons/urgent-alert.png"
     },
     {
       title: "1,456",
       subtitle: "Personnes Reconnues",
       badge: "Today",
       gradient: "bg-gradient-to-r from-violet-500 to-blue-500",
-      icon: "/figmaAssets/i-16.svg"
+      icon: "/icons/people-recognition.png"
     },
     {
       title: "87",
       subtitle: "Score de Sécurité",
       badge: "Score",
       gradient: "bg-gradient-to-r from-emerald-500 to-green-600",
-      icon: "/figmaAssets/i-21.svg",
+      icon: "/icons/security-score.png",
       hasChart: true
     }
   ];
