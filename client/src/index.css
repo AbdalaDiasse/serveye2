@@ -218,25 +218,4 @@
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
-
-  /* Fix SVG white background issue using CSS filters */
-  img[src$=".svg"] {
-    background: none !important;
-    background-color: transparent !important;
-    mix-blend-mode: multiply;
-  }
-  
-  svg {
-    background: none !important;
-    background-color: transparent !important;
-    mix-blend-mode: multiply;
-  }
-  
-  /* Additional fix for metric card icons */
-  .metric-card-icon {
-    background: none !important;
-    background-color: transparent !important;
-    mix-blend-mode: multiply;
-    filter: invert(1) brightness(2);
-  }
 }
