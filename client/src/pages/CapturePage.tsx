@@ -226,6 +226,11 @@ export const CapturePage = (): JSX.Element => {
   const [beardType, setBeardType] = useState("all");
   const [hatType, setHatType] = useState("all");
   
+  // États pour les filtres de localisation
+  const [filterSite, setFilterSite] = useState("all");
+  const [filterCamera, setFilterCamera] = useState("all");
+  const [filterZone, setFilterZone] = useState("all");
+  
   // États pour la recherche par visage
   const [searchMode, setSearchMode] = useState("texte");
   const [similarity, setSimilarity] = useState(80);
@@ -623,6 +628,64 @@ export const CapturePage = (): JSX.Element => {
 
                 {/* Filtres dynamiques selon le mode */}
                 <div className="space-y-4">
+                  {/* Filtres de localisation */}
+                  <div>
+                    <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                      Sites
+                    </label>
+                    <Select value={filterSite} onValueChange={setFilterSite}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Tous les sites" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">Tous les sites</SelectItem>
+                        <SelectItem value="site1">Site Principal</SelectItem>
+                        <SelectItem value="site2">Site Secondaire</SelectItem>
+                        <SelectItem value="site3">Site Est</SelectItem>
+                        <SelectItem value="site4">Site Ouest</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div>
+                    <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                      Caméras
+                    </label>
+                    <Select value={filterCamera} onValueChange={setFilterCamera}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Toutes les caméras" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">Toutes les caméras</SelectItem>
+                        <SelectItem value="cam1">Caméra 01</SelectItem>
+                        <SelectItem value="cam2">Caméra 02</SelectItem>
+                        <SelectItem value="cam3">Caméra 03</SelectItem>
+                        <SelectItem value="cam4">Caméra 04</SelectItem>
+                        <SelectItem value="cam5">Caméra 05</SelectItem>
+                        <SelectItem value="cam6">Caméra 06</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div>
+                    <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                      Zones
+                    </label>
+                    <Select value={filterZone} onValueChange={setFilterZone}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Toutes les zones" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">Toutes les zones</SelectItem>
+                        <SelectItem value="entrance">Zone d'entrée</SelectItem>
+                        <SelectItem value="lobby">Hall d'accueil</SelectItem>
+                        <SelectItem value="parking">Parking</SelectItem>
+                        <SelectItem value="corridor">Couloirs</SelectItem>
+                        <SelectItem value="exit">Zone de sortie</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
                   {/* Filtres communs */}
                   <div>
                     <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">

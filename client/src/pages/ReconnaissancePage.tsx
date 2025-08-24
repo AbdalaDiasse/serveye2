@@ -170,6 +170,8 @@ export const ReconnaissancePage = (): JSX.Element => {
   const [ageFilter, setAgeFilter] = useState("all");
   const [sexFilter, setSexFilter] = useState("all");
   const [cameraFilter, setCameraFilter] = useState("all");
+  const [siteFilter, setSiteFilter] = useState("all");
+  const [zoneFilter, setZoneFilter] = useState("all");
   const [confidenceRange, setConfidenceRange] = useState([0]);
 
   const filteredData = recognitionData.filter(person => {
@@ -440,6 +442,24 @@ export const ReconnaissancePage = (): JSX.Element => {
 
                   <div>
                     <label className="text-sm text-slate-600 [font-family:'Inter',Helvetica] mb-2 block">
+                      Sites
+                    </label>
+                    <Select value={siteFilter} onValueChange={setSiteFilter}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Tous les sites" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">Tous les sites</SelectItem>
+                        <SelectItem value="site1">Site Principal</SelectItem>
+                        <SelectItem value="site2">Site Secondaire</SelectItem>
+                        <SelectItem value="site3">Site Est</SelectItem>
+                        <SelectItem value="site4">Site Ouest</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div>
+                    <label className="text-sm text-slate-600 [font-family:'Inter',Helvetica] mb-2 block">
                       Caméra
                     </label>
                     <Select value={cameraFilter} onValueChange={setCameraFilter}>
@@ -451,6 +471,28 @@ export const ReconnaissancePage = (): JSX.Element => {
                         <SelectItem value="cam1">Caméra 01</SelectItem>
                         <SelectItem value="cam2">Caméra 02</SelectItem>
                         <SelectItem value="cam3">Caméra 03</SelectItem>
+                        <SelectItem value="cam4">Caméra 04</SelectItem>
+                        <SelectItem value="cam5">Caméra 05</SelectItem>
+                        <SelectItem value="cam6">Caméra 06</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div>
+                    <label className="text-sm text-slate-600 [font-family:'Inter',Helvetica] mb-2 block">
+                      Zones
+                    </label>
+                    <Select value={zoneFilter} onValueChange={setZoneFilter}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Toutes les zones" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">Toutes les zones</SelectItem>
+                        <SelectItem value="entrance">Zone d'entrée</SelectItem>
+                        <SelectItem value="lobby">Hall d'accueil</SelectItem>
+                        <SelectItem value="parking">Parking</SelectItem>
+                        <SelectItem value="corridor">Couloirs</SelectItem>
+                        <SelectItem value="exit">Zone de sortie</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
