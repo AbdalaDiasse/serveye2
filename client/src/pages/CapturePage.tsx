@@ -43,139 +43,176 @@ const captureGallery = [
   {
     id: 3,
     type: "Visage",
-    timestamp: "14:25:18",
+    timestamp: "14:25:17",
     camera: "Caméra 02",
     gender: "Homme",
     age: 35,
     confidence: 91,
     image: casualManPhoto,
-    attributes: ["Barbe", "Cheveux courts", "Sans lunettes"],
+    attributes: ["Barbe courte", "Cheveux bruns", "T-shirt"],
     today: "Aujourd'hui 14:25"
   },
   {
     id: 4,
     type: "Visage",
-    timestamp: "14:22:03",
-    camera: "Caméra 05",
+    timestamp: "14:20:58",
+    camera: "Caméra 04",
     gender: "Femme",
-    age: 55,
-    confidence: 89,
+    age: 62,
+    confidence: 87,
     image: elderlyWomanPhoto,
-    attributes: ["Cheveux courts", "Lunettes", "Sans casquette"],
-    today: "Aujourd'hui 14:22"
+    attributes: ["Cheveux gris", "Lunettes", "Manteau"],
+    today: "Aujourd'hui 14:20"
   },
   {
     id: 5,
-    type: "Visage",
-    timestamp: "14:18:29",
+    type: "Corps",
+    timestamp: "14:18:33",
     camera: "Caméra 01",
     gender: "Homme",
-    age: 25,
-    confidence: 96,
+    age: 29,
+    confidence: 84,
     image: youngManPhoto,
-    attributes: ["Sans barbe", "Cheveux courts", "Sans lunettes"],
+    attributes: ["Jean bleu", "Chemise blanche", "Sac à dos"],
     today: "Aujourd'hui 14:18"
   },
   {
     id: 6,
     type: "Visage",
-    timestamp: "14:15:47",
-    camera: "Caméra 04",
-    gender: "Homme",
-    age: 40,
-    confidence: 67,
-    image: businessmanPhoto,
-    attributes: ["Barbe", "Cheveux courts", "Sans lunettes"],
+    timestamp: "14:15:42",
+    camera: "Caméra 03",
+    gender: "Femme",
+    age: 38,
+    confidence: 96,
+    image: womanPhoto,
+    attributes: ["Cheveux longs", "Robe rouge", "Sac à main"],
     today: "Aujourd'hui 14:15"
   },
   {
     id: 7,
-    type: "Visage",
-    timestamp: "14:12:33",
-    camera: "Caméra 06",
-    gender: "Femme",
-    age: 32,
-    confidence: 93,
-    image: womanPhoto,
-    attributes: ["Cheveux longs", "Sans lunettes", "Sans barbe"],
+    type: "Corps",
+    timestamp: "14:12:11",
+    camera: "Caméra 02",
+    gender: "Homme",
+    age: 52,
+    confidence: 89,
+    image: businessmanPhoto,
+    attributes: ["Costume gris", "Cravate", "Mallette"],
     today: "Aujourd'hui 14:12"
   },
   {
     id: 8,
     type: "Visage",
-    timestamp: "14:09:15",
-    camera: "Caméra 02",
+    timestamp: "14:08:27",
+    camera: "Caméra 04",
     gender: "Homme",
-    age: 38,
-    confidence: 88,
+    age: 31,
+    confidence: 93,
     image: casualManPhoto,
-    attributes: ["Lunettes", "Cheveux longs", "Sans barbe"],
-    today: "Aujourd'hui 14:09"
+    attributes: ["Casquette", "Veste en cuir", "Jean"],
+    today: "Aujourd'hui 14:08"
   },
   {
     id: 9,
-    type: "Corps",
-    timestamp: "14:06:22",
+    type: "Visage",
+    timestamp: "14:05:14",
     camera: "Caméra 01",
-    gender: "Homme",
-    age: 42,
-    confidence: 85,
-    image: businessmanPhoto,
-    attributes: ["Costume", "Taille moyenne", "Posture droite"],
-    today: "Aujourd'hui 14:06"
+    gender: "Femme",
+    age: 45,
+    confidence: 88,
+    image: elderlyWomanPhoto,
+    attributes: ["Cheveux courts", "Blouse", "Bijoux"],
+    today: "Aujourd'hui 14:05"
   },
   {
     id: 10,
     type: "Corps",
-    timestamp: "14:03:11",
+    timestamp: "14:02:39",
     camera: "Caméra 03",
-    gender: "Femme",
-    age: 30,
-    confidence: 92,
-    image: womanPhoto,
-    attributes: ["Robe", "Taille petite", "Démarche rapide"],
-    today: "Aujourd'hui 14:03"
+    gender: "Homme",
+    age: 26,
+    confidence: 85,
+    image: youngManPhoto,
+    attributes: ["Short", "T-shirt", "Baskets"],
+    today: "Aujourd'hui 14:02"
   },
   {
     id: 11,
-    type: "Corps",
-    timestamp: "14:00:45",
+    type: "Visage",
+    timestamp: "13:58:56",
     camera: "Caméra 02",
-    gender: "Homme",
-    age: 28,
-    confidence: 78,
-    image: casualManPhoto,
-    attributes: ["Jeans", "Taille grande", "Sac à dos"],
-    today: "Aujourd'hui 14:00"
+    gender: "Femme",
+    age: 33,
+    confidence: 92,
+    image: womanPhoto,
+    attributes: ["Maquillage", "Boucles d'oreilles", "Chemisier"],
+    today: "Aujourd'hui 13:58"
   },
   {
     id: 12,
     type: "Corps",
-    timestamp: "13:58:17",
-    camera: "Caméra 05",
-    gender: "Femme",
-    age: 52,
+    timestamp: "13:55:21",
+    camera: "Caméra 04",
+    gender: "Homme",
+    age: 48,
+    confidence: 90,
+    image: businessmanPhoto,
+    attributes: ["Polo", "Pantalon chino", "Montre"],
+    today: "Aujourd'hui 13:55"
+  },
+  {
+    id: 13,
+    type: "Visage",
+    timestamp: "13:51:43",
+    camera: "Caméra 01",
+    gender: "Homme",
+    age: 37,
     confidence: 86,
+    image: casualManPhoto,
+    attributes: ["Barbe épaisse", "Chemise", "Lunettes de soleil"],
+    today: "Aujourd'hui 13:51"
+  },
+  {
+    id: 14,
+    type: "Visage",
+    timestamp: "13:48:08",
+    camera: "Caméra 03",
+    gender: "Femme",
+    age: 55,
+    confidence: 91,
     image: elderlyWomanPhoto,
-    attributes: ["Manteau", "Taille moyenne", "Canne"],
-    today: "Aujourd'hui 13:58"
+    attributes: ["Foulard", "Manteau long", "Sac"],
+    today: "Aujourd'hui 13:48"
+  },
+  {
+    id: 15,
+    type: "Corps",
+    timestamp: "13:44:17",
+    camera: "Caméra 02",
+    gender: "Homme",
+    age: 24,
+    confidence: 83,
+    image: youngManPhoto,
+    attributes: ["Sweat à capuche", "Jeans troués", "Casque audio"],
+    today: "Aujourd'hui 13:44"
+  },
+  {
+    id: 16,
+    type: "Visage",
+    timestamp: "13:40:52",
+    camera: "Caméra 04",
+    gender: "Femme",
+    age: 41,
+    confidence: 95,
+    image: womanPhoto,
+    attributes: ["Coiffure élégante", "Rouge à lèvres", "Collier"],
+    today: "Aujourd'hui 13:40"
   }
-];
-
-const liveFeeds = [
-  { id: "CAM-001", name: "Entrée Principale", status: "recording", quality: "4K", persons: 3 },
-  { id: "CAM-002", name: "Hall Réception", status: "recording", quality: "HD", persons: 7 },
-  { id: "CAM-003", name: "Bureau Étage 2", status: "recording", quality: "HD", persons: 12 },
-  { id: "CAM-004", name: "Salle Conférence", status: "recording", quality: "4K", persons: 0 },
-  { id: "CAM-005", name: "Parking Souterrain", status: "standby", quality: "HD", persons: 2 }
 ];
 
 export const CapturePage = (): JSX.Element => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFilter, setSelectedFilter] = useState("all");
-  const [viewMode, setViewMode] = useState("grid");
-  
-  // États pour les filtres
   const [filterAge, setFilterAge] = useState("all");
   const [filterGender, setFilterGender] = useState("all");
   const [clothingType, setClothingType] = useState("all");
@@ -298,234 +335,121 @@ export const CapturePage = (): JSX.Element => {
         </div>
       </header>
 
-      {/* Section Recherche Intelligente */}
-      <div className="bg-gradient-to-r from-cyan-50 to-blue-50 border-b border-cyan-100">
-        <div className="px-8 py-6">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-8 h-8 bg-teal-600 rounded-lg flex items-center justify-center">
-              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-              </svg>
+      <div className="px-8 py-6">
+        {/* Section Recherche Intelligente */}
+        <Card className="mb-6 bg-cyan-50/50 border-cyan-200">
+          <CardContent className="p-6">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-8 h-8 bg-teal-500 rounded-lg flex items-center justify-center">
+                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                </svg>
+              </div>
+              <h2 className="text-lg font-semibold text-slate-800 [font-family:'Inter',Helvetica]">
+                Recherche intelligente
+              </h2>
             </div>
-            <h2 className="text-lg font-bold text-slate-800 [font-family:'Inter',Helvetica]">
-              Recherche intelligente
-            </h2>
-          </div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-            <div className="lg:col-span-3">
-              {/* Onglets Texte/Visage */}
-              <div className="flex gap-2 mb-4">
-                <Button
-                  className={`[font-family:'Inter',Helvetica] text-sm px-4 py-2 rounded-lg ${
-                    searchMode === "texte" 
-                      ? "bg-teal-500 hover:bg-teal-600 text-white" 
-                      : "bg-white border border-teal-200 text-teal-600 hover:bg-teal-50"
-                  }`}
-                  onClick={() => setSearchMode("texte")}
-                >
-                  📝 Texte
-                </Button>
-                <Button
-                  className={`[font-family:'Inter',Helvetica] text-sm px-4 py-2 rounded-lg ${
-                    searchMode === "visage" 
-                      ? "bg-teal-500 hover:bg-teal-600 text-white" 
-                      : "bg-white border border-teal-200 text-teal-600 hover:bg-teal-50"
-                  }`}
-                  onClick={() => setSearchMode("visage")}
-                >
-                  👤 Visage
+
+            {/* Onglets Texte/Visage */}
+            <div className="flex gap-2 mb-4">
+              <Button
+                className={`[font-family:'Inter',Helvetica] text-sm px-4 py-2 rounded-lg ${
+                  searchMode === "texte" 
+                    ? "bg-teal-500 hover:bg-teal-600 text-white" 
+                    : "bg-white border border-teal-200 text-teal-600 hover:bg-teal-50"
+                }`}
+                onClick={() => setSearchMode("texte")}
+              >
+                📝 Texte
+              </Button>
+              <Button
+                className={`[font-family:'Inter',Helvetica] text-sm px-4 py-2 rounded-lg ${
+                  searchMode === "visage" 
+                    ? "bg-teal-500 hover:bg-teal-600 text-white" 
+                    : "bg-white border border-teal-200 text-teal-600 hover:bg-teal-50"
+                }`}
+                onClick={() => setSearchMode("visage")}
+              >
+                👤 Visage
+              </Button>
+            </div>
+
+            {/* Contenu selon le mode de recherche */}
+            {searchMode === "texte" ? (
+              <div className="space-y-3">
+                <textarea
+                  placeholder="Décrivez ce que vous cherchez en langage naturel...&#10;Exemples:&#10;• 'Montre-moi toutes les femmes avec veste rouge détectées hier'&#10;• 'Hommes âgés de 25-40 ans avec barbe ce matin'"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full px-4 py-3 bg-white border border-cyan-200 rounded-lg text-slate-700 placeholder:text-slate-400 min-h-[80px] resize-none [font-family:'Inter',Helvetica] text-sm"
+                />
+                <div className="flex gap-3">
+                  <Badge variant="outline" className="text-xs text-slate-600">
+                    Personnes suspectes
+                  </Badge>
+                  <Badge variant="outline" className="text-xs text-slate-600">
+                    Visiteurs récurrents
+                  </Badge>
+                  <Badge variant="outline" className="text-xs text-slate-600">
+                    Personnel autorisé
+                  </Badge>
+                </div>
+                <Button className="bg-teal-500 hover:bg-teal-600 text-white">
+                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                  Rechercher
                 </Button>
               </div>
-
-              {/* Contenu selon le mode de recherche */}
-              {searchMode === "texte" ? (
-                <div className="mb-4">
-                  <div className="relative">
-                    <div className="bg-white/90 border border-cyan-200 rounded-lg p-4">
-                      <textarea
-                        placeholder="Décrivez ce que vous cherchez en langage naturel...&#10;Exemples:&#10;• 'Montre-moi toutes les femmes avec veste rouge détectées hier'&#10;• 'Hommes âgés de 25-40 ans avec barbe ce matin'"
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full bg-transparent border-none outline-none text-slate-700 placeholder:text-slate-400 min-h-[60px] resize-none [font-family:'Inter',Helvetica] text-sm"
+            ) : (
+              <div className="space-y-4">
+                <div
+                  className="border-2 border-dashed border-teal-300 rounded-lg p-8 text-center bg-teal-50/30 hover:bg-teal-50/50 transition-colors cursor-pointer"
+                  onDragOver={handleDragOver}
+                  onDrop={handleDrop}
+                  onClick={() => document.getElementById('image-upload')?.click()}
+                >
+                  {uploadedImage ? (
+                    <div className="space-y-4">
+                      <img 
+                        src={uploadedImage} 
+                        alt="Image uploadée" 
+                        className="w-32 h-32 object-cover rounded-lg mx-auto border-2 border-teal-200"
                       />
-                      <Button
-                        className="absolute bottom-4 right-4 bg-teal-500 hover:bg-teal-600 text-white [font-family:'Inter',Helvetica] text-sm px-4 py-2 rounded-lg"
-                        onClick={() => {
-                          // Ici on peut ajouter la logique de recherche
-                          console.log('Recherche lancée:', searchQuery);
-                        }}
-                      >
-                        🔍 Rechercher
-                      </Button>
+                      <p className="text-sm text-teal-700 [font-family:'Inter',Helvetica]">
+                        ✓ Image chargée - Cliquez pour changer
+                      </p>
                     </div>
-                  </div>
-                </div>
-              ) : (
-                <div className="mb-4">
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    {/* Zone d'upload d'image */}
-                    <div 
-                      className="border-2 border-dashed border-cyan-200 rounded-lg p-8 text-center bg-white/90 hover:border-teal-300 transition-colors cursor-pointer"
-                      onDragOver={handleDragOver}
-                      onDrop={handleDrop}
-                      onClick={() => document.getElementById('image-upload')?.click()}
-                    >
-                      <input
-                        id="image-upload"
-                        type="file"
-                        accept="image/*"
-                        onChange={handleImageUpload}
-                        className="hidden"
-                      />
-                      <div className="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg className="w-8 h-8 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                  ) : (
+                    <div className="space-y-3">
+                      <div className="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto">
+                        <svg className="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
                       </div>
-                      {uploadedImage ? (
-                        <div>
-                          <img src={uploadedImage} alt="Image uploadée" className="w-32 h-32 object-cover rounded-lg mx-auto mb-2" />
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setUploadedImage(null);
-                            }}
-                            className="text-slate-600"
-                          >
-                            Changer l'image
-                          </Button>
-                        </div>
-                      ) : (
-                        <div>
-                          <h3 className="font-semibold text-slate-800 [font-family:'Inter',Helvetica] mb-2">
-                            Glissez une photo ici
-                          </h3>
-                          <p className="text-slate-500 [font-family:'Inter',Helvetica] text-sm mb-4">
-                            ou cliquez pour parcourir
-                          </p>
-                          <p className="text-slate-400 [font-family:'Inter',Helvetica] text-xs">
-                            JPG, PNG jusqu'à 10MB
-                          </p>
-                        </div>
-                      )}
+                      <div>
+                        <p className="text-teal-700 [font-family:'Inter',Helvetica] font-medium">
+                          📸 Glissez une image ici ou cliquez pour sélectionner
+                        </p>
+                        <p className="text-xs text-slate-500 [font-family:'Inter',Helvetica] mt-1">
+                          JPG, PNG jusqu'à 10MB
+                        </p>
+                      </div>
                     </div>
-
-                    {/* Contrôles de recherche */}
-                    <div className="space-y-4">
-                      {/* Similarité */}
-                      <div>
-                        <label className="block text-slate-700 [font-family:'Inter',Helvetica] font-medium mb-2">
-                          Similarité
-                        </label>
-                        <div className="flex items-center gap-3">
-                          <input
-                            type="range"
-                            min="0"
-                            max="100"
-                            value={similarity}
-                            onChange={(e) => setSimilarity(parseInt(e.target.value))}
-                            className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
-                            style={{
-                              background: `linear-gradient(to right, #14b8a6 0%, #14b8a6 ${similarity}%, #e5e7eb ${similarity}%, #e5e7eb 100%)`
-                            }}
-                          />
-                          <span className="text-teal-600 font-semibold [font-family:'Inter',Helvetica] text-sm min-w-[40px]">
-                            {similarity}%
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Période */}
-                      <div>
-                        <label className="block text-slate-700 [font-family:'Inter',Helvetica] font-medium mb-2">
-                          Période
-                        </label>
-                        <Select value={period} onValueChange={setPeriod}>
-                          <SelectTrigger className="w-full">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="24h">Dernières 24h</SelectItem>
-                            <SelectItem value="48h">Dernières 48h</SelectItem>
-                            <SelectItem value="7j">Derniers 7 jours</SelectItem>
-                            <SelectItem value="30j">Derniers 30 jours</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      {/* Caméras */}
-                      <div>
-                        <label className="block text-slate-700 [font-family:'Inter',Helvetica] font-medium mb-2">
-                          Caméras
-                        </label>
-                        <Select value={cameras} onValueChange={setCameras}>
-                          <SelectTrigger className="w-full">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="toutes">Toutes les caméras</SelectItem>
-                            <SelectItem value="cam01">Caméra 01 - Entrée</SelectItem>
-                            <SelectItem value="cam02">Caméra 02 - Hall</SelectItem>
-                            <SelectItem value="cam03">Caméra 03 - Bureau</SelectItem>
-                            <SelectItem value="cam05">Caméra 05 - Parking</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      {/* Bouton de recherche */}
-                      <Button
-                        className="w-full bg-teal-500 hover:bg-teal-600 text-white [font-family:'Inter',Helvetica] text-sm py-3"
-                        disabled={!uploadedImage}
-                        onClick={() => {
-                          console.log('Recherche par visage:', { uploadedImage, similarity, period, cameras });
-                        }}
-                      >
-                        👤 Rechercher ce visage
-                      </Button>
-                    </div>
-                  </div>
+                  )}
                 </div>
-              )}
-              
-              <div className="flex items-center gap-3">
-                <span className="text-slate-500 [font-family:'Inter',Helvetica] text-sm">
-                  Suggestions:
-                </span>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="bg-white/80 border-cyan-200 text-teal-700 hover:bg-cyan-50 hover:border-teal-300"
-                  onClick={() => setSearchQuery("Personnes suspectes")}
-                >
-                  Personnes suspectes
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="bg-white/80 border-cyan-200 text-teal-700 hover:bg-cyan-50 hover:border-teal-300"
-                  onClick={() => setSearchQuery("Visiteurs récurrents")}
-                >
-                  Visiteurs récurrents
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="bg-white/80 border-cyan-200 text-teal-700 hover:bg-cyan-50 hover:border-teal-300"
-                  onClick={() => setSearchQuery("Personnel autorisé")}
-                >
-                  Personnel autorisé
-                </Button>
+                <input
+                  id="image-upload"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  className="hidden"
+                />
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
+            )}
+          </CardContent>
+        </Card>
 
-      {/* Section principale */}
-      <div className="px-8 py-6">
         {/* Section principale avec layout 3 colonnes */}
         <div className="grid grid-cols-12 gap-6">
           {/* Sidebar Gauche - Panneau de Filtres */}
@@ -565,7 +489,7 @@ export const CapturePage = (): JSX.Element => {
                       }`}
                       onClick={() => setActiveFilterMode("visage")}
                     >
-                      Visage
+                      👤 Visage
                     </Button>
                     <Button 
                       variant="outline" 
@@ -577,40 +501,40 @@ export const CapturePage = (): JSX.Element => {
                       }`}
                       onClick={() => setActiveFilterMode("corps")}
                     >
-                      Corps
+                      👤 Corps
                     </Button>
                   </div>
                 </div>
 
-                {/* Filtres Principaux */}
+                {/* Filtres */}
                 <div className="space-y-4">
                   <div>
                     <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                      Age
+                      Âge
                     </label>
                     <Select value={filterAge} onValueChange={setFilterAge}>
-                      <SelectTrigger className="w-full bg-white border-slate-200">
+                      <SelectTrigger className="w-full">
                         <SelectValue placeholder="Tous les âges" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="all">Tous les âges</SelectItem>
-                        <SelectItem value="young">Jeune (moins de 30 ans)</SelectItem>
-                        <SelectItem value="middle">Adulte (30-50 ans)</SelectItem>
-                        <SelectItem value="senior">Senior (plus de 50 ans)</SelectItem>
+                        <SelectItem value="young">18-30 ans</SelectItem>
+                        <SelectItem value="middle">30-50 ans</SelectItem>
+                        <SelectItem value="senior">50+ ans</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
 
                   <div>
                     <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                      Sexe
+                      Genre
                     </label>
                     <Select value={filterGender} onValueChange={setFilterGender}>
-                      <SelectTrigger className="w-full bg-white border-slate-200">
-                        <SelectValue placeholder="Tous les sexes" />
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Tous" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="all">Tous les sexes</SelectItem>
+                        <SelectItem value="all">Tous</SelectItem>
                         <SelectItem value="Homme">Homme</SelectItem>
                         <SelectItem value="Femme">Femme</SelectItem>
                       </SelectContent>
@@ -619,223 +543,112 @@ export const CapturePage = (): JSX.Element => {
 
                   <div>
                     <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                      Période
+                      Vêtements
                     </label>
-                    <Select>
-                      <SelectTrigger className="w-full bg-white border-slate-200">
-                        <SelectValue placeholder="Sélectionner" />
+                    <Select value={clothingType} onValueChange={setClothingType}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Tous types" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="today">Aujourd'hui</SelectItem>
-                        <SelectItem value="week">Cette semaine</SelectItem>
-                        <SelectItem value="month">Ce mois</SelectItem>
+                        <SelectItem value="all">Tous types</SelectItem>
+                        <SelectItem value="casual">Décontracté</SelectItem>
+                        <SelectItem value="formal">Formel</SelectItem>
+                        <SelectItem value="sportswear">Sportif</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
 
-                  {/* Dates */}
-                  <div className="flex gap-2">
-                    <div className="flex-1">
-                      <Input 
-                        type="date" 
-                        placeholder="min 08/07/26"
-                        className="text-xs bg-white border-slate-200"
-                      />
-                    </div>
-                    <div className="flex-1">
-                      <Input 
-                        type="date" 
-                        placeholder="max 08/07/26"
-                        className="text-xs bg-white border-slate-200"
-                      />
-                    </div>
+                  <div>
+                    <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
+                      Cheveux
+                    </label>
+                    <Select value={hairType} onValueChange={setHairType}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Tous types" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">Tous types</SelectItem>
+                        <SelectItem value="short">Courts</SelectItem>
+                        <SelectItem value="long">Longs</SelectItem>
+                        <SelectItem value="bald">Chauve</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
 
-                {/* Attributs Corporels */}
-                {(activeFilterMode === "tous" || activeFilterMode === "corps") && (
-                  <div className="pt-4 border-t border-slate-200">
-                    <h4 className="text-sm font-bold text-slate-800 [font-family:'Inter',Helvetica] mb-3">
-                      Attributs Corporels
-                    </h4>
-                    <div className="space-y-3">
-                      <div>
-                        <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                          Tenue vestimentaire
-                        </label>
-                        <Select value={clothingType} onValueChange={setClothingType}>
-                          <SelectTrigger className="w-full bg-white border-slate-200">
-                            <SelectValue placeholder="Sélectionner" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="all">Toutes</SelectItem>
-                            <SelectItem value="formal">Formelle</SelectItem>
-                            <SelectItem value="casual">Décontractée</SelectItem>
-                            <SelectItem value="uniform">Uniforme</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      <div>
-                        <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                          Taille standard
-                        </label>
-                        <Select>
-                          <SelectTrigger className="w-full bg-white border-slate-200">
-                            <SelectValue placeholder="Sélectionner" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="small">Petite</SelectItem>
-                            <SelectItem value="medium">Moyenne</SelectItem>
-                            <SelectItem value="large">Grande</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Attributs Faciaux */}
-                {(activeFilterMode === "tous" || activeFilterMode === "visage") && (
-                  <div className="pt-4 border-t border-slate-200">
-                    <h4 className="text-sm font-bold text-slate-800 [font-family:'Inter',Helvetica] mb-3">
-                      Attributs Faciaux
-                    </h4>
-                    <div className="space-y-3">
-                      <div>
-                        <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                          Cheveux
-                        </label>
-                        <Select value={hairType} onValueChange={setHairType}>
-                          <SelectTrigger className="w-full bg-white border-slate-200">
-                            <SelectValue placeholder="Sélectionner" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="all">Tous</SelectItem>
-                            <SelectItem value="blond">Blond</SelectItem>
-                            <SelectItem value="brun">Brun</SelectItem>
-                            <SelectItem value="noir">Noir</SelectItem>
-                            <SelectItem value="roux">Roux</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      <div>
-                        <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                          Lunettes
-                        </label>
-                        <Select>
-                          <SelectTrigger className="w-full bg-white border-slate-200">
-                            <SelectValue placeholder="Sélectionner" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="none">Aucune</SelectItem>
-                            <SelectItem value="glasses">Lunettes</SelectItem>
-                            <SelectItem value="sunglasses">Lunettes de soleil</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      <div>
-                        <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                          Barbe
-                        </label>
-                        <Select>
-                          <SelectTrigger className="w-full bg-white border-slate-200">
-                            <SelectValue placeholder="Sélectionner" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="none">Aucune</SelectItem>
-                            <SelectItem value="light">Légère</SelectItem>
-                            <SelectItem value="full">Complète</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      <div>
-                        <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                          Coiffure
-                        </label>
-                        <Select>
-                          <SelectTrigger className="w-full bg-white border-slate-200">
-                            <SelectValue placeholder="Sélectionner" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="short">Courte</SelectItem>
-                            <SelectItem value="medium">Moyenne</SelectItem>
-                            <SelectItem value="long">Longue</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      <div>
-                        <label className="text-sm font-medium text-slate-700 [font-family:'Inter',Helvetica] mb-2 block">
-                          Port
-                        </label>
-                        <Select>
-                          <SelectTrigger className="w-full bg-white border-slate-200">
-                            <SelectValue placeholder="Sélectionner" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="normal">Normal</SelectItem>
-                            <SelectItem value="confident">Confiant</SelectItem>
-                            <SelectItem value="nervous">Nerveux</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
                 {/* Boutons d'action */}
-                <div className="pt-4 space-y-3">
-                  <Button className="w-full bg-teal-600 hover:bg-teal-700 text-white">
-                    ✓ Appliquer les filtres
+                <div className="pt-4 space-y-2">
+                  <Button className="w-full bg-teal-600 hover:bg-teal-700 text-white [font-family:'Inter',Helvetica]">
+                    🔍 Appliquer les filtres
                   </Button>
-                  <Button variant="outline" className="w-full border-slate-300 text-slate-600 hover:bg-slate-50">
+                  <Button variant="outline" className="w-full text-slate-600 border-slate-300 [font-family:'Inter',Helvetica]">
                     ↻ Réinitialiser
                   </Button>
+                </div>
+
+                {/* Statistiques */}
+                <div className="pt-4 text-center">
+                  <div className="text-2xl font-bold text-slate-800 [font-family:'Inter',Helvetica]">
+                    {filteredCaptures.length}
+                  </div>
+                  <div className="text-sm text-slate-500 [font-family:'Inter',Helvetica]">
+                    captures trouvées
+                  </div>
                 </div>
               </CardContent>
             </Card>
           </div>
 
-          {/* Section Centrale - Galerie de Captures */}
+          {/* Section principale - Galerie */}
           <div className="col-span-9">
             <Card className="bg-white/70 backdrop-blur-sm border-slate-200/60 shadow-lg">
-              <CardHeader className="border-b border-slate-200/60 pb-4">
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-lg font-bold text-slate-800 [font-family:'Inter',Helvetica]">
-                    Captures Récentes ({filteredCaptures.length})
+              <CardHeader className="flex flex-row items-center justify-between pb-4">
+                <div className="space-y-2">
+                  <CardTitle className="text-xl font-bold text-slate-800 [font-family:'Inter',Helvetica] flex items-center gap-3">
+                    <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                    Galerie des Captures
+                    <Badge className="bg-emerald-100 text-emerald-700 px-2 py-1">
+                      🔴 LIVE
+                    </Badge>
                   </CardTitle>
-                  <div className="flex items-center gap-4">
-                    {/* Recherche */}
-                    <div className="relative">
-                      <Input
-                        placeholder="Rechercher par nom, zone ou département..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-80 pl-10 bg-white/80 border-slate-200 focus:border-blue-400"
-                      />
-                      <svg 
-                        className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" 
-                        fill="none" 
-                        stroke="currentColor" 
-                        viewBox="0 0 24 24"
-                      >
+                  <p className="text-slate-500 [font-family:'Inter',Helvetica] text-sm">
+                    Détections en temps réel • Dernière mise à jour: maintenant
+                  </p>
+                </div>
+                
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <span className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">
+                      {filteredCaptures.length} actives
+                    </span>
+                  </div>
+
+                  {/* Barre de recherche locale */}
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                       </svg>
                     </div>
-
-                    {/* Filtres */}
-                    <Tabs value={selectedFilter} onValueChange={setSelectedFilter} className="w-auto">
-                      <TabsList className="bg-slate-100/80">
-                        <TabsTrigger value="all" className="text-sm">Tous</TabsTrigger>
-                        <TabsTrigger value="authorized" className="text-sm">Autorisés</TabsTrigger>
-                        <TabsTrigger value="unknown" className="text-sm">Inconnus</TabsTrigger>
-                      </TabsList>
-                    </Tabs>
+                    <Input
+                      placeholder="Rechercher dans les captures..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="pl-10 pr-4 w-64 [font-family:'Inter',Helvetica] text-sm"
+                    />
                   </div>
+
+                  {/* Filtres */}
+                  <Tabs value={selectedFilter} onValueChange={setSelectedFilter} className="w-auto">
+                    <TabsList className="bg-slate-100/80">
+                      <TabsTrigger value="all" className="text-sm">Tous</TabsTrigger>
+                      <TabsTrigger value="authorized" className="text-sm">Autorisés</TabsTrigger>
+                      <TabsTrigger value="unknown" className="text-sm">Inconnus</TabsTrigger>
+                    </TabsList>
+                  </Tabs>
                 </div>
               </CardHeader>
 
