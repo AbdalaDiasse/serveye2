@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -8,6 +8,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { 
   Menu, Search, Bell, ChevronDown, TrendingUp, Settings, Shield, Users, 
   ArrowDown, ArrowUp, User, AlertTriangle, Eye, Car, Hash, Gauge, 
@@ -18,6 +19,7 @@ import {
 } from "lucide-react";
 
 export const ControlPanelSection = (): JSX.Element => {
+  const [selectedPeriod, setSelectedPeriod] = useState("jour");
   // Data for top metric cards
   const metricCards = [
     {
@@ -402,7 +404,20 @@ Centre de Contrôle Intelligent
 IA ACTIVE
                     </Badge>
 </div>
+<div className="flex items-center gap-3">
+                  <Select value={selectedPeriod} onValueChange={setSelectedPeriod}>
+                    <SelectTrigger className="w-32 bg-white/10 border-white/20 text-white">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="jour">Jour</SelectItem>
+                      <SelectItem value="semaine">Semaine</SelectItem>
+                      <SelectItem value="mois">Mois</SelectItem>
+                      <SelectItem value="annee">Année</SelectItem>
+                    </SelectContent>
+                  </Select>
 <Settings className="w-8 h-8 text-white/80" />
+                </div>
 </div>
 </CardHeader>
 <CardContent className="space-y-8">
