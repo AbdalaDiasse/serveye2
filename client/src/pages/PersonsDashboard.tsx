@@ -334,21 +334,6 @@ export const PersonsDashboard = (): JSX.Element => {
                           strokeDasharray={y === 200 ? "none" : "2,2"} />
                   ))}
                   
-                  {/* Zone sous la courbe Entrées */}
-                  <path
-                    d={`M 40,200 ${entriesExitsData.map((d, i) => 
-                      `L ${40 + (i * 440 / (entriesExitsData.length - 1))},${200 - (d.entries / maxEntry * 180)}`
-                    ).join(' ')} L 480,200 Z`}
-                    fill="url(#entriesGradient)"
-                  />
-                  
-                  {/* Zone sous la courbe Sorties */}
-                  <path
-                    d={`M 40,200 ${entriesExitsData.map((d, i) => 
-                      `L ${40 + (i * 440 / (entriesExitsData.length - 1))},${200 - (d.exits / maxEntry * 180)}`
-                    ).join(' ')} L 480,200 Z`}
-                    fill="url(#exitsGradient)"
-                  />
                   
                   {/* Courbe Entrées avec effet glow */}
                   <polyline
@@ -525,33 +510,8 @@ export const PersonsDashboard = (): JSX.Element => {
                     ) : null;
                   })}
                   
-                  {/* Titre du graphique intégré */}
-                  <text x="260" y="15" className="text-sm fill-indigo-700 font-bold" textAnchor="middle">
-                    {maxDetection.toLocaleString()} détections max
-                  </text>
                 </svg>
                 
-                {/* Informations additionelles */}
-                <div className="flex justify-between mt-4 bg-white/70 backdrop-blur-sm rounded-lg p-3 border border-indigo-200/40">
-                  <div className="text-center">
-                    <div className="text-lg font-bold text-indigo-600">
-                      {detectionData.reduce((sum, d) => sum + d.detections, 0).toLocaleString()}
-                    </div>
-                    <div className="text-xs text-slate-600">Total période</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-lg font-bold text-blue-600">
-                      {Math.round(detectionData.reduce((sum, d) => sum + d.detections, 0) / detectionData.length).toLocaleString()}
-                    </div>
-                    <div className="text-xs text-slate-600">Moyenne</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-lg font-bold text-indigo-800">
-                      {maxDetection.toLocaleString()}
-                    </div>
-                    <div className="text-xs text-slate-600">Maximum</div>
-                  </div>
-                </div>
               </div>
             </CardContent>
           </Card>
