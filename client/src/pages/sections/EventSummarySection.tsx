@@ -121,21 +121,35 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
         <div className="space-y-2">
           {navigationItems.map((item, index) => (
             <div key={index} className="relative">
-              {(currentPage === item.name.toLowerCase() || (item.name === "Personnes" && currentPage === "persons")) ? (
-                <div className="h-12 rounded-xl shadow-[0px_10px_15px_#0000001a,0px_4px_6px_#0000001a] bg-gradient-to-r from-blue-600 to-blue-500 flex items-center px-4">
+              {(currentPage === item.name.toLowerCase() || (item.name === "Personnes" && (currentPage === "persons" || currentPage === "capture" || currentPage === "reconnaissance"))) ? (
+                <div className={`h-12 rounded-xl shadow-[0px_10px_15px_#0000001a,0px_4px_6px_#0000001a] flex items-center px-4 cursor-pointer ${
+                  item.name === "Personnes" 
+                    ? "bg-gradient-to-r from-teal-500 to-cyan-500" 
+                    : "bg-gradient-to-r from-blue-600 to-blue-500"
+                }`}
+                onClick={() => {
+                  if (item.hasDropdown) {
+                    toggleDropdown(item.name);
+                  }
+                }}>
                   {renderIcon(item.icon, "w-5 h-6 mr-3 text-white")}
                   <span className="[font-family:'Inter',Helvetica] font-semibold text-white text-base tracking-[0] leading-[normal]">
                     {item.name}
                   </span>
+                  {item.hasDropdown && (
+                    <img
+                      className={`w-3 h-3 ml-auto transition-transform duration-200 ${
+                        openDropdown === item.name ? 'rotate-180' : ''
+                      } filter brightness-0 invert`}
+                      alt="Dropdown"
+                      src="/figmaAssets/frame-7.svg"
+                    />
+                  )}
                 </div>
               ) : (
                 <>
                   <div 
-                    className={`h-12 flex items-center px-4 rounded-xl cursor-pointer transition-colors ${
-                      (item.name === "Personnes" && (currentPage === "capture" || currentPage === "reconnaissance" || currentPage === "persons"))
-                        ? 'bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600' 
-                        : 'hover:bg-gray-50'
-                    }`}
+                    className="h-12 flex items-center px-4 rounded-xl cursor-pointer transition-colors hover:bg-gray-50"
                     onClick={() => {
                       if (item.hasDropdown) {
                         // Pour "Personnes", navigue vers le dashboard en plus de toggler le dropdown
@@ -149,18 +163,14 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                     }}
                   >
                     {renderIcon(item.icon, "w-4 h-4 mr-3 text-slate-600")}
-                    <span className={`[font-family:'Inter',Helvetica] font-normal text-base tracking-[0] leading-6 ${
-                      (item.name === "Personnes" && (currentPage === "capture" || currentPage === "reconnaissance" || currentPage === "persons"))
-                        ? 'text-white font-semibold' 
-                        : 'text-slate-600'
-                    }`}>
+                    <span className="[font-family:'Inter',Helvetica] font-normal text-slate-600 text-base tracking-[0] leading-6">
                       {item.name}
                     </span>
                     {item.hasDropdown && (
                       <img
                         className={`w-3 h-3 ml-auto transition-transform duration-200 ${
                           openDropdown === item.name ? 'rotate-180' : ''
-                        } ${(item.name === "Personnes" && (currentPage === "capture" || currentPage === "reconnaissance" || currentPage === "persons")) ? 'filter brightness-0 invert' : ''}`}
+                        }`}
                         alt="Dropdown"
                         src="/figmaAssets/frame-7.svg"
                       />
