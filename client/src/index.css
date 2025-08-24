@@ -218,4 +218,15 @@
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
+
+  /* Fix SVG white background issue */
+  img[src$=".svg"] {
+    background: none !important;
+    background-color: transparent !important;
+  }
+  
+  svg {
+    background: none !important;
+    background-color: transparent !important;
+  }
 }
