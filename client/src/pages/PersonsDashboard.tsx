@@ -305,7 +305,7 @@ export const PersonsDashboard = (): JSX.Element => {
               </Select>
             </CardHeader>
             <CardContent>
-              <div className="h-[240px] relative bg-gradient-to-br from-slate-50 to-white rounded-lg p-4">
+              <div className="h-[200px] relative">
                 <svg viewBox="0 0 500 200" className="w-full h-full drop-shadow-sm">
                   {/* Définition des gradients */}
                   <defs>
@@ -385,16 +385,6 @@ export const PersonsDashboard = (): JSX.Element => {
                   })}
                 </svg>
                 
-                <div className="flex gap-6 justify-center mt-4 bg-white/60 backdrop-blur-sm rounded-lg p-2 border border-white/40">
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full shadow-sm"></div>
-                    <span className="text-sm text-slate-700 font-medium">Entrées</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-gradient-to-r from-red-500 to-red-400 rounded-full shadow-sm"></div>
-                    <span className="text-sm text-slate-700 font-medium">Sorties</span>
-                  </div>
-                </div>
               </div>
             </CardContent>
           </Card>
