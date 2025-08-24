@@ -13,7 +13,8 @@ import {
   ArrowDown, ArrowUp, User, AlertTriangle, Eye, Car, Hash, Gauge, 
   AlertCircle, MoreVertical, MoreHorizontal, ChevronRight, HardHat,
   Shirt, Zap, Flame, Wind, Droplet, Activity, Monitor, Target,
-  Truck, Bike, Bus, FileText, Wrench
+  Truck, Bike, Bus, FileText, Wrench, Swords, Cloud, TrendingDown,
+  Move, ShieldAlert
 } from "lucide-react";
 
 export const ControlPanelSection = (): JSX.Element => {
@@ -75,12 +76,12 @@ export const ControlPanelSection = (): JSX.Element => {
 
   // Data for behavior analysis
   const behaviorAnalysis = [
-    { name: "Bagarre", count: 12, icon: <Activity className="w-8 h-8 text-white" /> },
-    { name: "Smoke", count: 28, icon: <Wind className="w-8 h-8 text-white" /> },
-    { name: "Fall", count: 7, icon: <ArrowDown className="w-8 h-8 text-white" /> },
-    { name: "Running", count: 19, icon: <Activity className="w-8 h-8 text-white" /> },
+    { name: "Bagarre", count: 12, icon: <Swords className="w-8 h-8 text-white" /> },
+    { name: "Smoke", count: 28, icon: <Cloud className="w-8 h-8 text-white" /> },
+    { name: "Fall", count: 7, icon: <TrendingDown className="w-8 h-8 text-white" /> },
+    { name: "Running", count: 19, icon: <Move className="w-8 h-8 text-white" /> },
     { name: "Gathering", count: 15, icon: <Users className="w-8 h-8 text-white" /> },
-    { name: "Gun", count: 8, icon: <AlertCircle className="w-8 h-8 text-white" /> }
+    { name: "Gun", count: 8, icon: <ShieldAlert className="w-8 h-8 text-white" /> }
   ];
 
   // Data for vehicles
