@@ -76,17 +76,17 @@ const renderIcon = (icon: string, className: string) => {
 
 export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage }: EventSummarySectionProps): JSX.Element => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(
-    // Ouvrir automatiquement le dropdown "Personnes" si on est sur capture ou reconnaissance
-    (currentPage === "capture" || currentPage === "reconnaissance") ? "Personnes" : null
+    // Ouvrir automatiquement le dropdown "Personnes" si on est sur capture, reconnaissance ou persons
+    (currentPage === "capture" || currentPage === "reconnaissance" || currentPage === "persons") ? "Personnes" : null
   );
 
   const toggleDropdown = (itemName: string) => {
     setOpenDropdown(openDropdown === itemName ? null : itemName);
   };
 
-  // Effet pour ouvrir automatiquement le dropdown quand on navigue vers capture/reconnaissance
+  // Effet pour ouvrir automatiquement le dropdown quand on navigue vers capture/reconnaissance/persons
   useEffect(() => {
-    if (currentPage === "capture" || currentPage === "reconnaissance") {
+    if (currentPage === "capture" || currentPage === "reconnaissance" || currentPage === "persons") {
       setOpenDropdown("Personnes");
     }
   }, [currentPage]);
@@ -132,12 +132,16 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                 <>
                   <div 
                     className={`h-12 flex items-center px-4 rounded-xl cursor-pointer transition-colors ${
-                      (item.name === "Personnes" && (currentPage === "capture" || currentPage === "reconnaissance"))
+                      (item.name === "Personnes" && (currentPage === "capture" || currentPage === "reconnaissance" || currentPage === "persons"))
                         ? 'bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600' 
                         : 'hover:bg-gray-50'
                     }`}
                     onClick={() => {
                       if (item.hasDropdown) {
+                        // Pour "Personnes", navigue vers le dashboard en plus de toggler le dropdown
+                        if (item.name === "Personnes") {
+                          handleNavigation("persons");
+                        }
                         toggleDropdown(item.name);
                       } else {
                         handleNavigation(item.name.toLowerCase());
@@ -146,7 +150,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                   >
                     {renderIcon(item.icon, "w-4 h-4 mr-3 text-slate-600")}
                     <span className={`[font-family:'Inter',Helvetica] font-normal text-base tracking-[0] leading-6 ${
-                      (item.name === "Personnes" && (currentPage === "capture" || currentPage === "reconnaissance"))
+                      (item.name === "Personnes" && (currentPage === "capture" || currentPage === "reconnaissance" || currentPage === "persons"))
                         ? 'text-white font-semibold' 
                         : 'text-slate-600'
                     }`}>
@@ -156,7 +160,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                       <img
                         className={`w-3 h-3 ml-auto transition-transform duration-200 ${
                           openDropdown === item.name ? 'rotate-180' : ''
-                        } ${(item.name === "Personnes" && (currentPage === "capture" || currentPage === "reconnaissance")) ? 'filter brightness-0 invert' : ''}`}
+                        } ${(item.name === "Personnes" && (currentPage === "capture" || currentPage === "reconnaissance" || currentPage === "persons")) ? 'filter brightness-0 invert' : ''}`}
                         alt="Dropdown"
                         src="/figmaAssets/frame-7.svg"
                       />
