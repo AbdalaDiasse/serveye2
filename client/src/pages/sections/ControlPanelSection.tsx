@@ -9,6 +9,13 @@ import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
+// Import new dashboard icons
+import surveillanceIcon from "@assets/generated_images/Blue_gradient_surveillance_icon_85813ee4.png";
+import uptimeIcon from "@assets/generated_images/Green_gradient_uptime_icon_358eb148.png";
+import alertIcon from "@assets/generated_images/Red_gradient_alert_icon_320f3d10.png";
+import peopleIcon from "@assets/generated_images/Purple_gradient_people_icon_4425290f.png";
+import securityIcon from "@assets/generated_images/Purple_gradient_security_score_icon_222eff63.png";
+
 export const ControlPanelSection = (): JSX.Element => {
   // Data for top metric cards
   const metricCards = [
@@ -17,35 +24,35 @@ export const ControlPanelSection = (): JSX.Element => {
       subtitle: "Détections Actives",
       badge: "Live",
       gradient: "bg-gradient-to-r from-blue-500 to-blue-700",
-      icon: "/figmaAssets/i-23-new.png"
+      icon: surveillanceIcon
     },
     {
       title: "98.7%",
       subtitle: "Temps de Fonctionnement",
       badge: "24h",
       gradient: "bg-gradient-to-r from-emerald-500 to-cyan-500",
-      icon: "/figmaAssets/i-19.svg"
+      icon: uptimeIcon
     },
     {
       title: "23",
       subtitle: "Alertes Critiques",
       badge: "Urgent",
       gradient: "bg-gradient-to-r from-orange-500 to-red-500",
-      icon: "/figmaAssets/i-18.svg"
+      icon: alertIcon
     },
     {
       title: "1,456",
       subtitle: "Personnes Reconnues",
       badge: "Today",
       gradient: "bg-gradient-to-r from-violet-500 to-blue-500",
-      icon: "/figmaAssets/i-16.svg"
+      icon: peopleIcon
     },
     {
       title: "87",
       subtitle: "Score de Sécurité",
       badge: "Score",
       gradient: "bg-gradient-to-r from-emerald-500 to-green-600",
-      icon: "/figmaAssets/i-21.svg",
+      icon: securityIcon,
       hasChart: true
     }
   ];
