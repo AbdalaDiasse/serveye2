@@ -15,6 +15,11 @@ import youngManPhoto from "@assets/generated_images/Security_capture_young_man_e
 export const PersonsDashboard = (): JSX.Element => {
   const [selectedCamera, setSelectedCamera] = useState("all");
   const [selectedZone, setSelectedZone] = useState("all");
+  const [entriesExitsPeriod, setEntriesExitsPeriod] = useState("today");
+  const [detectionsPeriod, setDetectionsPeriod] = useState("today");
+  const [genderPeriod, setGenderPeriod] = useState("today");
+  const [agePeriod, setAgePeriod] = useState("today");
+  const [heatmapPeriod, setHeatmapPeriod] = useState("today");
 
   // Données pour les graphiques
   const entriesExitsData = [
@@ -201,10 +206,21 @@ export const PersonsDashboard = (): JSX.Element => {
         <div className="grid grid-cols-12 gap-6">
           {/* Courbe Entrées et Sorties */}
           <Card className="col-span-6">
-            <CardHeader>
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-base font-semibold text-slate-800">
                 Entrées et Sorties
               </CardTitle>
+              <Select value={entriesExitsPeriod} onValueChange={setEntriesExitsPeriod}>
+                <SelectTrigger className="w-[120px] h-8">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="today">Aujourd'hui</SelectItem>
+                  <SelectItem value="week">Cette semaine</SelectItem>
+                  <SelectItem value="month">Ce mois</SelectItem>
+                  <SelectItem value="year">Cette année</SelectItem>
+                </SelectContent>
+              </Select>
             </CardHeader>
             <CardContent>
               <div className="h-[200px] relative">
@@ -258,10 +274,21 @@ export const PersonsDashboard = (): JSX.Element => {
 
           {/* Courbe Détections */}
           <Card className="col-span-6">
-            <CardHeader>
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-base font-semibold text-slate-800">
                 Détections de Personnes
               </CardTitle>
+              <Select value={detectionsPeriod} onValueChange={setDetectionsPeriod}>
+                <SelectTrigger className="w-[120px] h-8">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="today">Aujourd'hui</SelectItem>
+                  <SelectItem value="week">Cette semaine</SelectItem>
+                  <SelectItem value="month">Ce mois</SelectItem>
+                  <SelectItem value="year">Cette année</SelectItem>
+                </SelectContent>
+              </Select>
             </CardHeader>
             <CardContent>
               <div className="h-[200px] relative">
@@ -312,10 +339,21 @@ export const PersonsDashboard = (): JSX.Element => {
 
           {/* Distribution Homme/Femme */}
           <Card className="col-span-3">
-            <CardHeader>
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-base font-semibold text-slate-800">
                 Distribution Homme/Femme
               </CardTitle>
+              <Select value={genderPeriod} onValueChange={setGenderPeriod}>
+                <SelectTrigger className="w-[100px] h-8">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="today">Aujourd'hui</SelectItem>
+                  <SelectItem value="week">Semaine</SelectItem>
+                  <SelectItem value="month">Mois</SelectItem>
+                  <SelectItem value="year">Année</SelectItem>
+                </SelectContent>
+              </Select>
             </CardHeader>
             <CardContent>
               <div className="relative h-[180px] flex items-center justify-center">
@@ -346,10 +384,21 @@ export const PersonsDashboard = (): JSX.Element => {
 
           {/* Répartition par Âge */}
           <Card className="col-span-4">
-            <CardHeader>
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-base font-semibold text-slate-800">
                 Répartition par Âge
               </CardTitle>
+              <Select value={agePeriod} onValueChange={setAgePeriod}>
+                <SelectTrigger className="w-[100px] h-8">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="today">Aujourd'hui</SelectItem>
+                  <SelectItem value="week">Semaine</SelectItem>
+                  <SelectItem value="month">Mois</SelectItem>
+                  <SelectItem value="year">Année</SelectItem>
+                </SelectContent>
+              </Select>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
@@ -372,10 +421,21 @@ export const PersonsDashboard = (): JSX.Element => {
 
           {/* Carte de Chaleur des Caméras */}
           <Card className="col-span-5">
-            <CardHeader>
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-base font-semibold text-slate-800">
                 Carte de Chaleur des Caméras
               </CardTitle>
+              <Select value={heatmapPeriod} onValueChange={setHeatmapPeriod}>
+                <SelectTrigger className="w-[100px] h-8">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="today">Aujourd'hui</SelectItem>
+                  <SelectItem value="week">Semaine</SelectItem>
+                  <SelectItem value="month">Mois</SelectItem>
+                  <SelectItem value="year">Année</SelectItem>
+                </SelectContent>
+              </Select>
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
