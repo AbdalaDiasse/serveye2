@@ -4,6 +4,7 @@ import { EventSummarySection } from "./sections/EventSummarySection";
 import { CapturePage } from "./CapturePage";
 import { ReconnaissancePage } from "./ReconnaissancePage";
 import { PersonsDashboard } from "./PersonsDashboard";
+import { EventsPage } from "./EventsPage";
 
 export const Frame = (): JSX.Element => {
   const [currentPage, setCurrentPage] = useState<string>("dashboard");
@@ -18,6 +19,8 @@ export const Frame = (): JSX.Element => {
         return <ReconnaissancePage />;
       case "persons":
         return <PersonsDashboard />;
+      case "events":
+        return <EventsPage />;
       default:
         return <ControlPanelSection />;
     }

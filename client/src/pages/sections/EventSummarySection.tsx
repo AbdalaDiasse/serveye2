@@ -41,7 +41,7 @@ const navigationItems = [
     isActive: false,
   },
   {
-    name: "Évènements",
+    name: "Événements",
     icon: "/figmaAssets/frame-4.svg",
     isActive: false,
   },
@@ -121,7 +121,8 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
         <div className="space-y-2">
           {navigationItems.map((item, index) => {
             const isPersonnesActive = item.name === "Personnes" && (currentPage === "persons" || currentPage === "capture" || currentPage === "reconnaissance");
-            const isOtherActive = currentPage === item.name.toLowerCase() && item.name !== "Personnes";
+            const isEventsActive = (item.name === "Évènements" || item.name === "Événements") && currentPage === "events";
+            const isOtherActive = currentPage === item.name.toLowerCase() && item.name !== "Personnes" && item.name !== "Évènements" && item.name !== "Événements";
             
             return (
               <div key={index} className="relative">
@@ -129,6 +130,8 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                   className={`h-12 rounded-xl flex items-center px-4 cursor-pointer transition-all ${
                     isPersonnesActive
                       ? "shadow-md bg-gradient-to-r from-teal-500 to-cyan-500"
+                      : isEventsActive
+                      ? "shadow-md bg-gradient-to-r from-red-500 to-red-600"
                       : isOtherActive
                       ? "shadow-md bg-gradient-to-r from-blue-600 to-blue-500"
                       : "hover:bg-gray-50"
@@ -139,14 +142,16 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                       if (item.name === "Personnes" && openDropdown !== item.name) {
                         handleNavigation("persons");
                       }
+                    } else if (item.name === "Évènements" || item.name === "Événements") {
+                      handleNavigation("events");
                     } else {
                       handleNavigation(item.name.toLowerCase());
                     }
                   }}
                 >
-                  {renderIcon(item.icon, `${(isPersonnesActive || isOtherActive) ? "w-4 h-4 mr-3 text-white" : "w-4 h-4 mr-3 text-slate-600"}`)}
+                  {renderIcon(item.icon, `${(isPersonnesActive || isEventsActive || isOtherActive) ? "w-4 h-4 mr-3 text-white" : "w-4 h-4 mr-3 text-slate-600"}`)}
                   <span className={`[font-family:'Inter',Helvetica] text-base tracking-[0] truncate ${
-                    (isPersonnesActive || isOtherActive)
+                    (isPersonnesActive || isEventsActive || isOtherActive)
                       ? 'font-semibold text-white leading-[normal]'
                       : 'font-normal text-slate-600 leading-6'
                   }`}>
