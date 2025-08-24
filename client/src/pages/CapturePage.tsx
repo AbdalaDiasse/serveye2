@@ -522,15 +522,17 @@ export const CapturePage = (): JSX.Element => {
 
                 {/* Bouton de recherche et suggestions */}
                 <div className="col-span-12">
-                  <Button 
-                    className="w-full bg-slate-400 hover:bg-slate-500 text-white mb-3"
-                    disabled={!uploadedImage}
-                  >
-                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                    Rechercher ce visage
-                  </Button>
+                  <div className="flex justify-center mb-3">
+                    <Button 
+                      className="px-6 py-2 bg-slate-400 hover:bg-slate-500 text-white text-sm font-medium"
+                      disabled={!uploadedImage}
+                    >
+                      <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                      </svg>
+                      Rechercher ce visage
+                    </Button>
+                  </div>
                   
                   <div className="flex gap-3">
                     <span className="text-xs text-slate-500 [font-family:'Inter',Helvetica]">
