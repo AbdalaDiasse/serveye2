@@ -524,7 +524,11 @@ export const CapturePage = (): JSX.Element => {
                 <div className="col-span-12">
                   <div className="flex justify-center mb-3">
                     <Button 
-                      className="px-6 py-2 bg-slate-400 hover:bg-slate-500 text-white text-sm font-medium"
+                      className={`px-6 py-2 text-white text-sm font-medium transition-colors ${
+                        uploadedImage 
+                          ? 'bg-emerald-500 hover:bg-emerald-600' 
+                          : 'bg-slate-400 hover:bg-slate-500 disabled:opacity-50'
+                      }`}
                       disabled={!uploadedImage}
                     >
                       <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
