@@ -238,7 +238,7 @@ export const CapturePage = (): JSX.Element => {
   });
 
   return (
-    <div className="flex-1 bg-gradient-to-br from-slate-50 to-blue-50 min-h-screen">
+    <div className="flex-1 bg-gradient-to-br from-slate-50 to-blue-50">
       {/* Header Uniforme SYRATE */}
       <div className="bg-white border-b border-gray-200 sticky top-0 z-10">
         <div className="px-6 py-3">
