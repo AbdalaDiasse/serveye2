@@ -14,7 +14,7 @@ import {
   AlertCircle, MoreVertical, MoreHorizontal, ChevronRight, HardHat,
   Shirt, Zap, Flame, Wind, Droplet, Activity, Monitor, Target,
   Truck, Bike, Bus, FileText, Wrench, Swords, Cloud, TrendingDown,
-  Move, ShieldAlert, UserX, Cigarette, Gun
+  Move, ShieldAlert, UserX, Cigarette, Gun, Footprints
 } from "lucide-react";
 
 export const ControlPanelSection = (): JSX.Element => {
@@ -81,7 +81,7 @@ export const ControlPanelSection = (): JSX.Element => {
     { name: "Bagarre", count: 12, icon: <Swords className="w-8 h-8 text-white" /> },
     { name: "Smoke", count: 28, icon: <Cigarette className="w-8 h-8 text-white" /> },
     { name: "Fall", count: 7, icon: <UserX className="w-8 h-8 text-white" /> },
-    { name: "Running", count: 19, icon: <Move className="w-8 h-8 text-white" /> },
+    { name: "Running", count: 19, icon: <Footprints className="w-8 h-8 text-white" /> },
     { name: "Gathering", count: 15, icon: <Users className="w-8 h-8 text-white" /> },
     { name: "Gun", count: 8, icon: <Zap className="w-8 h-8 text-white" /> }
   ];
