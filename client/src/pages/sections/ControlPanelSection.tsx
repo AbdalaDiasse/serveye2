@@ -391,6 +391,7 @@ Administrateur
                       className="w-[77px] h-[77px]"
                       alt="Chart"
                       src="/figmaAssets/div-35.svg"
+                      style={{background: 'none'}}
                     />
 </div>
 )}
@@ -417,6 +418,7 @@ IA ACTIVE
                     className="w-[110px] h-10"
                     alt="Controls"
                     src="/figmaAssets/div-29.svg"
+                    style={{background: 'none'}}
                   />
 </div>
 </CardHeader>
@@ -432,6 +434,7 @@ IA ACTIVE
                             className="w-6 h-10"
                             alt="Safety"
                             src="/figmaAssets/div-38.svg"
+                            style={{background: 'none'}}
                           />
 <div>
 <h4 className="font-bold text-white [font-family:'Inter',Helvetica]">Safety</h4>
@@ -453,6 +456,7 @@ IA ACTIVE
                                   className="w-4 h-5"
                                   alt={item.name}
                                   src={item.icon}
+                                  style={{background: 'none'}}
                                 />
 <span className="text-sm text-white/80 [font-family:'Inter',Helvetica]">
 {item.name}
@@ -482,6 +486,7 @@ IA ACTIVE
                           className="w-8 h-10"
                           alt="People"
                           src="/figmaAssets/div.svg"
+                          style={{background: 'none'}}
                         />
 <div>
 <h4 className="font-bold text-white [font-family:'Inter',Helvetica]">People Counting</h4>
@@ -498,6 +503,7 @@ Flux de personnes
                                 className="w-[35px] h-5 mx-auto mb-1"
                                 alt="In"
                                 src="/figmaAssets/i-6.svg"
+                                style={{background: 'none'}}
                               />
 <span className="text-lg font-bold text-white [font-family:'Inter',Helvetica]">
 342
@@ -513,6 +519,7 @@ Flux de personnes
                                 className="w-[35px] h-5 mx-auto mb-1"
                                 alt="Out"
                                 src="/figmaAssets/i-8.svg"
+                                style={{background: 'none'}}
                               />
 <span className="text-lg font-bold text-white [font-family:'Inter',Helvetica]">
 298
@@ -539,6 +546,7 @@ Personnes présentes
                           className="w-8 h-10"
                           alt="Person"
                           src="/figmaAssets/div-16.svg"
+                          style={{background: 'none'}}
                         />
 <div>
 <h4 className="font-bold text-white [font-family:'Inter',Helvetica]">Person</h4>
@@ -582,6 +590,7 @@ Reconnaissance faciale
                             className="w-6 h-10"
                             alt="Zone Alert"
                             src="/figmaAssets/i-20.svg"
+                            style={{background: 'none'}}
                           />
 <div>
 <h4 className="font-bold text-white [font-family:'Inter',Helvetica]">Zone Monitoring</h4>
@@ -601,6 +610,7 @@ Surveillance de zones
                                     className="w-6 h-6"
                                     alt={item.name}
                                     src={item.icon}
+                                    style={{background: 'none'}}
                                   />
 <span className="text-sm text-white/80 [font-family:'Inter',Helvetica]">
 {item.name}
@@ -629,6 +639,7 @@ Surveillance de zones
                             className="w-6 h-10"
                             alt="Behavior"
                             src="/figmaAssets/div-8.svg"
+                            style={{background: 'none'}}
                           />
 <div>
 <h4 className="font-bold text-white [font-family:'Inter',Helvetica]">Behavior</h4>
@@ -646,6 +657,7 @@ Analyse comportementale
                               className="w-8 h-8 mx-auto mb-2"
                               alt={item.name}
                               src={item.icon}
+                              style={{background: 'none'}}
                             />
 <span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
 {item.count}
@@ -670,6 +682,7 @@ Analyse comportementale
                           className="w-3.5 h-5"
                           alt="Vehicles"
                           src="/figmaAssets/i-9.svg"
+                          style={{background: 'none'}}
                         />
 <h4 className="font-bold text-white text-sm [font-family:'Inter',Helvetica]">Véhicules</h4>
 </div>
@@ -683,6 +696,7 @@ Analyse comportementale
                               className="w-6 h-6 mx-auto mb-2"
                               alt={vehicle.name}
                               src={vehicle.icon}
+                              style={{background: 'none'}}
                             />
 <span className="text-sm font-bold text-white block [font-family:'Inter',Helvetica]">
 {vehicle.count}
@@ -701,6 +715,7 @@ Analyse comportementale
                             className="w-4 h-5 mx-auto mb-2"
                             alt="Plates"
                             src="/figmaAssets/i-15.svg"
+                            style={{background: 'none'}}
                           />
 <span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
 1,847
@@ -719,6 +734,7 @@ Plaques Détectées
                             className="w-3.5 h-5 mx-auto mb-2"
                             alt="Speed"
                             src="/figmaAssets/i-5.svg"
+                            style={{background: 'none'}}
                           />
 <div className="flex items-center justify-center gap-1 mb-2">
                             <span className="text-lg font-bold text-white [font-family:'Inter',Helvetica]">47</span>
@@ -735,6 +751,7 @@ Vitesse Moyenne
                             className="w-3.5 h-5 mx-auto mb-2"
                             alt="Violations"
                             src="/figmaAssets/i-7.svg"
+                            style={{background: 'none'}}
                           />
 <span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
 34
