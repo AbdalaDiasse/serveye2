@@ -39,6 +39,17 @@ const navigationItems = [
     name: "Vehicules",
     icon: "/figmaAssets/frame-6.svg",
     isActive: false,
+    hasDropdown: true,
+    subItems: [
+      {
+        name: "Dashboard",
+        icon: "/figmaAssets/frame-1.svg",
+      },
+      {
+        name: "Captures",
+        icon: "/figmaAssets/frame-2.svg",
+      },
+    ],
   },
   {
     name: "Événements",
@@ -76,18 +87,21 @@ const renderIcon = (icon: string, className: string) => {
 
 export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage }: EventSummarySectionProps): JSX.Element => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(
-    // Ouvrir automatiquement le dropdown "Personnes" si on est sur capture, reconnaissance ou persons
-    (currentPage === "capture" || currentPage === "reconnaissance" || currentPage === "persons") ? "Personnes" : null
+    // Ouvrir automatiquement le dropdown approprié selon la page
+    (currentPage === "capture" || currentPage === "reconnaissance" || currentPage === "persons") ? "Personnes" : 
+    (currentPage === "vehicles" || currentPage === "vehicleCapture") ? "Vehicules" : null
   );
 
   const toggleDropdown = (itemName: string) => {
     setOpenDropdown(openDropdown === itemName ? null : itemName);
   };
 
-  // Effet pour ouvrir automatiquement le dropdown quand on navigue vers capture/reconnaissance/persons
+  // Effet pour ouvrir automatiquement le dropdown approprié selon la page
   useEffect(() => {
     if (currentPage === "capture" || currentPage === "reconnaissance" || currentPage === "persons") {
       setOpenDropdown("Personnes");
+    } else if (currentPage === "vehicles" || currentPage === "vehicleCapture") {
+      setOpenDropdown("Vehicules");
     }
   }, [currentPage]);
 
@@ -122,8 +136,8 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
           {navigationItems.map((item, index) => {
             const isPersonnesActive = item.name === "Personnes" && (currentPage === "persons" || currentPage === "capture" || currentPage === "reconnaissance");
             const isEventsActive = (item.name === "Évènements" || item.name === "Événements") && currentPage === "events";
-            const isVehiclesActive = item.name === "Vehicules" && currentPage === "vehicles";
-            const isOtherActive = currentPage === item.name.toLowerCase() && item.name !== "Personnes" && item.name !== "Évènements" && item.name !== "Événements";
+            const isVehiclesActive = item.name === "Vehicules" && (currentPage === "vehicles" || currentPage === "vehicleCapture");
+            const isOtherActive = currentPage === item.name.toLowerCase() && item.name !== "Personnes" && item.name !== "Évènements" && item.name !== "Événements" && item.name !== "Vehicules";
             
             return (
               <div key={index} className="relative">
@@ -148,7 +162,9 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                     } else if (item.name === "Évènements" || item.name === "Événements") {
                       handleNavigation("events");
                     } else if (item.name === "Vehicules") {
-                      handleNavigation("vehicles");
+                      if (openDropdown !== item.name) {
+                        handleNavigation("vehicles");
+                      }
                     } else {
                       handleNavigation(item.name.toLowerCase());
                     }
@@ -166,7 +182,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                     <img
                       className={`w-3 h-3 ml-auto transition-transform duration-200 ${
                         openDropdown === item.name ? 'rotate-180' : ''
-                      } ${(isPersonnesActive) ? 'filter brightness-0 invert' : ''}`}
+                      } ${(isPersonnesActive || isVehiclesActive) ? 'filter brightness-0 invert' : ''}`}
                       alt="Dropdown"
                       src="/figmaAssets/frame-7.svg"
                     />
@@ -174,30 +190,42 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                 </div>
                 {item.subItems && openDropdown === item.name && (
                   <div className="ml-6 mt-1 space-y-1">
-                    {item.subItems.map((subItem, subIndex) => (
-                      <div
-                        key={subIndex}
-                        className={`flex items-center px-4 rounded-lg cursor-pointer transition-all duration-200 ${
-                          currentPage === subItem.name.toLowerCase()
-                            ? 'h-12 bg-gradient-to-r from-teal-400 to-cyan-400 shadow-md'
-                            : 'h-10 hover:bg-gray-50'
-                        }`}
-                        onClick={() => handleNavigation(subItem.name.toLowerCase())}
-                      >
+                    {item.subItems.map((subItem, subIndex) => {
+                      const subPageName = item.name === "Vehicules" && subItem.name === "Captures" 
+                        ? "vehicleCapture" 
+                        : item.name === "Vehicules" && subItem.name === "Dashboard"
+                        ? "vehicles"
+                        : subItem.name.toLowerCase();
+                      const isSubActive = currentPage === subPageName;
+                      const gradientClass = item.name === "Vehicules" 
+                        ? 'from-orange-400 to-orange-500' 
+                        : 'from-teal-400 to-cyan-400';
+                      
+                      return (
+                        <div
+                          key={subIndex}
+                          className={`flex items-center px-4 rounded-lg cursor-pointer transition-all duration-200 ${
+                            isSubActive
+                              ? `h-12 bg-gradient-to-r ${gradientClass} shadow-md`
+                              : 'h-10 hover:bg-gray-50'
+                          }`}
+                          onClick={() => handleNavigation(subPageName)}
+                        >
                         <img
                           className="w-3 h-3 mr-3"
                           alt={subItem.name}
                           src={subItem.icon}
                         />
                         <span className={`[font-family:'Inter',Helvetica] text-sm tracking-[0] leading-5 truncate ${
-                          currentPage === subItem.name.toLowerCase()
+                          isSubActive
                             ? 'font-semibold text-white'
                             : 'font-normal text-slate-500'
                         }`}>
                           {subItem.name}
                         </span>
                       </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 )}
               </div>
