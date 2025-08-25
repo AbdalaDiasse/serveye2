@@ -96,7 +96,8 @@ export const VehiclesDashboard = (): JSX.Element => {
       speed: "42 km/h",
       location: "CAM-02",
       status: "normal",
-      vehicleType: "Voiture"
+      vehicleType: "Voiture",
+      image: "https://images.unsplash.com/photo-1549924231-f129b911e442?w=400&h=300&fit=crop&auto=format"
     },
     {
       plate: "XYZ-789",
@@ -104,7 +105,8 @@ export const VehiclesDashboard = (): JSX.Element => {
       speed: "82 km/h",
       location: "CAM-05",
       status: "warning",
-      vehicleType: "Voiture"
+      vehicleType: "Voiture",
+      image: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=400&h=300&fit=crop&auto=format"
     },
     {
       plate: "MN-456",
@@ -112,7 +114,89 @@ export const VehiclesDashboard = (): JSX.Element => {
       speed: "38 km/h",
       location: "CAM-01",
       status: "normal",
-      vehicleType: "Moto"
+      vehicleType: "Moto",
+      image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop&auto=format"
+    },
+    {
+      plate: "DEF-456",
+      time: "Il y a 12 minutes",
+      speed: "55 km/h",
+      location: "CAM-03",
+      status: "normal",
+      vehicleType: "Camion",
+      image: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=400&h=300&fit=crop&auto=format"
+    },
+    {
+      plate: "GHI-789",
+      time: "Il y a 15 minutes",
+      speed: "78 km/h",
+      location: "CAM-04",
+      status: "warning",
+      vehicleType: "Voiture",
+      image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400&h=300&fit=crop&auto=format"
+    },
+    {
+      plate: "JKL-012",
+      time: "Il y a 18 minutes",
+      speed: "45 km/h",
+      location: "CAM-06",
+      status: "normal",
+      vehicleType: "Voiture",
+      image: "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=400&h=300&fit=crop&auto=format"
+    },
+    {
+      plate: "MNO-345",
+      time: "Il y a 22 minutes",
+      speed: "35 km/h",
+      location: "CAM-01",
+      status: "normal",
+      vehicleType: "Moto",
+      image: "https://images.unsplash.com/photo-1609630875171-b1321377ee65?w=400&h=300&fit=crop&auto=format"
+    },
+    {
+      plate: "PQR-678",
+      time: "Il y a 25 minutes",
+      speed: "89 km/h",
+      location: "CAM-07",
+      status: "warning",
+      vehicleType: "Voiture",
+      image: "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=400&h=300&fit=crop&auto=format"
+    },
+    {
+      plate: "STU-901",
+      time: "Il y a 28 minutes",
+      speed: "62 km/h",
+      location: "CAM-02",
+      status: "normal",
+      vehicleType: "Bus",
+      image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400&h=300&fit=crop&auto=format"
+    },
+    {
+      plate: "VWX-234",
+      time: "Il y a 32 minutes",
+      speed: "48 km/h",
+      location: "CAM-08",
+      status: "normal",
+      vehicleType: "Voiture",
+      image: "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=400&h=300&fit=crop&auto=format"
+    },
+    {
+      plate: "YZA-567",
+      time: "Il y a 35 minutes",
+      speed: "75 km/h",
+      location: "CAM-03",
+      status: "warning",
+      vehicleType: "Camion",
+      image: "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=400&h=300&fit=crop&auto=format"
+    },
+    {
+      plate: "BCD-890",
+      time: "Il y a 38 minutes",
+      speed: "52 km/h",
+      location: "CAM-05",
+      status: "normal",
+      vehicleType: "Voiture",
+      image: "https://images.unsplash.com/photo-1617788138017-80ad40651399?w=400&h=300&fit=crop&auto=format"
     }
   ];
 
@@ -435,30 +519,42 @@ export const VehiclesDashboard = (): JSX.Element => {
             </div>
           </CardHeader>
           <CardContent>
-            <ScrollArea className="h-[300px]">
-              <div className="space-y-3">
+            <ScrollArea className="h-[400px]">
+              <div className="space-y-3 pr-2">
                 {vehicleCaptures.map((capture, index) => (
                   <div key={index} className="border rounded-lg p-3 hover:bg-gray-50 transition-colors">
                     <div className="flex items-start gap-3">
-                      <div className="w-20 h-14 bg-gray-200 rounded flex items-center justify-center">
-                        <Car className="w-8 h-8 text-gray-400" />
+                      <div className="w-20 h-14 bg-gray-100 rounded overflow-hidden flex-shrink-0">
+                        <img 
+                          src={capture.image} 
+                          alt={`${capture.vehicleType} ${capture.plate}`}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.style.display = 'none';
+                            target.nextElementSibling?.classList.remove('hidden');
+                          }}
+                        />
+                        <div className="hidden w-full h-full flex items-center justify-center bg-gray-200">
+                          <Car className="w-8 h-8 text-gray-400" />
+                        </div>
                       </div>
-                      <div className="flex-1">
+                      <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between mb-1">
                           <div className="flex items-center gap-2">
-                            <span className="font-semibold text-gray-900">{capture.plate}</span>
+                            <span className="font-semibold text-gray-900 text-sm">{capture.plate}</span>
                             <Badge className={
                               capture.status === 'warning' 
-                                ? 'bg-orange-100 text-orange-700 border-0' 
-                                : 'bg-green-100 text-green-700 border-0'
+                                ? 'bg-orange-100 text-orange-700 border-0 text-xs' 
+                                : 'bg-green-100 text-green-700 border-0 text-xs'
                             }>
                               {capture.vehicleType}
                             </Badge>
                           </div>
                           {capture.status === 'warning' ? (
-                            <AlertCircle className="w-4 h-4 text-orange-500" />
+                            <AlertCircle className="w-4 h-4 text-orange-500 flex-shrink-0" />
                           ) : (
-                            <CheckCircle className="w-4 h-4 text-green-500" />
+                            <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
                           )}
                         </div>
                         <div className="flex items-center gap-4 text-xs text-gray-500">
