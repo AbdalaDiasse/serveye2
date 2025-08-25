@@ -175,31 +175,77 @@ export const VehicleCapturePage = (): JSX.Element => {
         </div>
       </div>
 
+      {/* Recherche Avancée - Pleine largeur */}
+      <div className="bg-gradient-to-r from-orange-50 to-orange-100 border-b border-orange-200 px-6 py-6">
+        <div className="max-w-full">
+          <div className="flex items-center gap-3 mb-4">
+            <Shield className="w-6 h-6 text-orange-600" />
+            <h2 className="text-lg font-bold text-gray-800">Recherche Avancée</h2>
+          </div>
+          
+          <div className="bg-white rounded-lg p-4 shadow-sm border border-orange-200">
+            <div className="space-y-3">
+              <div className="text-sm text-gray-600">
+                <p className="font-medium mb-2">Exemples :</p>
+                <div className="flex flex-wrap gap-2">
+                  <span className="px-3 py-1 bg-orange-50 text-orange-700 rounded-full text-xs border border-orange-200">
+                    "Véhicules rouges avec violation de vitesse aujourd'hui"
+                  </span>
+                  <span className="px-3 py-1 bg-orange-50 text-orange-700 rounded-full text-xs border border-orange-200">
+                    "Camions détectés par Caméra 3 cette semaine"
+                  </span>
+                  <span className="px-3 py-1 bg-orange-50 text-orange-700 rounded-full text-xs border border-orange-200">
+                    "Plaques d'immatriculation reconnues zone parking"
+                  </span>
+                  <span className="px-3 py-1 bg-orange-50 text-orange-700 rounded-full text-xs border border-orange-200">
+                    "Véhicules entre 8h et 10h Zone principale"
+                  </span>
+                </div>
+              </div>
+              
+              <div className="flex gap-3">
+                <Input 
+                  placeholder="Saisissez ce que vous cherchez en langage naturel..." 
+                  className="flex-1 h-12 text-base border-orange-200 focus:border-orange-400"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <div className="flex gap-2">
+                  <Select defaultValue="5min">
+                    <SelectTrigger className="w-[140px] h-12 border-orange-200">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="5min">Dernières 5 min</SelectItem>
+                      <SelectItem value="1h">Dernière heure</SelectItem>
+                      <SelectItem value="24h">24 heures</SelectItem>
+                      <SelectItem value="7d">7 jours</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Select defaultValue="plaques">
+                    <SelectTrigger className="w-[140px] h-12 border-orange-200">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="plaques">Plaques</SelectItem>
+                      <SelectItem value="vehicles">Véhicules</SelectItem>
+                      <SelectItem value="all">Tous</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Button className="bg-orange-500 hover:bg-orange-600 text-white h-12 px-6">
+                    <Search className="w-5 h-5 mr-2" />
+                    Rechercher
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar avec filtres */}
         <aside className="w-80 bg-white border-r border-gray-200 p-4 overflow-y-auto">
-          {/* Recherche Avancée */}
-          <Card className="mb-4 border-orange-200">
-            <CardHeader className="bg-gradient-to-r from-orange-50 to-orange-100 pb-3">
-              <CardTitle className="text-base font-semibold text-gray-800 flex items-center gap-2">
-                <Shield className="w-5 h-5 text-orange-500" />
-                Recherche Avancée
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4 pt-4">
-              <div className="text-sm text-gray-600 space-y-2">
-                <p>• Saisissez ce que vous cherchez en langage naturel</p>
-                <p>• "Véhicules rouges avec violation de vitesse aujourd'hui"</p>
-                <p>• "Camions détectés par Caméra 3 cette semaine"</p>
-                <p>• "Plaques d'immatriculation reconnues zone parking"</p>
-              </div>
-              <Button className="w-full bg-orange-500 hover:bg-orange-600 text-white">
-                <Search className="w-4 h-4 mr-2" />
-                Rechercher
-              </Button>
-            </CardContent>
-          </Card>
-
           {/* Filtres */}
           <div className="space-y-6">
             <div>
