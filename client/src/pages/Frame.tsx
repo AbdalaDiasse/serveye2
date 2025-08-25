@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ControlPanelSection } from "./sections/ControlPanelSection";
+import { MainDashboard } from "./MainDashboard";
 import { EventSummarySection } from "./sections/EventSummarySection";
 import { CapturePage } from "./CapturePage";
 import { ReconnaissancePage } from "./ReconnaissancePage";
@@ -12,7 +12,7 @@ export const Frame = (): JSX.Element => {
   const renderContent = () => {
     switch (currentPage) {
       case "dashboard":
-        return <ControlPanelSection />;
+        return <MainDashboard />;
       case "capture":
         return <CapturePage />;
       case "reconnaissance":
@@ -22,7 +22,7 @@ export const Frame = (): JSX.Element => {
       case "events":
         return <EventsPage />;
       default:
-        return <ControlPanelSection />;
+        return <MainDashboard />;
     }
   };
 
