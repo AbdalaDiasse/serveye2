@@ -122,6 +122,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
           {navigationItems.map((item, index) => {
             const isPersonnesActive = item.name === "Personnes" && (currentPage === "persons" || currentPage === "capture" || currentPage === "reconnaissance");
             const isEventsActive = (item.name === "Évènements" || item.name === "Événements") && currentPage === "events";
+            const isVehiclesActive = item.name === "Vehicules" && currentPage === "vehicles";
             const isOtherActive = currentPage === item.name.toLowerCase() && item.name !== "Personnes" && item.name !== "Évènements" && item.name !== "Événements";
             
             return (
@@ -132,6 +133,8 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                       ? "shadow-md bg-gradient-to-r from-teal-500 to-cyan-500"
                       : isEventsActive
                       ? "shadow-md bg-gradient-to-r from-red-500 to-red-600"
+                      : isVehiclesActive
+                      ? "shadow-md bg-gradient-to-r from-orange-500 to-orange-600"
                       : isOtherActive
                       ? "shadow-md bg-gradient-to-r from-blue-600 to-blue-500"
                       : "hover:bg-gray-50"
@@ -144,14 +147,16 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                       }
                     } else if (item.name === "Évènements" || item.name === "Événements") {
                       handleNavigation("events");
+                    } else if (item.name === "Vehicules") {
+                      handleNavigation("vehicles");
                     } else {
                       handleNavigation(item.name.toLowerCase());
                     }
                   }}
                 >
-                  {renderIcon(item.icon, `${(isPersonnesActive || isEventsActive || isOtherActive) ? "w-4 h-4 mr-3 text-white" : "w-4 h-4 mr-3 text-slate-600"}`)}
+                  {renderIcon(item.icon, `${(isPersonnesActive || isEventsActive || isVehiclesActive || isOtherActive) ? "w-4 h-4 mr-3 text-white" : "w-4 h-4 mr-3 text-slate-600"}`)}
                   <span className={`[font-family:'Inter',Helvetica] text-base tracking-[0] truncate ${
-                    (isPersonnesActive || isEventsActive || isOtherActive)
+                    (isPersonnesActive || isEventsActive || isVehiclesActive || isOtherActive)
                       ? 'font-semibold text-white leading-[normal]'
                       : 'font-normal text-slate-600 leading-6'
                   }`}>
