@@ -69,7 +69,12 @@ export const Frame = (): JSX.Element => {
         <div className="flex w-full">
           <EventSummarySection currentPage={currentPage} setCurrentPage={setCurrentPage} />
           <div className="flex-1 flex flex-col">
-            {/* Graphiques d'analyse - seulement pour le dashboard */}
+            {/* Contenu principal (centre de commande, etc.) */}
+            <div className="flex-1">
+              {renderContent()}
+            </div>
+            
+            {/* Graphiques d'analyse - seulement pour le dashboard - EN DESSOUS */}
             {currentPage === "dashboard" && (
               <div className="grid grid-cols-3 gap-6 p-6 bg-gray-50">
                 {/* Distribution des Événements - Pie Chart */}
@@ -241,11 +246,6 @@ export const Frame = (): JSX.Element => {
                 </Card>
               </div>
             )}
-            
-            {/* Contenu principal (centre de commande, etc.) */}
-            <div className="flex-1">
-              {renderContent()}
-            </div>
           </div>
         </div>
       </div>
