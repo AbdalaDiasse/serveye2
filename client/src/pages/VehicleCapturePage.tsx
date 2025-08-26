@@ -6,6 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { 
@@ -23,8 +25,7 @@ import {
   Home,
   Printer,
   Upload,
-  Eye,
-  Gauge
+  Eye
 } from "lucide-react";
 
 export const VehicleCapturePage = (): JSX.Element => {
@@ -144,50 +145,59 @@ export const VehicleCapturePage = (): JSX.Element => {
   ];
 
   return (
-    <div className="w-full h-full bg-[#f8f9fa]">
-      {/* Header avec titre et badges */}
-      <div className="bg-white px-8 py-6 border-b border-[#e5e7eb] shadow-sm">
+    <div className="w-full h-full flex flex-col bg-gray-50">
+      {/* Header */}
+      <div className="bg-white border-b border-gray-200 px-6 py-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-6">
-            <h1 className="text-2xl font-bold text-gray-900">Captures Véhicules & Plaques</h1>
-            <Badge className="bg-orange-100 text-orange-700 border-orange-200 text-sm px-3 py-1">
-              <Camera className="w-3 h-3 mr-1" />
-              Recherche intelligente : "véhicules"
-            </Badge>
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-orange-100 rounded-lg">
+              <Car className="w-5 h-5 text-orange-600" />
+            </div>
+            <div>
+              <h1 className="text-xl font-bold text-gray-900">Captures Véhicules & Plaques</h1>
+              <p className="text-sm text-gray-500">Liste des captures de véhicules et plaques détectées</p>
+            </div>
           </div>
           <div className="flex items-center gap-3">
-            <Button variant="outline" size="sm" className="border-gray-300">
+            <Badge className="bg-orange-100 text-orange-700 border-0">
+              <Home className="w-3 h-3 mr-1" />
+              Recherche intelligente : "véhicules"
+            </Badge>
+            <Button variant="outline" size="sm">
               <Upload className="w-4 h-4 mr-2" />
               Exporter
+            </Button>
+            <Button className="bg-orange-500 hover:bg-orange-600 text-white" size="sm">
+              <Camera className="w-4 h-4 mr-2" />
+              Rechercher
             </Button>
           </div>
         </div>
       </div>
 
       {/* Recherche Avancée - Pleine largeur */}
-      <div className="bg-white px-8 py-4 border-b border-[#e5e7eb]">
-        <Card className="border-orange-200 shadow-sm">
-          <CardHeader className="bg-gradient-to-r from-orange-50 to-orange-100 px-6 py-4">
-            <CardTitle className="text-lg font-bold text-gray-800 flex items-center gap-2">
-              <Shield className="w-5 h-5 text-orange-600" />
-              Recherche Avancée
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="px-6 py-4">
+      <div className="bg-gradient-to-r from-orange-50 to-orange-100 border-b border-orange-200 px-6 py-6">
+        <div className="max-w-full">
+          <div className="flex items-center gap-3 mb-4">
+            <Shield className="w-6 h-6 text-orange-600" />
+            <h2 className="text-lg font-bold text-gray-800">Recherche Avancée</h2>
+          </div>
+          
+          <div className="bg-white rounded-lg p-4 shadow-sm border border-orange-200">
             <div className="space-y-3">
               <div className="text-sm text-gray-600">
-                <p className="font-medium mb-2">Suggestions rapides :</p>
+                <p className="font-medium mb-2">Exemples :</p>
                 <div className="flex flex-wrap gap-2">
-                  <span className="px-3 py-1 bg-orange-50 text-orange-700 rounded-full text-xs border border-orange-200 cursor-pointer hover:bg-orange-100">
+                  <span className="px-3 py-1 bg-orange-50 text-orange-700 rounded-full text-xs border border-orange-200">
                     "Véhicules rouges avec violation de vitesse aujourd'hui"
                   </span>
-                  <span className="px-3 py-1 bg-orange-50 text-orange-700 rounded-full text-xs border border-orange-200 cursor-pointer hover:bg-orange-100">
+                  <span className="px-3 py-1 bg-orange-50 text-orange-700 rounded-full text-xs border border-orange-200">
                     "Camions détectés par Caméra 3 cette semaine"
                   </span>
-                  <span className="px-3 py-1 bg-orange-50 text-orange-700 rounded-full text-xs border border-orange-200 cursor-pointer hover:bg-orange-100">
+                  <span className="px-3 py-1 bg-orange-50 text-orange-700 rounded-full text-xs border border-orange-200">
                     "Plaques d'immatriculation reconnues zone parking"
                   </span>
-                  <span className="px-3 py-1 bg-orange-50 text-orange-700 rounded-full text-xs border border-orange-200 cursor-pointer hover:bg-orange-100">
+                  <span className="px-3 py-1 bg-orange-50 text-orange-700 rounded-full text-xs border border-orange-200">
                     "Véhicules entre 8h et 10h Zone principale"
                   </span>
                 </div>
@@ -196,23 +206,59 @@ export const VehicleCapturePage = (): JSX.Element => {
               <div className="flex gap-3">
                 <Input 
                   placeholder="Saisissez ce que vous cherchez en langage naturel..." 
-                  className="flex-1 h-11 border-gray-300 focus:border-orange-400"
+                  className="flex-1 h-12 text-base border-orange-200 focus:border-orange-400"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
-                <Select defaultValue="5min">
-                  <SelectTrigger className="w-[140px] h-11 border-gray-300">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="5min">Dernières 5 min</SelectItem>
-                    <SelectItem value="1h">Dernière heure</SelectItem>
-                    <SelectItem value="24h">24 heures</SelectItem>
-                    <SelectItem value="7d">7 jours</SelectItem>
-                  </SelectContent>
-                </Select>
+                <div className="flex gap-2">
+                  <Select defaultValue="5min">
+                    <SelectTrigger className="w-[140px] h-12 border-orange-200">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="5min">Dernières 5 min</SelectItem>
+                      <SelectItem value="1h">Dernière heure</SelectItem>
+                      <SelectItem value="24h">24 heures</SelectItem>
+                      <SelectItem value="7d">7 jours</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Select defaultValue="plaques">
+                    <SelectTrigger className="w-[140px] h-12 border-orange-200">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="plaques">Plaques</SelectItem>
+                      <SelectItem value="vehicles">Véhicules</SelectItem>
+                      <SelectItem value="all">Tous</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Button className="bg-orange-500 hover:bg-orange-600 text-white h-12 px-6">
+                    <Search className="w-5 h-5 mr-2" />
+                    Rechercher
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex flex-1 overflow-hidden">
+        {/* Sidebar avec filtres */}
+        <aside className="w-80 bg-white border-r border-gray-200 p-4 overflow-y-auto">
+          {/* Filtres */}
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+                <Filter className="w-4 h-4" />
+                Filtres
+              </h3>
+              
+              {/* Type de capture */}
+              <div className="space-y-3">
+                <Label className="text-sm">Type de capture</Label>
                 <Select defaultValue="plaques">
-                  <SelectTrigger className="w-[140px] h-11 border-gray-300">
+                  <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -221,204 +267,157 @@ export const VehicleCapturePage = (): JSX.Element => {
                     <SelectItem value="all">Tous</SelectItem>
                   </SelectContent>
                 </Select>
-                <Button className="bg-orange-500 hover:bg-orange-600 text-white h-11 px-6">
-                  <Search className="w-4 h-4 mr-2" />
-                  Rechercher
-                </Button>
               </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
 
-      {/* Contenu principal avec sidebar */}
-      <div className="flex h-[calc(100%-200px)]">
-        {/* Sidebar avec filtres */}
-        <aside className="w-[320px] bg-white border-r border-[#e5e7eb] p-6 overflow-y-auto">
-          <div className="space-y-6">
-            {/* Filtres header */}
-            <div className="flex items-center justify-between">
-              <h3 className="text-sm font-bold text-gray-800 flex items-center gap-2">
-                <Filter className="w-4 h-4 text-orange-500" />
-                Filtres
-              </h3>
-              <Button variant="ghost" size="sm" className="text-orange-600 hover:text-orange-700">
-                Réinitialiser
-              </Button>
-            </div>
+              {/* Sites */}
+              <div className="space-y-3 mt-4">
+                <Label className="text-sm">Sites</Label>
+                <Select defaultValue="all">
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">Tous les sites</SelectItem>
+                    <SelectItem value="entrance">Entrées</SelectItem>
+                    <SelectItem value="parking">Parkings</SelectItem>
+                    <SelectItem value="security">Zones sécurisées</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
 
-            <Separator className="bg-gray-200" />
+              {/* Caméras */}
+              <div className="space-y-3 mt-4">
+                <Label className="text-sm">Caméras</Label>
+                <Select defaultValue="all">
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">Toutes les caméras</SelectItem>
+                    <SelectItem value="cam1">CAM-01</SelectItem>
+                    <SelectItem value="cam2">CAM-02</SelectItem>
+                    <SelectItem value="cam3">CAM-03</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
 
-            {/* Type de capture */}
-            <div className="space-y-3">
-              <Label className="text-sm font-semibold text-gray-700">Type de capture</Label>
-              <Select defaultValue="plaques">
-                <SelectTrigger className="border-gray-300">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="plaques">Plaques</SelectItem>
-                  <SelectItem value="vehicles">Véhicules</SelectItem>
-                  <SelectItem value="all">Tous</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+              {/* Zones */}
+              <div className="space-y-3 mt-4">
+                <Label className="text-sm">Zones</Label>
+                <Select defaultValue="all">
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">Toutes les zones</SelectItem>
+                    <SelectItem value="public">Zones publiques</SelectItem>
+                    <SelectItem value="restricted">Zones restreintes</SelectItem>
+                    <SelectItem value="vip">Zones VIP</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
 
-            {/* Sites */}
-            <div className="space-y-3">
-              <Label className="text-sm font-semibold text-gray-700">Sites</Label>
-              <Select defaultValue="all">
-                <SelectTrigger className="border-gray-300">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">Tous les sites</SelectItem>
-                  <SelectItem value="entrance">Entrées</SelectItem>
-                  <SelectItem value="parking">Parkings</SelectItem>
-                  <SelectItem value="security">Zones sécurisées</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            {/* Caméras */}
-            <div className="space-y-3">
-              <Label className="text-sm font-semibold text-gray-700">Caméras</Label>
-              <Select defaultValue="all">
-                <SelectTrigger className="border-gray-300">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">Toutes les caméras</SelectItem>
-                  <SelectItem value="cam1">CAM-01</SelectItem>
-                  <SelectItem value="cam2">CAM-02</SelectItem>
-                  <SelectItem value="cam3">CAM-03</SelectItem>
-                  <SelectItem value="cam4">CAM-04</SelectItem>
-                  <SelectItem value="cam5">CAM-05</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            {/* Zones */}
-            <div className="space-y-3">
-              <Label className="text-sm font-semibold text-gray-700">Zones</Label>
-              <Select defaultValue="all">
-                <SelectTrigger className="border-gray-300">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">Toutes les zones</SelectItem>
-                  <SelectItem value="public">Zones publiques</SelectItem>
-                  <SelectItem value="restricted">Zones restreintes</SelectItem>
-                  <SelectItem value="vip">Zones VIP</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            {/* Période */}
-            <div className="space-y-3">
-              <Label className="text-sm font-semibold text-gray-700">Période</Label>
-              <div className="flex gap-2">
-                <div className="flex-1">
-                  <Label className="text-xs text-gray-500">De</Label>
-                  <Input type="date" className="border-gray-300" />
-                </div>
-                <div className="flex-1">
-                  <Label className="text-xs text-gray-500">À</Label>
-                  <Input type="date" className="border-gray-300" />
+              {/* Période */}
+              <div className="space-y-3 mt-4">
+                <Label className="text-sm">Période</Label>
+                <div className="flex gap-2">
+                  <Input type="date" className="flex-1" />
+                  <span className="self-center text-gray-500">à</span>
+                  <Input type="date" className="flex-1" />
                 </div>
               </div>
             </div>
 
-            <Separator className="bg-gray-200" />
+            <Separator />
 
             {/* Violations */}
             <div>
-              <Label className="text-sm font-semibold text-gray-700 mb-3 block">Violations</Label>
+              <Label className="text-sm font-semibold mb-3 block">Violations</Label>
               <div className="space-y-2">
                 <div className="flex items-center space-x-2">
-                  <Checkbox id="stationnement" className="border-gray-400" />
-                  <label htmlFor="stationnement" className="text-sm text-gray-600 cursor-pointer">Stationnement interdit</label>
+                  <Checkbox id="stationnement" />
+                  <label htmlFor="stationnement" className="text-sm">Stationnement interdit</label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Checkbox id="vitesse" className="border-gray-400" />
-                  <label htmlFor="vitesse" className="text-sm text-gray-600 cursor-pointer">Excès de vitesse</label>
+                  <Checkbox id="vitesse" />
+                  <label htmlFor="vitesse" className="text-sm">Excès de vitesse</label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Checkbox id="sens" className="border-gray-400" />
-                  <label htmlFor="sens" className="text-sm text-gray-600 cursor-pointer">Sens interdit</label>
+                  <Checkbox id="sens" />
+                  <label htmlFor="sens" className="text-sm">Sens interdit</label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Checkbox id="stop" className="border-gray-400" />
-                  <label htmlFor="stop" className="text-sm text-gray-600 cursor-pointer">Stop</label>
+                  <Checkbox id="stop" />
+                  <label htmlFor="stop" className="text-sm">Stop</label>
                 </div>
               </div>
             </div>
 
-            <Separator className="bg-gray-200" />
+            <Separator />
 
             {/* Type de véhicule */}
             <div>
-              <Label className="text-sm font-semibold text-gray-700 mb-3 block">Type de véhicule</Label>
+              <Label className="text-sm font-semibold mb-3 block">Type de véhicule</Label>
               <div className="space-y-2">
                 <div className="flex items-center space-x-2">
-                  <Checkbox id="voiture" defaultChecked className="border-gray-400" />
-                  <label htmlFor="voiture" className="text-sm text-gray-600 cursor-pointer">Voiture</label>
+                  <Checkbox id="voiture" defaultChecked />
+                  <label htmlFor="voiture" className="text-sm">Voiture</label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Checkbox id="camion" className="border-gray-400" />
-                  <label htmlFor="camion" className="text-sm text-gray-600 cursor-pointer">Camion</label>
+                  <Checkbox id="camion" />
+                  <label htmlFor="camion" className="text-sm">Camion</label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Checkbox id="moto" className="border-gray-400" />
-                  <label htmlFor="moto" className="text-sm text-gray-600 cursor-pointer">Moto</label>
+                  <Checkbox id="moto" />
+                  <label htmlFor="moto" className="text-sm">Moto</label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Checkbox id="bus" className="border-gray-400" />
-                  <label htmlFor="bus" className="text-sm text-gray-600 cursor-pointer">Bus</label>
+                  <Checkbox id="bus" />
+                  <label htmlFor="bus" className="text-sm">Bus</label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Checkbox id="truck" className="border-gray-400" />
-                  <label htmlFor="truck" className="text-sm text-gray-600 cursor-pointer">Truck</label>
+                  <Checkbox id="truck" />
+                  <label htmlFor="truck" className="text-sm">Truck</label>
                 </div>
               </div>
             </div>
 
-            <Separator className="bg-gray-200" />
+            <Separator />
 
             {/* Couleur */}
             <div>
-              <Label className="text-sm font-semibold text-gray-700 mb-3 block">Couleur</Label>
+              <Label className="text-sm font-semibold mb-3 block">Couleur</Label>
               <div className="space-y-2">
                 <div className="flex items-center space-x-2">
-                  <Checkbox id="blanc" className="border-gray-400" />
-                  <label htmlFor="blanc" className="text-sm text-gray-600 cursor-pointer">Blanc</label>
+                  <Checkbox id="blanc" />
+                  <label htmlFor="blanc" className="text-sm">Blanc</label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Checkbox id="noir" className="border-gray-400" />
-                  <label htmlFor="noir" className="text-sm text-gray-600 cursor-pointer">Noir</label>
+                  <Checkbox id="noir" />
+                  <label htmlFor="noir" className="text-sm">Noir</label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Checkbox id="rouge" className="border-gray-400" />
-                  <label htmlFor="rouge" className="text-sm text-gray-600 cursor-pointer">Rouge</label>
+                  <Checkbox id="rouge" />
+                  <label htmlFor="rouge" className="text-sm">Rouge</label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Checkbox id="bleu" className="border-gray-400" />
-                  <label htmlFor="bleu" className="text-sm text-gray-600 cursor-pointer">Bleu</label>
+                  <Checkbox id="bleu" />
+                  <label htmlFor="bleu" className="text-sm">Bleu</label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Checkbox id="gris" className="border-gray-400" />
-                  <label htmlFor="gris" className="text-sm text-gray-600 cursor-pointer">Gris</label>
+                  <Checkbox id="gris" />
+                  <label htmlFor="gris" className="text-sm">Gris</label>
                 </div>
               </div>
             </div>
 
-            <Separator className="bg-gray-200" />
+            <Separator />
 
             {/* Marque */}
-            <div className="space-y-3">
-              <Label className="text-sm font-semibold text-gray-700">Marque</Label>
+            <div>
+              <Label className="text-sm font-semibold mb-3 block">Marque</Label>
               <Select defaultValue="all">
-                <SelectTrigger className="border-gray-300">
+                <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -442,20 +441,20 @@ export const VehicleCapturePage = (): JSX.Element => {
         </aside>
 
         {/* Zone principale avec résultats */}
-        <main className="flex-1 p-6 overflow-y-auto bg-[#f8f9fa]">
+        <main className="flex-1 p-6 overflow-y-auto">
           {/* Barre de résultats */}
           <div className="mb-6 flex items-center justify-between">
             <div className="flex items-center gap-4">
               <h2 className="text-lg font-semibold text-gray-900">
                 Résultats de détection
               </h2>
-              <Badge className="bg-orange-100 text-orange-700 border-orange-200">
+              <Badge className="bg-orange-100 text-orange-700 border-0">
                 1,247 détections trouvées
               </Badge>
             </div>
             <div className="flex items-center gap-3">
               <Select defaultValue="recent">
-                <SelectTrigger className="w-[180px] border-gray-300 bg-white">
+                <SelectTrigger className="w-[180px]">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -465,7 +464,7 @@ export const VehicleCapturePage = (): JSX.Element => {
                   <SelectItem value="authorized">Autorisés d'abord</SelectItem>
                 </SelectContent>
               </Select>
-              <Button variant="outline" size="sm" className="border-gray-300 bg-white">
+              <Button variant="outline" size="sm">
                 <Download className="w-4 h-4 mr-2" />
                 Exporter
               </Button>
@@ -475,7 +474,7 @@ export const VehicleCapturePage = (): JSX.Element => {
           {/* Grille de captures */}
           <div className="grid grid-cols-3 gap-4">
             {vehicleCaptures.map((capture) => (
-              <Card key={capture.id} className="overflow-hidden border border-gray-200 hover:shadow-lg transition-shadow bg-white">
+              <Card key={capture.id} className="overflow-hidden hover:shadow-lg transition-shadow">
                 <div className="relative">
                   <img 
                     src={capture.image} 
@@ -515,13 +514,11 @@ export const VehicleCapturePage = (): JSX.Element => {
                       </Badge>
                     </div>
                   </div>
-                  <Separator className="my-3 bg-gray-200" />
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-gray-700 flex items-center gap-1">
-                      <Gauge className="w-3 h-3" />
-                      {capture.speed}
+                  <div className="flex items-center justify-between mt-3 pt-3 border-t">
+                    <span className="text-sm font-medium text-gray-700">
+                      Vitesse: {capture.speed}
                     </span>
-                    <Button size="sm" variant="ghost" className="text-orange-600 hover:text-orange-700 hover:bg-orange-50">
+                    <Button size="sm" variant="ghost" className="text-orange-600 hover:text-orange-700">
                       <Eye className="w-4 h-4 mr-1" />
                       Détails
                     </Button>
@@ -533,13 +530,13 @@ export const VehicleCapturePage = (): JSX.Element => {
 
           {/* Pagination */}
           <div className="flex items-center justify-center gap-2 mt-8">
-            <Button variant="outline" size="sm" className="border-gray-300">Précédent</Button>
-            <Button variant="outline" size="sm" className="bg-orange-500 text-white hover:bg-orange-600 border-orange-500">1</Button>
-            <Button variant="outline" size="sm" className="border-gray-300">2</Button>
-            <Button variant="outline" size="sm" className="border-gray-300">3</Button>
-            <Button variant="outline" size="sm" className="border-gray-300">...</Button>
-            <Button variant="outline" size="sm" className="border-gray-300">42</Button>
-            <Button variant="outline" size="sm" className="border-gray-300">Suivant</Button>
+            <Button variant="outline" size="sm">Précédent</Button>
+            <Button variant="outline" size="sm" className="bg-orange-500 text-white hover:bg-orange-600">1</Button>
+            <Button variant="outline" size="sm">2</Button>
+            <Button variant="outline" size="sm">3</Button>
+            <Button variant="outline" size="sm">...</Button>
+            <Button variant="outline" size="sm">42</Button>
+            <Button variant="outline" size="sm">Suivant</Button>
           </div>
         </main>
       </div>
