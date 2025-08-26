@@ -3,34 +3,19 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
 import { 
   Search, 
-  Filter, 
   Download, 
   Camera,
   Car,
-  MapPin,
-  Clock,
-  AlertTriangle,
-  Shield,
   ChevronRight,
-  CalendarIcon,
-  Home,
-  Printer,
-  Upload,
   Eye
 } from "lucide-react";
 
 export const VehicleCapturePage = (): JSX.Element => {
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeTab, setActiveTab] = useState("all");
   
   // Données des captures de véhicules
   const vehicleCaptures = [
@@ -144,401 +129,342 @@ export const VehicleCapturePage = (): JSX.Element => {
     }
   ];
 
+  const filteredData = vehicleCaptures.filter(vehicle => {
+    if (activeTab === "violations") return vehicle.violation;
+    if (activeTab === "authorized") return !vehicle.violation && vehicle.status === "Autorisé";
+    if (activeTab === "confirmed") return vehicle.status === "Confirmé";
+    return true;
+  });
+
+  const authorizedCount = vehicleCaptures.filter(v => !v.violation && v.status === "Autorisé").length;
+  const violationCount = vehicleCaptures.filter(v => v.violation).length;
+  const confirmedCount = vehicleCaptures.filter(v => v.status === "Confirmé").length;
+
   return (
-    <div className="w-full h-full flex flex-col bg-gray-50">
+    <div className="w-full min-h-screen relative">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 px-6 py-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-orange-100 rounded-lg">
-              <Car className="w-5 h-5 text-orange-600" />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-gray-900">Captures Véhicules & Plaques</h1>
-              <p className="text-sm text-gray-500">Liste des captures de véhicules et plaques détectées</p>
-            </div>
+      <header className="w-full h-20 bg-white/80 backdrop-blur-sm border-b border-white/20 shadow-sm">
+        <div className="flex items-center justify-between h-full px-8">
+          <div className="flex items-center gap-6">
+            <h1 className="[font-family:'Inter',Helvetica] font-bold text-slate-800 text-2xl">
+              Captures Véhicules & Plaques
+            </h1>
+            <p className="[font-family:'Inter',Helvetica] font-normal text-slate-500 text-sm">
+              Gestion des véhicules et plaques détectées
+            </p>
           </div>
-          <div className="flex items-center gap-3">
-            <Badge className="bg-orange-100 text-orange-700 border-0">
-              <Home className="w-3 h-3 mr-1" />
-              Recherche intelligente : "véhicules"
-            </Badge>
-            <Button variant="outline" size="sm">
-              <Upload className="w-4 h-4 mr-2" />
-              Exporter
-            </Button>
-            <Button className="bg-orange-500 hover:bg-orange-600 text-white" size="sm">
-              <Camera className="w-4 h-4 mr-2" />
-              Rechercher
-            </Button>
-          </div>
-        </div>
-      </div>
 
-      {/* Recherche Avancée - Pleine largeur */}
-      <div className="bg-gradient-to-r from-orange-50 to-orange-100 border-b border-orange-200 px-6 py-6">
-        <div className="max-w-full">
-          <div className="flex items-center gap-3 mb-4">
-            <Shield className="w-6 h-6 text-orange-600" />
-            <h2 className="text-lg font-bold text-gray-800">Recherche Avancée</h2>
-          </div>
-          
-          <div className="bg-white rounded-lg p-4 shadow-sm border border-orange-200">
-            <div className="space-y-3">
-              <div className="text-sm text-gray-600">
-                <p className="font-medium mb-2">Exemples :</p>
-                <div className="flex flex-wrap gap-2">
-                  <span className="px-3 py-1 bg-orange-50 text-orange-700 rounded-full text-xs border border-orange-200">
-                    "Véhicules rouges avec violation de vitesse aujourd'hui"
-                  </span>
-                  <span className="px-3 py-1 bg-orange-50 text-orange-700 rounded-full text-xs border border-orange-200">
-                    "Camions détectés par Caméra 3 cette semaine"
-                  </span>
-                  <span className="px-3 py-1 bg-orange-50 text-orange-700 rounded-full text-xs border border-orange-200">
-                    "Plaques d'immatriculation reconnues zone parking"
-                  </span>
-                  <span className="px-3 py-1 bg-orange-50 text-orange-700 rounded-full text-xs border border-orange-200">
-                    "Véhicules entre 8h et 10h Zone principale"
-                  </span>
+          {/* Actions droite */}
+          <div className="flex items-center gap-4">
+            {/* Barre de recherche */}
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Search className="h-4 w-4 text-gray-400" />
+              </div>
+              <input
+                type="text"
+                placeholder="Rechercher..."
+                className="pl-10 pr-4 py-2 w-64 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 [font-family:'Inter',Helvetica]"
+              />
+            </div>
+
+            {/* Notification */}
+            <div className="relative">
+              <svg className="w-6 h-6 text-gray-600 hover:text-gray-800 cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{background: 'none'}}>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-5-5V7a6 6 0 10-12 0v5l-5 5h5m5 0v1a3 3 0 11-6 0v-1m6 0H9" />
+              </svg>
+              <span className="absolute -top-1 -right-1 h-4 w-4 bg-red-500 rounded-full flex items-center justify-center text-xs text-white font-bold">
+                1
+              </span>
+            </div>
+
+            {/* Profil utilisateur */}
+            <div className="flex items-center gap-3 cursor-pointer hover:bg-gray-50 rounded-lg px-3 py-2">
+              <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
+                <span className="text-white text-sm font-semibold">A</span>
+              </div>
+              <div className="text-left">
+                <div className="[font-family:'Inter',Helvetica] font-semibold text-slate-800 text-sm">
+                  admin admin
+                </div>
+                <div className="[font-family:'Inter',Helvetica] font-normal text-slate-500 text-xs">
+                  Administrateur
                 </div>
               </div>
-              
-              <div className="flex gap-3">
-                <Input 
-                  placeholder="Saisissez ce que vous cherchez en langage naturel..." 
-                  className="flex-1 h-12 text-base border-orange-200 focus:border-orange-400"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                <div className="flex gap-2">
-                  <Select defaultValue="5min">
-                    <SelectTrigger className="w-[140px] h-12 border-orange-200">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="5min">Dernières 5 min</SelectItem>
-                      <SelectItem value="1h">Dernière heure</SelectItem>
-                      <SelectItem value="24h">24 heures</SelectItem>
-                      <SelectItem value="7d">7 jours</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <Select defaultValue="plaques">
-                    <SelectTrigger className="w-[140px] h-12 border-orange-200">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="plaques">Plaques</SelectItem>
-                      <SelectItem value="vehicles">Véhicules</SelectItem>
-                      <SelectItem value="all">Tous</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <Button className="bg-orange-500 hover:bg-orange-600 text-white h-12 px-6">
-                    <Search className="w-5 h-5 mr-2" />
-                    Rechercher
-                  </Button>
-                </div>
-              </div>
+              <ChevronRight className="w-4 h-4 text-gray-400" />
             </div>
           </div>
         </div>
-      </div>
+      </header>
 
-      <div className="flex flex-1 overflow-hidden">
-        {/* Sidebar avec filtres */}
-        <aside className="w-80 bg-white border-r border-gray-200 p-4 overflow-y-auto">
-          {/* Filtres */}
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
-                <Filter className="w-4 h-4" />
-                Filtres
-              </h3>
-              
-              {/* Type de capture */}
-              <div className="space-y-3">
-                <Label className="text-sm">Type de capture</Label>
-                <Select defaultValue="plaques">
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="plaques">Plaques</SelectItem>
-                    <SelectItem value="vehicles">Véhicules</SelectItem>
-                    <SelectItem value="all">Tous</SelectItem>
-                  </SelectContent>
-                </Select>
+      <div className="px-8 py-6">
+        {/* Section Recherche Intelligente */}
+        <Card className="mb-6 bg-orange-50/50 border-orange-200">
+          <CardContent className="p-6">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center">
+                <Search className="w-5 h-5 text-white" />
               </div>
-
-              {/* Sites */}
-              <div className="space-y-3 mt-4">
-                <Label className="text-sm">Sites</Label>
-                <Select defaultValue="all">
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">Tous les sites</SelectItem>
-                    <SelectItem value="entrance">Entrées</SelectItem>
-                    <SelectItem value="parking">Parkings</SelectItem>
-                    <SelectItem value="security">Zones sécurisées</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Caméras */}
-              <div className="space-y-3 mt-4">
-                <Label className="text-sm">Caméras</Label>
-                <Select defaultValue="all">
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">Toutes les caméras</SelectItem>
-                    <SelectItem value="cam1">CAM-01</SelectItem>
-                    <SelectItem value="cam2">CAM-02</SelectItem>
-                    <SelectItem value="cam3">CAM-03</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Zones */}
-              <div className="space-y-3 mt-4">
-                <Label className="text-sm">Zones</Label>
-                <Select defaultValue="all">
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">Toutes les zones</SelectItem>
-                    <SelectItem value="public">Zones publiques</SelectItem>
-                    <SelectItem value="restricted">Zones restreintes</SelectItem>
-                    <SelectItem value="vip">Zones VIP</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Période */}
-              <div className="space-y-3 mt-4">
-                <Label className="text-sm">Période</Label>
-                <div className="flex gap-2">
-                  <Input type="date" className="flex-1" />
-                  <span className="self-center text-gray-500">à</span>
-                  <Input type="date" className="flex-1" />
-                </div>
-              </div>
-            </div>
-
-            <Separator />
-
-            {/* Violations */}
-            <div>
-              <Label className="text-sm font-semibold mb-3 block">Violations</Label>
-              <div className="space-y-2">
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="stationnement" />
-                  <label htmlFor="stationnement" className="text-sm">Stationnement interdit</label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="vitesse" />
-                  <label htmlFor="vitesse" className="text-sm">Excès de vitesse</label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="sens" />
-                  <label htmlFor="sens" className="text-sm">Sens interdit</label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="stop" />
-                  <label htmlFor="stop" className="text-sm">Stop</label>
-                </div>
-              </div>
-            </div>
-
-            <Separator />
-
-            {/* Type de véhicule */}
-            <div>
-              <Label className="text-sm font-semibold mb-3 block">Type de véhicule</Label>
-              <div className="space-y-2">
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="voiture" defaultChecked />
-                  <label htmlFor="voiture" className="text-sm">Voiture</label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="camion" />
-                  <label htmlFor="camion" className="text-sm">Camion</label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="moto" />
-                  <label htmlFor="moto" className="text-sm">Moto</label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="bus" />
-                  <label htmlFor="bus" className="text-sm">Bus</label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="truck" />
-                  <label htmlFor="truck" className="text-sm">Truck</label>
-                </div>
-              </div>
-            </div>
-
-            <Separator />
-
-            {/* Couleur */}
-            <div>
-              <Label className="text-sm font-semibold mb-3 block">Couleur</Label>
-              <div className="space-y-2">
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="blanc" />
-                  <label htmlFor="blanc" className="text-sm">Blanc</label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="noir" />
-                  <label htmlFor="noir" className="text-sm">Noir</label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="rouge" />
-                  <label htmlFor="rouge" className="text-sm">Rouge</label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="bleu" />
-                  <label htmlFor="bleu" className="text-sm">Bleu</label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="gris" />
-                  <label htmlFor="gris" className="text-sm">Gris</label>
-                </div>
-              </div>
-            </div>
-
-            <Separator />
-
-            {/* Marque */}
-            <div>
-              <Label className="text-sm font-semibold mb-3 block">Marque</Label>
-              <Select defaultValue="all">
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">Toutes les marques</SelectItem>
-                  <SelectItem value="renault">Renault</SelectItem>
-                  <SelectItem value="peugeot">Peugeot</SelectItem>
-                  <SelectItem value="bmw">BMW</SelectItem>
-                  <SelectItem value="mercedes">Mercedes</SelectItem>
-                  <SelectItem value="volkswagen">Volkswagen</SelectItem>
-                  <SelectItem value="ford">Ford</SelectItem>
-                  <SelectItem value="toyota">Toyota</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <Button className="w-full bg-orange-500 hover:bg-orange-600 text-white mt-6">
-              <Filter className="w-4 h-4 mr-2" />
-              Appliquer les filtres
-            </Button>
-          </div>
-        </aside>
-
-        {/* Zone principale avec résultats */}
-        <main className="flex-1 p-6 overflow-y-auto">
-          {/* Barre de résultats */}
-          <div className="mb-6 flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <h2 className="text-lg font-semibold text-gray-900">
-                Résultats de détection
+              <h2 className="text-lg font-semibold text-slate-800 [font-family:'Inter',Helvetica]">
+                Recherche intelligente
               </h2>
-              <Badge className="bg-orange-100 text-orange-700 border-0">
-                1,247 détections trouvées
-              </Badge>
             </div>
-            <div className="flex items-center gap-3">
-              <Select defaultValue="recent">
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="recent">Plus récent</SelectItem>
-                  <SelectItem value="oldest">Plus ancien</SelectItem>
-                  <SelectItem value="violations">Violations d'abord</SelectItem>
-                  <SelectItem value="authorized">Autorisés d'abord</SelectItem>
-                </SelectContent>
-              </Select>
-              <Button variant="outline" size="sm">
-                <Download className="w-4 h-4 mr-2" />
-                Exporter
+            <div className="space-y-3">
+              <textarea
+                placeholder="Décrivez ce que vous cherchez en langage naturel...&#10;Exemples:&#10;• 'Véhicules avec violations de vitesse'&#10;• 'Plaques détectées cette semaine'"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full px-4 py-3 bg-white border border-orange-200 rounded-lg text-slate-700 placeholder:text-slate-400 placeholder:text-xs min-h-[80px] resize-none [font-family:'Inter',Helvetica] text-sm"
+              />
+              <div className="flex gap-3">
+                <Badge variant="outline" className="text-xs text-slate-600">
+                  Véhicules autorisés
+                </Badge>
+                <Badge variant="outline" className="text-xs text-slate-600">
+                  Violations récentes
+                </Badge>
+                <Badge variant="outline" className="text-xs text-slate-600">
+                  Plaques détectées
+                </Badge>
+                <Badge variant="outline" className="text-xs text-slate-600">
+                  Excès vitesse
+                </Badge>
+              </div>
+              <Button className="bg-orange-500 hover:bg-orange-600 text-white">
+                <Search className="w-4 h-4 mr-2" />
+                Rechercher
               </Button>
             </div>
-          </div>
+          </CardContent>
+        </Card>
 
-          {/* Grille de captures */}
-          <div className="grid grid-cols-3 gap-4">
-            {vehicleCaptures.map((capture) => (
-              <Card key={capture.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="relative">
-                  <img 
-                    src={capture.image} 
-                    alt={`Capture ${capture.plate}`}
-                    className="w-full h-48 object-cover"
+        {/* Statistiques et filtres */}
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex gap-4">
+            <Button
+              variant={activeTab === "all" ? "default" : "outline"}
+              onClick={() => setActiveTab("all")}
+              className={activeTab === "all" ? "bg-orange-500 hover:bg-orange-600" : ""}
+            >
+              🚗 Tous ({vehicleCaptures.length})
+            </Button>
+            <Button
+              variant={activeTab === "authorized" ? "default" : "outline"}
+              onClick={() => setActiveTab("authorized")}
+              className={activeTab === "authorized" ? "bg-green-500 hover:bg-green-600" : ""}
+            >
+              ✅ Autorisés ({authorizedCount})
+            </Button>
+            <Button
+              variant={activeTab === "violations" ? "default" : "outline"}
+              onClick={() => setActiveTab("violations")}
+              className={activeTab === "violations" ? "bg-red-500 hover:bg-red-600" : ""}
+            >
+              🚨 Violations ({violationCount})
+            </Button>
+            <Button
+              variant={activeTab === "confirmed" ? "default" : "outline"}
+              onClick={() => setActiveTab("confirmed")}
+              className={activeTab === "confirmed" ? "bg-blue-500 hover:bg-blue-600" : ""}
+            >
+              📋 Confirmés ({confirmedCount})
+            </Button>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          {/* Filtres avancés */}
+          <div className="lg:col-span-1">
+            <Card className="bg-white/90">
+              <CardContent className="p-6">
+                <h3 className="font-semibold text-slate-800 [font-family:'Inter',Helvetica] mb-4">
+                  🔍 Filtres de recherche
+                </h3>
+                
+                <div className="space-y-4">
+                  <Input
+                    placeholder="Nom de plaque, type véhicule..."
+                    className="w-full"
                   />
-                  {capture.violation && (
-                    <Badge className="absolute top-2 right-2 bg-red-500 text-white border-0">
-                      <AlertTriangle className="w-3 h-3 mr-1" />
-                      Violation
-                    </Badge>
-                  )}
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
-                    <div className="text-white">
-                      <div className="font-bold text-lg">{capture.plate}</div>
-                      <div className="text-sm opacity-90">{capture.vehicleType}</div>
-                    </div>
+
+                  <div>
+                    <label className="text-sm text-slate-600 [font-family:'Inter',Helvetica] mb-2 block">
+                      Type de véhicule
+                    </label>
+                    <Select defaultValue="all">
+                      <SelectTrigger>
+                        <SelectValue placeholder="Tous les types" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">Tous les types</SelectItem>
+                        <SelectItem value="car">Voitures</SelectItem>
+                        <SelectItem value="truck">Camions</SelectItem>
+                        <SelectItem value="motorcycle">Motos</SelectItem>
+                        <SelectItem value="bus">Bus</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
-                </div>
-                <CardContent className="p-3">
-                  <div className="grid grid-cols-2 gap-2 text-sm">
-                    <div className="flex items-center gap-1 text-gray-600">
-                      <MapPin className="w-3 h-3" />
-                      <span className="truncate">{capture.location}</span>
-                    </div>
-                    <div className="flex items-center gap-1 text-gray-600">
-                      <Clock className="w-3 h-3" />
-                      <span>{capture.time}</span>
-                    </div>
-                    <div className="flex items-center gap-1 text-gray-600">
-                      <Camera className="w-3 h-3" />
-                      <span>{capture.date}</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Badge className={capture.violation ? "bg-red-100 text-red-700 border-0" : "bg-green-100 text-green-700 border-0"}>
-                        {capture.status}
-                      </Badge>
-                    </div>
+
+                  <div>
+                    <label className="text-sm text-slate-600 [font-family:'Inter',Helvetica] mb-2 block">
+                      Statut
+                    </label>
+                    <Select defaultValue="all">
+                      <SelectTrigger>
+                        <SelectValue placeholder="Tous les statuts" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">Tous les statuts</SelectItem>
+                        <SelectItem value="authorized">Autorisé</SelectItem>
+                        <SelectItem value="violation">Violation</SelectItem>
+                        <SelectItem value="confirmed">Confirmé</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
-                  <div className="flex items-center justify-between mt-3 pt-3 border-t">
-                    <span className="text-sm font-medium text-gray-700">
-                      Vitesse: {capture.speed}
-                    </span>
-                    <Button size="sm" variant="ghost" className="text-orange-600 hover:text-orange-700">
-                      <Eye className="w-4 h-4 mr-1" />
-                      Détails
+
+                  <div>
+                    <label className="text-sm text-slate-600 [font-family:'Inter',Helvetica] mb-2 block">
+                      Période
+                    </label>
+                    <Select defaultValue="today">
+                      <SelectTrigger>
+                        <SelectValue placeholder="Sélectionner période" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="today">Aujourd'hui</SelectItem>
+                        <SelectItem value="week">Cette semaine</SelectItem>
+                        <SelectItem value="month">Ce mois</SelectItem>
+                        <SelectItem value="custom">Période personnalisée</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div>
+                    <label className="text-sm text-slate-600 [font-family:'Inter',Helvetica] mb-2 block">
+                      Caméra
+                    </label>
+                    <Select defaultValue="all">
+                      <SelectTrigger>
+                        <SelectValue placeholder="Toutes caméras" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">Toutes caméras</SelectItem>
+                        <SelectItem value="cam1">CAM-01</SelectItem>
+                        <SelectItem value="cam2">CAM-02</SelectItem>
+                        <SelectItem value="cam3">CAM-03</SelectItem>
+                        <SelectItem value="cam4">CAM-04</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div>
+                    <label className="text-sm text-slate-600 [font-family:'Inter',Helvetica] mb-2 block">
+                      Zones
+                    </label>
+                    <Select defaultValue="all">
+                      <SelectTrigger>
+                        <SelectValue placeholder="Toutes les zones" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">Toutes les zones</SelectItem>
+                        <SelectItem value="entrance">Zone d'entrée</SelectItem>
+                        <SelectItem value="parking">Parking</SelectItem>
+                        <SelectItem value="delivery">Zone livraison</SelectItem>
+                        <SelectItem value="vip">Zone VIP</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="pt-4 space-y-2">
+                    <Button className="w-full bg-orange-500 hover:bg-orange-600 text-white">
+                      🔍 Appliquer les filtres
+                    </Button>
+                    <Button variant="outline" className="w-full">
+                      ↻ Réinitialiser
                     </Button>
                   </div>
-                </CardContent>
-              </Card>
-            ))}
+
+                  <div className="mt-6 pt-6 border-t">
+                    <p className="text-center text-slate-500 [font-family:'Inter',Helvetica] text-sm">
+                      {filteredData.length} captures trouvées
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
 
-          {/* Pagination */}
-          <div className="flex items-center justify-center gap-2 mt-8">
-            <Button variant="outline" size="sm">Précédent</Button>
-            <Button variant="outline" size="sm" className="bg-orange-500 text-white hover:bg-orange-600">1</Button>
-            <Button variant="outline" size="sm">2</Button>
-            <Button variant="outline" size="sm">3</Button>
-            <Button variant="outline" size="sm">...</Button>
-            <Button variant="outline" size="sm">42</Button>
-            <Button variant="outline" size="sm">Suivant</Button>
+          {/* Grille de cartes */}
+          <div className="lg:col-span-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              {filteredData.map((vehicle) => (
+                <Card key={vehicle.id} className="bg-white hover:shadow-lg transition-shadow cursor-pointer">
+                  <CardContent className="p-4">
+                    <div className="relative mb-3">
+                      <Badge 
+                        className={`absolute top-2 right-2 ${
+                          vehicle.violation ? "bg-red-500" : "bg-green-500"
+                        } text-white text-xs`}
+                      >
+                        {vehicle.status}
+                      </Badge>
+                      <img
+                        src={vehicle.image}
+                        alt={vehicle.vehicleType}
+                        className="w-full h-40 object-cover rounded-lg"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = "https://images.unsplash.com/photo-1553440569-bcc63803a83d?w=400&h=300&fit=crop";
+                        }}
+                      />
+                      <div className={`absolute bottom-2 left-2 px-2 py-1 rounded text-xs text-white ${
+                        vehicle.violation ? "bg-red-500" : "bg-green-500"
+                      }`}>
+                        {vehicle.location}
+                      </div>
+                    </div>
+                    
+                    <h4 className="font-semibold text-slate-800 [font-family:'Inter',Helvetica] text-sm mb-1">
+                      {vehicle.plate}
+                    </h4>
+                    
+                    <p className="text-xs text-slate-500 [font-family:'Inter',Helvetica] mb-2">
+                      {vehicle.vehicleType}
+                    </p>
+                    
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs text-slate-600">Vitesse:</span>
+                      <span className="text-xs font-semibold">{vehicle.speed}</span>
+                    </div>
+                    
+                    <div className="flex flex-wrap gap-1 mb-2">
+                      <Badge variant="outline" className="text-xs">
+                        {vehicle.time}
+                      </Badge>
+                      <Badge variant="outline" className="text-xs">
+                        {vehicle.date}
+                      </Badge>
+                    </div>
+                    
+                    <div className="mt-3 flex justify-between items-center">
+                      <p className="text-xs text-slate-500">
+                        {vehicle.location}
+                      </p>
+                      <div className="flex gap-1">
+                        <Button size="sm" variant="ghost" className="h-6 w-6 p-0">
+                          <Eye className="w-3 h-3" />
+                        </Button>
+                        <Button size="sm" variant="ghost" className="h-6 w-6 p-0">
+                          <Download className="w-3 h-3" />
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
-        </main>
+        </div>
       </div>
     </div>
   );
