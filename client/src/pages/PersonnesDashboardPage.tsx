@@ -140,6 +140,35 @@ export const PersonnesDashboardPage = (): JSX.Element => {
     { range: "56+", count: 56 },
   ];
 
+  const generateGenderData = (period: string) => {
+    switch (period) {
+      case "today":
+        return [
+          { gender: "Homme", count: 743, percentage: 59.6 },
+          { gender: "Femme", count: 504, percentage: 40.4 },
+        ];
+      case "week":
+        return [
+          { gender: "Homme", count: 5234, percentage: 58.2 },
+          { gender: "Femme", count: 3766, percentage: 41.8 },
+        ];
+      case "month":
+        return [
+          { gender: "Homme", count: 22341, percentage: 57.8 },
+          { gender: "Femme", count: 16329, percentage: 42.2 },
+        ];
+      case "year":
+        return [
+          { gender: "Homme", count: 287456, percentage: 58.9 },
+          { gender: "Femme", count: 200544, percentage: 41.1 },
+        ];
+      default:
+        return [];
+    }
+  };
+
+  const genderData = generateGenderData(genderPeriod);
+
   const heatmapData = [
     { camera: "Cam 01", hour: "08", intensity: 0.3 },
     { camera: "Cam 01", hour: "09", intensity: 0.5 },
@@ -518,6 +547,98 @@ export const PersonnesDashboardPage = (): JSX.Element => {
                     );
                   })}
                 </svg>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Répartition par genre - Graphique en secteurs */}
+          <Card className="col-span-4">
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-base font-semibold text-slate-800">
+                Répartition par genre
+              </CardTitle>
+              <Select value={genderPeriod} onValueChange={setGenderPeriod}>
+                <SelectTrigger className="w-[100px] h-8">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="today">Aujourd'hui</SelectItem>
+                  <SelectItem value="week">Semaine</SelectItem>
+                  <SelectItem value="month">Mois</SelectItem>
+                  <SelectItem value="year">Année</SelectItem>
+                </SelectContent>
+              </Select>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center justify-center h-[200px]">
+                <div className="relative w-32 h-32">
+                  <svg viewBox="0 0 120 120" className="w-full h-full transform -rotate-90">
+                    <defs>
+                      <linearGradient id="maleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#3b82f6" />
+                        <stop offset="100%" stopColor="#1d4ed8" />
+                      </linearGradient>
+                      <linearGradient id="femaleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#ec4899" />
+                        <stop offset="100%" stopColor="#be185d" />
+                      </linearGradient>
+                    </defs>
+                    
+                    {/* Cercle de base */}
+                    <circle cx="60" cy="60" r="50" fill="#f1f5f9" stroke="#e2e8f0" strokeWidth="2"/>
+                    
+                    {/* Secteur Homme */}
+                    <path 
+                      d={`M 60 60 L 60 10 A 50 50 0 ${genderData[0]?.percentage > 50 ? 1 : 0} 1 ${
+                        60 + 50 * Math.cos((genderData[0]?.percentage / 100) * 2 * Math.PI - Math.PI/2)
+                      } ${
+                        60 + 50 * Math.sin((genderData[0]?.percentage / 100) * 2 * Math.PI - Math.PI/2)
+                      } Z`}
+                      fill="url(#maleGradient)"
+                      stroke="white"
+                      strokeWidth="2"
+                      className="drop-shadow-sm"
+                    />
+                    
+                    {/* Secteur Femme */}
+                    <path 
+                      d={`M 60 60 L ${
+                        60 + 50 * Math.cos((genderData[0]?.percentage / 100) * 2 * Math.PI - Math.PI/2)
+                      } ${
+                        60 + 50 * Math.sin((genderData[0]?.percentage / 100) * 2 * Math.PI - Math.PI/2)
+                      } A 50 50 0 ${genderData[1]?.percentage > 50 ? 1 : 0} 1 60 10 Z`}
+                      fill="url(#femaleGradient)"
+                      stroke="white"
+                      strokeWidth="2"
+                      className="drop-shadow-sm"
+                    />
+                  </svg>
+                  
+                  {/* Centre du graphique avec total */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-center">
+                      <div className="text-lg font-bold text-slate-800">
+                        {genderData.reduce((sum, item) => sum + item.count, 0)}
+                      </div>
+                      <div className="text-xs text-slate-600">Total</div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Légende */}
+                <div className="ml-6 space-y-2">
+                  {genderData.map((item, index) => (
+                    <div key={index} className="flex items-center gap-2">
+                      <div className={`w-3 h-3 rounded-full ${
+                        item.gender === "Homme" ? "bg-blue-500" : "bg-pink-500"
+                      }`} />
+                      <div className="text-sm">
+                        <div className="font-medium text-slate-800">{item.gender}</div>
+                        <div className="text-slate-600">{item.count} ({item.percentage}%)</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </CardContent>
           </Card>
