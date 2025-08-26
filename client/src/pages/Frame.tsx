@@ -4,6 +4,7 @@ import { EventSummarySection } from "./sections/EventSummarySection";
 import { CapturePage } from "./CapturePage";
 import { ReconnaissancePage } from "./ReconnaissancePage";
 import { PersonsDashboard } from "./PersonsDashboard";
+import { PersonnesDashboardPage } from "./PersonnesDashboardPage";
 import { EventsPage } from "./EventsPage";
 import { VehiclesDashboard } from "./VehiclesDashboard";
 import { VehicleCapturePage } from "./VehicleCapturePage";
@@ -51,6 +52,8 @@ export const Frame = (): JSX.Element => {
         return <ReconnaissancePage />;
       case "persons":
         return <PersonsDashboard />;
+      case "personnesDashboard":
+        return <PersonnesDashboardPage />;
       case "events":
         return <EventsPage />;
       case "vehicles":

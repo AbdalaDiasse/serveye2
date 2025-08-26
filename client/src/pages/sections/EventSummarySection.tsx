@@ -24,6 +24,11 @@ const navigationItems = [
     isActive: false,
     subItems: [
       {
+        name: "Dashboard",
+        icon: "/figmaAssets/frame-1.svg",
+        isActive: false,
+      },
+      {
         name: "Capture",
         icon: "/figmaAssets/frame-1.svg",
         isActive: false,
@@ -134,7 +139,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
       <nav className="flex-1 p-4 overflow-hidden">
         <div className="space-y-2">
           {navigationItems.map((item, index) => {
-            const isPersonnesActive = item.name === "Personnes" && (currentPage === "persons" || currentPage === "capture" || currentPage === "reconnaissance");
+            const isPersonnesActive = item.name === "Personnes" && (currentPage === "persons" || currentPage === "capture" || currentPage === "reconnaissance" || currentPage === "personnesDashboard");
             const isEventsActive = (item.name === "Évènements" || item.name === "Événements") && currentPage === "events";
             const isVehiclesActive = item.name === "Vehicules" && (currentPage === "vehicles" || currentPage === "vehicleCapture");
             const isOtherActive = currentPage === item.name.toLowerCase() && item.name !== "Personnes" && item.name !== "Évènements" && item.name !== "Événements" && item.name !== "Vehicules";
@@ -157,7 +162,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                     if (item.hasDropdown) {
                       toggleDropdown(item.name);
                       if (item.name === "Personnes" && openDropdown !== item.name) {
-                        handleNavigation("persons");
+                        // Ne pas naviguer automatiquement, seulement ouvrir le dropdown
                       }
                     } else if (item.name === "Évènements" || item.name === "Événements") {
                       handleNavigation("events");
@@ -195,6 +200,8 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                         ? "vehicleCapture" 
                         : item.name === "Vehicules" && subItem.name === "Dashboard"
                         ? "vehicles"
+                        : item.name === "Personnes" && subItem.name === "Dashboard"
+                        ? "personnesDashboard"
                         : subItem.name.toLowerCase();
                       const isSubActive = currentPage === subPageName;
                       const gradientClass = item.name === "Vehicules" 
