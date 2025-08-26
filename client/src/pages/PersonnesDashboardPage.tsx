@@ -767,51 +767,65 @@ export const PersonnesDashboardPage = (): JSX.Element => {
           </Card>
 
           {/* Heatmap des détections */}
-          <Card className="col-span-8">
+          <Card className="col-span-4">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-base font-semibold text-slate-800">
-                Carte de chaleur des détections
+                Carte de chaleur
               </CardTitle>
               <Select value={heatmapPeriod} onValueChange={setHeatmapPeriod}>
-                <SelectTrigger className="w-[120px] h-8">
+                <SelectTrigger className="w-[100px] h-8">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="today">Aujourd'hui</SelectItem>
-                  <SelectItem value="week">Cette semaine</SelectItem>
-                  <SelectItem value="month">Ce mois</SelectItem>
-                  <SelectItem value="year">Cette année</SelectItem>
+                  <SelectItem value="week">Semaine</SelectItem>
+                  <SelectItem value="month">Mois</SelectItem>
+                  <SelectItem value="year">Année</SelectItem>
                 </SelectContent>
               </Select>
             </CardHeader>
             <CardContent>
-              <div className="space-y-2">
+              <div className="space-y-3">
                 {["Cam 01", "Cam 02", "Cam 03"].map((camera) => (
-                  <div key={camera} className="flex items-center gap-2">
-                    <div className="w-16 text-sm font-medium text-slate-700 shrink-0">
+                  <div key={camera} className="space-y-1">
+                    <div className="text-xs font-medium text-slate-700">
                       {camera}
                     </div>
-                    <div className="flex gap-1 flex-1">
-                      {["08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18"].map((hour) => {
+                    <div className="grid grid-cols-6 gap-1">
+                      {["08", "10", "12", "14", "16", "18"].map((hour) => {
                         const data = heatmapData.find(d => d.camera === camera && d.hour === hour);
                         const intensity = data?.intensity || 0;
                         return (
                           <div 
                             key={hour}
-                            className={`flex-1 h-8 rounded ${getIntensityColor(intensity)} opacity-${Math.round(intensity * 100)}`}
-                            style={{opacity: 0.2 + (intensity * 0.8)}}
+                            className={`h-6 rounded-sm ${getIntensityColor(intensity)} transition-all duration-200 hover:scale-105 cursor-pointer`}
+                            style={{opacity: 0.3 + (intensity * 0.7)}}
                             title={`${camera} - ${hour}h: ${Math.round(intensity * 100)}%`}
-                          />
+                          >
+                            <div className="text-[10px] text-white font-medium h-full flex items-center justify-center">
+                              {hour}h
+                            </div>
+                          </div>
                         );
                       })}
                     </div>
                   </div>
                 ))}
               </div>
-              <div className="flex items-center justify-between mt-4 pt-3 border-t text-xs text-slate-600">
-                <span>08h</span>
-                <span>12h</span>
-                <span>18h</span>
+              <div className="mt-4 pt-3 border-t">
+                <div className="flex items-center justify-between text-[10px] text-slate-600 mb-2">
+                  <span>Faible</span>
+                  <span>Élevé</span>
+                </div>
+                <div className="flex gap-1">
+                  {[0.2, 0.4, 0.6, 0.8, 1.0].map((intensity, index) => (
+                    <div 
+                      key={index}
+                      className={`flex-1 h-2 rounded-sm ${getIntensityColor(intensity)}`}
+                      style={{opacity: 0.3 + (intensity * 0.7)}}
+                    />
+                  ))}
+                </div>
               </div>
             </CardContent>
           </Card>
