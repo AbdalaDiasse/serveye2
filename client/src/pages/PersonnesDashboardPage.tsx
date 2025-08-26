@@ -570,71 +570,152 @@ export const PersonnesDashboardPage = (): JSX.Element => {
               </Select>
             </CardHeader>
             <CardContent>
-              <div className="flex items-center justify-center h-[200px]">
-                <div className="relative w-32 h-32">
-                  <svg viewBox="0 0 120 120" className="w-full h-full transform -rotate-90">
+              <div className="flex items-center justify-center h-[240px]">
+                <div className="relative w-40 h-40">
+                  <svg viewBox="0 0 140 140" className="w-full h-full transform -rotate-90">
                     <defs>
+                      {/* Gradients améliorés */}
                       <linearGradient id="maleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#3b82f6" />
-                        <stop offset="100%" stopColor="#1d4ed8" />
+                        <stop offset="0%" stopColor="#60a5fa" />
+                        <stop offset="50%" stopColor="#3b82f6" />
+                        <stop offset="100%" stopColor="#1e40af" />
                       </linearGradient>
                       <linearGradient id="femaleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#ec4899" />
+                        <stop offset="0%" stopColor="#f472b6" />
+                        <stop offset="50%" stopColor="#ec4899" />
                         <stop offset="100%" stopColor="#be185d" />
                       </linearGradient>
+                      
+                      {/* Gradients pour hover */}
+                      <linearGradient id="maleHoverGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#93c5fd" />
+                        <stop offset="50%" stopColor="#60a5fa" />
+                        <stop offset="100%" stopColor="#3b82f6" />
+                      </linearGradient>
+                      <linearGradient id="femaleHoverGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#f9a8d4" />
+                        <stop offset="50%" stopColor="#f472b6" />
+                        <stop offset="100%" stopColor="#ec4899" />
+                      </linearGradient>
+                      
+                      {/* Ombres portées */}
+                      <filter id="dropShadow" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+                        <feOffset dx="2" dy="2" result="offset"/>
+                        <feFlood floodColor="#000000" floodOpacity="0.2"/>
+                        <feComposite in2="offset" operator="in"/>
+                        <feMerge>
+                          <feMergeNode/>
+                          <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                      </filter>
+                      
+                      {/* Effet de brillance */}
+                      <radialGradient id="shine" cx="30%" cy="30%">
+                        <stop offset="0%" stopColor="rgba(255,255,255,0.4)" />
+                        <stop offset="100%" stopColor="rgba(255,255,255,0)" />
+                      </radialGradient>
                     </defs>
                     
-                    {/* Cercle de base */}
-                    <circle cx="60" cy="60" r="50" fill="#f1f5f9" stroke="#e2e8f0" strokeWidth="2"/>
+                    {/* Cercle de base avec ombre */}
+                    <circle cx="70" cy="70" r="60" fill="#f8fafc" stroke="#e2e8f0" strokeWidth="3" filter="url(#dropShadow)"/>
                     
-                    {/* Secteur Homme */}
-                    <path 
-                      d={`M 60 60 L 60 10 A 50 50 0 ${genderData[0]?.percentage > 50 ? 1 : 0} 1 ${
-                        60 + 50 * Math.cos((genderData[0]?.percentage / 100) * 2 * Math.PI - Math.PI/2)
-                      } ${
-                        60 + 50 * Math.sin((genderData[0]?.percentage / 100) * 2 * Math.PI - Math.PI/2)
-                      } Z`}
-                      fill="url(#maleGradient)"
-                      stroke="white"
-                      strokeWidth="2"
-                      className="drop-shadow-sm"
-                    />
+                    {/* Secteur Homme avec animation */}
+                    <g className="transition-all duration-300 hover:scale-105 cursor-pointer">
+                      <path 
+                        d={`M 70 70 L 70 10 A 60 60 0 ${genderData[0]?.percentage > 50 ? 1 : 0} 1 ${
+                          70 + 60 * Math.cos((genderData[0]?.percentage / 100) * 2 * Math.PI - Math.PI/2)
+                        } ${
+                          70 + 60 * Math.sin((genderData[0]?.percentage / 100) * 2 * Math.PI - Math.PI/2)
+                        } Z`}
+                        fill="url(#maleGradient)"
+                        stroke="white"
+                        strokeWidth="3"
+                        filter="url(#dropShadow)"
+                        className="transition-all duration-300 hover:fill-[url(#maleHoverGradient)]"
+                      />
+                      {/* Effet de brillance */}
+                      <path 
+                        d={`M 70 70 L 70 10 A 60 60 0 ${genderData[0]?.percentage > 50 ? 1 : 0} 1 ${
+                          70 + 60 * Math.cos((genderData[0]?.percentage / 100) * 2 * Math.PI - Math.PI/2)
+                        } ${
+                          70 + 60 * Math.sin((genderData[0]?.percentage / 100) * 2 * Math.PI - Math.PI/2)
+                        } Z`}
+                        fill="url(#shine)"
+                        stroke="none"
+                      />
+                    </g>
                     
-                    {/* Secteur Femme */}
-                    <path 
-                      d={`M 60 60 L ${
-                        60 + 50 * Math.cos((genderData[0]?.percentage / 100) * 2 * Math.PI - Math.PI/2)
-                      } ${
-                        60 + 50 * Math.sin((genderData[0]?.percentage / 100) * 2 * Math.PI - Math.PI/2)
-                      } A 50 50 0 ${genderData[1]?.percentage > 50 ? 1 : 0} 1 60 10 Z`}
-                      fill="url(#femaleGradient)"
-                      stroke="white"
-                      strokeWidth="2"
-                      className="drop-shadow-sm"
-                    />
+                    {/* Secteur Femme avec animation */}
+                    <g className="transition-all duration-300 hover:scale-105 cursor-pointer">
+                      <path 
+                        d={`M 70 70 L ${
+                          70 + 60 * Math.cos((genderData[0]?.percentage / 100) * 2 * Math.PI - Math.PI/2)
+                        } ${
+                          70 + 60 * Math.sin((genderData[0]?.percentage / 100) * 2 * Math.PI - Math.PI/2)
+                        } A 60 60 0 ${genderData[1]?.percentage > 50 ? 1 : 0} 1 70 10 Z`}
+                        fill="url(#femaleGradient)"
+                        stroke="white"
+                        strokeWidth="3"
+                        filter="url(#dropShadow)"
+                        className="transition-all duration-300 hover:fill-[url(#femaleHoverGradient)]"
+                      />
+                      {/* Effet de brillance */}
+                      <path 
+                        d={`M 70 70 L ${
+                          70 + 60 * Math.cos((genderData[0]?.percentage / 100) * 2 * Math.PI - Math.PI/2)
+                        } ${
+                          70 + 60 * Math.sin((genderData[0]?.percentage / 100) * 2 * Math.PI - Math.PI/2)
+                        } A 60 60 0 ${genderData[1]?.percentage > 50 ? 1 : 0} 1 70 10 Z`}
+                        fill="url(#shine)"
+                        stroke="none"
+                      />
+                    </g>
+                    
+                    {/* Cercle intérieur décoratif */}
+                    <circle cx="70" cy="70" r="25" fill="white" stroke="#e2e8f0" strokeWidth="2" opacity="0.9"/>
                   </svg>
                   
-                  {/* Centre du graphique avec total */}
+                  {/* Centre du graphique avec animation */}
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center">
-                      <div className="text-lg font-bold text-slate-800">
-                        {genderData.reduce((sum, item) => sum + item.count, 0)}
+                    <div className="text-center bg-white rounded-full w-16 h-16 flex flex-col items-center justify-center shadow-lg border border-slate-200">
+                      <div className="text-lg font-bold text-slate-800 animate-pulse">
+                        {genderData.reduce((sum, item) => sum + item.count, 0).toLocaleString()}
                       </div>
-                      <div className="text-xs text-slate-600">Total</div>
+                      <div className="text-[10px] text-slate-600 font-medium">Total</div>
                     </div>
                   </div>
                 </div>
                 
-                {/* Légende */}
-                <div className="ml-6 space-y-2">
+                {/* Légende améliorée */}
+                <div className="ml-8 space-y-4">
                   {genderData.map((item, index) => (
-                    <div key={index} className="flex items-center gap-2">
-                      <div className={`w-3 h-3 rounded-full ${
-                        item.gender === "Homme" ? "bg-blue-500" : "bg-pink-500"
+                    <div key={index} className="group flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50 transition-all duration-200 cursor-pointer">
+                      <div className={`w-4 h-4 rounded-full shadow-md transition-all duration-200 group-hover:scale-110 ${
+                        item.gender === "Homme" 
+                          ? "bg-gradient-to-br from-blue-400 to-blue-600" 
+                          : "bg-gradient-to-br from-pink-400 to-pink-600"
                       }`} />
                       <div className="text-sm">
-                        <div className="font-medium text-slate-800">{item.gender}</div>
-                        <div className="text-slate-600">{item.count} ({item.percentage}%)</div>
+                        <div className="font-semibold text-slate-800 group-hover:text-slate-900 transition-colors">
+                          {item.gender}
+                        </div>
+                        <div className="text-slate-600 font-medium">
+                          {item.count.toLocaleString()} 
+                          <span className="text-slate-500 ml-1">({item.percentage}%)</span>
+                        </div>
+                      </div>
+                      
+                      {/* Barre de progression miniature */}
+                      <div className="ml-auto w-12 h-1 bg-slate-200 rounded-full overflow-hidden">
+                        <div 
+                          className={`h-full rounded-full transition-all duration-700 ${
+                            item.gender === "Homme" 
+                              ? "bg-gradient-to-r from-blue-400 to-blue-600" 
+                              : "bg-gradient-to-r from-pink-400 to-pink-600"
+                          }`}
+                          style={{width: `${item.percentage}%`}}
+                        />
                       </div>
                     </div>
                   ))}
