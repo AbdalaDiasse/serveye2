@@ -4,13 +4,15 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
 import { 
   Search, 
   Download, 
   Camera,
   Car,
   ChevronRight,
-  Eye
+  Eye,
+  Filter
 } from "lucide-react";
 
 export const VehicleCapturePage = (): JSX.Element => {
@@ -275,119 +277,241 @@ export const VehicleCapturePage = (): JSX.Element => {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Filtres avancés */}
           <div className="lg:col-span-1">
-            <Card className="bg-white/90">
-              <CardContent className="p-6">
-                <h3 className="font-semibold text-slate-800 [font-family:'Inter',Helvetica] mb-4">
-                  🔍 Filtres de recherche
-                </h3>
+            <Card className="bg-white/90 shadow-sm">
+              <CardContent className="p-4">
+                <div className="flex items-center gap-2 mb-4">
+                  <Filter className="w-4 h-4 text-orange-500" />
+                  <h3 className="font-semibold text-gray-800 text-sm">
+                    Filtres
+                  </h3>
+                </div>
                 
                 <div className="space-y-4">
-                  <Input
-                    placeholder="Nom de plaque, type véhicule..."
-                    className="w-full"
-                  />
-
+                  {/* Type de capture */}
                   <div>
-                    <label className="text-sm text-slate-600 [font-family:'Inter',Helvetica] mb-2 block">
-                      Type de véhicule
+                    <label className="text-sm font-medium text-gray-700 mb-2 block">
+                      Type de capture
                     </label>
-                    <Select defaultValue="all">
-                      <SelectTrigger>
-                        <SelectValue placeholder="Tous les types" />
+                    <Select defaultValue="plaques">
+                      <SelectTrigger className="w-full h-10 text-sm">
+                        <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="all">Tous les types</SelectItem>
-                        <SelectItem value="car">Voitures</SelectItem>
-                        <SelectItem value="truck">Camions</SelectItem>
-                        <SelectItem value="motorcycle">Motos</SelectItem>
-                        <SelectItem value="bus">Bus</SelectItem>
+                        <SelectItem value="plaques">Plaques</SelectItem>
+                        <SelectItem value="vehicles">Véhicules</SelectItem>
+                        <SelectItem value="all">Tous</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
 
+                  {/* Sites */}
                   <div>
-                    <label className="text-sm text-slate-600 [font-family:'Inter',Helvetica] mb-2 block">
-                      Statut
+                    <label className="text-sm font-medium text-gray-700 mb-2 block">
+                      Sites
                     </label>
                     <Select defaultValue="all">
-                      <SelectTrigger>
-                        <SelectValue placeholder="Tous les statuts" />
+                      <SelectTrigger className="w-full h-10 text-sm">
+                        <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="all">Tous les statuts</SelectItem>
-                        <SelectItem value="authorized">Autorisé</SelectItem>
-                        <SelectItem value="violation">Violation</SelectItem>
-                        <SelectItem value="confirmed">Confirmé</SelectItem>
+                        <SelectItem value="all">Tous les sites</SelectItem>
+                        <SelectItem value="site1">Site principal</SelectItem>
+                        <SelectItem value="site2">Site secondaire</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
 
+                  {/* Caméras */}
                   <div>
-                    <label className="text-sm text-slate-600 [font-family:'Inter',Helvetica] mb-2 block">
-                      Période
-                    </label>
-                    <Select defaultValue="today">
-                      <SelectTrigger>
-                        <SelectValue placeholder="Sélectionner période" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="today">Aujourd'hui</SelectItem>
-                        <SelectItem value="week">Cette semaine</SelectItem>
-                        <SelectItem value="month">Ce mois</SelectItem>
-                        <SelectItem value="custom">Période personnalisée</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div>
-                    <label className="text-sm text-slate-600 [font-family:'Inter',Helvetica] mb-2 block">
-                      Caméra
+                    <label className="text-sm font-medium text-gray-700 mb-2 block">
+                      Caméras
                     </label>
                     <Select defaultValue="all">
-                      <SelectTrigger>
-                        <SelectValue placeholder="Toutes caméras" />
+                      <SelectTrigger className="w-full h-10 text-sm">
+                        <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="all">Toutes caméras</SelectItem>
+                        <SelectItem value="all">Toutes les caméras</SelectItem>
                         <SelectItem value="cam1">CAM-01</SelectItem>
                         <SelectItem value="cam2">CAM-02</SelectItem>
                         <SelectItem value="cam3">CAM-03</SelectItem>
-                        <SelectItem value="cam4">CAM-04</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
 
+                  {/* Zones */}
                   <div>
-                    <label className="text-sm text-slate-600 [font-family:'Inter',Helvetica] mb-2 block">
+                    <label className="text-sm font-medium text-gray-700 mb-2 block">
                       Zones
                     </label>
                     <Select defaultValue="all">
-                      <SelectTrigger>
-                        <SelectValue placeholder="Toutes les zones" />
+                      <SelectTrigger className="w-full h-10 text-sm">
+                        <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="all">Toutes les zones</SelectItem>
                         <SelectItem value="entrance">Zone d'entrée</SelectItem>
                         <SelectItem value="parking">Parking</SelectItem>
-                        <SelectItem value="delivery">Zone livraison</SelectItem>
                         <SelectItem value="vip">Zone VIP</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
 
-                  <div className="pt-4 space-y-2">
-                    <Button className="w-full bg-orange-500 hover:bg-orange-600 text-white">
-                      🔍 Appliquer les filtres
-                    </Button>
-                    <Button variant="outline" className="w-full">
-                      ↻ Réinitialiser
-                    </Button>
+                  {/* Période avec date pickers */}
+                  <div>
+                    <label className="text-sm font-medium text-gray-700 mb-2 block">
+                      Période
+                    </label>
+                    <div className="flex gap-2">
+                      <Input 
+                        type="date" 
+                        defaultValue="2024-08-19"
+                        className="flex-1 h-10 text-sm"
+                      />
+                      <Input 
+                        type="date" 
+                        defaultValue="2024-08-25"
+                        className="flex-1 h-10 text-sm"
+                      />
+                    </div>
                   </div>
 
-                  <div className="mt-6 pt-6 border-t">
-                    <p className="text-center text-slate-500 [font-family:'Inter',Helvetica] text-sm">
-                      {filteredData.length} captures trouvées
-                    </p>
+                  {/* Violations */}
+                  <div>
+                    <label className="text-sm font-medium text-gray-700 mb-3 block">
+                      Violations
+                    </label>
+                    <div className="space-y-2">
+                      <div className="flex items-center space-x-2">
+                        <Checkbox id="stationnement" defaultChecked className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" />
+                        <label htmlFor="stationnement" className="text-sm text-gray-700">
+                          Stationnement interdit
+                        </label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox id="vitesse" className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" />
+                        <label htmlFor="vitesse" className="text-sm text-gray-700">
+                          Excès de vitesse
+                        </label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox id="sens" className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" />
+                        <label htmlFor="sens" className="text-sm text-gray-700">
+                          Sens interdit
+                        </label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox id="stop" className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" />
+                        <label htmlFor="stop" className="text-sm text-gray-700">
+                          Stop
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Type de véhicule */}
+                  <div>
+                    <label className="text-sm font-medium text-gray-700 mb-3 block">
+                      Type de véhicule
+                    </label>
+                    <div className="space-y-2">
+                      <div className="flex items-center space-x-2">
+                        <Checkbox id="voiture" className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" />
+                        <label htmlFor="voiture" className="text-sm text-gray-700">
+                          Voiture
+                        </label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox id="camion" className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" />
+                        <label htmlFor="camion" className="text-sm text-gray-700">
+                          Camion
+                        </label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox id="moto" className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" />
+                        <label htmlFor="moto" className="text-sm text-gray-700">
+                          Moto
+                        </label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox id="truck" className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" />
+                        <label htmlFor="truck" className="text-sm text-gray-700">
+                          Truck
+                        </label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox id="bus" className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" />
+                        <label htmlFor="bus" className="text-sm text-gray-700">
+                          Bus
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Couleur */}
+                  <div>
+                    <label className="text-sm font-medium text-gray-700 mb-3 block">
+                      Couleur
+                    </label>
+                    <div className="space-y-2">
+                      <div className="flex items-center space-x-2">
+                        <Checkbox id="blanc" className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" />
+                        <label htmlFor="blanc" className="text-sm text-gray-700">
+                          Blanc
+                        </label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox id="noir" className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" />
+                        <label htmlFor="noir" className="text-sm text-gray-700">
+                          Noir
+                        </label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox id="rouge" className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" />
+                        <label htmlFor="rouge" className="text-sm text-gray-700">
+                          Rouge
+                        </label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox id="bleu" className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" />
+                        <label htmlFor="bleu" className="text-sm text-gray-700">
+                          Bleu
+                        </label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox id="gris" className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" />
+                        <label htmlFor="gris" className="text-sm text-gray-700">
+                          Gris
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Marque */}
+                  <div>
+                    <label className="text-sm font-medium text-gray-700 mb-2 block">
+                      Marque
+                    </label>
+                    <Select defaultValue="all">
+                      <SelectTrigger className="w-full h-10 text-sm">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">Toutes les marques</SelectItem>
+                        <SelectItem value="renault">Renault</SelectItem>
+                        <SelectItem value="peugeot">Peugeot</SelectItem>
+                        <SelectItem value="bmw">BMW</SelectItem>
+                        <SelectItem value="mercedes">Mercedes</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {/* Bouton Appliquer */}
+                  <div className="pt-4">
+                    <Button className="w-full bg-orange-500 hover:bg-orange-600 text-white h-10 font-medium">
+                      <Search className="w-4 h-4 mr-2" />
+                      Appliquer les filtres
+                    </Button>
                   </div>
                 </div>
               </CardContent>
