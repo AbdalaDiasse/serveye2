@@ -19,7 +19,38 @@ export const VehicleCapturePage = (): JSX.Element => {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTab, setActiveTab] = useState("all");
   
-  // Données des captures de véhicules
+  // États pour les filtres
+  const [filters, setFilters] = useState({
+    typeCapture: "plaques",
+    site: "all", 
+    camera: "all",
+    zone: "all",
+    dateDebut: "2024-08-19",
+    dateFin: "2024-08-25",
+    violations: {
+      stationnement: true,
+      vitesse: false,
+      sens: false,
+      stop: false
+    },
+    typeVehicule: {
+      voiture: false,
+      camion: false,
+      moto: false,
+      truck: false,
+      bus: false
+    },
+    couleur: {
+      blanc: false,
+      noir: false,
+      rouge: false,
+      bleu: false,
+      gris: false
+    },
+    marque: "all"
+  });
+  
+  // Données des captures de véhicules enrichies
   const vehicleCaptures = [
     {
       id: 1,
@@ -27,35 +58,56 @@ export const VehicleCapturePage = (): JSX.Element => {
       vehicleType: "Renault Clio",
       location: "Entrée principale",
       time: "14:22:45",
-      date: "14-12-16",
+      date: "2024-08-20",
       status: "Excès vitesse",
       speed: "67 km/h",
       image: "https://images.unsplash.com/photo-1553440569-bcc63803a83d?w=400&h=300&fit=crop",
-      violation: true
+      violation: true,
+      site: "site1",
+      camera: "cam1",
+      zone: "entrance",
+      typeVehicule: "voiture",
+      couleur: "rouge",
+      marque: "renault",
+      violationType: "vitesse"
     },
     {
       id: 2,
-      plate: "EF-456-GH",
+      plate: "EF-456-GH", 
       vehicleType: "Iveco Daily",
       location: "Zone livraison",
       time: "14:35:23",
-      date: "14-12-16",
+      date: "2024-08-21",
       status: "Confirmé",
       speed: "42 km/h",
       image: "https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=400&h=300&fit=crop",
-      violation: false
+      violation: false,
+      site: "site1",
+      camera: "cam2",
+      zone: "parking",
+      typeVehicule: "camion",
+      couleur: "blanc",
+      marque: "iveco",
+      violationType: null
     },
     {
       id: 3,
       plate: "IJ-789-KL",
       vehicleType: "BMW Série 3",
-      location: "Parking visiteurs",
+      location: "Parking visiteurs", 
       time: "14:10:15",
-      date: "14-12-16",
+      date: "2024-08-22",
       status: "Stationnement interdit",
       speed: "0 km/h",
       image: "https://images.unsplash.com/photo-1555215858-9dc8d91d2e4e?w=400&h=300&fit=crop",
-      violation: true
+      violation: true,
+      site: "site2",
+      camera: "cam3",
+      zone: "vip",
+      typeVehicule: "voiture",
+      couleur: "noir",
+      marque: "bmw",
+      violationType: "stationnement"
     },
     {
       id: 4,
@@ -63,11 +115,18 @@ export const VehicleCapturePage = (): JSX.Element => {
       vehicleType: "Plaque détectée",
       location: "CAM-02",
       time: "14:41:33",
-      date: "14-12-16",
+      date: "2024-08-23",
       status: "Autorisé",
       speed: "35 km/h",
       image: "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=400&h=300&fit=crop",
-      violation: false
+      violation: false,
+      site: "site1",
+      camera: "cam2",
+      zone: "entrance",
+      typeVehicule: "voiture",
+      couleur: "bleu",
+      marque: "peugeot",
+      violationType: null
     },
     {
       id: 5,
@@ -75,11 +134,18 @@ export const VehicleCapturePage = (): JSX.Element => {
       vehicleType: "Yamaha MT-07",
       location: "Accès sécurisé",
       time: "14:55:18",
-      date: "14-12-16",
+      date: "2024-08-24",
       status: "Autorisé",
       speed: "28 km/h",
       image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop",
-      violation: false
+      violation: false,
+      site: "site2",
+      camera: "cam1",
+      zone: "entrance",
+      typeVehicule: "moto",
+      couleur: "noir",
+      marque: "yamaha",
+      violationType: null
     },
     {
       id: 6,
@@ -87,11 +153,18 @@ export const VehicleCapturePage = (): JSX.Element => {
       vehicleType: "Mercedes Citaro",
       location: "Zone bus",
       time: "14:02:21",
-      date: "14-12-16",
+      date: "2024-08-25",
       status: "Autorisé",
       speed: "25 km/h",
       image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400&h=300&fit=crop",
-      violation: false
+      violation: false,
+      site: "site1",
+      camera: "cam3",
+      zone: "parking",
+      typeVehicule: "bus",
+      couleur: "blanc",
+      marque: "mercedes",
+      violationType: null
     },
     {
       id: 7,
@@ -99,11 +172,18 @@ export const VehicleCapturePage = (): JSX.Element => {
       vehicleType: "Peugeot 308",
       location: "Entrée sud",
       time: "13:45:12",
-      date: "14-12-16",
-      status: "Zone interdite",
+      date: "2024-08-19",
+      status: "Sens interdit",
       speed: "48 km/h",
       image: "https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=400&h=300&fit=crop",
-      violation: true
+      violation: true,
+      site: "site2",
+      camera: "cam2",
+      zone: "entrance",
+      typeVehicule: "voiture",
+      couleur: "gris",
+      marque: "peugeot",
+      violationType: "sens"
     },
     {
       id: 8,
@@ -111,11 +191,18 @@ export const VehicleCapturePage = (): JSX.Element => {
       vehicleType: "Ford Transit",
       location: "Parking employés",
       time: "13:28:55",
-      date: "14-12-16",
+      date: "2024-08-20",
       status: "Confirmé",
       speed: "15 km/h",
       image: "https://images.unsplash.com/photo-1570733577524-3a047079e80d?w=400&h=300&fit=crop",
-      violation: false
+      violation: false,
+      site: "site1",
+      camera: "cam1",
+      zone: "parking",
+      typeVehicule: "truck",
+      couleur: "blanc",
+      marque: "ford",
+      violationType: null
     },
     {
       id: 9,
@@ -123,20 +210,66 @@ export const VehicleCapturePage = (): JSX.Element => {
       vehicleType: "Tesla Model 3",
       location: "Entrée VIP",
       time: "13:15:47",
-      date: "14-12-16",
+      date: "2024-08-21",
       status: "Autorisé",
       speed: "32 km/h",
       image: "https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=400&h=300&fit=crop",
-      violation: false
+      violation: false,
+      site: "site2",
+      camera: "cam3",
+      zone: "vip",
+      typeVehicule: "voiture",
+      couleur: "rouge",
+      marque: "tesla",
+      violationType: null
     }
   ];
 
-  const filteredData = vehicleCaptures.filter(vehicle => {
-    if (activeTab === "violations") return vehicle.violation;
-    if (activeTab === "authorized") return !vehicle.violation && vehicle.status === "Autorisé";
-    if (activeTab === "confirmed") return vehicle.status === "Confirmé";
-    return true;
-  });
+  // Fonction de filtrage complète
+  const applyFilters = () => {
+    return vehicleCaptures.filter(vehicle => {
+      // Filtres des onglets
+      if (activeTab === "violations" && !vehicle.violation) return false;
+      if (activeTab === "authorized" && (vehicle.violation || vehicle.status !== "Autorisé")) return false;
+      if (activeTab === "confirmed" && vehicle.status !== "Confirmé") return false;
+      
+      // Filtre par site
+      if (filters.site !== "all" && vehicle.site !== filters.site) return false;
+      
+      // Filtre par caméra
+      if (filters.camera !== "all" && vehicle.camera !== filters.camera) return false;
+      
+      // Filtre par zone
+      if (filters.zone !== "all" && vehicle.zone !== filters.zone) return false;
+      
+      // Filtre par date
+      const vehicleDate = new Date(vehicle.date);
+      const dateDebut = new Date(filters.dateDebut);
+      const dateFin = new Date(filters.dateFin);
+      if (vehicleDate < dateDebut || vehicleDate > dateFin) return false;
+      
+      // Filtre par violations
+      const violationsSelected = Object.entries(filters.violations).filter(([_, checked]) => checked).map(([type, _]) => type);
+      if (violationsSelected.length > 0 && vehicle.violation) {
+        if (!vehicle.violationType || !violationsSelected.includes(vehicle.violationType)) return false;
+      }
+      
+      // Filtre par type de véhicule
+      const typesSelected = Object.entries(filters.typeVehicule).filter(([_, checked]) => checked).map(([type, _]) => type);
+      if (typesSelected.length > 0 && !typesSelected.includes(vehicle.typeVehicule)) return false;
+      
+      // Filtre par couleur
+      const couleursSelected = Object.entries(filters.couleur).filter(([_, checked]) => checked).map(([couleur, _]) => couleur);
+      if (couleursSelected.length > 0 && !couleursSelected.includes(vehicle.couleur)) return false;
+      
+      // Filtre par marque
+      if (filters.marque !== "all" && vehicle.marque !== filters.marque) return false;
+      
+      return true;
+    });
+  };
+
+  const filteredData = applyFilters();
 
   const authorizedCount = vehicleCaptures.filter(v => !v.violation && v.status === "Autorisé").length;
   const violationCount = vehicleCaptures.filter(v => v.violation).length;
@@ -292,7 +425,10 @@ export const VehicleCapturePage = (): JSX.Element => {
                     <label className="text-sm font-medium text-gray-700 mb-2 block">
                       Type de capture
                     </label>
-                    <Select defaultValue="plaques">
+                    <Select 
+                      defaultValue="plaques" 
+                      onValueChange={(value) => setFilters({...filters, typeCapture: value})}
+                    >
                       <SelectTrigger className="w-full h-10 text-sm">
                         <SelectValue />
                       </SelectTrigger>
@@ -309,7 +445,10 @@ export const VehicleCapturePage = (): JSX.Element => {
                     <label className="text-sm font-medium text-gray-700 mb-2 block">
                       Sites
                     </label>
-                    <Select defaultValue="all">
+                    <Select 
+                      defaultValue="all" 
+                      onValueChange={(value) => setFilters({...filters, site: value})}
+                    >
                       <SelectTrigger className="w-full h-10 text-sm">
                         <SelectValue />
                       </SelectTrigger>
@@ -326,7 +465,10 @@ export const VehicleCapturePage = (): JSX.Element => {
                     <label className="text-sm font-medium text-gray-700 mb-2 block">
                       Caméras
                     </label>
-                    <Select defaultValue="all">
+                    <Select 
+                      defaultValue="all" 
+                      onValueChange={(value) => setFilters({...filters, camera: value})}
+                    >
                       <SelectTrigger className="w-full h-10 text-sm">
                         <SelectValue />
                       </SelectTrigger>
@@ -344,7 +486,10 @@ export const VehicleCapturePage = (): JSX.Element => {
                     <label className="text-sm font-medium text-gray-700 mb-2 block">
                       Zones
                     </label>
-                    <Select defaultValue="all">
+                    <Select 
+                      defaultValue="all" 
+                      onValueChange={(value) => setFilters({...filters, zone: value})}
+                    >
                       <SelectTrigger className="w-full h-10 text-sm">
                         <SelectValue />
                       </SelectTrigger>
@@ -367,11 +512,13 @@ export const VehicleCapturePage = (): JSX.Element => {
                         type="date" 
                         defaultValue="2024-08-19"
                         className="flex-1 h-10 text-sm"
+                        onChange={(e) => setFilters({...filters, dateDebut: e.target.value})}
                       />
                       <Input 
                         type="date" 
                         defaultValue="2024-08-25"
                         className="flex-1 h-10 text-sm"
+                        onChange={(e) => setFilters({...filters, dateFin: e.target.value})}
                       />
                     </div>
                   </div>
@@ -383,25 +530,42 @@ export const VehicleCapturePage = (): JSX.Element => {
                     </label>
                     <div className="space-y-2">
                       <div className="flex items-center space-x-2">
-                        <Checkbox id="stationnement" defaultChecked className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" />
+                        <Checkbox 
+                          id="stationnement" 
+                          defaultChecked 
+                          className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" 
+                          onCheckedChange={(checked) => setFilters({...filters, violations: {...filters.violations, stationnement: !!checked}})}
+                        />
                         <label htmlFor="stationnement" className="text-sm text-gray-700">
                           Stationnement interdit
                         </label>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <Checkbox id="vitesse" className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" />
+                        <Checkbox 
+                          id="vitesse" 
+                          className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" 
+                          onCheckedChange={(checked) => setFilters({...filters, violations: {...filters.violations, vitesse: !!checked}})}
+                        />
                         <label htmlFor="vitesse" className="text-sm text-gray-700">
                           Excès de vitesse
                         </label>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <Checkbox id="sens" className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" />
+                        <Checkbox 
+                          id="sens" 
+                          className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" 
+                          onCheckedChange={(checked) => setFilters({...filters, violations: {...filters.violations, sens: !!checked}})}
+                        />
                         <label htmlFor="sens" className="text-sm text-gray-700">
                           Sens interdit
                         </label>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <Checkbox id="stop" className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" />
+                        <Checkbox 
+                          id="stop" 
+                          className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" 
+                          onCheckedChange={(checked) => setFilters({...filters, violations: {...filters.violations, stop: !!checked}})}
+                        />
                         <label htmlFor="stop" className="text-sm text-gray-700">
                           Stop
                         </label>
@@ -416,31 +580,51 @@ export const VehicleCapturePage = (): JSX.Element => {
                     </label>
                     <div className="space-y-2">
                       <div className="flex items-center space-x-2">
-                        <Checkbox id="voiture" className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" />
+                        <Checkbox 
+                          id="voiture" 
+                          className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" 
+                          onCheckedChange={(checked) => setFilters({...filters, typeVehicule: {...filters.typeVehicule, voiture: !!checked}})}
+                        />
                         <label htmlFor="voiture" className="text-sm text-gray-700">
                           Voiture
                         </label>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <Checkbox id="camion" className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" />
+                        <Checkbox 
+                          id="camion" 
+                          className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" 
+                          onCheckedChange={(checked) => setFilters({...filters, typeVehicule: {...filters.typeVehicule, camion: !!checked}})}
+                        />
                         <label htmlFor="camion" className="text-sm text-gray-700">
                           Camion
                         </label>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <Checkbox id="moto" className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" />
+                        <Checkbox 
+                          id="moto" 
+                          className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" 
+                          onCheckedChange={(checked) => setFilters({...filters, typeVehicule: {...filters.typeVehicule, moto: !!checked}})}
+                        />
                         <label htmlFor="moto" className="text-sm text-gray-700">
                           Moto
                         </label>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <Checkbox id="truck" className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" />
+                        <Checkbox 
+                          id="truck" 
+                          className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" 
+                          onCheckedChange={(checked) => setFilters({...filters, typeVehicule: {...filters.typeVehicule, truck: !!checked}})}
+                        />
                         <label htmlFor="truck" className="text-sm text-gray-700">
                           Truck
                         </label>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <Checkbox id="bus" className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" />
+                        <Checkbox 
+                          id="bus" 
+                          className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" 
+                          onCheckedChange={(checked) => setFilters({...filters, typeVehicule: {...filters.typeVehicule, bus: !!checked}})}
+                        />
                         <label htmlFor="bus" className="text-sm text-gray-700">
                           Bus
                         </label>
@@ -455,31 +639,51 @@ export const VehicleCapturePage = (): JSX.Element => {
                     </label>
                     <div className="space-y-2">
                       <div className="flex items-center space-x-2">
-                        <Checkbox id="blanc" className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" />
+                        <Checkbox 
+                          id="blanc" 
+                          className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" 
+                          onCheckedChange={(checked) => setFilters({...filters, couleur: {...filters.couleur, blanc: !!checked}})}
+                        />
                         <label htmlFor="blanc" className="text-sm text-gray-700">
                           Blanc
                         </label>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <Checkbox id="noir" className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" />
+                        <Checkbox 
+                          id="noir" 
+                          className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" 
+                          onCheckedChange={(checked) => setFilters({...filters, couleur: {...filters.couleur, noir: !!checked}})}
+                        />
                         <label htmlFor="noir" className="text-sm text-gray-700">
                           Noir
                         </label>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <Checkbox id="rouge" className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" />
+                        <Checkbox 
+                          id="rouge" 
+                          className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" 
+                          onCheckedChange={(checked) => setFilters({...filters, couleur: {...filters.couleur, rouge: !!checked}})}
+                        />
                         <label htmlFor="rouge" className="text-sm text-gray-700">
                           Rouge
                         </label>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <Checkbox id="bleu" className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" />
+                        <Checkbox 
+                          id="bleu" 
+                          className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" 
+                          onCheckedChange={(checked) => setFilters({...filters, couleur: {...filters.couleur, bleu: !!checked}})}
+                        />
                         <label htmlFor="bleu" className="text-sm text-gray-700">
                           Bleu
                         </label>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <Checkbox id="gris" className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" />
+                        <Checkbox 
+                          id="gris" 
+                          className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500" 
+                          onCheckedChange={(checked) => setFilters({...filters, couleur: {...filters.couleur, gris: !!checked}})}
+                        />
                         <label htmlFor="gris" className="text-sm text-gray-700">
                           Gris
                         </label>
@@ -492,7 +696,10 @@ export const VehicleCapturePage = (): JSX.Element => {
                     <label className="text-sm font-medium text-gray-700 mb-2 block">
                       Marque
                     </label>
-                    <Select defaultValue="all">
+                    <Select 
+                      defaultValue="all" 
+                      onValueChange={(value) => setFilters({...filters, marque: value})}
+                    >
                       <SelectTrigger className="w-full h-10 text-sm">
                         <SelectValue />
                       </SelectTrigger>
@@ -502,6 +709,10 @@ export const VehicleCapturePage = (): JSX.Element => {
                         <SelectItem value="peugeot">Peugeot</SelectItem>
                         <SelectItem value="bmw">BMW</SelectItem>
                         <SelectItem value="mercedes">Mercedes</SelectItem>
+                        <SelectItem value="tesla">Tesla</SelectItem>
+                        <SelectItem value="yamaha">Yamaha</SelectItem>
+                        <SelectItem value="iveco">Iveco</SelectItem>
+                        <SelectItem value="ford">Ford</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
