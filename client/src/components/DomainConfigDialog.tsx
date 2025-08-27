@@ -59,13 +59,11 @@ export function DomainConfigDialog({
         <Button 
           variant="outline" 
           size="sm" 
-          className="gap-2 hover:bg-slate-50 group"
+          className="gap-2 hover:bg-slate-50"
           data-testid="button-open-domain-config"
         >
-          <Settings className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
-          <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-            Configuration
-          </span>
+          <Settings className="w-4 h-4" />
+          <span>Configuration</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto" data-testid="dialog-domain-config">
