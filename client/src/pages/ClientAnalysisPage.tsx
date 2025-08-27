@@ -108,9 +108,17 @@ const ClientAnalysisPage = (): JSX.Element => {
       { zone: "Rayon A", count: 89 },
       { zone: "Rayon B", count: 112 },
       { zone: "Rayon C", count: 78 },
+      { zone: "Rayon D", count: 67 },
+      { zone: "Rayon E", count: 95 },
       { zone: "Caisses", count: 156 },
       { zone: "Promotion", count: 134 },
       { zone: "Services", count: 45 },
+      { zone: "Alimentation", count: 123 },
+      { zone: "Électronique", count: 89 },
+      { zone: "Mode", count: 167 },
+      { zone: "Sport", count: 54 },
+      { zone: "Jardinage", count: 32 },
+      { zone: "Librairie", count: 28 },
     ];
     
     const multiplier = period === "week" ? 7 : period === "month" ? 30 : 1;
@@ -455,24 +463,26 @@ const ClientAnalysisPage = (): JSX.Element => {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="h-64 space-y-3">
-                  {zoneData.map((zone, index) => (
-                    <div key={index} className="flex items-center gap-3">
-                      <div className="w-20 text-sm text-gray-600">{zone.zone}</div>
-                      <div className="flex-1 relative">
-                        <div className="h-8 bg-gray-100 rounded overflow-hidden">
-                          <div 
-                            className="h-full bg-gradient-to-r from-emerald-500 to-teal-500 rounded transition-all duration-500"
-                            style={{ width: `${(zone.count / maxZone) * 100}%` }}
-                          />
-                        </div>
-                        <div className="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-700">
-                          {zone.count}
+                <ScrollArea className="h-64">
+                  <div className="space-y-3 pr-3">
+                    {zoneData.map((zone, index) => (
+                      <div key={index} className="flex items-center gap-3">
+                        <div className="w-20 text-sm text-gray-600">{zone.zone}</div>
+                        <div className="flex-1 relative">
+                          <div className="h-8 bg-gray-100 rounded overflow-hidden">
+                            <div 
+                              className="h-full bg-gradient-to-r from-emerald-500 to-teal-500 rounded transition-all duration-500"
+                              style={{ width: `${(zone.count / maxZone) * 100}%` }}
+                            />
+                          </div>
+                          <div className="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-700">
+                            {zone.count}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                </ScrollArea>
               </CardContent>
             </Card>
 
