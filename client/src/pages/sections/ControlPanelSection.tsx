@@ -749,6 +749,67 @@ Analyse comportementale
 </CardContent>
 </Card>
                   )}
+
+{/* Smart City Behavior Analysis */}
+                  {shouldRenderSection('behavior') && (
+                  <Card className="bg-white/10 border-0">
+<CardContent className="p-5">
+<div className="flex items-center justify-between mb-6">
+<div className="flex items-center gap-3">
+<Eye className="w-6 h-7 text-white" />
+<h4 className="font-bold text-white text-lg [font-family:'Inter',Helvetica]">Analyse Comportementale</h4>
+</div>
+<Badge className="bg-purple-500/30 text-purple-500 text-xs">IA ACTIVE</Badge>
+</div>
+<div className="grid grid-cols-2 gap-4">
+<Card className="bg-white/5 border border-white/10">
+<CardContent className="p-4 text-center">
+<Swords className="w-5 h-6 mx-auto mb-2 text-red-400" />
+<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
+2
+</span>
+<p className="text-sm text-white/80 [font-family:'Inter',Helvetica]">
+Bagarre
+</p>
+</CardContent>
+</Card>
+<Card className="bg-white/5 border border-white/10">
+<CardContent className="p-4 text-center">
+<Users className="w-5 h-6 mx-auto mb-2 text-yellow-400" />
+<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
+3
+</span>
+<p className="text-sm text-white/80 [font-family:'Inter',Helvetica]">
+Foule
+</p>
+</CardContent>
+</Card>
+<Card className="bg-white/5 border border-white/10">
+<CardContent className="p-4 text-center">
+<Target className="w-5 h-6 mx-auto mb-2 text-orange-400" />
+<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
+0
+</span>
+<p className="text-sm text-white/80 [font-family:'Inter',Helvetica]">
+Arme
+</p>
+</CardContent>
+</Card>
+<Card className="bg-white/5 border border-white/10">
+<CardContent className="p-4 text-center">
+<Activity className="w-5 h-6 mx-auto mb-2 text-blue-400" />
+<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
+47
+</span>
+<p className="text-sm text-white/80 [font-family:'Inter',Helvetica]">
+Course
+</p>
+</CardContent>
+</Card>
+</div>
+</CardContent>
+</Card>
+                  )}
 </div>
 {/* Vehicles Section */}
                 {shouldRenderSection('vehicles') && (
@@ -1097,118 +1158,7 @@ Infractions
 </Card>
                 )}
 
-{/* Smart City Behavior Analysis Section */}
-                {shouldRenderSection('behavior') && (
-                <Card className="bg-white/10 border-0">
-<CardContent className="p-4">
-<div className="flex items-center justify-between mb-4">
-<div className="flex items-center gap-2">
-<Eye className="w-5 h-6 text-white" />
-<h4 className="font-bold text-white text-sm [font-family:'Inter',Helvetica]">Analyse Comportementale</h4>
-</div>
-<Badge className="bg-purple-500/30 text-purple-500 text-xs">IA ACTIVE</Badge>
-</div>
-<div className="grid grid-cols-6 gap-3 mb-6">
-<Card className="bg-white/5 border border-white/10">
-<CardContent className="p-3 text-center">
-<User className="w-4 h-5 mx-auto mb-2 text-green-400" />
-<span className="text-sm font-bold text-white block [font-family:'Inter',Helvetica]">
-Normal
-</span>
-<p className="text-xs text-white/70 [font-family:'Inter',Helvetica]">
-2,456
-</p>
-</CardContent>
-</Card>
-<Card className="bg-white/5 border border-white/10">
-<CardContent className="p-3 text-center">
-<AlertTriangle className="w-4 h-5 mx-auto mb-2 text-yellow-400" />
-<span className="text-sm font-bold text-white block [font-family:'Inter',Helvetica]">
-Suspect
-</span>
-<p className="text-xs text-white/70 [font-family:'Inter',Helvetica]">
-12
-</p>
-</CardContent>
-</Card>
-<Card className="bg-white/5 border border-white/10">
-<CardContent className="p-3 text-center">
-<Activity className="w-4 h-5 mx-auto mb-2 text-blue-400" />
-<span className="text-sm font-bold text-white block [font-family:'Inter',Helvetica]">
-Foule
-</span>
-<p className="text-xs text-white/70 [font-family:'Inter',Helvetica]">
-3
-</p>
-</CardContent>
-</Card>
-<Card className="bg-white/5 border border-white/10">
-<CardContent className="p-3 text-center">
-<Target className="w-4 h-5 mx-auto mb-2 text-orange-400" />
-<span className="text-sm font-bold text-white block [font-family:'Inter',Helvetica]">
-Statique
-</span>
-<p className="text-xs text-white/70 [font-family:'Inter',Helvetica]">
-87
-</p>
-</CardContent>
-</Card>
-<Card className="bg-white/5 border border-white/10">
-<CardContent className="p-3 text-center">
-<Move className="w-4 h-5 mx-auto mb-2 text-cyan-400" />
-<span className="text-sm font-bold text-white block [font-family:'Inter',Helvetica]">
-Mobile
-</span>
-<p className="text-xs text-white/70 [font-family:'Inter',Helvetica]">
-1,789
-</p>
-</CardContent>
-</Card>
-<Card className="bg-white/5 border border-white/10">
-<CardContent className="p-3 text-center">
-<ShieldAlert className="w-4 h-5 mx-auto mb-2 text-red-400" />
-<span className="text-sm font-bold text-white block [font-family:'Inter',Helvetica]">
-Alerte
-</span>
-<p className="text-xs text-white/70 [font-family:'Inter',Helvetica]">
-2
-</p>
-</CardContent>
-</Card>
-</div>
-<div className="grid grid-cols-2 gap-4">
-<Card className="bg-white/5 border border-white/10">
-<CardContent className="p-4 text-center">
-<Monitor className="w-4 h-5 mx-auto mb-2 text-white" />
-<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
-24/7
-</span>
-<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
-Surveillance Active
-</p>
-<p className="text-xs font-semibold text-emerald-500 [font-family:'Inter',Helvetica]">
-99.8% Uptime
-</p>
-</CardContent>
-</Card>
-<Card className="bg-white/5 border border-white/10">
-<CardContent className="p-4 text-center">
-<AlertCircle className="w-4 h-5 mx-auto mb-2 text-yellow-400" />
-<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
-14
-</span>
-<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
-Incidents Détectés
-</p>
-<p className="text-xs font-semibold text-yellow-500 [font-family:'Inter',Helvetica]">
-Aujourd'hui
-</p>
-</CardContent>
-</Card>
-</div>
-</CardContent>
-</Card>
-                )}
+
 
 </CardContent>
 </Card>
