@@ -503,9 +503,6 @@ Administrateur
 <CardTitle className="text-xl font-bold [font-family:'Inter',Helvetica]">
 Centre de Contrôle Intelligent
                     </CardTitle>
-<Badge className="bg-emerald-500/20 text-emerald-500 text-xs">
-IA ACTIVE
-                    </Badge>
                     {!configLoading && domainInfo && (
                       <Badge className="bg-blue-500/20 text-blue-400 text-xs">
                         {domainInfo.icon} {domainInfo.name}
