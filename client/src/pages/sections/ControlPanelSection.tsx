@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -21,12 +22,54 @@ import {
   Move, ShieldAlert, UserX, Cigarette, Footprints
 } from "lucide-react";
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from "recharts";
+import { DomainConfigDialog } from "@/components/DomainConfigDialog";
+import { DOMAINS, type DomainType, type DomainConfig } from "@shared/schema";
+import { apiRequest } from "@/lib/queryClient";
 
 export const ControlPanelSection = (): JSX.Element => {
   const [selectedPeriod, setSelectedPeriod] = useState("jour");
   const [isConfigOpen, setIsConfigOpen] = useState(false);
-  
-  // Configuration state for which sections to show
+  const queryClient = useQueryClient();
+
+  // Fetch current domain configuration
+  const { data: domainConfig, isLoading: configLoading } = useQuery({
+    queryKey: ['/api/domain-config'],
+    queryFn: async () => {
+      const response = await fetch('/api/domain-config');
+      if (!response.ok) throw new Error('Failed to fetch domain config');
+      return response.json();
+    }
+  });
+
+  // Save domain configuration mutation
+  const saveDomainConfigMutation = useMutation({
+    mutationFn: async ({ domain, sections }: { domain: DomainType, sections: string[] }) => {
+      const response = await fetch('/api/domain-config', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ domain, sections })
+      });
+      if (!response.ok) throw new Error('Failed to save domain config');
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/domain-config'] });
+    }
+  });
+
+  // Handle domain configuration change
+  const handleDomainChange = (domain: DomainType, sections: string[]) => {
+    saveDomainConfigMutation.mutate({ domain, sections });
+  };
+
+  // Get current domain and sections
+  const currentDomain = (domainConfig?.domain as DomainType) || 'industrial_safety';
+  const currentSections = domainConfig?.sections || [];
+  const domainInfo = DOMAINS[currentDomain];
+
+  // Legacy config state (keeping for backward compatibility)
   const [config, setConfig] = useState({
     safety: true,
     peopleCountingnp: true,
@@ -37,9 +80,13 @@ export const ControlPanelSection = (): JSX.Element => {
     recentActivity: true
   });
 
-
   const handleConfigChange = (section: string, checked: boolean) => {
     setConfig(prev => ({...prev, [section]: checked}));
+  };
+
+  // Helper function to check if a section should be rendered
+  const shouldRenderSection = (sectionId: string) => {
+    return currentSections.includes(sectionId);
   };
   // Data for top metric cards
   const metricCards = [
@@ -459,6 +506,11 @@ Centre de Contrôle Intelligent
 <Badge className="bg-emerald-500/20 text-emerald-500 text-xs">
 IA ACTIVE
                     </Badge>
+                    {!configLoading && domainInfo && (
+                      <Badge className="bg-blue-500/20 text-blue-400 text-xs">
+                        {domainInfo.icon} {domainInfo.name}
+                      </Badge>
+                    )}
 </div>
 <div className="flex items-center gap-3">
                   <Select value={selectedPeriod} onValueChange={setSelectedPeriod}>
@@ -472,88 +524,11 @@ IA ACTIVE
                       <SelectItem value="annee">Année</SelectItem>
                     </SelectContent>
                   </Select>
-<Dialog open={isConfigOpen} onOpenChange={setIsConfigOpen}>
-                    <DialogTrigger asChild>
-                      <Button variant="ghost" size="icon" className="text-white/80 hover:text-white hover:bg-white/10">
-                        <Settings className="w-8 h-8" />
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className="sm:max-w-md">
-                      <DialogHeader>
-                        <DialogTitle>Configuration du Centre de Contrôle</DialogTitle>
-                      </DialogHeader>
-                      <div className="space-y-4">
-                        <div className="text-sm text-gray-600 mb-4">
-                          Choisissez les sections à afficher dans le centre de contrôle :
-                        </div>
-                        
-                        <div className="space-y-3">
-                          <div className="flex items-center space-x-2">
-                            <Checkbox 
-                              id="safety" 
-                              checked={config.safety}
-                              onCheckedChange={(checked) => handleConfigChange('safety', checked as boolean)}
-                            />
-                            <Label htmlFor="safety">Safety Equipment</Label>
-                          </div>
-                          
-                          <div className="flex items-center space-x-2">
-                            <Checkbox 
-                              id="peopleCountingnp" 
-                              checked={config.peopleCountingnp}
-                              onCheckedChange={(checked) => handleConfigChange('peopleCountingnp', checked as boolean)}
-                            />
-                            <Label htmlFor="peopleCountingnp">People Counting</Label>
-                          </div>
-                          
-                          <div className="flex items-center space-x-2">
-                            <Checkbox 
-                              id="personRecognition" 
-                              checked={config.personRecognition}
-                              onCheckedChange={(checked) => handleConfigChange('personRecognition', checked as boolean)}
-                            />
-                            <Label htmlFor="personRecognition">Person Recognition</Label>
-                          </div>
-                          
-                          <div className="flex items-center space-x-2">
-                            <Checkbox 
-                              id="zoneMonitoring" 
-                              checked={config.zoneMonitoring}
-                              onCheckedChange={(checked) => handleConfigChange('zoneMonitoring', checked as boolean)}
-                            />
-                            <Label htmlFor="zoneMonitoring">Zone Monitoring</Label>
-                          </div>
-                          
-                          <div className="flex items-center space-x-2">
-                            <Checkbox 
-                              id="behaviorAnalysis" 
-                              checked={config.behaviorAnalysis}
-                              onCheckedChange={(checked) => handleConfigChange('behaviorAnalysis', checked as boolean)}
-                            />
-                            <Label htmlFor="behaviorAnalysis">Behavior Analysis</Label>
-                          </div>
-                          
-                          <div className="flex items-center space-x-2">
-                            <Checkbox 
-                              id="vehicles" 
-                              checked={config.vehicles}
-                              onCheckedChange={(checked) => handleConfigChange('vehicles', checked as boolean)}
-                            />
-                            <Label htmlFor="vehicles">Vehicles Tracking</Label>
-                          </div>
-                          
-                          <div className="flex items-center space-x-2">
-                            <Checkbox 
-                              id="recentActivity" 
-                              checked={config.recentActivity}
-                              onCheckedChange={(checked) => handleConfigChange('recentActivity', checked as boolean)}
-                            />
-                            <Label htmlFor="recentActivity">Recent Activity</Label>
-                          </div>
-                        </div>
-                      </div>
-                    </DialogContent>
-                  </Dialog>
+                  <DomainConfigDialog
+                    currentDomain={currentDomain}
+                    currentSections={currentSections}
+                    onDomainChange={handleDomainChange}
+                  />
                 </div>
 </div>
 </CardHeader>
@@ -562,7 +537,7 @@ IA ACTIVE
 {/* Top Row - Safety, People Counting, Person Recognition */}
                 <div className="grid grid-cols-3 gap-6">
 {/* Safety Equipment */}
-                  {config.safety && (
+                  {shouldRenderSection('safety_equipment') && (
                   <Card className="bg-white/10 border-0">
 <CardContent className="p-5">
 <div className="flex items-center justify-between mb-6">
@@ -609,7 +584,7 @@ IA ACTIVE
 </Card>
                   )}
 {/* People Counting */}
-                  {config.peopleCountingnp && (
+                  {shouldRenderSection('people_counting') && (
                   <Card className="bg-white/10 border-0">
 <CardContent className="p-5">
 <div className="flex items-center gap-3 mb-6">
@@ -656,7 +631,7 @@ Personnes présentes
 </Card>
                   )}
 {/* Person Recognition */}
-                  {config.personRecognition && (
+                  {shouldRenderSection('person_recognition') && (
                   <Card className="bg-white/10 border-0">
 <CardContent className="p-5">
 <div className="flex items-center gap-3 mb-6">
