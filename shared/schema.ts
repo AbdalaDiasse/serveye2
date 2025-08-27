@@ -57,7 +57,7 @@ export const DOMAINS = {
       { id: "zone_monitoring", name: "Surveillance des Zones", description: "Surveillance urbaine par zones" },
       { id: "traffic", name: "Trafic", description: "Gestion du trafic routier" },
       { id: "personnes", name: "Personnes", description: "Analyse et comptage des piétons" },
-      { id: "voitures", name: "Voitures", description: "Surveillance des véhicules" },
+      { id: "voitures", name: "Voitures", description: "Surveillance des véhicules urbains" },
       { id: "behavior", name: "Analyse Comportementale", description: "Détection d'incidents urbains" }
     ]
   }
