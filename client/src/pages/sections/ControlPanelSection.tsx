@@ -686,7 +686,7 @@ Surveillance de zones
 </div>
 <span className="text-2xl font-bold text-cyan-500 [font-family:'Inter',Helvetica]">89</span>
 </div>
-<ScrollArea className="h-24">
+<ScrollArea className="h-48">
 <div className="space-y-4 pr-2">
 {zoneMonitoring.map((item, index) => (
                           <div key={index} className="space-y-2">
@@ -759,7 +759,7 @@ Analyse comportementale
 <Eye className="w-6 h-7 text-white" />
 <h4 className="font-bold text-white text-lg [font-family:'Inter',Helvetica]">Analyse Comportementale</h4>
 </div>
-<Badge className="bg-purple-500/30 text-purple-500 text-xs">IA ACTIVE</Badge>
+
 </div>
 <div className="grid grid-cols-2 gap-4">
 <Card className="bg-white/5 border border-white/10">
