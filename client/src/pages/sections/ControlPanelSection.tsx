@@ -942,90 +942,7 @@ Watchlists
 </Card>
                 )}
 
-{/* Smart City Traffic Section */}
-                {shouldRenderSection('traffic') && (
-                <Card className="bg-white/10 border-0">
-<CardContent className="p-4">
-<div className="flex items-center justify-between mb-4">
-<div className="flex items-center gap-2">
-<Car className="w-5 h-6 text-white" />
-<h4 className="font-bold text-white text-sm [font-family:'Inter',Helvetica]">Trafic Urbain</h4>
-</div>
-<Badge className="bg-yellow-500/30 text-yellow-500 text-xs">SURVEILLANCE</Badge>
-</div>
-<div className="grid grid-cols-3 gap-3 mb-6">
-<Card className="bg-white/5 border border-white/10">
-<CardContent className="p-3 text-center">
-<div className="w-6 h-6 bg-green-500 rounded-full mx-auto mb-2"></div>
-<span className="text-sm font-bold text-white block [font-family:'Inter',Helvetica]">
-Fluide
-</span>
-<p className="text-xs text-white/70 [font-family:'Inter',Helvetica]">
-Avenue Principal
-</p>
-</CardContent>
-</Card>
-<Card className="bg-white/5 border border-white/10">
-<CardContent className="p-3 text-center">
-<div className="w-6 h-6 bg-yellow-500 rounded-full mx-auto mb-2"></div>
-<span className="text-sm font-bold text-white block [font-family:'Inter',Helvetica]">
-Dense
-</span>
-<p className="text-xs text-white/70 [font-family:'Inter',Helvetica]">
-Centre Ville
-</p>
-</CardContent>
-</Card>
-<Card className="bg-white/5 border border-white/10">
-<CardContent className="p-3 text-center">
-<div className="w-6 h-6 bg-red-500 rounded-full mx-auto mb-2"></div>
-<span className="text-sm font-bold text-white block [font-family:'Inter',Helvetica]">
-Saturé
-</span>
-<p className="text-xs text-white/70 [font-family:'Inter',Helvetica]">
-Rond-Point Nord
-</p>
-</CardContent>
-</Card>
-</div>
-<div className="grid grid-cols-3 gap-4">
-<Card className="bg-white/5 border border-white/10">
-<CardContent className="p-4 text-center">
-<Gauge className="w-4 h-5 mx-auto mb-2 text-white" />
-<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
-42
-</span>
-<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
-km/h Moyenne
-</p>
-</CardContent>
-</Card>
-<Card className="bg-white/5 border border-white/10">
-<CardContent className="p-4 text-center">
-<Clock className="w-4 h-5 mx-auto mb-2 text-white" />
-<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
-8.5
-</span>
-<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
-min Temps Moyen
-</p>
-</CardContent>
-</Card>
-<Card className="bg-white/5 border border-white/10">
-<CardContent className="p-4 text-center">
-<AlertCircle className="w-4 h-5 mx-auto mb-2 text-red-400" />
-<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
-3
-</span>
-<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
-Embouteillages
-</p>
-</CardContent>
-</Card>
-</div>
-</CardContent>
-</Card>
-                )}
+
 
 {/* Smart City Traffic Section */}
                 {shouldRenderSection('traffic') && (
@@ -1084,7 +1001,7 @@ Motos
 </CardContent>
 </Card>
 </div>
-<div className="grid grid-cols-3 gap-4">
+<div className="grid grid-cols-5 gap-4">
 <Card className="bg-white/5 border border-white/10">
 <CardContent className="p-4 text-center">
 <Users className="w-4 h-5 mx-auto mb-2 text-white" />
@@ -1094,8 +1011,38 @@ Motos
 <p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
 Density
 </p>
-<p className="text-xs font-semibold text-emerald-500 [font-family:'Inter',Helvetica]">
-+5% aujourd'hui
+</CardContent>
+</Card>
+<Card className="bg-white/5 border border-white/10">
+<CardContent className="p-4 text-center">
+<Gauge className="w-4 h-5 mx-auto mb-2 text-white" />
+<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
+52
+</span>
+<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
+Vitesse Moyenne
+</p>
+</CardContent>
+</Card>
+<Card className="bg-white/5 border border-white/10">
+<CardContent className="p-4 text-center">
+<AlertCircle className="w-4 h-5 mx-auto mb-2 text-red-400" />
+<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
+3
+</span>
+<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
+Embouteillage
+</p>
+</CardContent>
+</Card>
+<Card className="bg-white/5 border border-white/10">
+<CardContent className="p-4 text-center">
+<Hash className="w-4 h-5 mx-auto mb-2 text-white" />
+<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
+2,282
+</span>
+<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
+Plaques Capturées
 </p>
 </CardContent>
 </Card>
@@ -1107,17 +1054,6 @@ Density
 </span>
 <p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
 Watchliste
-</p>
-</CardContent>
-</Card>
-<Card className="bg-white/5 border border-white/10">
-<CardContent className="p-4 text-center">
-<AlertCircle className="w-4 h-5 mx-auto mb-2 text-red-400" />
-<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
-18
-</span>
-<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
-Infractions
 </p>
 </CardContent>
 </Card>
