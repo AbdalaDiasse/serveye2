@@ -64,14 +64,6 @@ export const ControlPanelSection = (): JSX.Element => {
     saveDomainConfigMutation.mutate({ domain, sections });
   };
 
-  // Handle solution selection (automatically sets domain with all sections)
-  const handleSolutionChange = (solutionDomain: DomainType) => {
-    const domainInfo = DOMAINS[solutionDomain];
-    const allSections = Object.keys(domainInfo.sections);
-    console.log(`Switching to ${solutionDomain} with sections:`, allSections);
-    saveDomainConfigMutation.mutate({ domain: solutionDomain, sections: allSections });
-  };
-
   // Get current domain and sections
   const currentDomain = (domainConfig?.domain as DomainType) || 'industrial_safety';
   const currentSections = domainConfig?.sections || [];
@@ -94,14 +86,7 @@ export const ControlPanelSection = (): JSX.Element => {
 
   // Helper function to check if a section should be rendered
   const shouldRenderSection = (sectionId: string) => {
-    // If no sections are configured yet, show all sections for the current domain
-    if (!currentSections || currentSections.length === 0) {
-      const domainInfo = DOMAINS[currentDomain];
-      return Object.keys(domainInfo.sections).includes(sectionId);
-    }
-    const shouldRender = currentSections.includes(sectionId);
-    console.log(`Section ${sectionId}: ${shouldRender ? 'RENDER' : 'SKIP'} (currentSections: ${currentSections.join(', ')})`);
-    return shouldRender;
+    return currentSections.includes(sectionId);
   };
   // Data for top metric cards
   const metricCards = [
@@ -454,43 +439,6 @@ Tableau de bord de sécurité
                 </div>
 </Button>
 </div>
-
-{/* Solution Selector */}
-<div className="flex items-center gap-3 bg-white/50 rounded-xl p-2">
-<Settings className="w-5 h-5 text-gray-700" />
-<div className="flex flex-col">
-<p className="text-xs text-slate-500 [font-family:'Inter',Helvetica]">Solution</p>
-<Select 
-value={currentDomain} 
-onValueChange={(value: DomainType) => handleSolutionChange(value)}
->
-<SelectTrigger className="w-[180px] h-auto p-0 border-0 bg-transparent text-sm font-semibold text-gray-900 [font-family:'Inter',Helvetica]">
-<SelectValue />
-</SelectTrigger>
-<SelectContent>
-<SelectItem value="industrial_safety">
-<div className="flex items-center gap-2">
-<HardHat className="w-4 h-4" />
-<span>Industrial Safety</span>
-</div>
-</SelectItem>
-<SelectItem value="smart_city">
-<div className="flex items-center gap-2">
-<Car className="w-4 h-4" />
-<span>Smart Traffic</span>
-</div>
-</SelectItem>
-<SelectItem value="smart_retail">
-<div className="flex items-center gap-2">
-<Monitor className="w-4 h-4" />
-<span>Smart Retail</span>
-</div>
-</SelectItem>
-</SelectContent>
-</Select>
-</div>
-</div>
-
 <div className="flex items-center gap-3 bg-white/50 rounded-xl p-2">
 <Avatar className="w-10 h-10">
 <AvatarImage src="/figmaAssets/img.png" />
