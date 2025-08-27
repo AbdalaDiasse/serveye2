@@ -1255,6 +1255,87 @@ Sex distribution
 </div>
 <Badge className="bg-cyan-500/30 text-cyan-400 text-xs">ZONES</Badge>
 </div>
+
+{/* Visual displays grid */}
+<div className="grid grid-cols-2 gap-6 mb-6">
+  {/* Heatmap Display */}
+  <div className="bg-white/5 border border-white/10 rounded-lg p-4">
+    <div className="flex items-center gap-2 mb-3">
+      <Activity className="w-4 h-4 text-white" />
+      <h5 className="text-sm font-semibold text-white [font-family:'Inter',Helvetica]">Store Heatmap</h5>
+    </div>
+    <div className="relative bg-slate-800 rounded-lg p-3 h-32">
+      {/* Store layout grid */}
+      <div className="grid grid-cols-8 grid-rows-6 gap-1 h-full">
+        {/* Generate heatmap cells with different intensities */}
+        {Array.from({ length: 48 }, (_, i) => {
+          const intensity = Math.random();
+          let bgColor = 'bg-blue-900/20';
+          if (intensity > 0.8) bgColor = 'bg-red-500/80';
+          else if (intensity > 0.6) bgColor = 'bg-orange-500/60';
+          else if (intensity > 0.4) bgColor = 'bg-yellow-500/40';
+          else if (intensity > 0.2) bgColor = 'bg-green-500/30';
+          
+          return (
+            <div key={i} className={`${bgColor} rounded-sm`} />
+          );
+        })}
+      </div>
+      <div className="absolute bottom-1 left-3 text-xs text-white/60">High Traffic</div>
+      <div className="absolute top-1 right-3 text-xs text-white/60">Low Traffic</div>
+    </div>
+  </div>
+
+  {/* Customer Trajectory Display */}
+  <div className="bg-white/5 border border-white/10 rounded-lg p-4">
+    <div className="flex items-center gap-2 mb-3">
+      <Footprints className="w-4 h-4 text-white" />
+      <h5 className="text-sm font-semibold text-white [font-family:'Inter',Helvetica]">Customer Paths</h5>
+    </div>
+    <div className="relative bg-slate-800 rounded-lg p-3 h-32">
+      {/* Store outline */}
+      <div className="absolute inset-2 border border-white/20 rounded"></div>
+      {/* Customer path lines */}
+      <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100">
+        {/* Path 1 - Red */}
+        <path 
+          d="M10 20 Q30 15 50 25 Q70 35 85 30" 
+          stroke="#ef4444" 
+          strokeWidth="2" 
+          fill="none" 
+          strokeDasharray="2,2"
+          opacity="0.8"
+        />
+        {/* Path 2 - Blue */}
+        <path 
+          d="M15 80 Q40 70 60 75 Q80 80 90 70" 
+          stroke="#3b82f6" 
+          strokeWidth="2" 
+          fill="none" 
+          strokeDasharray="2,2"
+          opacity="0.8"
+        />
+        {/* Path 3 - Green */}
+        <path 
+          d="M20 50 Q45 45 65 55 Q80 65 85 50" 
+          stroke="#10b981" 
+          strokeWidth="2" 
+          fill="none" 
+          strokeDasharray="2,2"
+          opacity="0.8"
+        />
+        {/* Entry/Exit points */}
+        <circle cx="10" cy="20" r="2" fill="#ef4444" opacity="0.8" />
+        <circle cx="15" cy="80" r="2" fill="#3b82f6" opacity="0.8" />
+        <circle cx="20" cy="50" r="2" fill="#10b981" opacity="0.8" />
+      </svg>
+      <div className="absolute bottom-1 left-3 text-xs text-white/60">Entry Points</div>
+      <div className="absolute top-1 right-3 text-xs text-white/60">Popular Routes</div>
+    </div>
+  </div>
+</div>
+
+{/* Stats grid */}
 <div className="grid grid-cols-4 gap-4">
 <Card className="bg-white/5 border border-white/10">
 <CardContent className="p-4 text-center">
@@ -1263,7 +1344,7 @@ Sex distribution
 Active
 </span>
 <p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
-Heatmap
+Heatmap Status
 </p>
 </CardContent>
 </Card>
@@ -1274,7 +1355,7 @@ Heatmap
 127
 </span>
 <p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
-Customer Trajectory
+Active Trajectories
 </p>
 </CardContent>
 </Card>
