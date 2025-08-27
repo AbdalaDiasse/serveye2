@@ -1073,107 +1073,117 @@ Watchliste
 </Card>
                 )}
 
-{/* Smart Retail Anomalies Section */}
-                {shouldRenderSection('anomalies') && (
-                <Card className="bg-white/10 border-0">
-<CardContent className="p-4">
-<div className="flex items-center justify-between mb-4">
-<div className="flex items-center gap-2">
-<AlertTriangle className="w-5 h-6 text-red-400" />
-<h4 className="font-bold text-white text-sm [font-family:'Inter',Helvetica]">Anomalies</h4>
-</div>
-<Badge className="bg-red-500/30 text-red-400 text-xs">DÉTECTION</Badge>
-</div>
-<div className="grid grid-cols-3 gap-4">
-<Card className="bg-white/5 border border-white/10">
-<CardContent className="p-4 text-center">
-<Cigarette className="w-4 h-5 mx-auto mb-2 text-orange-400" />
-<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
-7
-</span>
-<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
-Manger
-</p>
-</CardContent>
-</Card>
-<Card className="bg-white/5 border border-white/10">
-<CardContent className="p-4 text-center">
-<ShieldAlert className="w-4 h-5 mx-auto mb-2 text-red-400" />
-<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
-2
-</span>
-<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
-Vol
-</p>
-</CardContent>
-</Card>
-<Card className="bg-white/5 border border-white/10">
-<CardContent className="p-4 text-center">
-<Move className="w-4 h-5 mx-auto mb-2 text-blue-400" />
-<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
-45
-</span>
-<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
-Trajectoires
-</p>
-</CardContent>
-</Card>
-</div>
-</CardContent>
-</Card>
-                )}
+{/* Smart Retail First Row: Anomalies, Service Quality, Persons */}
+                <div className="grid grid-cols-3 gap-4">
+                  {/* Anomalies Section */}
+                  {shouldRenderSection('anomalies') && (
+                    <Card className="bg-white/10 border-0">
+                      <CardContent className="p-4">
+                        <div className="flex items-center justify-between mb-4">
+                          <div className="flex items-center gap-2">
+                            <AlertTriangle className="w-5 h-6 text-red-400" />
+                            <h4 className="font-bold text-white text-sm [font-family:'Inter',Helvetica]">Anomalies</h4>
+                          </div>
+                          <Badge className="bg-red-500/30 text-red-400 text-xs">DÉTECTION</Badge>
+                        </div>
+                        <div className="grid grid-cols-3 gap-2">
+                          <Card className="bg-white/5 border border-white/10">
+                            <CardContent className="p-3 text-center">
+                              <Cigarette className="w-4 h-5 mx-auto mb-2 text-orange-400" />
+                              <span className="text-sm font-bold text-white block [font-family:'Inter',Helvetica]">7</span>
+                              <p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">Manger</p>
+                            </CardContent>
+                          </Card>
+                          <Card className="bg-white/5 border border-white/10">
+                            <CardContent className="p-3 text-center">
+                              <ShieldAlert className="w-4 h-5 mx-auto mb-2 text-red-400" />
+                              <span className="text-sm font-bold text-white block [font-family:'Inter',Helvetica]">2</span>
+                              <p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">Vol</p>
+                            </CardContent>
+                          </Card>
+                          <Card className="bg-white/5 border border-white/10">
+                            <CardContent className="p-3 text-center">
+                              <Move className="w-4 h-5 mx-auto mb-2 text-blue-400" />
+                              <span className="text-sm font-bold text-white block [font-family:'Inter',Helvetica]">45</span>
+                              <p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">Trajectoires</p>
+                            </CardContent>
+                          </Card>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  )}
 
-{/* Smart Retail Service Quality Section */}
-                {shouldRenderSection('service_quality') && (
-                <Card className="bg-white/10 border-0">
-<CardContent className="p-4">
-<div className="flex items-center justify-between mb-4">
-<div className="flex items-center gap-2">
-<Target className="w-5 h-6 text-green-400" />
-<h4 className="font-bold text-white text-sm [font-family:'Inter',Helvetica]">Qualité de Service</h4>
-</div>
-<Badge className="bg-green-500/30 text-green-400 text-xs">SERVICE</Badge>
-</div>
-<div className="grid grid-cols-3 gap-4">
-<Card className="bg-white/5 border border-white/10">
-<CardContent className="p-4 text-center">
-<Clock className="w-4 h-5 mx-auto mb-2 text-white" />
-<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
-3.2
-</span>
-<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
-Avg Time (min)
-</p>
-</CardContent>
-</Card>
-<Card className="bg-white/5 border border-white/10">
-<CardContent className="p-4 text-center">
-<AlertCircle className="w-4 h-5 mx-auto mb-2 text-orange-400" />
-<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
-12
-</span>
-<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
-Alert Overquering
-</p>
-</CardContent>
-</Card>
-<Card className="bg-white/5 border border-white/10">
-<CardContent className="p-4 text-center">
-<TrendingDown className="w-4 h-5 mx-auto mb-2 text-blue-400" />
-<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
-5
-</span>
-<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
-Alert Lessquering
-</p>
-</CardContent>
-</Card>
-</div>
-</CardContent>
-</Card>
-                )}
+                  {/* Service Quality Section */}
+                  {shouldRenderSection('service_quality') && (
+                    <Card className="bg-white/10 border-0">
+                      <CardContent className="p-4">
+                        <div className="flex items-center justify-between mb-4">
+                          <div className="flex items-center gap-2">
+                            <Target className="w-5 h-6 text-green-400" />
+                            <h4 className="font-bold text-white text-sm [font-family:'Inter',Helvetica]">Qualité de Service</h4>
+                          </div>
+                          <Badge className="bg-green-500/30 text-green-400 text-xs">SERVICE</Badge>
+                        </div>
+                        <div className="grid grid-cols-3 gap-2">
+                          <Card className="bg-white/5 border border-white/10">
+                            <CardContent className="p-3 text-center">
+                              <Clock className="w-4 h-5 mx-auto mb-2 text-white" />
+                              <span className="text-sm font-bold text-white block [font-family:'Inter',Helvetica]">3.2</span>
+                              <p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">Avg Time</p>
+                            </CardContent>
+                          </Card>
+                          <Card className="bg-white/5 border border-white/10">
+                            <CardContent className="p-3 text-center">
+                              <AlertCircle className="w-4 h-5 mx-auto mb-2 text-orange-400" />
+                              <span className="text-sm font-bold text-white block [font-family:'Inter',Helvetica]">12</span>
+                              <p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">Overquering</p>
+                            </CardContent>
+                          </Card>
+                          <Card className="bg-white/5 border border-white/10">
+                            <CardContent className="p-3 text-center">
+                              <TrendingDown className="w-4 h-5 mx-auto mb-2 text-blue-400" />
+                              <span className="text-sm font-bold text-white block [font-family:'Inter',Helvetica]">5</span>
+                              <p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">Lessquering</p>
+                            </CardContent>
+                          </Card>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  )}
 
-{/* Smart Retail Customer Analysis Section */}
+                  {/* Persons Section */}
+                  {shouldRenderSection('persons') && (
+                    <Card className="bg-white/10 border-0">
+                      <CardContent className="p-4">
+                        <div className="flex items-center justify-between mb-4">
+                          <div className="flex items-center gap-2">
+                            <User className="w-5 h-6 text-purple-400" />
+                            <h4 className="font-bold text-white text-sm [font-family:'Inter',Helvetica]">Personnes</h4>
+                          </div>
+                          <Badge className="bg-purple-500/30 text-purple-400 text-xs">PERSONNES</Badge>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <Card className="bg-white/5 border border-white/10">
+                            <CardContent className="p-4 text-center">
+                              <User className="w-4 h-5 mx-auto mb-2 text-yellow-400" />
+                              <span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">23</span>
+                              <p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">VIP</p>
+                            </CardContent>
+                          </Card>
+                          <Card className="bg-white/5 border border-white/10">
+                            <CardContent className="p-4 text-center">
+                              <UserX className="w-4 h-5 mx-auto mb-2 text-red-400" />
+                              <span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">8</span>
+                              <p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">Blacklist</p>
+                            </CardContent>
+                          </Card>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  )}
+                </div>
+
+                {/* Smart Retail Customer Analysis Section */}
                 {shouldRenderSection('customer_analysis') && (
                 <Card className="bg-white/10 border-0">
 <CardContent className="p-4">
@@ -1226,45 +1236,6 @@ Age distribution
 </span>
 <p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
 Sex distribution
-</p>
-</CardContent>
-</Card>
-</div>
-</CardContent>
-</Card>
-                )}
-
-{/* Smart Retail Persons Section */}
-                {shouldRenderSection('persons') && (
-                <Card className="bg-white/10 border-0">
-<CardContent className="p-4">
-<div className="flex items-center justify-between mb-4">
-<div className="flex items-center gap-2">
-<User className="w-5 h-6 text-purple-400" />
-<h4 className="font-bold text-white text-sm [font-family:'Inter',Helvetica]">Personnes</h4>
-</div>
-<Badge className="bg-purple-500/30 text-purple-400 text-xs">PERSONNES</Badge>
-</div>
-<div className="grid grid-cols-2 gap-4">
-<Card className="bg-white/5 border border-white/10">
-<CardContent className="p-4 text-center">
-<User className="w-4 h-5 mx-auto mb-2 text-yellow-400" />
-<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
-23
-</span>
-<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
-VIP
-</p>
-</CardContent>
-</Card>
-<Card className="bg-white/5 border border-white/10">
-<CardContent className="p-4 text-center">
-<UserX className="w-4 h-5 mx-auto mb-2 text-red-400" />
-<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
-8
-</span>
-<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
-Blacklist
 </p>
 </CardContent>
 </Card>
