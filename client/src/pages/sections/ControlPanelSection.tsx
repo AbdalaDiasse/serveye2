@@ -68,6 +68,7 @@ export const ControlPanelSection = (): JSX.Element => {
   const handleSolutionChange = (solutionDomain: DomainType) => {
     const domainInfo = DOMAINS[solutionDomain];
     const allSections = Object.keys(domainInfo.sections);
+    console.log(`Switching to ${solutionDomain} with sections:`, allSections);
     saveDomainConfigMutation.mutate({ domain: solutionDomain, sections: allSections });
   };
 
@@ -93,7 +94,14 @@ export const ControlPanelSection = (): JSX.Element => {
 
   // Helper function to check if a section should be rendered
   const shouldRenderSection = (sectionId: string) => {
-    return currentSections.includes(sectionId);
+    // If no sections are configured yet, show all sections for the current domain
+    if (!currentSections || currentSections.length === 0) {
+      const domainInfo = DOMAINS[currentDomain];
+      return Object.keys(domainInfo.sections).includes(sectionId);
+    }
+    const shouldRender = currentSections.includes(sectionId);
+    console.log(`Section ${sectionId}: ${shouldRender ? 'RENDER' : 'SKIP'} (currentSections: ${currentSections.join(', ')})`);
+    return shouldRender;
   };
   // Data for top metric cards
   const metricCards = [
