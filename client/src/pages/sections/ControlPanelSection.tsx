@@ -1194,7 +1194,9 @@ Watchliste
 </div>
 <Badge className="bg-blue-500/30 text-blue-400 text-xs">ANALYTICS</Badge>
 </div>
-<div className="grid grid-cols-4 gap-4">
+
+{/* Top row - basic stats */}
+<div className="grid grid-cols-2 gap-4 mb-6">
 <Card className="bg-white/5 border border-white/10">
 <CardContent className="p-4 text-center">
 <Users className="w-4 h-5 mx-auto mb-2 text-white" />
@@ -1202,7 +1204,7 @@ Watchliste
 1,234
 </span>
 <p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
-Visitor
+Visitors Today
 </p>
 </CardContent>
 </Card>
@@ -1217,28 +1219,101 @@ Dwelling time (min)
 </p>
 </CardContent>
 </Card>
-<Card className="bg-white/5 border border-white/10">
-<CardContent className="p-4 text-center">
-<TrendingUp className="w-4 h-5 mx-auto mb-2 text-white" />
-<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
-35%
-</span>
-<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
-Age distribution
-</p>
-</CardContent>
-</Card>
-<Card className="bg-white/5 border border-white/10">
-<CardContent className="p-4 text-center">
-<User className="w-4 h-5 mx-auto mb-2 text-white" />
-<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
-52%
-</span>
-<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
-Sex distribution
-</p>
-</CardContent>
-</Card>
+</div>
+
+{/* Visual analytics grid */}
+<div className="grid grid-cols-2 gap-6">
+  {/* Age Distribution Chart */}
+  <div className="bg-white/5 border border-white/10 rounded-lg p-4">
+    <div className="flex items-center gap-2 mb-3">
+      <TrendingUp className="w-4 h-4 text-white" />
+      <h5 className="text-sm font-semibold text-white [font-family:'Inter',Helvetica]">Age Distribution</h5>
+    </div>
+    <div className="space-y-3">
+      {/* Age ranges with visual bars */}
+      <div className="flex items-center justify-between">
+        <span className="text-xs text-white/80">18-25</span>
+        <div className="flex-1 mx-3 bg-slate-700 rounded-full h-2">
+          <div className="bg-blue-400 h-2 rounded-full" style={{width: '25%'}}></div>
+        </div>
+        <span className="text-xs text-white font-medium">25%</span>
+      </div>
+      <div className="flex items-center justify-between">
+        <span className="text-xs text-white/80">26-40</span>
+        <div className="flex-1 mx-3 bg-slate-700 rounded-full h-2">
+          <div className="bg-green-400 h-2 rounded-full" style={{width: '35%'}}></div>
+        </div>
+        <span className="text-xs text-white font-medium">35%</span>
+      </div>
+      <div className="flex items-center justify-between">
+        <span className="text-xs text-white/80">41-60</span>
+        <div className="flex-1 mx-3 bg-slate-700 rounded-full h-2">
+          <div className="bg-yellow-400 h-2 rounded-full" style={{width: '28%'}}></div>
+        </div>
+        <span className="text-xs text-white font-medium">28%</span>
+      </div>
+      <div className="flex items-center justify-between">
+        <span className="text-xs text-white/80">60+</span>
+        <div className="flex-1 mx-3 bg-slate-700 rounded-full h-2">
+          <div className="bg-purple-400 h-2 rounded-full" style={{width: '12%'}}></div>
+        </div>
+        <span className="text-xs text-white font-medium">12%</span>
+      </div>
+    </div>
+  </div>
+
+  {/* Gender Distribution Chart */}
+  <div className="bg-white/5 border border-white/10 rounded-lg p-4">
+    <div className="flex items-center gap-2 mb-3">
+      <User className="w-4 h-4 text-white" />
+      <h5 className="text-sm font-semibold text-white [font-family:'Inter',Helvetica]">Gender Distribution</h5>
+    </div>
+    <div className="relative h-24 flex items-center justify-center">
+      {/* Pie chart representation */}
+      <svg width="80" height="80" viewBox="0 0 80 80" className="transform -rotate-90">
+        {/* Male slice (52%) */}
+        <circle
+          cx="40"
+          cy="40"
+          r="30"
+          fill="none"
+          stroke="#3b82f6"
+          strokeWidth="12"
+          strokeDasharray="98 188"
+          strokeDashoffset="0"
+          opacity="0.8"
+        />
+        {/* Female slice (48%) */}
+        <circle
+          cx="40"
+          cy="40"
+          r="30"
+          fill="none"
+          stroke="#ec4899"
+          strokeWidth="12"
+          strokeDasharray="90 188"
+          strokeDashoffset="-98"
+          opacity="0.8"
+        />
+      </svg>
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-lg font-bold text-white">52/48</div>
+          <div className="text-xs text-white/60">M/F</div>
+        </div>
+      </div>
+    </div>
+    <div className="flex justify-center gap-4 mt-3">
+      <div className="flex items-center gap-1">
+        <div className="w-3 h-3 bg-blue-400 rounded-full"></div>
+        <span className="text-xs text-white/80">Male 52%</span>
+      </div>
+      <div className="flex items-center gap-1">
+        <div className="w-3 h-3 bg-pink-400 rounded-full"></div>
+        <span className="text-xs text-white/80">Female 48%</span>
+      </div>
+    </div>
+  </div>
 </div>
 </CardContent>
 </Card>
