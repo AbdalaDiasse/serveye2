@@ -59,6 +59,17 @@ export const DOMAINS = {
       { id: "traffic", name: "Traffic", description: "Surveillance véhicules et densité" },
       { id: "behavior", name: "Analyse Comportementale", description: "Détection d'incidents urbains" }
     ]
+  },
+  smart_retail: {
+    name: "Commerce Intelligent",
+    icon: "🛒",
+    sections: [
+      { id: "anomalies", name: "Anomalies", description: "Manger, Vol, Trajectoires" },
+      { id: "service_quality", name: "Qualité de Service", description: "Temps moyen, Alertes attente" },
+      { id: "customer_analysis", name: "Analyse Client", description: "Visiteurs, Temps séjour, Distribution" },
+      { id: "persons", name: "Personnes", description: "VIP, Liste noire" },
+      { id: "area_analysis", name: "Analyse Zone", description: "Heatmap, Trajectoires, Rayons" }
+    ]
   }
 } as const;
 

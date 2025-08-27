@@ -1073,7 +1073,266 @@ Watchliste
 </Card>
                 )}
 
+{/* Smart Retail Anomalies Section */}
+                {shouldRenderSection('anomalies') && (
+                <Card className="bg-white/10 border-0">
+<CardContent className="p-4">
+<div className="flex items-center justify-between mb-4">
+<div className="flex items-center gap-2">
+<AlertTriangle className="w-5 h-6 text-red-400" />
+<h4 className="font-bold text-white text-sm [font-family:'Inter',Helvetica]">Anomalies</h4>
+</div>
+<Badge className="bg-red-500/30 text-red-400 text-xs">DÉTECTION</Badge>
+</div>
+<div className="grid grid-cols-3 gap-4">
+<Card className="bg-white/5 border border-white/10">
+<CardContent className="p-4 text-center">
+<Cigarette className="w-4 h-5 mx-auto mb-2 text-orange-400" />
+<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
+7
+</span>
+<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
+Manger
+</p>
+</CardContent>
+</Card>
+<Card className="bg-white/5 border border-white/10">
+<CardContent className="p-4 text-center">
+<ShieldAlert className="w-4 h-5 mx-auto mb-2 text-red-400" />
+<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
+2
+</span>
+<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
+Vol
+</p>
+</CardContent>
+</Card>
+<Card className="bg-white/5 border border-white/10">
+<CardContent className="p-4 text-center">
+<Move className="w-4 h-5 mx-auto mb-2 text-blue-400" />
+<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
+45
+</span>
+<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
+Trajectoires
+</p>
+</CardContent>
+</Card>
+</div>
+</CardContent>
+</Card>
+                )}
 
+{/* Smart Retail Service Quality Section */}
+                {shouldRenderSection('service_quality') && (
+                <Card className="bg-white/10 border-0">
+<CardContent className="p-4">
+<div className="flex items-center justify-between mb-4">
+<div className="flex items-center gap-2">
+<Target className="w-5 h-6 text-green-400" />
+<h4 className="font-bold text-white text-sm [font-family:'Inter',Helvetica]">Qualité de Service</h4>
+</div>
+<Badge className="bg-green-500/30 text-green-400 text-xs">SERVICE</Badge>
+</div>
+<div className="grid grid-cols-3 gap-4">
+<Card className="bg-white/5 border border-white/10">
+<CardContent className="p-4 text-center">
+<Clock className="w-4 h-5 mx-auto mb-2 text-white" />
+<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
+3.2
+</span>
+<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
+Avg Time (min)
+</p>
+</CardContent>
+</Card>
+<Card className="bg-white/5 border border-white/10">
+<CardContent className="p-4 text-center">
+<AlertCircle className="w-4 h-5 mx-auto mb-2 text-orange-400" />
+<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
+12
+</span>
+<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
+Alert Overquering
+</p>
+</CardContent>
+</Card>
+<Card className="bg-white/5 border border-white/10">
+<CardContent className="p-4 text-center">
+<TrendingDown className="w-4 h-5 mx-auto mb-2 text-blue-400" />
+<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
+5
+</span>
+<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
+Alert Lessquering
+</p>
+</CardContent>
+</Card>
+</div>
+</CardContent>
+</Card>
+                )}
+
+{/* Smart Retail Customer Analysis Section */}
+                {shouldRenderSection('customer_analysis') && (
+                <Card className="bg-white/10 border-0">
+<CardContent className="p-4">
+<div className="flex items-center justify-between mb-4">
+<div className="flex items-center gap-2">
+<Users className="w-5 h-6 text-blue-400" />
+<h4 className="font-bold text-white text-sm [font-family:'Inter',Helvetica]">Analyse Client</h4>
+</div>
+<Badge className="bg-blue-500/30 text-blue-400 text-xs">ANALYTICS</Badge>
+</div>
+<div className="grid grid-cols-4 gap-4">
+<Card className="bg-white/5 border border-white/10">
+<CardContent className="p-4 text-center">
+<Users className="w-4 h-5 mx-auto mb-2 text-white" />
+<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
+1,234
+</span>
+<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
+Visitor
+</p>
+</CardContent>
+</Card>
+<Card className="bg-white/5 border border-white/10">
+<CardContent className="p-4 text-center">
+<Clock className="w-4 h-5 mx-auto mb-2 text-white" />
+<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
+8.5
+</span>
+<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
+Dwelling time (min)
+</p>
+</CardContent>
+</Card>
+<Card className="bg-white/5 border border-white/10">
+<CardContent className="p-4 text-center">
+<TrendingUp className="w-4 h-5 mx-auto mb-2 text-white" />
+<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
+35%
+</span>
+<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
+Age distribution
+</p>
+</CardContent>
+</Card>
+<Card className="bg-white/5 border border-white/10">
+<CardContent className="p-4 text-center">
+<User className="w-4 h-5 mx-auto mb-2 text-white" />
+<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
+52%
+</span>
+<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
+Sex distribution
+</p>
+</CardContent>
+</Card>
+</div>
+</CardContent>
+</Card>
+                )}
+
+{/* Smart Retail Persons Section */}
+                {shouldRenderSection('persons') && (
+                <Card className="bg-white/10 border-0">
+<CardContent className="p-4">
+<div className="flex items-center justify-between mb-4">
+<div className="flex items-center gap-2">
+<User className="w-5 h-6 text-purple-400" />
+<h4 className="font-bold text-white text-sm [font-family:'Inter',Helvetica]">Personnes</h4>
+</div>
+<Badge className="bg-purple-500/30 text-purple-400 text-xs">PERSONNES</Badge>
+</div>
+<div className="grid grid-cols-2 gap-4">
+<Card className="bg-white/5 border border-white/10">
+<CardContent className="p-4 text-center">
+<User className="w-4 h-5 mx-auto mb-2 text-yellow-400" />
+<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
+23
+</span>
+<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
+VIP
+</p>
+</CardContent>
+</Card>
+<Card className="bg-white/5 border border-white/10">
+<CardContent className="p-4 text-center">
+<UserX className="w-4 h-5 mx-auto mb-2 text-red-400" />
+<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
+8
+</span>
+<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
+Blacklist
+</p>
+</CardContent>
+</Card>
+</div>
+</CardContent>
+</Card>
+                )}
+
+{/* Smart Retail Area Analysis Section */}
+                {shouldRenderSection('area_analysis') && (
+                <Card className="bg-white/10 border-0">
+<CardContent className="p-4">
+<div className="flex items-center justify-between mb-4">
+<div className="flex items-center gap-2">
+<Monitor className="w-5 h-6 text-cyan-400" />
+<h4 className="font-bold text-white text-sm [font-family:'Inter',Helvetica]">Analyse Zone</h4>
+</div>
+<Badge className="bg-cyan-500/30 text-cyan-400 text-xs">ZONES</Badge>
+</div>
+<div className="grid grid-cols-4 gap-4">
+<Card className="bg-white/5 border border-white/10">
+<CardContent className="p-4 text-center">
+<Activity className="w-4 h-5 mx-auto mb-2 text-white" />
+<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
+Active
+</span>
+<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
+Heatmap
+</p>
+</CardContent>
+</Card>
+<Card className="bg-white/5 border border-white/10">
+<CardContent className="p-4 text-center">
+<Footprints className="w-4 h-5 mx-auto mb-2 text-white" />
+<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
+127
+</span>
+<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
+Customer Trajectory
+</p>
+</CardContent>
+</Card>
+<Card className="bg-white/5 border border-white/10">
+<CardContent className="p-4 text-center">
+<TrendingUp className="w-4 h-5 mx-auto mb-2 text-red-400" />
+<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
+89%
+</span>
+<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
+Hot Shelve
+</p>
+</CardContent>
+</Card>
+<Card className="bg-white/5 border border-white/10">
+<CardContent className="p-4 text-center">
+<TrendingDown className="w-4 h-5 mx-auto mb-2 text-blue-400" />
+<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
+12%
+</span>
+<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
+Cold Shelve
+</p>
+</CardContent>
+</Card>
+</div>
+</CardContent>
+</Card>
+                )}
 
 </CardContent>
 </Card>
