@@ -908,64 +908,34 @@ Piétons
 </Card>
 <Card className="bg-white/5 border border-white/10">
 <CardContent className="p-3 text-center">
-<User className="w-5 h-6 mx-auto mb-2 text-green-400" />
+<AlertTriangle className="w-5 h-6 mx-auto mb-2 text-red-400" />
 <span className="text-sm font-bold text-white block [font-family:'Inter',Helvetica]">
-456
+18
 </span>
 <p className="text-xs text-white/70 [font-family:'Inter',Helvetica]">
-Cyclistes
+Violations
 </p>
 </CardContent>
 </Card>
 <Card className="bg-white/5 border border-white/10">
 <CardContent className="p-3 text-center">
-<AlertTriangle className="w-5 h-6 mx-auto mb-2 text-orange-400" />
+<Activity className="w-5 h-6 mx-auto mb-2 text-yellow-400" />
 <span className="text-sm font-bold text-white block [font-family:'Inter',Helvetica]">
-12
+85%
 </span>
 <p className="text-xs text-white/70 [font-family:'Inter',Helvetica]">
-Incidents
+Crowd Density
 </p>
 </CardContent>
 </Card>
 <Card className="bg-white/5 border border-white/10">
 <CardContent className="p-3 text-center">
-<Shield className="w-5 h-6 mx-auto mb-2 text-cyan-400" />
+<Eye className="w-5 h-6 mx-auto mb-2 text-orange-400" />
 <span className="text-sm font-bold text-white block [font-family:'Inter',Helvetica]">
-98%
+23
 </span>
 <p className="text-xs text-white/70 [font-family:'Inter',Helvetica]">
-Sécurité
-</p>
-</CardContent>
-</Card>
-</div>
-<div className="grid grid-cols-2 gap-4">
-<Card className="bg-white/5 border border-white/10">
-<CardContent className="p-4 text-center">
-<ArrowDown className="w-4 h-5 mx-auto mb-2 text-emerald-400" />
-<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
-1,247
-</span>
-<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
-Flux Entrant
-</p>
-<p className="text-xs font-semibold text-emerald-500 [font-family:'Inter',Helvetica]">
-+15% aujourd'hui
-</p>
-</CardContent>
-</Card>
-<Card className="bg-white/5 border border-white/10">
-<CardContent className="p-4 text-center">
-<ArrowUp className="w-4 h-5 mx-auto mb-2 text-red-400" />
-<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
-1,156
-</span>
-<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
-Flux Sortant
-</p>
-<p className="text-xs font-semibold text-red-500 [font-family:'Inter',Helvetica]">
-Normal
+Watchlists
 </p>
 </CardContent>
 </Card>
