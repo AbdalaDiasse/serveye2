@@ -1001,7 +1001,7 @@ Motos
 </CardContent>
 </Card>
 </div>
-<div className="grid grid-cols-5 gap-4">
+<div className="grid grid-cols-6 gap-4">
 <Card className="bg-white/5 border border-white/10">
 <CardContent className="p-4 text-center">
 <Users className="w-4 h-5 mx-auto mb-2 text-white" />
@@ -1043,6 +1043,17 @@ Embouteillage
 </span>
 <p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
 Plaques Capturées
+</p>
+</CardContent>
+</Card>
+<Card className="bg-white/5 border border-white/10">
+<CardContent className="p-4 text-center">
+<ShieldAlert className="w-4 h-5 mx-auto mb-2 text-red-400" />
+<span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
+18
+</span>
+<p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
+Violations
 </p>
 </CardContent>
 </Card>
