@@ -67,6 +67,39 @@ const navigationItems = [
     isActive: false,
   },
   {
+    name: "VSS",
+    icon: "/figmaAssets/frame-4.svg",
+    isActive: false,
+    hasDropdown: true,
+    subItems: [
+      {
+        name: "Agent VSS",
+        icon: "/figmaAssets/frame-1.svg",
+        isActive: false,
+      },
+      {
+        name: "Résumé",
+        icon: "/figmaAssets/frame-1.svg",
+        isActive: false,
+      },
+      {
+        name: "Recherche",
+        icon: "/figmaAssets/frame-2.svg",
+        isActive: false,
+      },
+      {
+        name: "Alertes",
+        icon: "/figmaAssets/frame-2.svg",
+        isActive: false,
+      },
+      {
+        name: "Q/R",
+        icon: "/figmaAssets/frame-2.svg",
+        isActive: false,
+      },
+    ],
+  },
+  {
     name: "Sites",
     icon: "/figmaAssets/frame-3.svg",
     isActive: false,
@@ -99,7 +132,8 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
   const [openDropdown, setOpenDropdown] = useState<string | null>(
     // Ouvrir automatiquement le dropdown approprié selon la page
     (currentPage === "capture" || currentPage === "reconnaissance" || currentPage === "persons" || currentPage === "personnesDashboard" || currentPage === "clientAnalysis") ? "Personnes" : 
-    (currentPage === "vehicles" || currentPage === "vehicleCapture") ? "Vehicules" : null
+    (currentPage === "vehicles" || currentPage === "vehicleCapture") ? "Vehicules" : 
+    (currentPage === "vssAgent" || currentPage === "vssSummarize" || currentPage === "vssSearch" || currentPage === "vssAlerts" || currentPage === "vssQA") ? "VSS" : null
   );
 
   const toggleDropdown = (itemName: string) => {
@@ -112,6 +146,8 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
       setOpenDropdown("Personnes");
     } else if (currentPage === "vehicles" || currentPage === "vehicleCapture") {
       setOpenDropdown("Vehicules");
+    } else if (currentPage === "vssAgent" || currentPage === "vssSummarize" || currentPage === "vssSearch" || currentPage === "vssAlerts" || currentPage === "vssQA") {
+      setOpenDropdown("VSS");
     }
   }, [currentPage]);
 
@@ -147,7 +183,8 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
             const isPersonnesActive = item.name === "Personnes" && (currentPage === "persons" || currentPage === "capture" || currentPage === "reconnaissance" || currentPage === "personnesDashboard" || currentPage === "clientAnalysis");
             const isEventsActive = (item.name === "Évènements" || item.name === "Événements") && currentPage === "events";
             const isVehiclesActive = item.name === "Vehicules" && (currentPage === "vehicles" || currentPage === "vehicleCapture");
-            const isOtherActive = currentPage === item.name.toLowerCase() && item.name !== "Personnes" && item.name !== "Évènements" && item.name !== "Événements" && item.name !== "Vehicules";
+            const isVSSActive = item.name === "VSS" && (currentPage === "vssAgent" || currentPage === "vssSummarize" || currentPage === "vssSearch" || currentPage === "vssAlerts" || currentPage === "vssQA");
+            const isOtherActive = currentPage === item.name.toLowerCase() && item.name !== "Personnes" && item.name !== "Évènements" && item.name !== "Événements" && item.name !== "Vehicules" && item.name !== "VSS";
             
             return (
               <div key={index} className="relative">
@@ -159,6 +196,8 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                       ? "shadow-md bg-gradient-to-r from-red-500 to-red-600"
                       : isVehiclesActive
                       ? "shadow-md bg-gradient-to-r from-orange-500 to-orange-600"
+                      : isVSSActive
+                      ? "shadow-md bg-gradient-to-r from-purple-500 to-indigo-600"
                       : isOtherActive
                       ? "shadow-md bg-gradient-to-r from-blue-600 to-blue-500"
                       : "hover:bg-gray-50"
@@ -168,6 +207,8 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                       toggleDropdown(item.name);
                       if (item.name === "Personnes" && openDropdown !== item.name) {
                         // Ne pas naviguer automatiquement, seulement ouvrir le dropdown
+                      } else if (item.name === "VSS" && openDropdown !== item.name) {
+                        // Ne pas naviguer automatiquement pour VSS, seulement ouvrir le dropdown
                       }
                     } else if (item.name === "Évènements" || item.name === "Événements") {
                       handleNavigation("events");
@@ -180,9 +221,9 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                     }
                   }}
                 >
-                  {renderIcon(item.icon, `${(isPersonnesActive || isEventsActive || isVehiclesActive || isOtherActive) ? "w-4 h-4 mr-3 text-white" : "w-4 h-4 mr-3 text-slate-600"}`)}
+                  {renderIcon(item.icon, `${(isPersonnesActive || isEventsActive || isVehiclesActive || isVSSActive || isOtherActive) ? "w-4 h-4 mr-3 text-white" : "w-4 h-4 mr-3 text-slate-600"}`)}
                   <span className={`[font-family:'Inter',Helvetica] text-base tracking-[0] truncate ${
-                    (isPersonnesActive || isEventsActive || isVehiclesActive || isOtherActive)
+                    (isPersonnesActive || isEventsActive || isVehiclesActive || isVSSActive || isOtherActive)
                       ? 'font-semibold text-white leading-[normal]'
                       : 'font-normal text-slate-600 leading-6'
                   }`}>
@@ -192,7 +233,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                     <img
                       className={`w-3 h-3 ml-auto transition-transform duration-200 ${
                         openDropdown === item.name ? 'rotate-180' : ''
-                      } ${(isPersonnesActive || isVehiclesActive) ? 'filter brightness-0 invert' : ''}`}
+                      } ${(isPersonnesActive || isVehiclesActive || isVSSActive) ? 'filter brightness-0 invert' : ''}`}
                       alt="Dropdown"
                       src="/figmaAssets/frame-7.svg"
                     />
@@ -209,10 +250,22 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                         ? "personnesDashboard"
                         : item.name === "Personnes" && subItem.name === "Analyse Client"
                         ? "clientAnalysis"
+                        : item.name === "VSS" && subItem.name === "Agent VSS"
+                        ? "vssAgent"
+                        : item.name === "VSS" && subItem.name === "Résumé"
+                        ? "vssSummarize"
+                        : item.name === "VSS" && subItem.name === "Recherche"
+                        ? "vssSearch"
+                        : item.name === "VSS" && subItem.name === "Alertes"
+                        ? "vssAlerts"
+                        : item.name === "VSS" && subItem.name === "Q/R"
+                        ? "vssQA"
                         : subItem.name.toLowerCase();
                       const isSubActive = currentPage === subPageName;
                       const gradientClass = item.name === "Vehicules" 
                         ? 'from-orange-400 to-orange-500' 
+                        : item.name === "VSS"
+                        ? 'from-purple-400 to-indigo-500'
                         : 'from-teal-400 to-cyan-400';
                       
                       return (

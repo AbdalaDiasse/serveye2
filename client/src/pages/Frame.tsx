@@ -63,6 +63,9 @@ export const Frame = (): JSX.Element => {
         return <VehicleCapturePage />;
       case "clientAnalysis":
         return <ClientAnalysisPage />;
+      case "vssAgent":
+        window.location.href = "/vss-agent";
+        return <div>Redirecting to VSS Agent...</div>;
       default:
         return <ControlPanelSection />;
     }
