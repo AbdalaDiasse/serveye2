@@ -192,12 +192,13 @@ export const ControlPanelSection = (): JSX.Element => {
 
 
   // Data for vehicles
-  const vehicleTypes = [
+  const trafficData = [
     { name: "Voitures", count: 234, icon: <Car className="w-6 h-6 text-white" /> },
     { name: "Camions", count: 67, icon: <Truck className="w-6 h-6 text-white" /> },
     { name: "Motos", count: 89, icon: <Bike className="w-6 h-6 text-white" /> },
-    { name: "Trucks", count: 23, icon: <Truck className="w-6 h-6 text-white" /> },
-    { name: "Bus", count: 12, icon: <Bus className="w-6 h-6 text-white" /> }
+    { name: "Bus", count: 12, icon: <Bus className="w-6 h-6 text-white" /> },
+    { name: "Density", count: 78, icon: <Users className="w-6 h-6 text-white" /> },
+    { name: "Watchliste", count: 15, icon: <Eye className="w-6 h-6 text-white" /> }
   ];
 
   // Data for live events
@@ -820,7 +821,7 @@ Course
 <Badge className="bg-blue-500/30 text-blue-500 text-xs">ACTIF</Badge>
 </div>
 <div className="grid grid-cols-5 gap-3 mb-6">
-{vehicleTypes.map((vehicle, index) => (
+{trafficData.map((vehicle, index) => (
                         <Card key={index} className="bg-white/5 border border-white/10">
 <CardContent className="p-3 text-center">
 {vehicle.icon}
@@ -1026,14 +1027,14 @@ Embouteillages
 </Card>
                 )}
 
-{/* Smart City Voitures Section */}
-                {shouldRenderSection('voitures') && (
+{/* Smart City Traffic Section */}
+                {shouldRenderSection('traffic') && (
                 <Card className="bg-white/10 border-0">
 <CardContent className="p-4">
 <div className="flex items-center justify-between mb-4">
 <div className="flex items-center gap-2">
 <Car className="w-5 h-6 text-white" />
-<h4 className="font-bold text-white text-sm [font-family:'Inter',Helvetica]">Voitures Urbaines</h4>
+<h4 className="font-bold text-white text-sm [font-family:'Inter',Helvetica]">Traffic Urbain</h4>
 </div>
 <Badge className="bg-blue-500/30 text-blue-500 text-xs">SURVEILLANCE</Badge>
 </div>
@@ -1086,26 +1087,26 @@ Motos
 <div className="grid grid-cols-3 gap-4">
 <Card className="bg-white/5 border border-white/10">
 <CardContent className="p-4 text-center">
-<Hash className="w-4 h-5 mx-auto mb-2 text-white" />
+<Users className="w-4 h-5 mx-auto mb-2 text-white" />
 <span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
-2,282
+78%
 </span>
 <p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
-Plaques Détectées
+Density
 </p>
 <p className="text-xs font-semibold text-emerald-500 [font-family:'Inter',Helvetica]">
-+8% aujourd'hui
++5% aujourd'hui
 </p>
 </CardContent>
 </Card>
 <Card className="bg-white/5 border border-white/10">
 <CardContent className="p-4 text-center">
-<Gauge className="w-4 h-5 mx-auto mb-2 text-white" />
+<Eye className="w-4 h-5 mx-auto mb-2 text-white" />
 <span className="text-lg font-bold text-white block [font-family:'Inter',Helvetica]">
-52
+15
 </span>
 <p className="text-xs text-white/80 [font-family:'Inter',Helvetica]">
-km/h Moyenne
+Watchliste
 </p>
 </CardContent>
 </Card>
