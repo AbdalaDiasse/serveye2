@@ -38,6 +38,11 @@ const navigationItems = [
         icon: "/figmaAssets/frame-2.svg",
         isActive: false,
       },
+      {
+        name: "Analyse Client",
+        icon: "/figmaAssets/frame-2.svg",
+        isActive: false,
+      },
     ],
   },
   {
@@ -93,7 +98,7 @@ const renderIcon = (icon: string, className: string) => {
 export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage }: EventSummarySectionProps): JSX.Element => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(
     // Ouvrir automatiquement le dropdown approprié selon la page
-    (currentPage === "capture" || currentPage === "reconnaissance" || currentPage === "persons") ? "Personnes" : 
+    (currentPage === "capture" || currentPage === "reconnaissance" || currentPage === "persons" || currentPage === "personnesDashboard" || currentPage === "clientAnalysis") ? "Personnes" : 
     (currentPage === "vehicles" || currentPage === "vehicleCapture") ? "Vehicules" : null
   );
 
@@ -103,7 +108,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
 
   // Effet pour ouvrir automatiquement le dropdown approprié selon la page
   useEffect(() => {
-    if (currentPage === "capture" || currentPage === "reconnaissance" || currentPage === "persons") {
+    if (currentPage === "capture" || currentPage === "reconnaissance" || currentPage === "persons" || currentPage === "personnesDashboard" || currentPage === "clientAnalysis") {
       setOpenDropdown("Personnes");
     } else if (currentPage === "vehicles" || currentPage === "vehicleCapture") {
       setOpenDropdown("Vehicules");
@@ -139,7 +144,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
       <nav className="flex-1 p-4 overflow-hidden">
         <div className="space-y-2">
           {navigationItems.map((item, index) => {
-            const isPersonnesActive = item.name === "Personnes" && (currentPage === "persons" || currentPage === "capture" || currentPage === "reconnaissance" || currentPage === "personnesDashboard");
+            const isPersonnesActive = item.name === "Personnes" && (currentPage === "persons" || currentPage === "capture" || currentPage === "reconnaissance" || currentPage === "personnesDashboard" || currentPage === "clientAnalysis");
             const isEventsActive = (item.name === "Évènements" || item.name === "Événements") && currentPage === "events";
             const isVehiclesActive = item.name === "Vehicules" && (currentPage === "vehicles" || currentPage === "vehicleCapture");
             const isOtherActive = currentPage === item.name.toLowerCase() && item.name !== "Personnes" && item.name !== "Évènements" && item.name !== "Événements" && item.name !== "Vehicules";
@@ -202,6 +207,8 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                         ? "vehicles"
                         : item.name === "Personnes" && subItem.name === "Dashboard"
                         ? "personnesDashboard"
+                        : item.name === "Personnes" && subItem.name === "Analyse Client"
+                        ? "clientAnalysis"
                         : subItem.name.toLowerCase();
                       const isSubActive = currentPage === subPageName;
                       const gradientClass = item.name === "Vehicules" 

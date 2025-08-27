@@ -8,6 +8,7 @@ import { PersonnesDashboardPage } from "./PersonnesDashboardPage";
 import { EventsPage } from "./EventsPage";
 import { VehiclesDashboard } from "./VehiclesDashboard";
 import { VehicleCapturePage } from "./VehicleCapturePage";
+import ClientAnalysisPage from "./ClientAnalysisPage";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from "recharts";
@@ -60,6 +61,8 @@ export const Frame = (): JSX.Element => {
         return <VehiclesDashboard />;
       case "vehicleCapture":
         return <VehicleCapturePage />;
+      case "clientAnalysis":
+        return <ClientAnalysisPage />;
       default:
         return <ControlPanelSection />;
     }
