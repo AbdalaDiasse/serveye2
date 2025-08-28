@@ -123,7 +123,7 @@ export default function VSSResumePage() {
           </div>
         </div>
 
-        <div className="p-6 space-y-6">
+        <div className="p-6 space-y-2">
           {/* Video Analysis Section */}
           <div className="grid grid-cols-12 gap-6">
             {/* Main Video Player */}
