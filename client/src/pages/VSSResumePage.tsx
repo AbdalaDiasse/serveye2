@@ -385,13 +385,9 @@ export default function VSSResumePage() {
                   </div>
                 </CardContent>
               </Card>
-            </div>
-          </div>
-
-          {/* AI Generated Summary - Moved to match video analysis width */}
-          <div className="grid grid-cols-12 gap-6">
-            <div className="col-span-8">
-              <Card>
+              
+              {/* AI Generated Summary - Positioned right after video */}
+              <Card className="mt-2">
                 <CardHeader className="pb-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -845,6 +841,10 @@ export default function VSSResumePage() {
               </div>
             </CardContent>
           </Card>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
 
           {/* Recent Summary History */}
           <Card>
