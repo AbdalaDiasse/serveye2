@@ -8,6 +8,7 @@ import NotFound from "@/pages/not-found";
 import { Frame } from "@/pages/Frame";
 import ClientAnalysisPage from "@/pages/ClientAnalysisPage";
 import VSSAgentPage from "@/pages/VSSAgentPage";
+import VSSResumePage from "@/pages/VSSResumePage";
 
 function Router() {
   return (
@@ -16,6 +17,7 @@ function Router() {
       <Route path="/" component={Frame} />
       <Route path="/client-analysis" component={ClientAnalysisPage} />
       <Route path="/vss-agent" component={VSSAgentPage} />
+      <Route path="/vss-resume" component={VSSResumePage} />
       {/* Fallback to 404 */}
       <Route component={NotFound} />
     </Switch>
