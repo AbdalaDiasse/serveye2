@@ -9,6 +9,7 @@ import { Frame } from "@/pages/Frame";
 import ClientAnalysisPage from "@/pages/ClientAnalysisPage";
 import VSSAgentPage from "@/pages/VSSAgentPage";
 import VSSResumePage from "@/pages/VSSResumePage";
+import VSSSearchPage from "@/pages/VSSSearchPage";
 
 function Router() {
   return (
@@ -18,6 +19,7 @@ function Router() {
       <Route path="/client-analysis" component={ClientAnalysisPage} />
       <Route path="/vss-agent" component={VSSAgentPage} />
       <Route path="/vss-resume" component={VSSResumePage} />
+      <Route path="/vss-search" component={VSSSearchPage} />
       {/* Fallback to 404 */}
       <Route component={NotFound} />
     </Switch>
