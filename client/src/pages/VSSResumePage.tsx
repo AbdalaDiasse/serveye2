@@ -248,6 +248,156 @@ export default function VSSResumePage() {
                     </div>
                   </div>
                 </CardContent>
+                
+                {/* AI Generated Summary - Inside video analysis component */}
+                <CardContent className="pt-0">
+                  <Card className="mt-4">
+                    <CardHeader className="pb-4">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="p-2 bg-blue-100 rounded-lg">
+                            <Brain className="w-5 h-5 text-blue-600" />
+                          </div>
+                          <div>
+                            <CardTitle className="text-lg">AI Generated Summary</CardTitle>
+                            <div className="flex items-center gap-2 mt-1">
+                              <Badge className="bg-green-100 text-green-700 text-xs">
+                                Generated • 2 min ago
+                              </Badge>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Button variant="outline" size="sm">Brief</Button>
+                          <Button variant="ghost" size="sm">Detailed</Button>
+                          <Button variant="ghost" size="sm">Timeline</Button>
+                          <Button className="bg-red-600 hover:bg-red-700 text-white" size="sm">
+                            <FileText className="w-4 h-4 mr-2" />
+                            Export PDF
+                          </Button>
+                        </div>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="space-y-6">
+                      {/* Period Analysis */}
+                      <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                        <div className="flex items-center gap-2 mb-3">
+                          <Clock className="w-4 h-4 text-blue-600" />
+                          <h3 className="font-semibold text-blue-900">Période d'analyse: 14:00 - 16:00 (Aujourd'hui)</h3>
+                        </div>
+                        
+                        <div className="grid grid-cols-4 gap-6 mb-4">
+                          <div className="text-center">
+                            <div className="text-3xl font-bold text-blue-600">127</div>
+                            <div className="text-sm text-gray-600">Personnes détectées</div>
+                          </div>
+                          <div className="text-center">
+                            <div className="text-3xl font-bold text-green-600">23</div>
+                            <div className="text-sm text-gray-600">Véhicules identifiés</div>
+                          </div>
+                          <div className="text-center">
+                            <div className="text-3xl font-bold text-orange-600">5</div>
+                            <div className="text-sm text-gray-600">Alertes générées</div>
+                          </div>
+                          <div className="text-center">
+                            <div className="text-3xl font-bold text-purple-600">98%</div>
+                            <div className="text-sm text-gray-600">Précision IA</div>
+                          </div>
+                        </div>
+
+                        <div className="bg-blue-100 p-3 rounded border-l-4 border-blue-600">
+                          <p className="text-sm text-blue-900">
+                            <strong>Résumé Exécutif:</strong> Durant la période analysée de 14:00 à 16:00, le système VSS a traité et analysé 2 heures de flux vidéo en continu provenant de 6 caméras de sécurité. L'activité globale était élevée avec un pic d'affluence observé entre 14:30 et 15:15.
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Person Analysis */}
+                      <div className="grid grid-cols-2 gap-6">
+                        <div>
+                          <div className="flex items-center gap-2 mb-3">
+                            <Users className="w-5 h-5 text-blue-600" />
+                            <h3 className="font-semibold text-gray-900">Analyse des Personnes</h3>
+                          </div>
+                          <div className="space-y-2 text-sm text-gray-700">
+                            <p>• <strong>127 personnes uniques</strong> détectées et suivies à travers le système</p>
+                            <p>• <strong>89% d'employés reconnus</strong> via reconnaissance faciale (112 personnes)</p>
+                            <p>• <strong>15 visiteurs non-identifiés</strong> escortés selon les procédures standard</p>
+                            <p>• <strong>Pic d'activité:</strong> 34 personnes simultanément présentes à 14:47</p>
+                            <p>• <strong>Zones les plus fréquentées:</strong> Entrée principale (67%), Hall d'accueil (45%), Cafétéria (23%)</p>
+                          </div>
+                        </div>
+
+                        <div>
+                          <div className="flex items-center gap-2 mb-3">
+                            <Activity className="w-5 h-5 text-green-600" />
+                            <h3 className="font-semibold text-gray-900">Suivi Véhiculaire</h3>
+                          </div>
+                          <div className="space-y-2 text-sm text-gray-700">
+                            <p>• <strong>23 véhicules</strong> identifiés dans le périmètre de sécurité</p>
+                            <p>• <strong>18 véhicules autorisés</strong> avec plaques d'immatriculation reconnues</p>
+                            <p>• <strong>5 véhicules visiteurs</strong> dirigés vers la zone d'accueil</p>
+                            <p>• <strong>3 livraisons programmées:</strong> FedEx (14:15), DHL (15:20), Transporteur local (15:45)</p>
+                            <p>• <strong>Temps de stationnement moyen:</strong> 45 minutes pour les visiteurs</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Security Incidents */}
+                      <div className="bg-orange-50 p-4 rounded-lg border border-orange-200">
+                        <div className="flex items-center gap-2 mb-3">
+                          <AlertCircle className="w-5 h-5 text-orange-600" />
+                          <h3 className="font-semibold text-orange-900">Incidents de Sécurité</h3>
+                        </div>
+                        <div className="space-y-3">
+                          <div className="bg-red-100 p-3 rounded border-l-4 border-red-500">
+                            <div className="flex items-center gap-2 mb-1">
+                              <Badge className="bg-red-600 text-white text-xs">CRITIQUE</Badge>
+                              <span className="font-semibold text-red-900">14:32 - Tentative d'accès non autorisé</span>
+                            </div>
+                            <p className="text-sm text-red-800">détectée à l'entrée arrière. Résolu en 2m15s par l'équipe de sécurité.</p>
+                          </div>
+                          <div className="bg-yellow-100 p-3 rounded border-l-4 border-yellow-500">
+                            <div className="flex items-center gap-2 mb-1">
+                              <Badge className="bg-yellow-600 text-white text-xs">MOYEN</Badge>
+                              <span className="font-semibold text-yellow-900">15:08 - Porte de secours</span>
+                            </div>
+                            <p className="text-sm text-yellow-800">ouverte pendant 45s pour maintenance programmée.</p>
+                          </div>
+                          <div className="bg-yellow-100 p-3 rounded border-l-4 border-yellow-500">
+                            <div className="flex items-center gap-2 mb-1">
+                              <Badge className="bg-yellow-600 text-white text-xs">FAIBLE</Badge>
+                              <span className="font-semibold text-yellow-900">14:55 - Objet abandonné</span>
+                            </div>
+                            <p className="text-sm text-yellow-800">(sac à dos) dans le hall, récupéré par son propriétaire après 3 minutes.</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Action Buttons */}
+                      <div className="flex items-center justify-between pt-4 border-t">
+                        <div className="flex items-center gap-2 text-sm text-gray-600">
+                          <Brain className="w-4 h-4 text-blue-600" />
+                          <span>Généré par VSS AI Engine v2.1 • Temps de traitement: 28 secondes</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Button variant="outline" size="sm">
+                            <Copy className="w-4 h-4 mr-2" />
+                            Copier
+                          </Button>
+                          <Button className="bg-blue-600 hover:bg-blue-700 text-white" size="sm">
+                            <Share2 className="w-4 h-4 mr-2" />
+                            Partager
+                          </Button>
+                          <Button className="bg-green-600 hover:bg-green-700 text-white" size="sm">
+                            <RefreshCw className="w-4 h-4 mr-2" />
+                            Régénérer
+                          </Button>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </CardContent>
               </Card>
             </div>
 
