@@ -86,63 +86,9 @@ export default function VSSResumePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
-      {/* Left Sidebar Navigation */}
-      <div className="w-64 bg-white border-r border-gray-200 flex flex-col">
-        {/* Header */}
-        <div className="p-4 border-b border-gray-200">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-blue-600 rounded-lg">
-              <Brain className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <h1 className="font-semibold text-gray-900">VSS Agent</h1>
-              <p className="text-xs text-gray-500">Video Security System</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Navigation Menu */}
-        <nav className="flex-1 p-4">
-          <div className="space-y-2">
-            <Button variant="ghost" className="w-full justify-start gap-3 text-gray-600 hover:bg-gray-100">
-              <Home className="w-4 h-4" />
-              Dashboard
-            </Button>
-            <Button className="w-full justify-start gap-3 bg-blue-600 text-white hover:bg-blue-700">
-              <FileText className="w-4 h-4" />
-              Summarize
-            </Button>
-            <Button variant="ghost" className="w-full justify-start gap-3 text-gray-600 hover:bg-gray-100">
-              <Search className="w-4 h-4" />
-              Search
-            </Button>
-            <Button variant="ghost" className="w-full justify-start gap-3 text-gray-600 hover:bg-gray-100">
-              <Bell className="w-4 h-4" />
-              Alerts
-            </Button>
-            <Button variant="ghost" className="w-full justify-start gap-3 text-gray-600 hover:bg-gray-100">
-              <MessageSquare className="w-4 h-4" />
-              Q/A
-            </Button>
-            <Button variant="ghost" className="w-full justify-start gap-3 text-gray-600 hover:bg-gray-100">
-              <Camera className="w-4 h-4" />
-              Cameras
-            </Button>
-            <Button variant="ghost" className="w-full justify-start gap-3 text-gray-600 hover:bg-gray-100">
-              <Settings className="w-4 h-4" />
-              Settings
-            </Button>
-            <Button variant="ghost" className="w-full justify-start gap-3 text-gray-600 hover:bg-gray-100">
-              <BarChart3 className="w-4 h-4" />
-              Analytics
-            </Button>
-          </div>
-        </nav>
-      </div>
-
+    <div className="min-h-screen bg-gray-50">
       {/* Main Content */}
-      <div className="flex-1 overflow-auto">
+      <div className="w-full overflow-auto">
         {/* Top Header */}
         <div className="bg-white border-b border-gray-200 p-4">
           <div className="flex items-center justify-between">
