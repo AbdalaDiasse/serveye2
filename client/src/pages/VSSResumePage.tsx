@@ -841,12 +841,8 @@ export default function VSSResumePage() {
               </div>
             </CardContent>
           </Card>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
 
-          {/* Recent Summary History */}
+          {/* Recent Summary History */}}
           <Card>
             <CardHeader>
               <div className="flex items-center justify-between">
