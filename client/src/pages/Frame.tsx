@@ -9,6 +9,7 @@ import { EventsPage } from "./EventsPage";
 import { VehiclesDashboard } from "./VehiclesDashboard";
 import { VehicleCapturePage } from "./VehicleCapturePage";
 import ClientAnalysisPage from "./ClientAnalysisPage";
+import VSSAgentPage from "./VSSAgentPage";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from "recharts";
@@ -64,8 +65,27 @@ export const Frame = (): JSX.Element => {
       case "clientAnalysis":
         return <ClientAnalysisPage />;
       case "vssAgent":
-        window.location.href = "/vss-agent";
-        return <div>Redirecting to VSS Agent...</div>;
+        return <VSSAgentPage />;
+      case "vssSummarize":
+        return <div className="p-6">
+          <h1 className="text-2xl font-bold mb-4">VSS Résumé</h1>
+          <p>Page de résumé VSS en cours de développement...</p>
+        </div>;
+      case "vssSearch":
+        return <div className="p-6">
+          <h1 className="text-2xl font-bold mb-4">VSS Recherche</h1>
+          <p>Page de recherche VSS en cours de développement...</p>
+        </div>;
+      case "vssAlerts":
+        return <div className="p-6">
+          <h1 className="text-2xl font-bold mb-4">VSS Alertes</h1>
+          <p>Page des alertes VSS en cours de développement...</p>
+        </div>;
+      case "vssQA":
+        return <div className="p-6">
+          <h1 className="text-2xl font-bold mb-4">VSS Q/R</h1>
+          <p>Page de questions/réponses VSS en cours de développement...</p>
+        </div>;
       default:
         return <ControlPanelSection />;
     }
