@@ -373,36 +373,49 @@ export default function VSSAgentPage() {
 
               <TabsContent value="summarize" className="mt-6">
                 <div className="space-y-6">
-                  {/* Video Player Section */}
-                  <div className="grid grid-cols-3 gap-6">
-                    {/* Video Player */}
-                    <div className="col-span-2">
-                      <Card className="bg-gray-900 text-white">
+                  {/* Top Video Analytics Section */}
+                  <div className="grid grid-cols-12 gap-6">
+                    {/* Video Player - Takes up 8 columns */}
+                    <div className="col-span-8">
+                      <Card className="bg-blue-900 text-white overflow-hidden">
+                        <CardHeader className="pb-2">
+                          <div className="flex items-center justify-between">
+                            <CardTitle className="text-lg font-semibold text-white">Video Surveillance</CardTitle>
+                            <div className="flex items-center gap-2">
+                              <Select defaultValue="camera1">
+                                <SelectTrigger className="w-40 bg-blue-800 border-blue-700 text-white">
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="camera1">Camera 01</SelectItem>
+                                  <SelectItem value="camera2">Camera 02</SelectItem>
+                                  <SelectItem value="camera3">Camera 03</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </div>
+                          </div>
+                        </CardHeader>
                         <CardContent className="p-0">
-                          {/* Video Container */}
-                          <div className="relative aspect-video bg-black rounded-t-lg overflow-hidden">
-                            <video 
+                          {/* Main Video Display */}
+                          <div className="relative aspect-video bg-black">
+                            <img 
+                              src="/api/placeholder/800/450" 
+                              alt="Video surveillance feed"
                               className="w-full h-full object-cover"
-                              poster="/api/placeholder/800/450"
-                            >
-                              <source src="/video-placeholder.mp4" type="video/mp4" />
-                            </video>
+                            />
                             
                             {/* Video Overlay Info */}
                             <div className="absolute top-4 left-4 flex items-center gap-2">
-                              <Badge className="bg-red-600 text-white">
+                              <Badge className="bg-red-600 text-white text-xs px-2 py-1">
                                 <div className="flex items-center gap-1">
                                   <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
                                   LIVE
                                 </div>
                               </Badge>
-                              <Badge className="bg-gray-800/80 text-white">
-                                Caméra 01 - Hall Principal
-                              </Badge>
                             </div>
                             
                             <div className="absolute top-4 right-4">
-                              <Badge className="bg-gray-800/80 text-white">
+                              <Badge className="bg-black/60 text-white text-xs px-2 py-1">
                                 {new Date().toLocaleTimeString()}
                               </Badge>
                             </div>
@@ -411,255 +424,404 @@ export default function VSSAgentPage() {
                             <div className="absolute inset-0 flex items-center justify-center">
                               <Button 
                                 size="lg" 
-                                className="bg-white/20 backdrop-blur hover:bg-white/30 rounded-full p-4"
+                                className="bg-white/20 backdrop-blur hover:bg-white/30 rounded-full p-3"
                               >
-                                <Play className="w-8 h-8 text-white" />
+                                <Play className="w-6 h-6 text-white" />
                               </Button>
                             </div>
                           </div>
                           
-                          {/* Video Controls */}
-                          <div className="p-4 bg-gray-800">
-                            <div className="flex items-center justify-between mb-2">
-                              <div className="flex items-center gap-2">
-                                <Button size="sm" variant="ghost" className="text-white hover:bg-gray-700">
+                          {/* Video Controls and Timeline */}
+                          <div className="p-4 bg-blue-800 space-y-3">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-3">
+                                <Button size="sm" variant="ghost" className="text-white hover:bg-blue-700 p-2">
                                   <Play className="w-4 h-4" />
                                 </Button>
-                                <Button size="sm" variant="ghost" className="text-white hover:bg-gray-700">
+                                <Button size="sm" variant="ghost" className="text-white hover:bg-blue-700 p-2">
                                   <Pause className="w-4 h-4" />
                                 </Button>
-                                <span className="text-sm text-gray-400">00:45 / 03:20</span>
+                                <span className="text-sm text-blue-200">14:30:45 / 15:15:20</span>
                               </div>
                               <div className="flex items-center gap-2">
-                                <Button size="sm" variant="ghost" className="text-white hover:bg-gray-700">
+                                <Button size="sm" variant="ghost" className="text-white hover:bg-blue-700 p-2">
                                   <Download className="w-4 h-4" />
                                 </Button>
-                                <Button size="sm" variant="ghost" className="text-white hover:bg-gray-700">
+                                <Button size="sm" variant="ghost" className="text-white hover:bg-blue-700 p-2">
                                   <Share2 className="w-4 h-4" />
                                 </Button>
                               </div>
                             </div>
-                            <Progress value={35} className="h-1" />
+                            <Progress value={65} className="h-2 bg-blue-700" />
+                            
+                            {/* Timeline Thumbnails */}
+                            <div className="flex gap-2">
+                              {[1, 2, 3, 4, 5, 6].map((i) => (
+                                <div key={i} className="flex-1 aspect-video bg-blue-700 rounded cursor-pointer hover:bg-blue-600 transition-colors overflow-hidden">
+                                  <img 
+                                    src="/api/placeholder/120/68" 
+                                    alt={`Timeline ${i}`}
+                                    className="w-full h-full object-cover"
+                                  />
+                                </div>
+                              ))}
+                            </div>
                           </div>
                         </CardContent>
                       </Card>
-
-                      {/* Timeline Thumbnails */}
-                      <div className="flex gap-2 mt-4">
-                        {[1, 2, 3, 4, 5].map((i) => (
-                          <div key={i} className="flex-1 aspect-video bg-gray-200 rounded cursor-pointer hover:opacity-80 transition-opacity">
-                            <img 
-                              src="/api/placeholder/150/85" 
-                              alt={`Snapshot ${i}`}
-                              className="w-full h-full object-cover rounded"
-                            />
-                          </div>
-                        ))}
-                      </div>
                     </div>
 
-                    {/* Right Side Panels */}
-                    <div className="space-y-4">
-                      {/* Resume du Video */}
-                      <Card className="bg-blue-50 border-blue-200">
+                    {/* Right Analytics Panel - Takes up 4 columns */}
+                    <div className="col-span-4 space-y-4">
+                      {/* Period Selector */}
+                      <div className="flex items-center gap-2 text-sm">
+                        <Clock className="w-4 h-4 text-gray-500" />
+                        <span className="text-gray-700">Période d'analyse:</span>
+                        <Select defaultValue="today">
+                          <SelectTrigger className="w-32 h-8">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="today">Aujourd'hui</SelectItem>
+                            <SelectItem value="week">Cette semaine</SelectItem>
+                            <SelectItem value="month">Ce mois</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      {/* Quick Stats */}
+                      <div className="grid grid-cols-2 gap-3">
+                        <Card className="p-3 bg-blue-50">
+                          <div className="text-center">
+                            <div className="text-2xl font-bold text-blue-600">127</div>
+                            <div className="text-xs text-gray-600">Personnes détectées</div>
+                          </div>
+                        </Card>
+                        <Card className="p-3 bg-green-50">
+                          <div className="text-center">
+                            <div className="text-2xl font-bold text-green-600">23</div>
+                            <div className="text-xs text-gray-600">Véhicules suivis</div>
+                          </div>
+                        </Card>
+                        <Card className="p-3 bg-orange-50">
+                          <div className="text-center">
+                            <div className="text-2xl font-bold text-orange-600">5</div>
+                            <div className="text-xs text-gray-600">Alertes actives</div>
+                          </div>
+                        </Card>
+                        <Card className="p-3 bg-purple-50">
+                          <div className="text-center">
+                            <div className="text-2xl font-bold text-purple-600">98%</div>
+                            <div className="text-xs text-gray-600">Efficacité IA</div>
+                          </div>
+                        </Card>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Analysis Results Section */}
+                  <div className="grid grid-cols-12 gap-6">
+                    
+                    {/* Resume Personnel */}
+                    <div className="col-span-6">
+                      <Card className="bg-blue-50 border border-blue-200">
                         <CardHeader className="pb-3">
-                          <CardTitle className="text-base flex items-center gap-2">
-                            <FileText className="w-4 h-4 text-blue-600" />
-                            Résumé du Vidéo
+                          <CardTitle className="text-base flex items-center gap-2 text-blue-800">
+                            <Users className="w-5 h-5" />
+                            Résumé Personnel
                           </CardTitle>
                         </CardHeader>
-                        <CardContent className="text-sm space-y-2">
-                          <div className="flex items-start gap-2">
-                            <div className="w-1.5 h-1.5 bg-blue-600 rounded-full mt-1.5" />
-                            <p className="text-gray-700">Période analysée: 09:00-09:45 (45 min)</p>
+                        <CardContent className="space-y-3">
+                          <div className="bg-white p-3 rounded border border-blue-100">
+                            <h4 className="font-semibold text-sm text-gray-800 mb-2">Analyse des Documents</h4>
+                            <div className="text-xs text-gray-600 space-y-1">
+                              <p>• Documents analysés dans la zone A: 15 fichiers, 3 dossiers de 12,5 MB</p>
+                              <p>• Cartes d'identité scannées et vérifiées: 8 personnes autorisées</p>
+                              <p>• Badges d'accès validés: 12 employés, niveau de sécurité confirmé</p>
+                              <p>• Personnel externe enregistré: 3 visiteurs, accompagnés selon le protocole</p>
+                            </div>
                           </div>
-                          <div className="flex items-start gap-2">
-                            <div className="w-1.5 h-1.5 bg-blue-600 rounded-full mt-1.5" />
-                            <p className="text-gray-700">127 personnes détectées au total</p>
+                          
+                          <div className="bg-white p-3 rounded border border-blue-100">
+                            <h4 className="font-semibold text-sm text-gray-800 mb-2">Feuille de Présence</h4>
+                            <div className="text-xs text-gray-600 space-y-1">
+                              <p>• Heures d'arrivée enregistrées: 07:30-09:00</p>
+                              <p>• Personnel présent: 89 employés sur 95 attendus</p>
+                              <p>• Absences justifiées: 4 congés planifiés, 2 congés maladie</p>
+                              <p>• Temps de présence moyen: 8h 15min par employé</p>
+                            </div>
                           </div>
-                          <div className="flex items-start gap-2">
-                            <div className="w-1.5 h-1.5 bg-blue-600 rounded-full mt-1.5" />
-                            <p className="text-gray-700">23 véhicules identifiés dans le parking</p>
-                          </div>
-                          <div className="flex items-start gap-2">
-                            <div className="w-1.5 h-1.5 bg-blue-600 rounded-full mt-1.5" />
-                            <p className="text-gray-700">Pic d'activité: 09:15-09:30</p>
+
+                          <div className="bg-white p-3 rounded border border-blue-100">
+                            <h4 className="font-semibold text-sm text-gray-800 mb-2">Analyse Comportementale</h4>
+                            <div className="text-xs text-gray-600 space-y-1">
+                              <p>• Comportements normaux détectés: 98.5% des interactions</p>
+                              <p>• Anomalies mineures: 3 cas de retard d'accès (&gt;30 sec aux portes)</p>
+                              <p>• Groupes formés spontanément: 6 discussions de 5-15 minutes</p>
+                              <p>• Respect des protocoles de sécurité: 100% de conformité</p>
+                            </div>
                           </div>
                         </CardContent>
                       </Card>
+                    </div>
 
-                      {/* Analyse des Personnes */}
-                      <Card className="bg-yellow-50 border-yellow-200">
+                    {/* Analyse Securite */}
+                    <div className="col-span-6">
+                      <Card className="bg-red-50 border border-red-200">
                         <CardHeader className="pb-3">
-                          <CardTitle className="text-base flex items-center gap-2">
-                            <Users className="w-4 h-4 text-yellow-600" />
-                            Analyse des Personnes
+                          <CardTitle className="text-base flex items-center gap-2 text-red-800">
+                            <Shield className="w-5 h-5" />
+                            Analyse Sécurité
                           </CardTitle>
                         </CardHeader>
-                        <CardContent className="text-sm space-y-2">
-                          <div className="grid grid-cols-2 gap-3">
-                            <div className="bg-white p-2 rounded">
-                              <p className="text-xs text-gray-500">Personnel identifié</p>
-                              <p className="font-semibold">89</p>
+                        <CardContent className="space-y-3">
+                          <div className="bg-white p-3 rounded border border-red-100">
+                            <h4 className="font-semibold text-sm text-gray-800 mb-2">Événements de Sécurité</h4>
+                            <div className="space-y-2">
+                              <div className="flex items-start gap-2 text-xs">
+                                <AlertCircle className="w-3 h-3 text-red-500 mt-0.5 flex-shrink-0" />
+                                <span className="text-gray-700">
+                                  <span className="font-semibold text-red-600">14:15</span> - Tentative d'accès non autorisé détectée à la porte B. Personne non identifiée dans la base de données
+                                </span>
+                              </div>
+                              <div className="flex items-start gap-2 text-xs">
+                                <AlertCircle className="w-3 h-3 text-orange-500 mt-0.5 flex-shrink-0" />
+                                <span className="text-gray-700">
+                                  <span className="font-semibold text-orange-600">14:23</span> - Objet abandonné détecté en zone B pendant 15 minutes. Sac à dos noir, taille moyenne
+                                </span>
+                              </div>
+                              <div className="flex items-start gap-2 text-xs">
+                                <AlertCircle className="w-3 h-3 text-yellow-500 mt-0.5 flex-shrink-0" />
+                                <span className="text-gray-700">
+                                  <span className="font-semibold text-yellow-600">14:35</span> - Comportement atypique: personne immobile pendant 8 minutes près de la zone sensible
+                                </span>
+                              </div>
                             </div>
-                            <div className="bg-white p-2 rounded">
-                              <p className="text-xs text-gray-500">Visiteurs</p>
-                              <p className="font-semibold">38</p>
-                            </div>
                           </div>
-                          <div className="flex items-start gap-2">
-                            <div className="w-1.5 h-1.5 bg-yellow-600 rounded-full mt-1.5" />
-                            <p className="text-gray-700">Temps moyen de passage: 2.5 min</p>
-                          </div>
-                          <div className="flex items-start gap-2">
-                            <div className="w-1.5 h-1.5 bg-yellow-600 rounded-full mt-1.5" />
-                            <p className="text-gray-700">Zone la plus fréquentée: Hall A</p>
-                          </div>
-                        </CardContent>
-                      </Card>
 
-                      {/* Analyse de Securite */}
-                      <Card className="bg-red-50 border-red-200">
-                        <CardHeader className="pb-3">
-                          <CardTitle className="text-base flex items-center gap-2">
-                            <Shield className="w-4 h-4 text-red-600" />
-                            Analyse de Sécurité
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent className="text-sm space-y-2">
-                          <div className="flex items-start gap-2">
-                            <AlertCircle className="w-4 h-4 text-orange-500 mt-0.5" />
-                            <p className="text-gray-700">
-                              <span className="font-semibold text-orange-600">Alerte:</span> Personne non autorisée détectée à 09:23
-                            </p>
+                          <div className="bg-white p-3 rounded border border-red-100">
+                            <h4 className="font-semibold text-sm text-gray-800 mb-2">État des Accès</h4>
+                            <div className="text-xs text-gray-600 space-y-1">
+                              <div className="flex justify-between">
+                                <span>Portes principales</span>
+                                <span className="text-green-600 font-semibold">✓ Sécurisées</span>
+                              </div>
+                              <div className="flex justify-between">
+                                <span>Sorties de secours</span>
+                                <span className="text-green-600 font-semibold">✓ Fonctionnelles</span>
+                              </div>
+                              <div className="flex justify-between">
+                                <span>Système d'alarme</span>
+                                <span className="text-green-600 font-semibold">✓ Actif</span>
+                              </div>
+                              <div className="flex justify-between">
+                                <span>Caméras de surveillance</span>
+                                <span className="text-green-600 font-semibold">✓ 24/24 opérationnelles</span>
+                              </div>
+                            </div>
                           </div>
-                          <div className="flex items-start gap-2">
-                            <AlertCircle className="w-4 h-4 text-yellow-500 mt-0.5" />
-                            <p className="text-gray-700">
-                              <span className="font-semibold text-yellow-600">Avertissement:</span> Objet abandonné zone B (09:35)
-                            </p>
-                          </div>
-                          <div className="flex items-start gap-2">
-                            <div className="w-1.5 h-1.5 bg-green-600 rounded-full mt-1.5" />
-                            <p className="text-gray-700">Toutes les sorties de secours: OK</p>
+
+                          <div className="bg-white p-3 rounded border border-red-100">
+                            <h4 className="font-semibold text-sm text-gray-800 mb-2">Analyse Comportementale</h4>
+                            <div className="text-xs text-gray-600 space-y-1">
+                              <p>• Mouvements suspects détectés: 0 cas critiques</p>
+                              <p>• Vitesse de déplacement anormale: 2 cas (course dans les couloirs)</p>
+                              <p>• Regroupements non autorisés: 0 rassemblement détecté</p>
+                              <p>• Conformité aux protocoles: 98.2% de respect des règles</p>
+                            </div>
                           </div>
                         </CardContent>
                       </Card>
                     </div>
                   </div>
 
-                  {/* Bottom Sections */}
-                  <div className="grid grid-cols-2 gap-6">
-                    {/* Environmental Impact */}
-                    <Card className="bg-green-50 border-green-200">
-                      <CardHeader className="pb-3">
-                        <CardTitle className="text-base flex items-center gap-2">
-                          <Activity className="w-4 h-4 text-green-600" />
-                          Impact Environnemental
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent className="text-sm space-y-3">
-                        <div className="grid grid-cols-3 gap-3">
-                          <div className="bg-white p-3 rounded text-center">
-                            <p className="text-xs text-gray-500 mb-1">Éclairage</p>
-                            <p className="text-xl font-bold text-green-600">78%</p>
-                            <p className="text-xs text-gray-500">Optimisé</p>
-                          </div>
-                          <div className="bg-white p-3 rounded text-center">
-                            <p className="text-xs text-gray-500 mb-1">HVAC</p>
-                            <p className="text-xl font-bold text-yellow-600">65%</p>
-                            <p className="text-xs text-gray-500">Normal</p>
-                          </div>
-                          <div className="bg-white p-3 rounded text-center">
-                            <p className="text-xs text-gray-500 mb-1">Occupation</p>
-                            <p className="text-xl font-bold text-blue-600">42%</p>
-                            <p className="text-xs text-gray-500">Faible</p>
-                          </div>
-                        </div>
-                        <div className="bg-white p-3 rounded">
-                          <div className="flex justify-between items-center mb-2">
-                            <span className="text-xs text-gray-500">Consommation énergétique</span>
-                            <span className="text-xs font-semibold">-12% vs hier</span>
-                          </div>
-                          <Progress value={65} className="h-2" />
-                        </div>
-                      </CardContent>
-                    </Card>
+                  {/* Environmental Impact Section */}
+                  <div className="grid grid-cols-12 gap-6">
+                    <div className="col-span-12">
+                      <Card className="bg-green-50 border border-green-200">
+                        <CardHeader className="pb-3">
+                          <CardTitle className="text-base flex items-center gap-2 text-green-800">
+                            <Activity className="w-5 h-5" />
+                            Recommandations
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="grid grid-cols-3 gap-4">
+                            {/* Performance */}
+                            <div className="bg-white p-4 rounded border border-green-100">
+                              <h4 className="font-semibold text-sm text-gray-800 mb-3">Performance</h4>
+                              <div className="space-y-2 text-xs text-gray-600">
+                                <p>• Optimiser la position de la caméra 3 pour une meilleure couverture de la zone d'accès</p>
+                                <p>• Ajuster les seuils de détection pour réduire les faux positifs de 15%</p>
+                                <p>• Améliorer l'éclairage de la zone B pour une reconnaissance faciale plus précise</p>
+                                <p>• Configurer des alertes spécialisées pour les objets abandonnés &gt;10 minutes</p>
+                              </div>
+                            </div>
 
+                            {/* Recommendations */}
+                            <div className="bg-white p-4 rounded border border-green-100">
+                              <h4 className="font-semibold text-sm text-gray-800 mb-3">Recommandations</h4>
+                              <div className="space-y-2 text-xs text-gray-600">
+                                <p>• Installer un lecteur de badges supplémentaire à l'entrée principale</p>
+                                <p>• Programmer des rondes de sécurité toutes les 2 heures en zone sensible</p>
+                                <p>• Mettre en place un système d'alerte SMS pour les incidents critiques</p>
+                                <p>• Former le personnel aux nouveaux protocoles de sécurité renforcés</p>
+                              </div>
+                            </div>
+
+                            {/* Statistics Summary */}
+                            <div className="bg-white p-4 rounded border border-green-100">
+                              <h4 className="font-semibold text-sm text-gray-800 mb-3">Actions à Effectuer</h4>
+                              <div className="space-y-2 text-xs text-gray-600">
+                                <p>• Vérifier l'identité de la personne non autorisée (incident 14:15)</p>
+                                <p>• Récupérer et analyser l'objet abandonné en zone B</p>
+                                <p>• Effectuer un contrôle de routine des systèmes d'accès</p>
+                                <p>• Planifier une maintenance préventive des caméras zone 3-5</p>
+                              </div>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </div>
+
+                  {/* Bottom Statistics Section */}
+                  <div className="grid grid-cols-12 gap-6">
                     {/* Statistics Table */}
-                    <Card>
-                      <CardHeader className="pb-3">
-                        <CardTitle className="text-base flex items-center gap-2">
-                          <TrendingUp className="w-4 h-4" />
-                          Statistiques Détaillées
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="overflow-x-auto">
-                          <table className="w-full text-sm">
-                            <thead>
-                              <tr className="border-b">
-                                <th className="text-left py-2 font-medium text-gray-600">Catégorie</th>
-                                <th className="text-center py-2 font-medium text-gray-600">Valeur</th>
-                                <th className="text-center py-2 font-medium text-gray-600">Variation</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr className="border-b">
-                                <td className="py-2 flex items-center gap-2">
-                                  <Users className="w-3 h-3 text-blue-500" />
-                                  Flux de personnes
-                                </td>
-                                <td className="text-center py-2 font-semibold">1,247</td>
-                                <td className="text-center py-2">
-                                  <Badge className="bg-green-100 text-green-700">+12%</Badge>
-                                </td>
-                              </tr>
-                              <tr className="border-b">
-                                <td className="py-2 flex items-center gap-2">
-                                  <Camera className="w-3 h-3 text-purple-500" />
-                                  Événements détectés
-                                </td>
-                                <td className="text-center py-2 font-semibold">89</td>
-                                <td className="text-center py-2">
-                                  <Badge className="bg-yellow-100 text-yellow-700">+5%</Badge>
-                                </td>
-                              </tr>
-                              <tr className="border-b">
-                                <td className="py-2 flex items-center gap-2">
-                                  <Shield className="w-3 h-3 text-red-500" />
-                                  Alertes sécurité
-                                </td>
-                                <td className="text-center py-2 font-semibold">3</td>
-                                <td className="text-center py-2">
-                                  <Badge className="bg-red-100 text-red-700">+50%</Badge>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td className="py-2 flex items-center gap-2">
-                                  <Zap className="w-3 h-3 text-yellow-500" />
-                                  Efficacité énergétique
-                                </td>
-                                <td className="text-center py-2 font-semibold">82%</td>
-                                <td className="text-center py-2">
-                                  <Badge className="bg-green-100 text-green-700">+8%</Badge>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                        
-                        <div className="flex justify-between items-center mt-4 pt-4 border-t">
-                          <Button variant="outline" size="sm">
-                            <Download className="w-4 h-4 mr-2" />
-                            Exporter CSV
-                          </Button>
-                          <Button className="bg-blue-600 hover:bg-blue-700" size="sm">
-                            Générer Rapport
-                          </Button>
-                        </div>
-                      </CardContent>
-                    </Card>
+                    <div className="col-span-8">
+                      <Card>
+                        <CardHeader className="pb-3">
+                          <CardTitle className="text-base flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <TrendingUp className="w-5 h-5 text-blue-600" />
+                              <span>Statistiques Détaillées</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Button variant="outline" size="sm" className="text-xs h-8">
+                                <ListFilter className="w-3 h-3 mr-1" />
+                                Filtrer
+                              </Button>
+                              <Button variant="outline" size="sm" className="text-xs h-8">
+                                <Download className="w-3 h-3 mr-1" />
+                                Export
+                              </Button>
+                            </div>
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="overflow-x-auto">
+                            <table className="w-full text-sm">
+                              <thead>
+                                <tr className="border-b border-gray-200">
+                                  <th className="text-left py-2 font-medium text-gray-700">Objet</th>
+                                  <th className="text-center py-2 font-medium text-gray-700">Compté</th>
+                                  <th className="text-center py-2 font-medium text-gray-700">Référence</th>
+                                  <th className="text-center py-2 font-medium text-gray-700">Stratégies</th>
+                                </tr>
+                              </thead>
+                              <tbody className="text-xs">
+                                <tr className="border-b border-gray-100">
+                                  <td className="py-2 flex items-center gap-2">
+                                    <Users className="w-4 h-4 text-blue-500" />
+                                    <span className="font-medium">Employés</span>
+                                  </td>
+                                  <td className="text-center py-2 font-semibold">89</td>
+                                  <td className="text-center py-2 text-gray-600">95</td>
+                                  <td className="text-center py-2">
+                                    <Badge className="bg-blue-100 text-blue-700 text-xs">Personnel Planifié</Badge>
+                                  </td>
+                                </tr>
+                                <tr className="border-b border-gray-100">
+                                  <td className="py-2 flex items-center gap-2">
+                                    <Users className="w-4 h-4 text-green-500" />
+                                    <span className="font-medium">Visiteurs</span>
+                                  </td>
+                                  <td className="text-center py-2 font-semibold">38</td>
+                                  <td className="text-center py-2 text-gray-600">-</td>
+                                  <td className="text-center py-2">
+                                    <Badge className="bg-green-100 text-green-700 text-xs">Référence Historique</Badge>
+                                  </td>
+                                </tr>
+                                <tr className="border-b border-gray-100">
+                                  <td className="py-2 flex items-center gap-2">
+                                    <Camera className="w-4 h-4 text-purple-500" />
+                                    <span className="font-medium">Véhicules</span>
+                                  </td>
+                                  <td className="text-center py-2 font-semibold">23</td>
+                                  <td className="text-center py-2 text-gray-600">85</td>
+                                  <td className="text-center py-2">
+                                    <Badge className="bg-purple-100 text-purple-700 text-xs">Parking Management</Badge>
+                                  </td>
+                                </tr>
+                                <tr className="border-b border-gray-100">
+                                  <td className="py-2 flex items-center gap-2">
+                                    <Shield className="w-4 h-4 text-red-500" />
+                                    <span className="font-medium">Incidents</span>
+                                  </td>
+                                  <td className="text-center py-2 font-semibold">5</td>
+                                  <td className="text-center py-2 text-gray-600">2</td>
+                                  <td className="text-center py-2">
+                                    <Badge className="bg-red-100 text-red-700 text-xs">Analyse de Sécurité</Badge>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td className="py-2 flex items-center gap-2">
+                                    <Zap className="w-4 h-4 text-yellow-500" />
+                                    <span className="font-medium">Performance IA</span>
+                                  </td>
+                                  <td className="text-center py-2 font-semibold">98%</td>
+                                  <td className="text-center py-2 text-gray-600">95%</td>
+                                  <td className="text-center py-2">
+                                    <Badge className="bg-yellow-100 text-yellow-700 text-xs">Amélioration Continue</Badge>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </div>
+
+                    {/* Side Panel with Circular Progress */}
+                    <div className="col-span-4 space-y-4">
+                      {/* Performance Gauge */}
+                      <Card className="text-center">
+                        <CardHeader className="pb-2">
+                          <CardTitle className="text-sm">Performance Globale</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="relative w-24 h-24 mx-auto mb-3">
+                            <svg className="w-24 h-24 transform -rotate-90">
+                              <circle cx="48" cy="48" r="40" stroke="#e5e7eb" strokeWidth="8" fill="none" />
+                              <circle 
+                                cx="48" cy="48" r="40" 
+                                stroke="#10b981" 
+                                strokeWidth="8" 
+                                fill="none"
+                                strokeDasharray={`${2 * Math.PI * 40 * 0.82} ${2 * Math.PI * 40}`}
+                                strokeLinecap="round"
+                              />
+                            </svg>
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <span className="text-2xl font-bold text-green-600">82%</span>
+                            </div>
+                          </div>
+                          <p className="text-xs text-gray-600">Efficacité du système</p>
+                        </CardContent>
+                      </Card>
+
+                      {/* Action Buttons */}
+                      <div className="space-y-2">
+                        <Button className="w-full bg-blue-600 hover:bg-blue-700 text-sm h-9">
+                          <FileText className="w-4 h-4 mr-2" />
+                          Générer Rapport
+                        </Button>
+                        <Button variant="outline" className="w-full text-sm h-9">
+                          <Share2 className="w-4 h-4 mr-2" />
+                          Partager Analyse
+                        </Button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </TabsContent>
