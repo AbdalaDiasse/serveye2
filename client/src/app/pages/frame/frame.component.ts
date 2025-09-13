@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router, ActivatedRoute } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { NavigationService } from '../../services/navigation.service';
 import { EventSummaryComponent } from '../sections/event-summary/event-summary.component';
@@ -98,12 +98,9 @@ import { ControlPanelComponent } from '../sections/control-panel/control-panel.c
 })
 export class FrameComponent implements OnInit {
   currentPage: string = 'dashboard';
+  private navigationService = inject(NavigationService);
 
-  constructor(
-    private navigationService: NavigationService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {}
+  constructor() {}
 
   ngOnInit(): void {
     // Subscribe to navigation state changes
