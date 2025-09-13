@@ -22,37 +22,43 @@ interface NavigationSubItem {
   standalone: true,
   imports: [CommonModule, MatIconModule, MatButtonModule],
   template: `
-    <aside class="w-72 h-full bg-white/80 border-r border-white/20 shadow-xl flex flex-col overflow-hidden flex-shrink-0">
+    <aside class="w-72 h-full bg-gradient-to-b from-slate-50 to-white border-r border-slate-200/50 shadow-2xl flex flex-col overflow-hidden flex-shrink-0 animate-fade-in">
       <!-- Header -->
-      <header class="h-20 border-b border-gray-200 flex items-center px-6">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-            <mat-icon class="text-white">security</mat-icon>
+      <header class="h-20 border-b border-slate-200/60 flex items-center px-6 bg-gradient-to-r from-blue-50 to-indigo-50">
+        <div class="flex items-center gap-3 animate-fade-up" style="--animation-delay: 0.1s">
+          <div class="w-12 h-12 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-xl flex items-center justify-center shadow-lg transform hover:scale-110 transition-all duration-300 hover:shadow-xl">
+            <mat-icon class="text-white text-lg">security</mat-icon>
           </div>
           <div>
-            <div class="font-bold text-slate-900 text-lg tracking-tight">SYRATE</div>
-            <div class="font-normal text-slate-500 text-xs">Security Platform</div>
+            <div class="font-bold text-slate-900 text-xl tracking-tight bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">SYRATE</div>
+            <div class="font-medium text-slate-500 text-xs uppercase tracking-wider">Security Platform</div>
           </div>
         </div>
       </header>
 
       <!-- Navigation -->
-      <nav class="flex-1 p-4 overflow-auto">
-        <div class="space-y-2">
-          <div *ngFor="let item of navigationItems" class="relative">
+      <nav class="flex-1 p-4 overflow-auto custom-scrollbar">
+        <div class="space-y-1">
+          <div *ngFor="let item of navigationItems; let i = index" class="relative animate-fade-up" 
+               [style]="'--animation-delay: ' + (0.1 * (i + 2)) + 's'">
             <!-- Main Navigation Item -->
             <div 
               [class]="getItemClasses(item)"
               (click)="handleItemClick(item)"
+              class="group relative overflow-hidden"
             >
-              <mat-icon class="w-4 h-4 mr-3" 
-                       [class]="getIconClasses(item)">
-                {{ getIconName(item.icon) }}
-              </mat-icon>
-              <span [class]="getTextClasses(item)">{{ item.name }}</span>
-              <mat-icon *ngIf="item.hasDropdown" 
-                       class="ml-auto transition-transform duration-200"
-                       [class.rotate-180]="openDropdown === item.name">
+              <!-- Hover gradient background -->
+              <div class="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              
+              <div class="relative z-10 flex items-center">
+                <mat-icon class="w-5 h-5 mr-3 transition-all duration-300 group-hover:scale-110 group-hover:text-blue-600" 
+                         [class]="getIconClasses(item)">
+                  {{ getIconName(item.icon) }}
+                </mat-icon>
+                <span [class]="getTextClasses(item)" class="transition-all duration-300 group-hover:text-blue-700 font-medium">{{ item.name }}</span>
+                <mat-icon *ngIf="item.hasDropdown" 
+                         class="ml-auto transition-all duration-300 group-hover:text-blue-600"
+                         [class.rotate-180]="openDropdown === item.name">
                 expand_more
               </mat-icon>
             </div>
@@ -158,8 +164,8 @@ export class EventSummaryComponent implements OnInit {
 
   getItemClasses(item: NavigationItem): string {
     const isActive = this.isItemActive(item);
-    return `h-12 rounded-xl flex items-center px-4 cursor-pointer transition-all ${
-      isActive ? this.getActiveGradient(item) : 'hover:bg-gray-50'
+    return `h-12 rounded-xl flex items-center px-4 cursor-pointer transition-all duration-300 transform hover:translate-x-1 ${
+      isActive ? 'bg-gradient-to-r from-blue-500 to-indigo-600 shadow-lg hover:shadow-xl' : 'hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 hover:shadow-md'
     }`;
   }
 
@@ -172,13 +178,13 @@ export class EventSummaryComponent implements OnInit {
 
   getIconClasses(item: NavigationItem): string {
     const isActive = this.isItemActive(item);
-    return isActive ? 'text-white' : 'text-slate-600';
+    return isActive ? 'text-white' : 'text-slate-600 group-hover:text-blue-600';
   }
 
   getTextClasses(item: NavigationItem): string {
     const isActive = this.isItemActive(item);
     return `text-base tracking-tight truncate ${
-      isActive ? 'font-semibold text-white' : 'font-normal text-slate-600'
+      isActive ? 'font-semibold text-white' : 'font-medium text-slate-600 group-hover:text-blue-700'
     }`;
   }
 
