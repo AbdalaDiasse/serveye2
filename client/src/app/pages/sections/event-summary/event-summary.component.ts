@@ -60,7 +60,8 @@ interface NavigationSubItem {
                          class="ml-auto transition-all duration-300 group-hover:text-blue-600"
                          [class.rotate-180]="openDropdown === item.name">
                 expand_more
-              </mat-icon>
+                </mat-icon>
+              </div>
             </div>
             
             <!-- Dropdown Sub Items -->
