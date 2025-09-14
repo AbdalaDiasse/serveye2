@@ -16,106 +16,140 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     NgApexchartsModule
   ],
   template: `
-    <div class="p-6 bg-gray-50 min-h-screen">
+    <div class="p-6 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 min-h-screen animate-fade-in">
       <!-- Header Stats -->
       <div class="grid grid-cols-4 gap-6 mb-8">
-        <mat-card class="p-6 bg-gradient-to-r from-blue-500 to-blue-600 text-white">
-          <div class="flex items-center justify-between">
+        <mat-card class="card-hover p-6 bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-xl animate-fade-up border-0 overflow-hidden relative" style="--animation-delay: 0.1s">
+          <div class="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+          <div class="relative z-10 flex items-center justify-between">
             <div>
-              <p class="text-blue-100 text-sm">Total Events</p>
-              <p class="text-3xl font-bold">1,234</p>
+              <p class="text-blue-100 text-sm font-medium tracking-wider uppercase">Total Events</p>
+              <p class="text-4xl font-bold mb-1 animate-pulse">1,234</p>
+              <p class="text-blue-200 text-xs">+12% from yesterday</p>
             </div>
-            <mat-icon class="text-blue-200 text-4xl">event</mat-icon>
+            <div class="p-3 bg-white/20 rounded-xl backdrop-blur-sm">
+              <mat-icon class="text-white text-3xl">event</mat-icon>
+            </div>
           </div>
         </mat-card>
         
-        <mat-card class="p-6 bg-gradient-to-r from-green-500 to-green-600 text-white">
-          <div class="flex items-center justify-between">
+        <mat-card class="card-hover p-6 bg-gradient-to-br from-emerald-500 to-green-600 text-white shadow-xl animate-fade-up border-0 overflow-hidden relative" style="--animation-delay: 0.2s">
+          <div class="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+          <div class="relative z-10 flex items-center justify-between">
             <div>
-              <p class="text-green-100 text-sm">Active Cameras</p>
-              <p class="text-3xl font-bold">12</p>
+              <p class="text-emerald-100 text-sm font-medium tracking-wider uppercase">Active Cameras</p>
+              <p class="text-4xl font-bold mb-1">12</p>
+              <p class="text-emerald-200 text-xs">All systems online</p>
             </div>
-            <mat-icon class="text-green-200 text-4xl">videocam</mat-icon>
+            <div class="p-3 bg-white/20 rounded-xl backdrop-blur-sm">
+              <mat-icon class="text-white text-3xl">videocam</mat-icon>
+            </div>
           </div>
         </mat-card>
         
-        <mat-card class="p-6 bg-gradient-to-r from-orange-500 to-orange-600 text-white">
-          <div class="flex items-center justify-between">
+        <mat-card class="card-hover p-6 bg-gradient-to-br from-orange-500 to-red-500 text-white shadow-xl animate-fade-up border-0 overflow-hidden relative" style="--animation-delay: 0.3s">
+          <div class="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+          <div class="relative z-10 flex items-center justify-between">
             <div>
-              <p class="text-orange-100 text-sm">Alerts Today</p>
-              <p class="text-3xl font-bold">23</p>
+              <p class="text-orange-100 text-sm font-medium tracking-wider uppercase">Alerts Today</p>
+              <p class="text-4xl font-bold mb-1">23</p>
+              <p class="text-orange-200 text-xs">2 high priority</p>
             </div>
-            <mat-icon class="text-orange-200 text-4xl">warning</mat-icon>
+            <div class="p-3 bg-white/20 rounded-xl backdrop-blur-sm animate-pulse">
+              <mat-icon class="text-white text-3xl">warning</mat-icon>
+            </div>
           </div>
         </mat-card>
         
-        <mat-card class="p-6 bg-gradient-to-r from-purple-500 to-purple-600 text-white">
-          <div class="flex items-center justify-between">
+        <mat-card class="card-hover p-6 bg-gradient-to-br from-purple-500 to-indigo-600 text-white shadow-xl animate-fade-up border-0 overflow-hidden relative" style="--animation-delay: 0.4s">
+          <div class="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+          <div class="relative z-10 flex items-center justify-between">
             <div>
-              <p class="text-purple-100 text-sm">AI Detection Rate</p>
-              <p class="text-3xl font-bold">98%</p>
+              <p class="text-purple-100 text-sm font-medium tracking-wider uppercase">AI Detection Rate</p>
+              <p class="text-4xl font-bold mb-1">98%</p>
+              <p class="text-purple-200 text-xs">Excellent performance</p>
             </div>
-            <mat-icon class="text-purple-200 text-4xl">psychology</mat-icon>
+            <div class="p-3 bg-white/20 rounded-xl backdrop-blur-sm">
+              <mat-icon class="text-white text-3xl">psychology</mat-icon>
+            </div>
           </div>
         </mat-card>
       </div>
 
       <!-- Charts Row -->
       <div class="grid grid-cols-2 gap-6 mb-8">
-        <mat-card class="p-6">
-          <mat-card-header>
-            <mat-card-title>Event Distribution</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <div class="h-80">
-              <apx-chart
-                [series]="pieChartSeries"
-                [chart]="pieChartOptions.chart"
-                [labels]="pieChartOptions.labels"
-                [colors]="pieChartOptions.colors"
-                [legend]="pieChartOptions.legend"
-              ></apx-chart>
+        <mat-card class="card-hover p-6 bg-white/90 backdrop-blur-sm shadow-xl border-0 animate-fade-up" style="--animation-delay: 0.5s">
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="text-xl font-bold text-slate-800">Event Analytics</h3>
+            <mat-icon class="text-blue-600">analytics</mat-icon>
+          </div>
+          <div class="h-64 flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 rounded-xl">
+            <div class="text-center">
+              <mat-icon class="text-6xl text-blue-400 mb-4">show_chart</mat-icon>
+              <p class="text-slate-600 font-medium">Real-time Analytics Chart</p>
+              <p class="text-slate-500 text-sm">ng-apexcharts integration</p>
             </div>
-          </mat-card-content>
+          </div>
         </mat-card>
         
-        <mat-card class="p-6">
-          <mat-card-header>
-            <mat-card-title>Monthly Events</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <div class="h-80">
-              <apx-chart
-                [series]="barChartSeries"
-                [chart]="barChartOptions.chart"
-                [xaxis]="barChartOptions.xaxis"
-                [colors]="barChartOptions.colors"
-              ></apx-chart>
+        <mat-card class="card-hover p-6 bg-white/90 backdrop-blur-sm shadow-xl border-0 animate-fade-up" style="--animation-delay: 0.6s">
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="text-xl font-bold text-slate-800">Detection Heatmap</h3>
+            <mat-icon class="text-green-600">map</mat-icon>
+          </div>
+          <div class="h-64 flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100 rounded-xl">
+            <div class="text-center">
+              <mat-icon class="text-6xl text-green-400 mb-4">location_on</mat-icon>
+              <p class="text-slate-600 font-medium">Detection Heatmap</p>
+              <p class="text-slate-500 text-sm">Zone activity visualization</p>
             </div>
-          </mat-card-content>
+          </div>
         </mat-card>
       </div>
 
       <!-- Recent Activity -->
-      <mat-card class="p-6">
-        <mat-card-header>
-          <mat-card-title>Recent Activity</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
+      <div class="grid grid-cols-1 gap-6">
+        <mat-card class="card-hover p-6 bg-white/90 backdrop-blur-sm shadow-xl border-0 animate-fade-up" style="--animation-delay: 0.7s">
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="text-xl font-bold text-slate-800">Recent Activity</h3>
+            <mat-button color="primary">View All</mat-button>
+          </div>
           <div class="space-y-4">
-            <div *ngFor="let activity of recentActivities" class="flex items-center justify-between py-3 border-b">
-              <div class="flex items-center space-x-3">
-                <mat-icon [class]="activity.iconClass">{{ activity.icon }}</mat-icon>
-                <div>
-                  <p class="font-medium">{{ activity.title }}</p>
-                  <p class="text-sm text-gray-500">{{ activity.description }}</p>
-                </div>
+            <div class="flex items-center p-4 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl animate-fade-in">
+              <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mr-4">
+                <mat-icon class="text-white">person</mat-icon>
               </div>
-              <span class="text-sm text-gray-400">{{ activity.time }}</span>
+              <div class="flex-1">
+                <p class="font-semibold text-slate-800">Person Detected</p>
+                <p class="text-slate-600 text-sm">Camera 01 - Zone A</p>
+              </div>
+              <div class="text-slate-500 text-sm">2 min ago</div>
+            </div>
+            
+            <div class="flex items-center p-4 bg-gradient-to-r from-orange-50 to-orange-100 rounded-xl animate-fade-in" style="--animation-delay: 0.1s">
+              <div class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center mr-4">
+                <mat-icon class="text-white">directions_car</mat-icon>
+              </div>
+              <div class="flex-1">
+                <p class="font-semibold text-slate-800">Vehicle Movement</p>
+                <p class="text-slate-600 text-sm">Camera 03 - Parking</p>
+              </div>
+              <div class="text-slate-500 text-sm">5 min ago</div>
+            </div>
+            
+            <div class="flex items-center p-4 bg-gradient-to-r from-green-50 to-green-100 rounded-xl animate-fade-in" style="--animation-delay: 0.2s">
+              <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mr-4">
+                <mat-icon class="text-white">check_circle</mat-icon>
+              </div>
+              <div class="flex-1">
+                <p class="font-semibold text-slate-800">System Check Complete</p>
+                <p class="text-slate-600 text-sm">All cameras operational</p>
+              </div>
+              <div class="text-slate-500 text-sm">10 min ago</div>
             </div>
           </div>
-        </mat-card-content>
-      </mat-card>
+        </mat-card>
+      </div>
     </div>
   `,
   styles: [`
