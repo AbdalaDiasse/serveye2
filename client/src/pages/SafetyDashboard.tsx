@@ -148,6 +148,8 @@ export default function SafetyDashboard() {
       camera: 'CAM-05',
       status: 'New',
       statusColor: 'bg-green-500',
+      severity: 'Critical',
+      severityColor: 'bg-red-500',
       thumbnail: detectionImage1
     },
     {
@@ -159,6 +161,8 @@ export default function SafetyDashboard() {
       camera: 'CAM-02',
       status: 'In Review',
       statusColor: 'bg-yellow-500',
+      severity: 'High',
+      severityColor: 'bg-orange-500',
       thumbnail: detectionImage2
     },
     {
@@ -170,6 +174,8 @@ export default function SafetyDashboard() {
       camera: 'CAM-07',
       status: 'Confirmed',
       statusColor: 'bg-blue-500',
+      severity: 'Alert',
+      severityColor: 'bg-yellow-500',
       thumbnail: detectionImage3
     },
     {
@@ -181,6 +187,8 @@ export default function SafetyDashboard() {
       camera: 'CAM-03',
       status: 'Resolved',
       statusColor: 'bg-gray-500',
+      severity: 'High',
+      severityColor: 'bg-orange-500',
       thumbnail: detectionImage4
     },
     {
@@ -192,6 +200,8 @@ export default function SafetyDashboard() {
       camera: 'CAM-08',
       status: 'New',
       statusColor: 'bg-green-500',
+      severity: 'Medium',
+      severityColor: 'bg-blue-500',
       thumbnail: detectionImage1
     },
     {
@@ -203,6 +213,8 @@ export default function SafetyDashboard() {
       camera: 'CAM-12',
       status: 'Critical',
       statusColor: 'bg-red-500',
+      severity: 'Critical',
+      severityColor: 'bg-red-600',
       thumbnail: detectionImage2
     },
     {
@@ -214,6 +226,8 @@ export default function SafetyDashboard() {
       camera: 'CAM-01',
       status: 'In Review',
       statusColor: 'bg-yellow-500',
+      severity: 'High',
+      severityColor: 'bg-orange-500',
       thumbnail: detectionImage3
     },
     {
@@ -225,6 +239,8 @@ export default function SafetyDashboard() {
       camera: 'CAM-06',
       status: 'Confirmed',
       statusColor: 'bg-blue-500',
+      severity: 'Medium',
+      severityColor: 'bg-blue-500',
       thumbnail: detectionImage4
     }
   ];
@@ -485,11 +501,16 @@ export default function SafetyDashboard() {
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Badge className={`${detection.statusColor} text-white text-xs px-3 py-1`}>
-                      {detection.status}
-                    </Badge>
-                    <Button variant="ghost" size="sm" className="h-8 px-2 text-gray-500 dark:text-gray-400">
-                      <Settings className="w-4 h-4 mr-1" />
+                    <div className="flex flex-col gap-1">
+                      <Badge className={`${detection.severityColor} text-white text-xs px-2 py-0.5 font-medium`}>
+                        {detection.severity}
+                      </Badge>
+                      <Badge className={`${detection.statusColor} text-white text-xs px-2 py-0.5`}>
+                        {detection.status}
+                      </Badge>
+                    </div>
+                    <Button variant="ghost" size="sm" className="h-8 px-3 bg-blue-500 hover:bg-blue-600 text-white text-xs font-medium">
+                      <Settings className="w-3 h-3 mr-1" />
                       Process
                     </Button>
                   </div>
