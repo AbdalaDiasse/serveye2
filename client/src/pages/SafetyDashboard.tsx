@@ -502,7 +502,14 @@ export default function SafetyDashboard() {
                   </div>
                   <div className="flex flex-col items-end gap-2">
                     {/* Status - Outlined style for informational purpose */}
-                    <div className={`border-2 ${detection.statusColor.replace('bg-', 'border-')} ${detection.statusColor.replace('bg-', 'text-')} text-xs px-2 py-1 rounded-md font-medium bg-transparent`}>
+                    <div className={`border-2 text-xs px-2 py-1 rounded-md font-medium bg-transparent ${
+                      detection.statusColor === 'bg-green-500' ? 'border-green-500 text-green-600 dark:border-green-400 dark:text-green-400' :
+                      detection.statusColor === 'bg-yellow-500' ? 'border-yellow-500 text-yellow-600 dark:border-yellow-400 dark:text-yellow-400' :
+                      detection.statusColor === 'bg-blue-500' ? 'border-blue-500 text-blue-600 dark:border-blue-400 dark:text-blue-400' :
+                      detection.statusColor === 'bg-gray-500' ? 'border-gray-500 text-gray-600 dark:border-gray-400 dark:text-gray-300' :
+                      detection.statusColor === 'bg-red-500' ? 'border-red-500 text-red-600 dark:border-red-400 dark:text-red-400' :
+                      'border-gray-500 text-gray-600 dark:border-gray-400 dark:text-gray-300'
+                    }`}>
                       {detection.status}
                     </div>
                     <div className="flex items-center gap-2">
