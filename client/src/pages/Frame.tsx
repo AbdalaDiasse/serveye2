@@ -16,9 +16,38 @@ import SafetyDashboard from "./SafetyDashboard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from "recharts";
+import { Search, Settings, Bell, Moon, Sun } from "lucide-react";
 
 export const Frame = (): JSX.Element => {
   const [currentPage, setCurrentPage] = useState<string>("dashboard");
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'light' ? 'dark' : 'light');
+  };
+
+  const getPageTitle = () => {
+    switch (currentPage) {
+      case "safetyDashboard":
+        return { title: "Safety Dashboard", subtitle: "Real-time safety violation monitoring" };
+      case "dashboard":
+        return { title: "Dashboard", subtitle: "Main system overview" };
+      case "events":
+        return { title: "Events", subtitle: "Event management and tracking" };
+      case "persons":
+        return { title: "Persons", subtitle: "Person detection and tracking" };
+      case "vehicles":
+        return { title: "Vehicles", subtitle: "Vehicle monitoring system" };
+      case "vssAgent":
+        return { title: "VSS Agent", subtitle: "AI-powered video analysis" };
+      case "vssSummarize":
+        return { title: "VSS Resume", subtitle: "Video summary generation" };
+      case "vssSearch":
+        return { title: "VSS Search", subtitle: "Intelligent video search" };
+      default:
+        return { title: "Dashboard", subtitle: "System overview" };
+    }
+  };
 
   // Données pour les graphiques
   const eventDistributionData = [
@@ -90,9 +119,71 @@ export const Frame = (): JSX.Element => {
     }
   };
 
+  const pageInfo = getPageTitle();
+  
   return (
-    <div className="flex w-full min-h-screen bg-white border-2 border-solid border-[#ced4da]">
-      <div className="flex w-full bg-[linear-gradient(90deg,rgba(248,250,252,1)_0%,rgba(230,242,255,1)_100%)]">
+    <div className="flex flex-col w-full min-h-screen bg-white border-2 border-solid border-[#ced4da]">
+      {/* Top Header Bar */}
+      <header className="w-full bg-white border-b border-[#ced4da] px-6 py-3 flex items-center justify-between">
+        {/* Left side - SYRATE branding and page title */}
+        <div className="flex items-center gap-6">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-[#0070F3] rounded flex items-center justify-center">
+              <span className="text-white font-bold text-sm">S</span>
+            </div>
+            <div>
+              <div className="font-bold text-gray-800 text-sm">SYRATE</div>
+              <div className="text-xs text-gray-500">Safety Module</div>
+            </div>
+          </div>
+          
+          <div className="border-l border-gray-300 pl-6">
+            <h1 className="text-xl font-semibold text-[#0070F3]">{pageInfo.title}</h1>
+            <p className="text-sm text-gray-500">{pageInfo.subtitle}</p>
+          </div>
+        </div>
+
+        {/* Right side - Search and user controls */}
+        <div className="flex items-center gap-4">
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Search violations..."
+              className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg w-64 text-sm border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#0070F3] focus:border-transparent"
+            />
+            <Search className="w-4 h-4 text-gray-400 absolute right-3 top-2.5" />
+          </div>
+          
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            onClick={toggleTheme}
+            className="text-gray-500 hover:text-gray-700"
+          >
+            {theme === 'light' ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
+          </Button>
+          
+          <Button variant="ghost" size="sm" className="text-gray-500 hover:text-gray-700">
+            <Settings className="w-4 h-4" />
+          </Button>
+          
+          <Button variant="ghost" size="sm" className="text-gray-500 hover:text-gray-700 relative">
+            <Bell className="w-4 h-4" />
+            <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+          </Button>
+          
+          <div className="flex items-center gap-3 border-l border-gray-300 pl-4">
+            <img src="/api/placeholder/32/32" alt="User" className="w-8 h-8 rounded-full" />
+            <div className="text-sm">
+              <div className="font-medium text-gray-700">Safety Admin</div>
+              <div className="text-xs text-gray-500">Safety Manager</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Main content area */}
+      <div className="flex flex-1 bg-[linear-gradient(90deg,rgba(248,250,252,1)_0%,rgba(230,242,255,1)_100%)]">
         <div className="flex w-full">
           <EventSummarySection currentPage={currentPage} setCurrentPage={setCurrentPage} />
           <div className="flex-1">
