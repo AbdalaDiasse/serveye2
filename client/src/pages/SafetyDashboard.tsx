@@ -486,16 +486,11 @@ export default function SafetyDashboard() {
             <div className="h-80 overflow-y-scroll scrollbar-hide space-y-3 pr-2">
               {liveDetections.map((detection) => (
                 <div key={detection.id} className="relative flex items-center gap-4 p-4 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
-                  <div className="relative">
-                    <img 
-                      src={detection.thumbnail} 
-                      alt={detection.type}
-                      className="w-20 h-16 object-cover rounded-lg"
-                    />
-                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
-                      <span className="text-white text-xs font-bold">!</span>
-                    </div>
-                  </div>
+                  <img 
+                    src={detection.thumbnail} 
+                    alt={detection.type}
+                    className="w-28 h-20 object-cover rounded-lg"
+                  />
                   <div className="flex-1">
                     <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">{detection.type}</h4>
                     <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">
