@@ -363,23 +363,12 @@ export default function SafetyDashboard() {
 
   return (
     <div className={`min-h-screen ${currentTheme.background} ${currentTheme.text} p-6`}>
-      {/* Header - Exact match to design */}
+      {/* Header */}
       <div className="flex items-center justify-between mb-6 bg-white dark:bg-[#334155] px-6 py-4 rounded-lg shadow-sm">
-        {/* Left side - SYRATE branding */}
-        <div className="flex items-center gap-6">
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-[#0070F3] rounded flex items-center justify-center">
-              <span className="text-white font-bold text-xs">S</span>
-            </div>
-            <span className="font-bold text-gray-700 dark:text-gray-200">SYRATE</span>
-            <span className="text-xs text-gray-500 dark:text-gray-400">Safety Module</span>
-          </div>
-          
-          {/* Title section */}
-          <div className="border-l border-gray-300 dark:border-gray-600 pl-6">
-            <h1 className="text-xl font-semibold text-[#0070F3]">Safety Dashboard</h1>
-            <p className="text-sm text-gray-500 dark:text-gray-400">Real-time safety violation monitoring</p>
-          </div>
+        {/* Left side - Title section */}
+        <div>
+          <h1 className="text-xl font-semibold text-[#0070F3]">Safety Dashboard</h1>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Real-time safety violation monitoring</p>
         </div>
 
         {/* Right side - Search and user info */}
