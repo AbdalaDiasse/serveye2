@@ -367,7 +367,7 @@ export default function SafetyDashboard() {
           <CardContent>
             <div className="grid grid-cols-2 gap-8">
               <div className="flex flex-col">
-                <div className="radar-card h-64 mb-4 rounded-lg bg-white dark:bg-gray-900 p-2">
+                <div className="radar-card h-64 mb-4">
                   <ResponsiveContainer width="100%" height="100%">
                     <RadarChart data={radarData}>
                       <PolarGrid 
