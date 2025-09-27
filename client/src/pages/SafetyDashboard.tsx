@@ -363,52 +363,6 @@ export default function SafetyDashboard() {
 
   return (
     <div className={`min-h-screen ${currentTheme.background} ${currentTheme.text} p-6`}>
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6 bg-white dark:bg-[#334155] px-6 py-4 rounded-lg shadow-sm">
-        {/* Left side - Title section */}
-        <div>
-          <h1 className="text-xl font-semibold text-[#0070F3]">Safety Dashboard</h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400">Real-time safety violation monitoring</p>
-        </div>
-
-        {/* Right side - Search and user info */}
-        <div className="flex items-center gap-4">
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search violations..."
-              className="bg-gray-100 dark:bg-gray-600 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-lg w-64 text-sm border border-gray-200 dark:border-gray-500 focus:outline-none focus:ring-2 focus:ring-[#0070F3] focus:border-transparent"
-            />
-            <Search className="w-4 h-4 text-gray-400 absolute right-3 top-2.5" />
-          </div>
-          
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            onClick={toggleTheme}
-            className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-          >
-            {theme === 'light' ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
-          </Button>
-          
-          <Button variant="ghost" size="sm" className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
-            <Settings className="w-4 h-4" />
-          </Button>
-          
-          <Button variant="ghost" size="sm" className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 relative">
-            <Bell className="w-4 h-4" />
-            <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-          </Button>
-          
-          <div className="flex items-center gap-3 border-l border-gray-300 dark:border-gray-600 pl-4">
-            <img src="/api/placeholder/32/32" alt="User" className="w-8 h-8 rounded-full" />
-            <div className="text-sm">
-              <div className="font-medium text-gray-700 dark:text-gray-200">Safety Admin</div>
-              <div className="text-xs text-gray-500 dark:text-gray-400">Safety Manager</div>
-            </div>
-          </div>
-        </div>
-      </div>
 
       {/* Key Metrics */}
       <div className="grid grid-cols-7 gap-4 mb-6">
