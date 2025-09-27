@@ -173,9 +173,9 @@ export default function SafetyDashboard() {
       time: '8 mins ago',
       camera: 'CAM-07',
       status: 'Confirmed',
-      statusColor: 'bg-blue-500',
+      statusColor: 'bg-gray-400',
       severity: 'Alert',
-      severityColor: 'bg-yellow-500',
+      severityColor: 'bg-yellow-400',
       thumbnail: detectionImage3
     },
     {
@@ -485,31 +485,34 @@ export default function SafetyDashboard() {
           <CardContent>
             <div className="h-80 overflow-y-scroll scrollbar-hide space-y-3 pr-2">
               {liveDetections.map((detection) => (
-                <div key={detection.id} className="flex items-center gap-4 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                  <img 
-                    src={detection.thumbnail} 
-                    alt={detection.type}
-                    className="w-24 h-16 object-cover rounded-lg border border-gray-600"
-                  />
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100">{detection.type}</h4>
-                    </div>
-                    <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
-                      <span>{detection.area} • {detection.location}</span>
-                      <span>{detection.time} • {detection.camera}</span>
+                <div key={detection.id} className="relative flex items-center gap-4 p-4 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
+                  <div className="relative">
+                    <img 
+                      src={detection.thumbnail} 
+                      alt={detection.type}
+                      className="w-20 h-16 object-cover rounded-lg"
+                    />
+                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
+                      <span className="text-white text-xs font-bold">!</span>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <div className="flex flex-col gap-1">
-                      <Badge className={`${detection.severityColor} text-white text-xs px-2 py-0.5 font-medium`}>
-                        {detection.severity}
-                      </Badge>
-                      <Badge className={`${detection.statusColor} text-white text-xs px-2 py-0.5`}>
-                        {detection.status}
-                      </Badge>
+                  <div className="flex-1">
+                    <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">{detection.type}</h4>
+                    <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">
+                      {detection.area} • {detection.location}
                     </div>
-                    <Button variant="ghost" size="sm" className="h-8 px-3 bg-blue-500 hover:bg-blue-600 text-white text-xs font-medium">
+                    <div className="text-xs text-gray-500 dark:text-gray-400">
+                      {detection.time} • {detection.camera}
+                    </div>
+                  </div>
+                  <div className="flex flex-col items-end gap-2">
+                    <Badge className={`${detection.statusColor} text-white text-xs px-3 py-1 rounded-full font-medium`}>
+                      {detection.status}
+                    </Badge>
+                    <Badge className={`${detection.severityColor} text-white text-xs px-3 py-1 rounded-full font-medium`}>
+                      {detection.severity}
+                    </Badge>
+                    <Button size="sm" className="h-7 px-3 bg-blue-500 hover:bg-blue-600 text-white text-xs font-medium rounded-full">
                       <Settings className="w-3 h-3 mr-1" />
                       Process
                     </Button>
