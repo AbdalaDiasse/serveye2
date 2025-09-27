@@ -179,7 +179,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
   };
 
   return (
-    <aside className="w-72 h-full bg-[#ffffffcc] border-r border-[#ffffff33] shadow-[0px_25px_50px_#00000040] flex flex-col overflow-hidden flex-shrink-0">
+    <aside className="w-72 h-full bg-[#ffffffcc] dark:bg-gray-800/90 border-r border-[#ffffff33] dark:border-gray-700/50 shadow-[0px_25px_50px_#00000040] dark:shadow-[0px_25px_50px_#00000080] flex flex-col overflow-hidden flex-shrink-0">
 
       <nav className="flex-1 p-4 overflow-hidden">
         <div className="space-y-2">
@@ -287,7 +287,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                           className={`flex items-center px-4 rounded-lg cursor-pointer transition-all duration-200 ${
                             isSubActive
                               ? `h-12 bg-gradient-to-r ${gradientClass} shadow-md`
-                              : 'h-10 hover:bg-gray-50'
+                              : 'h-10 hover:bg-gray-50 dark:hover:bg-gray-700/50'
                           }`}
                           onClick={() => handleNavigation(subPageName)}
                         >
@@ -299,7 +299,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                         <span className={`[font-family:'Inter',Helvetica] text-sm tracking-[0] leading-5 truncate ${
                           isSubActive
                             ? 'font-semibold text-white'
-                            : 'font-normal text-slate-500'
+                            : 'font-normal text-slate-500 dark:text-gray-300'
                         }`}>
                           {subItem.name}
                         </span>
@@ -315,7 +315,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
       </nav>
 
       <div className="p-4">
-        <Card className="rounded-xl border border-[#10b98133] bg-[linear-gradient(90deg,rgba(16,185,129,0.1)_0%,rgba(6,182,212,0.1)_100%)]">
+        <Card className="rounded-xl border border-[#10b98133] dark:border-emerald-700/50 bg-[linear-gradient(90deg,rgba(16,185,129,0.1)_0%,rgba(6,182,212,0.1)_100%)] dark:bg-[linear-gradient(90deg,rgba(16,185,129,0.2)_0%,rgba(6,182,212,0.2)_100%)]">
           <CardContent className="p-4">
             <div className="flex items-center gap-2 mb-2">
               <div className="w-2 h-2 bg-emerald-500 rounded-full opacity-90" />
@@ -323,7 +323,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                 Système Actif
               </span>
             </div>
-            <div className="[font-family:'Inter',Helvetica] font-normal text-slate-600 text-xs tracking-[0] leading-4">
+            <div className="[font-family:'Inter',Helvetica] font-normal text-slate-600 dark:text-gray-300 text-xs tracking-[0] leading-4">
               Surveillance en cours
             </div>
           </CardContent>

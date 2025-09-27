@@ -209,7 +209,7 @@ export const VehiclesDashboard = (): JSX.Element => {
   ];
 
   return (
-    <div className="w-full p-6 space-y-6 bg-gray-50">
+    <div className="w-full p-6 space-y-6 bg-gray-50 dark:bg-gray-900">
 
       {/* Métriques principales */}
       <div className="grid grid-cols-4 gap-4">

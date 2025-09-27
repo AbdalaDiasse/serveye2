@@ -188,15 +188,15 @@ export const PersonsDashboard = (): JSX.Element => {
   const maxEntry = Math.max(...entriesExitsData.map(d => Math.max(d.entries, d.exits)));
 
   return (
-    <div className="flex-1 p-6 bg-gradient-to-br from-slate-50 to-blue-50/30 overflow-auto">
+    <div className="flex-1 p-6 bg-gradient-to-br from-slate-50 to-blue-50/30 dark:from-gray-900 dark:to-gray-800 overflow-auto">
       <div className="max-w-[1600px] mx-auto space-y-6">
         {/* Header avec titre et sélecteurs */}
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h1 className="text-2xl font-bold text-slate-800 [font-family:'Inter',Helvetica]">
+            <h1 className="text-2xl font-bold text-slate-800 dark:text-gray-200 [font-family:'Inter',Helvetica]">
               Dashboard Personnes
             </h1>
-            <p className="text-sm text-slate-600 [font-family:'Inter',Helvetica]">
+            <p className="text-sm text-slate-600 dark:text-gray-400 [font-family:'Inter',Helvetica]">
               Analyse et surveillance des personnes
             </p>
           </div>

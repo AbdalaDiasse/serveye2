@@ -156,7 +156,7 @@ const ClientAnalysisPage = (): JSX.Element => {
   ];
 
   return (
-    <div className="w-full h-full bg-gradient-to-br from-slate-50 to-slate-100 overflow-hidden">
+    <div className="w-full h-full bg-gradient-to-br from-slate-50 to-slate-100 dark:from-gray-900 dark:to-gray-800 overflow-hidden">
       <ScrollArea className="h-full">
         <div className="p-6 space-y-6">
 

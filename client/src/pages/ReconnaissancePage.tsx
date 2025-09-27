@@ -186,10 +186,10 @@ export const ReconnaissancePage = (): JSX.Element => {
   const intrusionCount = recognitionData.filter(p => p.status === "Suspect" || p.status === "Inconnu" || p.status === "Inconnue").length;
 
   return (
-    <div className="w-full min-h-screen relative">
+    <div className="w-full min-h-screen relative dark:bg-gray-900">
       <div className="px-8 py-6">
         {/* Section Recherche Intelligente */}
-        <Card className="mb-6 bg-cyan-50/50 border-cyan-200">
+        <Card className="mb-6 bg-cyan-50/50 dark:bg-cyan-900/20 border-cyan-200 dark:border-cyan-800">
           <CardContent className="p-6">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-8 h-8 bg-teal-500 rounded-lg flex items-center justify-center">

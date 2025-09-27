@@ -276,10 +276,10 @@ export const VehicleCapturePage = (): JSX.Element => {
   const confirmedCount = vehicleCaptures.filter(v => v.status === "Confirmé").length;
 
   return (
-    <div className="w-full min-h-screen relative">
+    <div className="w-full min-h-screen relative dark:bg-gray-900">
       <div className="px-8 py-6">
         {/* Section Recherche Intelligente */}
-        <Card className="mb-6 bg-orange-50/50 border-orange-200">
+        <Card className="mb-6 bg-orange-50/50 dark:bg-orange-900/20 border-orange-200 dark:border-orange-800">
           <CardContent className="p-6">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center">

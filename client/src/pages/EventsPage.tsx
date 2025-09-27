@@ -258,10 +258,10 @@ export const EventsPage = (): JSX.Element => {
   const totalEvents = filteredEvents.length;
 
   return (
-    <div className="w-full min-h-screen relative">
+    <div className="w-full min-h-screen relative dark:bg-gray-900">
       <div className="px-8 py-6">
         {/* Section Recherche Intelligente - Pleine largeur */}
-        <Card className="mb-6 bg-red-50/50 border-red-200">
+        <Card className="mb-6 bg-red-50/50 dark:bg-red-900/20 border-red-200 dark:border-red-800">
           <CardContent className="p-6">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center">
