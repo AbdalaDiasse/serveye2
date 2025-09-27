@@ -367,27 +367,25 @@ export default function SafetyDashboard() {
           <CardContent>
             <div className="grid grid-cols-2 gap-8">
               <div className="flex flex-col">
-                <div className="radar-card h-64 mb-4 bg-transparent">
+                <div className="radar-card h-64 mb-4 rounded-lg bg-white dark:bg-gray-900 p-2">
                   <ResponsiveContainer width="100%" height="100%">
                     <RadarChart data={radarData}>
                       <PolarGrid 
                         gridType="polygon" 
                         radialLines={true}
-                        stroke="currentColor"
-                        className="text-gray-200 dark:text-gray-600"
-                        strokeWidth={2}
+                        stroke="#9ca3af"
+                        strokeWidth={1}
+                        strokeOpacity={0.5}
                       />
                       <PolarAngleAxis 
                         dataKey="subject" 
                         tick={{ fill: '#6b7280', fontSize: 11, fontWeight: 500 }}
-                        className="dark:fill-white"
                         tickFormatter={(value) => value}
                       />
                       <PolarRadiusAxis 
                         angle={90} 
                         domain={[0, 100]} 
                         tick={{ fill: '#9ca3af', fontSize: 10 }}
-                        className="dark:fill-gray-300"
                         tickCount={5}
                         axisLine={false}
                       />
@@ -396,20 +394,18 @@ export default function SafetyDashboard() {
                         dataKey="currentWeek"
                         stroke="#3b82f6"
                         fill="#3b82f6"
-                        fillOpacity={0.25}
+                        fillOpacity={0.2}
                         strokeWidth={3}
                         dot={{ fill: '#3b82f6', strokeWidth: 3, r: 6 }}
-                        className="dark:stroke-blue-400 dark:fill-blue-400"
                       />
                       <Radar
                         name="Previous Week"
                         dataKey="previousWeek"
                         stroke="#6b7280"
                         fill="#6b7280"
-                        fillOpacity={0.15}
+                        fillOpacity={0.1}
                         strokeWidth={2}
                         dot={{ fill: '#6b7280', strokeWidth: 2, r: 4 }}
-                        className="dark:stroke-gray-400 dark:fill-gray-400"
                       />
                     </RadarChart>
                   </ResponsiveContainer>

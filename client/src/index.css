@@ -230,33 +230,27 @@
     background-color: transparent !important;
   }
   
-  /* Comprehensive radar chart background fix */
-  .radar-card svg,
-  .radar-card .recharts-surface,
+  /* Radar chart styling for dark mode */
+  .radar-card {
+    position: relative;
+  }
+  
+  /* Make recharts container transparent to show parent background */
   .radar-card .recharts-wrapper,
-  .radar-card .recharts-layer {
+  .radar-card .recharts-surface {
     background: transparent !important;
-    background-color: transparent !important;
-    fill: none !important;
   }
   
-  /* Dark mode - ensure chart area inherits card background */
-  .dark .radar-card {
-    background-color: transparent !important;
+  /* Style axis text for dark mode */
+  .dark .radar-card .recharts-text {
+    fill: #9ca3af !important;
   }
   
-  .dark .radar-card svg,
-  .dark .radar-card .recharts-surface,
-  .dark .radar-card .recharts-wrapper,
-  .dark .radar-card .recharts-layer {
-    background: transparent !important;
-    background-color: transparent !important;
-    fill: none !important;
-  }
-  
-  /* Ensure radar areas maintain their opacity but no background */
-  .radar-card .recharts-radar-polygon {
-    fill-opacity: 0.15 !important;
+  /* Style grid lines for dark mode visibility */
+  .dark .radar-card .recharts-polar-grid-angle line,
+  .dark .radar-card .recharts-polar-grid-concentric polygon {
+    stroke: #6b7280 !important;
+    stroke-opacity: 0.5 !important;
   }
 }
 
