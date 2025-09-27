@@ -124,12 +124,45 @@ export default function SafetyDashboard() {
   ];
 
   // Radar chart data for Safety Module Performance
+  // Radar data for safety module performance - matching screenshot
   const radarData = [
-    { subject: 'Critical Alert Ratio', value: 75, fullMark: 100 },
-    { subject: 'PPE Compliance', value: 82, fullMark: 100 },
-    { subject: 'Zone Breaches', value: 45, fullMark: 100 },
-    { subject: 'False Positive Rate', value: 25, fullMark: 100 },
-    { subject: 'Safety Recommendations', value: 90, fullMark: 100 }
+    { subject: 'PPE Compliance', currentWeek: 85, previousWeek: 78, fullMark: 100 },
+    { subject: 'PPE Violations', currentWeek: 60, previousWeek: 65, fullMark: 100 },
+    { subject: 'Fire/Leak Detection', currentWeek: 92, previousWeek: 88, fullMark: 100 },
+    { subject: 'False Positive Rate', currentWeek: 35, previousWeek: 42, fullMark: 100 },
+    { subject: 'Zone Breaches', currentWeek: 25, previousWeek: 30, fullMark: 100 },
+    { subject: 'Detection Coverage', currentWeek: 78, previousWeek: 75, fullMark: 100 },
+    { subject: 'Response Time', currentWeek: 82, previousWeek: 85, fullMark: 100 },
+    { subject: 'Critical Alert Ratio', currentWeek: 68, previousWeek: 65, fullMark: 100 }
+  ];
+
+  // Safety recommendations data
+  const safetyRecommendations = [
+    {
+      title: 'Increase PPE Training',
+      description: 'Focus on helmet compliance',
+      icon: HardHat
+    },
+    {
+      title: 'Add More Cameras',
+      description: 'Improve zone coverage',
+      icon: Camera
+    },
+    {
+      title: 'Reduce Response Time',
+      description: 'Optimize alert system',
+      icon: AlertTriangle
+    },
+    {
+      title: 'Safety Protocols',
+      description: 'Update safety procedures',
+      icon: Shield
+    },
+    {
+      title: 'Alert Threshold',
+      description: 'Fine-tune alert sensitivity',
+      icon: Settings
+    }
   ];
 
   // Live detections - exact from design
@@ -306,22 +339,22 @@ export default function SafetyDashboard() {
       {/* Main Content Grid */}
       <div className="grid grid-cols-12 gap-6">
         {/* Safety Module Performance */}
-        <Card className={`col-span-5 ${currentTheme.cardBg} ${currentTheme.cardBorder}`}>
+        <Card className="col-span-8 bg-white border border-gray-200">
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle className={currentTheme.text}>Safety Module Performance</CardTitle>
+              <CardTitle className="text-gray-900 text-base font-medium">Safety Module Performance</CardTitle>
               <div className="flex gap-2">
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className="bg-blue-600 border-blue-600 text-white hover:bg-blue-700"
+                  className="bg-blue-600 border-blue-600 text-white hover:bg-blue-700 h-8 px-4 text-xs"
                 >
                   Weekly
                 </Button>
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className={`bg-transparent ${theme === 'light' ? 'border-gray-400 text-gray-600 hover:bg-gray-100' : 'border-gray-600 text-gray-400 hover:bg-gray-700'}`}
+                  className="bg-transparent border-gray-300 text-gray-600 hover:bg-gray-100 h-8 px-4 text-xs"
                 >
                   Monthly
                 </Button>
@@ -329,49 +362,82 @@ export default function SafetyDashboard() {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="h-64 mb-4">
-              <ResponsiveContainer width="100%" height="100%">
-                <RadarChart data={radarData}>
-                  <PolarGrid 
-                    gridType="polygon" 
-                    radialLines={true}
-                    stroke={theme === 'light' ? '#d1d5db' : '#374151'}
-                  />
-                  <PolarAngleAxis 
-                    dataKey="subject" 
-                    tick={{ fill: currentTheme.chartText, fontSize: 10 }}
-                  />
-                  <PolarRadiusAxis 
-                    angle={90} 
-                    domain={[0, 100]} 
-                    tick={{ fill: currentTheme.chartText, fontSize: 10 }}
-                    tickCount={6}
-                  />
-                  <Radar
-                    name="Performance"
-                    dataKey="value"
-                    stroke="#3b82f6"
-                    fill="#3b82f6"
-                    fillOpacity={0.3}
-                    strokeWidth={2}
-                  />
-                </RadarChart>
-              </ResponsiveContainer>
-            </div>
-            <div className="space-y-2">
-              <div className="flex items-center justify-between text-xs">
-                <span className={currentTheme.textMuted}>Zone Breaches</span>
-                <span className={currentTheme.textMuted}>False Positive Rate</span>
+            <div className="grid grid-cols-2 gap-8">
+              <div className="flex flex-col">
+                <div className="h-64 mb-4">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <RadarChart data={radarData}>
+                      <PolarGrid 
+                        gridType="polygon" 
+                        radialLines={true}
+                        stroke="#e2e8f0"
+                      />
+                      <PolarAngleAxis 
+                        dataKey="subject" 
+                        tick={{ fill: '#64748b', fontSize: 10 }}
+                      />
+                      <PolarRadiusAxis 
+                        angle={90} 
+                        domain={[0, 100]} 
+                        tick={false}
+                        tickCount={6}
+                      />
+                      <Radar
+                        name="Current Week"
+                        dataKey="currentWeek"
+                        stroke="#2563eb"
+                        fill="#2563eb"
+                        fillOpacity={0.1}
+                        strokeWidth={2}
+                        dot={{ fill: '#2563eb', strokeWidth: 2, r: 4 }}
+                      />
+                      <Radar
+                        name="Previous Week"
+                        dataKey="previousWeek"
+                        stroke="#94a3b8"
+                        fill="#94a3b8"
+                        fillOpacity={0.05}
+                        strokeWidth={2}
+                        dot={{ fill: '#94a3b8', strokeWidth: 2, r: 3 }}
+                      />
+                    </RadarChart>
+                  </ResponsiveContainer>
+                </div>
+                <div className="flex items-center gap-6 text-xs">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                    <span className="text-gray-600">Current Week</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
+                    <span className="text-gray-600">Previous Week</span>
+                  </div>
+                </div>
+                <div className="mt-4 text-xs text-gray-600">
+                  <div className="mb-2">
+                    <span className="font-medium">Critical Alert Ratio</span>
+                  </div>
+                  <div className="text-xs">
+                    <span>• Current Week: <span className="font-medium">68%</span></span><br/>
+                    <span>• Previous Week: <span className="font-medium">65%</span></span>
+                  </div>
+                </div>
               </div>
-              <div className="flex gap-4 mt-4">
-                <Button variant="outline" size="sm" className="flex-1 bg-blue-600/20 border-blue-600 text-blue-400">
-                  <CircleCheck className="w-4 h-4 mr-2" />
-                  Current Week
-                </Button>
-                <Button variant="outline" size="sm" className={`flex-1 ${theme === 'light' ? 'border-gray-400 text-gray-600' : 'border-gray-600 text-gray-400'}`}>
-                  <CircleX className="w-4 h-4 mr-2" />
-                  Previous Week
-                </Button>
+              <div className="flex flex-col">
+                <h3 className="text-base font-medium text-gray-900 mb-4">Safety Recommendations</h3>
+                <div className="space-y-3">
+                  {safetyRecommendations.map((recommendation, index) => (
+                    <div key={index} className="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
+                      <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                        <recommendation.icon className="w-4 h-4 text-white" />
+                      </div>
+                      <div>
+                        <div className="text-sm font-medium text-gray-900">{recommendation.title}</div>
+                        <div className="text-xs text-gray-600">{recommendation.description}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </CardContent>
