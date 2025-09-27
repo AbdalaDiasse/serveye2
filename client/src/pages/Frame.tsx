@@ -28,22 +28,44 @@ export const Frame = (): JSX.Element => {
 
   const getPageTitle = () => {
     switch (currentPage) {
-      case "safetyDashboard":
-        return { title: "Safety Dashboard", subtitle: "Real-time safety violation monitoring" };
       case "dashboard":
         return { title: "Dashboard", subtitle: "Main system overview" };
-      case "events":
-        return { title: "Events", subtitle: "Event management and tracking" };
+      case "capture":
+        return { title: "Capture", subtitle: "Person capture and identification" };
+      case "reconnaissance":
+        return { title: "Reconnaissance", subtitle: "Person recognition system" };
       case "persons":
-        return { title: "Persons", subtitle: "Person detection and tracking" };
+        return { title: "Dashboard Personnes", subtitle: "Person detection and tracking" };
+      case "personnesDashboard":
+        return { title: "Dashboard Personnes", subtitle: "Analyse et surveillance des personnes" };
+      case "clientAnalysis":
+        return { title: "Analyse Client", subtitle: "Client analysis and insights" };
+      case "events":
+        return { title: "Événements", subtitle: "Event management and tracking" };
       case "vehicles":
-        return { title: "Vehicles", subtitle: "Vehicle monitoring system" };
+        return { title: "Vehicules", subtitle: "Vehicle monitoring system" };
+      case "vehicleCapture":
+        return { title: "Vehicle Capture", subtitle: "Vehicle detection and capture" };
       case "vssAgent":
         return { title: "VSS Agent", subtitle: "AI-powered video analysis" };
       case "vssSummarize":
-        return { title: "VSS Resume", subtitle: "Video summary generation" };
+        return { title: "VSS Résumé", subtitle: "Video summary generation" };
       case "vssSearch":
-        return { title: "VSS Search", subtitle: "Intelligent video search" };
+        return { title: "VSS Recherche", subtitle: "Intelligent video search" };
+      case "vssAlerts":
+        return { title: "VSS Alertes", subtitle: "Video security alerts" };
+      case "vssQA":
+        return { title: "VSS Q/R", subtitle: "Video question and response" };
+      case "safetyDashboard":
+        return { title: "Safety Dashboard", subtitle: "Real-time safety violation monitoring" };
+      case "safetyEvents":
+        return { title: "Safety Events", subtitle: "Safety event management" };
+      case "sites":
+        return { title: "Sites", subtitle: "Site management and monitoring" };
+      case "cameras":
+        return { title: "Cameras", subtitle: "Camera system management" };
+      case "boxes":
+        return { title: "Boxes", subtitle: "Detection box management" };
       default:
         return { title: "Dashboard", subtitle: "System overview" };
     }
