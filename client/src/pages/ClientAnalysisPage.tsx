@@ -159,11 +159,6 @@ const ClientAnalysisPage = (): JSX.Element => {
     <div className="w-full h-full bg-gradient-to-br from-slate-50 to-slate-100 overflow-hidden">
       <ScrollArea className="h-full">
         <div className="p-6 space-y-6">
-          {/* Header */}
-          <div className="mb-6">
-            <h1 className="text-3xl font-bold text-gray-900">Analyse Client</h1>
-            <p className="text-gray-600 mt-2">Tableau de bord d'analyse comportementale des clients</p>
-          </div>
 
           {/* Row 1: KPIs */}
           <div className="grid grid-cols-4 gap-4">

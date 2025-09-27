@@ -210,48 +210,6 @@ export const VehiclesDashboard = (): JSX.Element => {
 
   return (
     <div className="w-full p-6 space-y-6 bg-gray-50">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">Gestion des Véhicules</h1>
-          <p className="text-sm text-gray-500">Surveillance et analyse du trafic véhiculaire</p>
-        </div>
-        <div className="flex items-center gap-3">
-          <Select defaultValue="5min">
-            <SelectTrigger className="w-[140px]">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="5min">Dernières 5 min</SelectItem>
-              <SelectItem value="1h">Dernière heure</SelectItem>
-              <SelectItem value="24h">24 heures</SelectItem>
-              <SelectItem value="7d">7 jours</SelectItem>
-            </SelectContent>
-          </Select>
-          <Select defaultValue="all">
-            <SelectTrigger className="w-[140px]">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Toutes les caméras</SelectItem>
-              <SelectItem value="entrance">Entrées</SelectItem>
-              <SelectItem value="exit">Sorties</SelectItem>
-              <SelectItem value="parking">Parking</SelectItem>
-            </SelectContent>
-          </Select>
-          <Select defaultValue="all">
-            <SelectTrigger className="w-[140px]">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Tous types</SelectItem>
-              <SelectItem value="car">Voitures</SelectItem>
-              <SelectItem value="truck">Camions</SelectItem>
-              <SelectItem value="moto">Motos</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
 
       {/* Métriques principales */}
       <div className="grid grid-cols-4 gap-4">
