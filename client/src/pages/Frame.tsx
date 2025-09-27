@@ -12,6 +12,7 @@ import ClientAnalysisPage from "./ClientAnalysisPage";
 import VSSAgentPage from "./VSSAgentPage";
 import VSSResumePage from "./VSSResumePage";
 import VSSSearchPage from "./VSSSearchPage";
+import SafetyDashboard from "./SafetyDashboard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from "recharts";
@@ -82,6 +83,8 @@ export const Frame = (): JSX.Element => {
           <h1 className="text-2xl font-bold mb-4">VSS Q/R</h1>
           <p>Page de questions/réponses VSS en cours de développement...</p>
         </div>;
+      case "safetyDashboard":
+        return <SafetyDashboard />;
       default:
         return <ControlPanelSection />;
     }

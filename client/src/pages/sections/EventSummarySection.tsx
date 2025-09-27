@@ -100,6 +100,24 @@ const navigationItems = [
     ],
   },
   {
+    name: "Safety",
+    icon: "/figmaAssets/frame-4.svg",
+    isActive: false,
+    hasDropdown: true,
+    subItems: [
+      {
+        name: "Safety Dashboard",
+        icon: "/figmaAssets/frame-1.svg",
+        isActive: false,
+      },
+      {
+        name: "Events List",
+        icon: "/figmaAssets/frame-2.svg",
+        isActive: false,
+      },
+    ],
+  },
+  {
     name: "Sites",
     icon: "/figmaAssets/frame-3.svg",
     isActive: false,
@@ -133,7 +151,8 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
     // Ouvrir automatiquement le dropdown approprié selon la page
     (currentPage === "capture" || currentPage === "reconnaissance" || currentPage === "persons" || currentPage === "personnesDashboard" || currentPage === "clientAnalysis") ? "Personnes" : 
     (currentPage === "vehicles" || currentPage === "vehicleCapture") ? "Vehicules" : 
-    (currentPage === "vssAgent" || currentPage === "vssSummarize" || currentPage === "vssSearch" || currentPage === "vssAlerts" || currentPage === "vssQA") ? "VSS" : null
+    (currentPage === "vssAgent" || currentPage === "vssSummarize" || currentPage === "vssSearch" || currentPage === "vssAlerts" || currentPage === "vssQA") ? "VSS" : 
+    (currentPage === "safetyDashboard" || currentPage === "safetyEvents") ? "Safety" : null
   );
 
   const toggleDropdown = (itemName: string) => {
@@ -148,6 +167,8 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
       setOpenDropdown("Vehicules");
     } else if (currentPage === "vssAgent" || currentPage === "vssSummarize" || currentPage === "vssSearch" || currentPage === "vssAlerts" || currentPage === "vssQA") {
       setOpenDropdown("VSS");
+    } else if (currentPage === "safetyDashboard" || currentPage === "safetyEvents") {
+      setOpenDropdown("Safety");
     }
   }, [currentPage]);
 
@@ -184,7 +205,8 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
             const isEventsActive = (item.name === "Évènements" || item.name === "Événements") && currentPage === "events";
             const isVehiclesActive = item.name === "Vehicules" && (currentPage === "vehicles" || currentPage === "vehicleCapture");
             const isVSSActive = item.name === "VSS" && (currentPage === "vssAgent" || currentPage === "vssSummarize" || currentPage === "vssSearch" || currentPage === "vssAlerts" || currentPage === "vssQA");
-            const isOtherActive = currentPage === item.name.toLowerCase() && item.name !== "Personnes" && item.name !== "Évènements" && item.name !== "Événements" && item.name !== "Vehicules" && item.name !== "VSS";
+            const isSafetyActive = item.name === "Safety" && (currentPage === "safetyDashboard" || currentPage === "safetyEvents");
+            const isOtherActive = currentPage === item.name.toLowerCase() && item.name !== "Personnes" && item.name !== "Évènements" && item.name !== "Événements" && item.name !== "Vehicules" && item.name !== "VSS" && item.name !== "Safety";
             
             return (
               <div key={index} className="relative">
@@ -198,6 +220,8 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                       ? "shadow-md bg-gradient-to-r from-orange-500 to-orange-600"
                       : isVSSActive
                       ? "shadow-md bg-gradient-to-r from-purple-500 to-indigo-600"
+                      : isSafetyActive
+                      ? "shadow-md bg-gradient-to-r from-green-500 to-emerald-600"
                       : isOtherActive
                       ? "shadow-md bg-gradient-to-r from-blue-600 to-blue-500"
                       : "hover:bg-gray-50"
@@ -221,9 +245,9 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                     }
                   }}
                 >
-                  {renderIcon(item.icon, `${(isPersonnesActive || isEventsActive || isVehiclesActive || isVSSActive || isOtherActive) ? "w-4 h-4 mr-3 text-white" : "w-4 h-4 mr-3 text-slate-600"}`)}
+                  {renderIcon(item.icon, `${(isPersonnesActive || isEventsActive || isVehiclesActive || isVSSActive || isSafetyActive || isOtherActive) ? "w-4 h-4 mr-3 text-white" : "w-4 h-4 mr-3 text-slate-600"}`)}
                   <span className={`[font-family:'Inter',Helvetica] text-base tracking-[0] truncate ${
-                    (isPersonnesActive || isEventsActive || isVehiclesActive || isVSSActive || isOtherActive)
+                    (isPersonnesActive || isEventsActive || isVehiclesActive || isVSSActive || isSafetyActive || isOtherActive)
                       ? 'font-semibold text-white leading-[normal]'
                       : 'font-normal text-slate-600 leading-6'
                   }`}>
@@ -233,7 +257,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                     <img
                       className={`w-3 h-3 ml-auto transition-transform duration-200 ${
                         openDropdown === item.name ? 'rotate-180' : ''
-                      } ${(isPersonnesActive || isVehiclesActive || isVSSActive) ? 'filter brightness-0 invert' : ''}`}
+                      } ${(isPersonnesActive || isVehiclesActive || isVSSActive || isSafetyActive) ? 'filter brightness-0 invert' : ''}`}
                       alt="Dropdown"
                       src="/figmaAssets/frame-7.svg"
                     />
@@ -260,12 +284,18 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                         ? "vssAlerts"
                         : item.name === "VSS" && subItem.name === "Q/R"
                         ? "vssQA"
+                        : item.name === "Safety" && subItem.name === "Safety Dashboard"
+                        ? "safetyDashboard"
+                        : item.name === "Safety" && subItem.name === "Events List"
+                        ? "safetyEvents"
                         : subItem.name.toLowerCase();
                       const isSubActive = currentPage === subPageName;
                       const gradientClass = item.name === "Vehicules" 
                         ? 'from-orange-400 to-orange-500' 
                         : item.name === "VSS"
                         ? 'from-purple-400 to-indigo-500'
+                        : item.name === "Safety"
+                        ? 'from-green-400 to-emerald-500'
                         : 'from-teal-400 to-cyan-400';
                       
                       return (
