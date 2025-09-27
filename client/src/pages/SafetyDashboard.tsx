@@ -47,6 +47,12 @@ import {
   Moon
 } from 'lucide-react';
 
+// Import safety detection images
+import detectionImage1 from '@assets/stock_images/construction_worker__9d5e7150.jpg';
+import detectionImage2 from '@assets/stock_images/construction_worker__7080098c.jpg';
+import detectionImage3 from '@assets/stock_images/construction_worker__42be1684.jpg';
+import detectionImage4 from '@assets/stock_images/construction_worker__b0637b73.jpg';
+
 export default function SafetyDashboard() {
   const [selectedPeriod, setSelectedPeriod] = useState('today');
   const [theme, setTheme] = useState<'light' | 'dark'>('dark');
@@ -135,7 +141,7 @@ export default function SafetyDashboard() {
       camera: 'CAM-05',
       status: 'New',
       statusColor: 'bg-green-500',
-      thumbnail: '/api/placeholder/120/80'
+      thumbnail: detectionImage1
     },
     {
       id: 2,
@@ -146,7 +152,7 @@ export default function SafetyDashboard() {
       camera: 'CAM-02',
       status: 'In Review',
       statusColor: 'bg-yellow-500',
-      thumbnail: '/api/placeholder/120/80'
+      thumbnail: detectionImage2
     },
     {
       id: 3,
@@ -157,7 +163,7 @@ export default function SafetyDashboard() {
       camera: 'CAM-07',
       status: 'Confirmed',
       statusColor: 'bg-blue-500',
-      thumbnail: '/api/placeholder/120/80'
+      thumbnail: detectionImage3
     },
     {
       id: 4,
@@ -168,7 +174,7 @@ export default function SafetyDashboard() {
       camera: 'CAM-03',
       status: 'Resolved',
       statusColor: 'bg-gray-500',
-      thumbnail: '/api/placeholder/120/80'
+      thumbnail: detectionImage4
     }
   ];
 
@@ -386,7 +392,7 @@ export default function SafetyDashboard() {
                 <img 
                   src={detection.thumbnail} 
                   alt={detection.type}
-                  className="w-20 h-14 object-cover rounded"
+                  className="w-24 h-16 object-cover rounded-lg border border-gray-600"
                 />
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
