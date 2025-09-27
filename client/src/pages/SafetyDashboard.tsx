@@ -366,7 +366,14 @@ export default function SafetyDashboard() {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className={`text-2xl font-bold ${currentTheme.text}`}>Safety Dashboard</h1>
+          <h1 className="text-2xl font-bold">
+            <span className="bg-gradient-to-r from-[#0070F3] to-[#0056D6] bg-clip-text text-transparent">
+              Safety
+            </span>
+            <span className={`ml-2 ${currentTheme.textMuted}`}>
+              Dashboard
+            </span>
+          </h1>
           <p className={`${currentTheme.textMuted} text-sm`}>Real-time safety violation monitoring</p>
         </div>
         <div className="flex items-center gap-3">
