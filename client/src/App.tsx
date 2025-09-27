@@ -10,6 +10,7 @@ import ClientAnalysisPage from "@/pages/ClientAnalysisPage";
 import VSSAgentPage from "@/pages/VSSAgentPage";
 import VSSResumePage from "@/pages/VSSResumePage";
 import VSSSearchPage from "@/pages/VSSSearchPage";
+import SafetyDashboard from "@/pages/SafetyDashboard";
 
 function Router() {
   return (
@@ -20,6 +21,7 @@ function Router() {
       <Route path="/vss-agent" component={VSSAgentPage} />
       <Route path="/vss-resume" component={VSSResumePage} />
       <Route path="/vss-search" component={VSSSearchPage} />
+      <Route path="/safety" component={SafetyDashboard} />
       {/* Fallback to 404 */}
       <Route component={NotFound} />
     </Switch>

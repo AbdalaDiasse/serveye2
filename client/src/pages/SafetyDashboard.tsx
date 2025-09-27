@@ -277,19 +277,17 @@ export default function SafetyDashboard() {
       {/* Key Metrics */}
       <div className="grid grid-cols-7 gap-4 mb-6">
         {safetyMetrics.map((metric, index) => (
-          <Card key={index} className={`${currentTheme.cardBg} ${currentTheme.cardBorder}`}>
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between mb-3">
-                <span className={`${currentTheme.textMuted} text-xs`}>No</span>
-                <span className={`${currentTheme.textMuted} text-xs`}>{metric.label.split(' ')[1]}</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className={`text-3xl font-bold ${currentTheme.text}`}>{metric.value}</div>
-                <metric.icon className="w-8 h-8 text-blue-400" />
-              </div>
-              <div className="flex items-center gap-1 mt-2">
-                <span className="text-green-400 text-xs font-medium">{metric.change}</span>
-                <span className={`${currentTheme.textMuted} text-xs`}>{metric.period}</span>
+          <Card key={index} className={`${theme === 'light' ? 'bg-white border-gray-200' : 'bg-white border-gray-200'} shadow-sm`}>
+            <CardContent className="p-6">
+              <div className="flex items-start justify-between">
+                <div className="flex flex-col">
+                  <div className="text-3xl font-bold text-gray-900 mb-1">{metric.value}</div>
+                  <div className="text-sm text-gray-600 mb-2">{metric.label}</div>
+                  <div className="text-xs text-gray-500">{metric.change} {metric.period}</div>
+                </div>
+                <div className="ml-4">
+                  <metric.icon className="w-10 h-10 text-blue-500" />
+                </div>
               </div>
             </CardContent>
           </Card>
