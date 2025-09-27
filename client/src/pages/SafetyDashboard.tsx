@@ -12,6 +12,8 @@ import {
   CartesianGrid, 
   Tooltip, 
   ResponsiveContainer,
+  LineChart,
+  Line,
   PieChart,
   Pie,
   Cell,
@@ -19,13 +21,15 @@ import {
   PolarGrid,
   PolarAngleAxis,
   PolarRadiusAxis,
-  Radar
+  Radar,
+  Legend
 } from 'recharts';
 import { 
   Shield,
   HardHat,
   Shirt,
   User,
+  Users,
   Flame,
   Droplets,
   AlertTriangle,
@@ -36,7 +40,9 @@ import {
   Search,
   Maximize2,
   RefreshCw,
-  Filter
+  Filter,
+  CircleCheck,
+  CircleX
 } from 'lucide-react';
 
 export default function SafetyDashboard() {
@@ -45,9 +51,9 @@ export default function SafetyDashboard() {
   // Key safety metrics - exact values from design
   const safetyMetrics = [
     { label: 'No Helmet', value: 89, icon: HardHat, change: '+12%', period: 'today' },
-    { label: 'No Vest', value: 67, icon: Shield, change: '+8%', period: 'today' },
+    { label: 'No Vest', value: 67, icon: Shirt, change: '+8%', period: 'today' },
     { label: 'No Harness', value: 34, icon: Shield, change: '+4%', period: 'today' },
-    { label: 'No Uniform', value: 23, icon: Shirt, change: '+3%', period: 'today' },
+    { label: 'No Uniform', value: 23, icon: Users, change: '+3%', period: 'today' },
     { label: 'Smoke', value: 19, icon: Flame, change: '+15%', period: 'today' },
     { label: 'Fire', value: 12, icon: Flame, change: '+25%', period: 'today' },
     { label: 'Leakage', value: 8, icon: Droplets, change: '+1%', period: 'today' }
@@ -55,12 +61,11 @@ export default function SafetyDashboard() {
 
   // Radar chart data for Safety Module Performance
   const radarData = [
-    { subject: 'Increase PPE', A: 120, fullMark: 150 },
-    { subject: 'Training', A: 98, fullMark: 150 },
-    { subject: 'helmet compliance', A: 86, fullMark: 150 },
-    { subject: 'Reduce Response', A: 99, fullMark: 150 },
-    { subject: 'Add More Cameras', A: 85, fullMark: 150 },
-    { subject: 'Safety Recommendations', A: 65, fullMark: 150 }
+    { subject: 'Critical Alert Ratio', value: 75, fullMark: 100 },
+    { subject: 'PPE Compliance', value: 82, fullMark: 100 },
+    { subject: 'Zone Breaches', value: 45, fullMark: 100 },
+    { subject: 'False Positive Rate', value: 25, fullMark: 100 },
+    { subject: 'Safety Recommendations', value: 90, fullMark: 100 }
   ];
 
   // Live detections - exact from design
@@ -69,27 +74,30 @@ export default function SafetyDashboard() {
       id: 1,
       type: 'No Helmet Detected',
       location: 'Construction Zone',
+      area: 'Site A',
       time: '2 mins ago',
       camera: 'CAM-05',
-      status: 'Critical',
-      statusColor: 'bg-red-500',
+      status: 'New',
+      statusColor: 'bg-green-500',
       thumbnail: '/api/placeholder/120/80'
     },
     {
       id: 2,
       type: 'No Vest Detected',
-      location: 'Warehouse Area',
-      time: '3 mins ago',
+      location: 'Warehouse',
+      area: 'Site B',
+      time: '5 mins ago',
       camera: 'CAM-02',
       status: 'In Review',
-      statusColor: 'bg-orange-500',
+      statusColor: 'bg-yellow-500',
       thumbnail: '/api/placeholder/120/80'
     },
     {
       id: 3,
       type: 'Smoke Detected',
       location: 'Factory Floor',
-      time: '5 mins ago',
+      area: 'Site C',
+      time: '8 mins ago',
       camera: 'CAM-07',
       status: 'Confirmed',
       statusColor: 'bg-blue-500',
@@ -99,6 +107,7 @@ export default function SafetyDashboard() {
       id: 4,
       type: 'No Harness Detected',
       location: 'High Work Zone',
+      area: 'Site A',
       time: '12 mins ago',
       camera: 'CAM-03',
       status: 'Resolved',
@@ -109,27 +118,39 @@ export default function SafetyDashboard() {
 
   // Detection frequency data
   const detectionFrequencyData = [
-    { time: '6am', violations: 12 },
-    { time: '8am', violations: 25 },
-    { time: '10am', violations: 35 },
-    { time: '12pm', violations: 45 },
-    { time: '2pm', violations: 38 },
-    { time: '4pm', violations: 28 },
-    { time: '6pm', violations: 15 },
-    { time: '8pm', violations: 8 }
+    { time: '06:00-08:00', violations: 95 },
+    { time: '08:00-10:00', violations: 110 },
+    { time: '10:00-12:00', violations: 75 },
+    { time: '12:00-14:00', violations: 85 },
+    { time: '14:00-16:00', violations: 65 },
+    { time: '16:00-18:00', violations: 55 },
+    { time: '18:00-20:00', violations: 35 },
+    { time: '20:00-22:00', violations: 25 }
+  ];
+
+  // Safety violation trends data for line chart
+  const violationTrendsData = [
+    { time: '06:00', helmet: 12, vest: 8, harness: 5, uniform: 3, smoke: 1, fire: 0, leakage: 1 },
+    { time: '08:00', helmet: 25, vest: 18, harness: 8, uniform: 5, smoke: 2, fire: 1, leakage: 2 },
+    { time: '10:00', helmet: 35, vest: 28, harness: 12, uniform: 8, smoke: 3, fire: 1, leakage: 2 },
+    { time: '12:00', helmet: 42, vest: 32, harness: 15, uniform: 10, smoke: 4, fire: 2, leakage: 3 },
+    { time: '14:00', helmet: 38, vest: 30, harness: 14, uniform: 9, smoke: 3, fire: 2, leakage: 2 },
+    { time: '16:00', helmet: 28, vest: 22, harness: 10, uniform: 7, smoke: 2, fire: 1, leakage: 2 },
+    { time: '18:00', helmet: 15, vest: 12, harness: 6, uniform: 4, smoke: 1, fire: 0, leakage: 1 }
   ];
 
   // Violation distribution
   const violationDistribution = [
-    { name: 'PPE\nViolations', value: 65, color: '#3b82f6' },
-    { name: 'Safety\nViolations', value: 25, color: '#6366f1' },
-    { name: 'Environmental\nHazards', value: 10, color: '#0ea5e9' }
+    { name: 'PPE\nViolations', value: 65, percentage: '65.5%', color: '#3b82f6' },
+    { name: 'Safety\n3.1%', value: 3.1, percentage: '3.1%', color: '#06b6d4' },
+    { name: 'No Harness\n5.1%', value: 5.1, percentage: '5.1%', color: '#8b5cf6' },
+    { name: 'No Vest\n26.3%', value: 26.3, percentage: '26.3%', color: '#6366f1' }
   ];
 
   // Detection summary
   const detectionSummary = [
     { type: 'Critical Violations', count: 108, icon: AlertTriangle },
-    { type: 'High Priority', count: 101, icon: User },
+    { type: 'High\nPriority', count: 101, icon: User },
     { type: 'Medium Priority', count: 31, icon: Shield }
   ];
 
@@ -137,8 +158,8 @@ export default function SafetyDashboard() {
   const camerasData = [
     { name: 'CAM-05', zone: 'Construction Zone A', violations: 45 },
     { name: 'CAM-02', zone: 'Warehouse', violations: 38 },
-    { name: 'CAM-03', zone: 'Factory Zone A', violations: 29 },
-    { name: 'CAM-07', zone: 'Factory Zone C', violations: 24 }
+    { name: 'CAM-03', zone: 'High Work Zone A', violations: 29 },
+    { name: 'CAM-07', zone: 'Factory Floor C', violations: 24 }
   ];
 
   // Detections per site - exact from design
@@ -146,11 +167,11 @@ export default function SafetyDashboard() {
     { name: 'Site A', zone: 'Construction Zone', violations: 123, total: 'total violations' },
     { name: 'Site B', zone: 'Warehouse Complex', violations: 87, total: 'total violations' },
     { name: 'Site C', zone: 'Factory Floor', violations: 64, total: 'total violations' },
-    { name: 'Site D', zone: 'Office Area', violations: 48, total: 'total violations' }
+    { name: 'Site D', zone: '', violations: 48, total: 'total violations' }
   ];
 
   return (
-    <div className="min-h-screen bg-[#0f1419] text-white p-6">
+    <div className="min-h-screen bg-[#0a0e27] text-white p-6">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
@@ -162,7 +183,7 @@ export default function SafetyDashboard() {
             <input
               type="text"
               placeholder="Search violations..."
-              className="bg-gray-800 text-gray-300 px-4 py-2 rounded-lg w-64 text-sm"
+              className="bg-gray-800/50 text-gray-300 px-4 py-2 rounded-lg w-64 text-sm border border-gray-700"
             />
             <Search className="w-4 h-4 text-gray-400 absolute right-3 top-2.5" />
           </div>
@@ -186,7 +207,7 @@ export default function SafetyDashboard() {
       {/* Key Metrics */}
       <div className="grid grid-cols-7 gap-4 mb-6">
         {safetyMetrics.map((metric, index) => (
-          <Card key={index} className="bg-gray-800/50 border-gray-700/50 backdrop-blur">
+          <Card key={index} className="bg-[#1a1f3a] border-gray-800">
             <CardContent className="p-4">
               <div className="flex items-center justify-between mb-3">
                 <span className="text-gray-400 text-xs">No</span>
@@ -208,7 +229,7 @@ export default function SafetyDashboard() {
       {/* Main Content Grid */}
       <div className="grid grid-cols-12 gap-6">
         {/* Safety Module Performance */}
-        <Card className="col-span-5 bg-gray-800/50 border-gray-700/50 backdrop-blur">
+        <Card className="col-span-5 bg-[#1a1f3a] border-gray-800">
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle className="text-white">Safety Module Performance</CardTitle>
@@ -245,37 +266,42 @@ export default function SafetyDashboard() {
                   />
                   <PolarRadiusAxis 
                     angle={90} 
-                    domain={[0, 150]} 
-                    tick={false}
-                    axisLine={false}
+                    domain={[0, 100]} 
+                    tick={{ fill: '#6b7280', fontSize: 10 }}
+                    tickCount={6}
                   />
                   <Radar
                     name="Performance"
-                    dataKey="A"
+                    dataKey="value"
                     stroke="#3b82f6"
                     fill="#3b82f6"
-                    fillOpacity={0.2}
+                    fillOpacity={0.3}
                     strokeWidth={2}
                   />
                 </RadarChart>
               </ResponsiveContainer>
             </div>
             <div className="space-y-2">
-              <h4 className="text-sm font-medium text-gray-300 mb-2">Safety Recommendations</h4>
-              <div className="space-y-1">
-                {['Increase PPE', 'Training', 'helmet compliance', 'Add More Cameras', 'Reduce Response'].map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                    <span className="text-xs text-gray-400">{item}</span>
-                  </div>
-                ))}
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-gray-400">Zone Breaches</span>
+                <span className="text-gray-400">False Positive Rate</span>
+              </div>
+              <div className="flex gap-4 mt-4">
+                <Button variant="outline" size="sm" className="flex-1 bg-blue-600/20 border-blue-600 text-blue-400">
+                  <CircleCheck className="w-4 h-4 mr-2" />
+                  Current Week
+                </Button>
+                <Button variant="outline" size="sm" className="flex-1 border-gray-600 text-gray-400">
+                  <CircleX className="w-4 h-4 mr-2" />
+                  Previous Week
+                </Button>
               </div>
             </div>
           </CardContent>
         </Card>
 
         {/* Live Detections */}
-        <Card className="col-span-7 bg-gray-800/50 border-gray-700/50 backdrop-blur">
+        <Card className="col-span-7 bg-[#1a1f3a] border-gray-800">
           <CardHeader>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
@@ -292,7 +318,7 @@ export default function SafetyDashboard() {
           </CardHeader>
           <CardContent className="space-y-3">
             {liveDetections.map((detection) => (
-              <div key={detection.id} className="flex items-center gap-4 p-3 bg-gray-900/50 rounded-lg">
+              <div key={detection.id} className="flex items-center gap-4 p-3 bg-[#0a0e27] rounded-lg">
                 <img 
                   src={detection.thumbnail} 
                   alt={detection.type}
@@ -301,20 +327,20 @@ export default function SafetyDashboard() {
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
                     <h4 className="text-sm font-medium text-white">{detection.type}</h4>
-                    <Badge className={`${detection.statusColor} text-white text-xs`}>
-                      {detection.status}
-                    </Badge>
                   </div>
                   <div className="flex items-center gap-4 text-xs text-gray-400">
-                    <span>{detection.location}</span>
+                    <span>{detection.area} • {detection.location}</span>
                     <span>{detection.time} • {detection.camera}</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-gray-400">
-                    <Settings className="w-4 h-4" />
+                  <Badge className={`${detection.statusColor} text-white text-xs px-3 py-1`}>
+                    {detection.status}
+                  </Badge>
+                  <Button variant="ghost" size="sm" className="h-8 px-2 text-gray-400">
+                    <Settings className="w-4 h-4 mr-1" />
+                    Process
                   </Button>
-                  <div className="text-xs text-gray-500">Process</div>
                 </div>
               </div>
             ))}
@@ -322,7 +348,7 @@ export default function SafetyDashboard() {
         </Card>
 
         {/* Detection Frequency */}
-        <Card className="col-span-4 bg-gray-800/50 border-gray-700/50 backdrop-blur">
+        <Card className="col-span-4 bg-[#1a1f3a] border-gray-800">
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle className="text-white text-base">Detection Frequency</CardTitle>
@@ -348,16 +374,28 @@ export default function SafetyDashboard() {
             <div className="h-48">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={detectionFrequencyData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#1f2937" />
                   <XAxis 
                     dataKey="time" 
                     axisLine={false} 
                     tickLine={false} 
-                    tick={{ fill: '#6b7280', fontSize: 10 }}
+                    tick={{ fill: '#6b7280', fontSize: 9 }}
+                    angle={-45}
+                    textAnchor="end"
+                    height={60}
                   />
                   <YAxis 
                     axisLine={false} 
                     tickLine={false} 
                     tick={{ fill: '#6b7280', fontSize: 10 }}
+                    ticks={[0, 25, 50, 75, 100, 125]}
+                  />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: '#1a1f3a', 
+                      border: '1px solid #374151',
+                      borderRadius: '8px'
+                    }}
                   />
                   <Bar dataKey="violations" fill="#3b82f6" radius={[4, 4, 0, 0]} />
                 </BarChart>
@@ -367,7 +405,7 @@ export default function SafetyDashboard() {
         </Card>
 
         {/* Safety Violation Trends */}
-        <Card className="col-span-4 bg-gray-800/50 border-gray-700/50 backdrop-blur">
+        <Card className="col-span-4 bg-[#1a1f3a] border-gray-800">
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle className="text-white text-base">Safety Violation Trends</CardTitle>
@@ -384,36 +422,80 @@ export default function SafetyDashboard() {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="h-48 flex items-center justify-center">
-              {/* Dot matrix visualization */}
-              <div className="grid grid-cols-12 gap-1">
-                {Array.from({ length: 96 }, (_, i) => {
-                  const colors = ['#3b82f6', '#ef4444', '#f59e0b', '#10b981', '#6366f1'];
-                  const randomColor = colors[Math.floor(Math.random() * colors.length)];
-                  const shouldShow = Math.random() > 0.3;
-                  return (
-                    <div
-                      key={i}
-                      className="w-2 h-2 rounded-full"
-                      style={{
-                        backgroundColor: shouldShow ? randomColor : '#1f2937',
-                        opacity: shouldShow ? (0.5 + Math.random() * 0.5) : 0.3
-                      }}
-                    />
-                  );
-                })}
+            <div className="h-48">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={violationTrendsData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#1f2937" />
+                  <XAxis 
+                    dataKey="time" 
+                    axisLine={false} 
+                    tickLine={false} 
+                    tick={{ fill: '#6b7280', fontSize: 10 }}
+                  />
+                  <YAxis 
+                    axisLine={false} 
+                    tickLine={false} 
+                    tick={{ fill: '#6b7280', fontSize: 10 }}
+                  />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: '#1a1f3a', 
+                      border: '1px solid #374151',
+                      borderRadius: '8px'
+                    }}
+                  />
+                  <Line type="monotone" dataKey="helmet" stroke="#3b82f6" strokeWidth={2} dot={false} name="No Helmet" />
+                  <Line type="monotone" dataKey="vest" stroke="#f59e0b" strokeWidth={2} dot={false} name="No Vest" />
+                  <Line type="monotone" dataKey="harness" stroke="#8b5cf6" strokeWidth={2} dot={false} name="No Harness" />
+                  <Line type="monotone" dataKey="uniform" stroke="#10b981" strokeWidth={2} dot={false} name="No Uniform" />
+                  <Line type="monotone" dataKey="smoke" stroke="#ef4444" strokeWidth={2} dot={false} name="Smoke" />
+                  <Line type="monotone" dataKey="fire" stroke="#f97316" strokeWidth={2} dot={false} name="Fire" />
+                  <Line type="monotone" dataKey="leakage" stroke="#06b6d4" strokeWidth={2} dot={false} name="Leakage" />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="mt-2 flex flex-wrap gap-4 text-xs">
+              <div className="flex items-center gap-1">
+                <div className="w-3 h-0.5 bg-blue-500"></div>
+                <span className="text-gray-400">No Helmet</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <div className="w-3 h-0.5 bg-yellow-500"></div>
+                <span className="text-gray-400">No Vest</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <div className="w-3 h-0.5 bg-purple-500"></div>
+                <span className="text-gray-400">No Harness</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <div className="w-3 h-0.5 bg-green-500"></div>
+                <span className="text-gray-400">No Uniform</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <div className="w-3 h-0.5 bg-red-500"></div>
+                <span className="text-gray-400">Smoke</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <div className="w-3 h-0.5 bg-orange-500"></div>
+                <span className="text-gray-400">Fire</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <div className="w-3 h-0.5 bg-cyan-500"></div>
+                <span className="text-gray-400">Leakage</span>
               </div>
             </div>
           </CardContent>
         </Card>
 
         {/* Violation Distribution */}
-        <Card className="col-span-4 bg-gray-800/50 border-gray-700/50 backdrop-blur">
+        <Card className="col-span-4 bg-[#1a1f3a] border-gray-800">
           <CardHeader>
-            <CardTitle className="text-white text-base">Violation Distribution</CardTitle>
-            <Button variant="ghost" size="sm" className="text-gray-400 h-6 p-0">
-              <Filter className="w-4 h-4" />
-            </Button>
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-white text-base">Violation Distribution</CardTitle>
+              <Button variant="ghost" size="sm" className="text-gray-400 h-6 p-0">
+                <Filter className="w-4 h-4" />
+              </Button>
+            </div>
           </CardHeader>
           <CardContent>
             <div className="h-48">
@@ -425,38 +507,66 @@ export default function SafetyDashboard() {
                     cy="50%"
                     innerRadius={40}
                     outerRadius={70}
-                    paddingAngle={5}
+                    paddingAngle={2}
                     dataKey="value"
                   >
                     {violationDistribution.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
                   </Pie>
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: '#1a1f3a', 
+                      border: '1px solid #374151',
+                      borderRadius: '8px'
+                    }}
+                  />
                 </PieChart>
               </ResponsiveContainer>
             </div>
             <div className="mt-2 space-y-2">
-              {violationDistribution.map((item, index) => (
-                <div key={index} className="flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded" style={{ backgroundColor: item.color }}></div>
-                    <span className="text-gray-300">{item.name.replace('\n', ' ')}</span>
-                  </div>
-                  <span className="text-white font-medium">{item.value}%</span>
+              <div className="flex items-center justify-between text-xs">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded" style={{ backgroundColor: '#3b82f6' }}></div>
+                  <span className="text-gray-300">Fire 6.5%</span>
                 </div>
-              ))}
+              </div>
+              <div className="flex items-center justify-between text-xs">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded" style={{ backgroundColor: '#06b6d4' }}></div>
+                  <span className="text-gray-300">Smoke 3.1%</span>
+                </div>
+              </div>
+              <div className="flex items-center justify-between text-xs">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded" style={{ backgroundColor: '#8b5cf6' }}></div>
+                  <span className="text-gray-300">No Harness 5.1%</span>
+                </div>
+              </div>
+              <div className="flex items-center justify-between text-xs">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded" style={{ backgroundColor: '#6366f1' }}></div>
+                  <span className="text-gray-300">No Helmet 59.1%</span>
+                </div>
+              </div>
+              <div className="flex items-center justify-between text-xs">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded" style={{ backgroundColor: '#3b82f6' }}></div>
+                  <span className="text-gray-300">No Vest 26.3%</span>
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>
 
         {/* Detection Summary */}
-        <Card className="col-span-4 bg-gray-800/50 border-gray-700/50 backdrop-blur">
+        <Card className="col-span-4 bg-[#1a1f3a] border-gray-800">
           <CardHeader>
             <CardTitle className="text-white text-base">Detection Summary</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
             {detectionSummary.map((item, index) => (
-              <div key={index} className="flex items-center justify-between p-3 bg-gray-900/50 rounded-lg">
+              <div key={index} className="flex items-center justify-between p-3 bg-[#0a0e27] rounded-lg">
                 <div className="flex items-center gap-3">
                   <div className={`p-2 rounded-lg ${index === 0 ? 'bg-blue-600/20' : index === 1 ? 'bg-gray-600/20' : 'bg-gray-700/20'}`}>
                     <item.icon className={`w-4 h-4 ${index === 0 ? 'text-blue-400' : 'text-gray-400'}`} />
@@ -470,7 +580,7 @@ export default function SafetyDashboard() {
         </Card>
 
         {/* Detections per Camera */}
-        <Card className="col-span-4 bg-gray-800/50 border-gray-700/50 backdrop-blur">
+        <Card className="col-span-4 bg-[#1a1f3a] border-gray-800">
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle className="text-white text-base">Detections per Camera</CardTitle>
@@ -501,7 +611,7 @@ export default function SafetyDashboard() {
         </Card>
 
         {/* Detections per Site */}
-        <Card className="col-span-4 bg-gray-800/50 border-gray-700/50 backdrop-blur">
+        <Card className="col-span-4 bg-[#1a1f3a] border-gray-800">
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle className="text-white text-base">Detections per Site</CardTitle>
