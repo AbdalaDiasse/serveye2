@@ -207,12 +207,15 @@ export default function SafetyDashboard() {
     { time: '18:00', helmet: 9, vest: 18, harness: 6, uniform: 3, smoke: 3, fire: 2, leakage: 2 }
   ];
 
-  // Violation distribution
+  // Violation distribution - matching screenshot data
   const violationDistribution = [
-    { name: 'PPE\nViolations', value: 65, percentage: '65.5%', color: '#3b82f6' },
-    { name: 'Safety\n3.1%', value: 3.1, percentage: '3.1%', color: '#06b6d4' },
-    { name: 'No Harness\n5.1%', value: 5.1, percentage: '5.1%', color: '#8b5cf6' },
-    { name: 'No Vest\n26.3%', value: 26.3, percentage: '26.3%', color: '#6366f1' }
+    { name: 'No Helmet', value: 35.3, percentage: '35.3%', color: '#2563eb' },
+    { name: 'No Vest', value: 26.6, percentage: '26.6%', color: '#1d4ed8' },
+    { name: 'No Harness', value: 12.5, percentage: '12.5%', color: '#3b82f6' },
+    { name: 'No Uniform', value: 9.1, percentage: '9.1%', color: '#60a5fa' },
+    { name: 'Smoke', value: 7.5, percentage: '7.5%', color: '#93c5fd' },
+    { name: 'Fire', value: 4.8, percentage: '4.8%', color: '#bfdbfe' },
+    { name: 'Leakage', value: 3.2, percentage: '3.2%', color: '#dbeafe' }
   ];
 
   // Detection summary
@@ -565,27 +568,29 @@ export default function SafetyDashboard() {
         </Card>
 
         {/* Violation Distribution */}
-        <Card className={`col-span-4 ${currentTheme.cardBg} ${currentTheme.cardBorder}`}>
+        <Card className="col-span-4 bg-white border border-gray-200">
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle className={`${currentTheme.text} text-base`}>Violation Distribution</CardTitle>
-              <Button variant="ghost" size="sm" className={`${currentTheme.textMuted} h-6 p-0`}>
-                <Filter className="w-4 h-4" />
-              </Button>
+              <CardTitle className="text-gray-900 text-base font-medium">Violation Distribution</CardTitle>
+              <button className="w-6 h-6 flex items-center justify-center text-gray-400 hover:text-gray-600">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M6 9l6 6 6-6"/>
+                </svg>
+              </button>
             </div>
           </CardHeader>
           <CardContent>
-            <div className="h-48">
+            <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
                     data={violationDistribution}
                     cx="50%"
                     cy="50%"
-                    innerRadius={40}
-                    outerRadius={70}
-                    paddingAngle={2}
+                    outerRadius={90}
                     dataKey="value"
+                    label={({ name, percentage }) => `${name}\n${percentage}`}
+                    labelLine={{ stroke: '#94a3b8', strokeWidth: 1 }}
                   >
                     {violationDistribution.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.color} />
@@ -593,45 +598,14 @@ export default function SafetyDashboard() {
                   </Pie>
                   <Tooltip 
                     contentStyle={{ 
-                      backgroundColor: currentTheme.tooltipBg, 
-                      border: `1px solid ${currentTheme.tooltipBorder}`,
-                      borderRadius: '8px'
+                      backgroundColor: 'white', 
+                      border: '1px solid #e2e8f0',
+                      borderRadius: '8px',
+                      fontSize: '12px'
                     }}
                   />
                 </PieChart>
               </ResponsiveContainer>
-            </div>
-            <div className="mt-2 space-y-2">
-              <div className="flex items-center justify-between text-xs">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded" style={{ backgroundColor: '#3b82f6' }}></div>
-                  <span className={currentTheme.textSecondary}>Fire 6.5%</span>
-                </div>
-              </div>
-              <div className="flex items-center justify-between text-xs">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded" style={{ backgroundColor: '#06b6d4' }}></div>
-                  <span className={currentTheme.textSecondary}>Smoke 3.1%</span>
-                </div>
-              </div>
-              <div className="flex items-center justify-between text-xs">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded" style={{ backgroundColor: '#8b5cf6' }}></div>
-                  <span className={currentTheme.textSecondary}>No Harness 5.1%</span>
-                </div>
-              </div>
-              <div className="flex items-center justify-between text-xs">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded" style={{ backgroundColor: '#6366f1' }}></div>
-                  <span className={currentTheme.textSecondary}>No Helmet 59.1%</span>
-                </div>
-              </div>
-              <div className="flex items-center justify-between text-xs">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded" style={{ backgroundColor: '#3b82f6' }}></div>
-                  <span className={currentTheme.textSecondary}>No Vest 26.3%</span>
-                </div>
-              </div>
             </div>
           </CardContent>
         </Card>
