@@ -521,7 +521,7 @@ export default function SafetyDashboard() {
               </div>
               <div className="flex flex-col">
                 <h3 className={`text-base font-medium ${currentTheme.text} mb-4`}>Safety Recommendations</h3>
-                <div className="h-64 overflow-y-auto space-y-3 pr-2">
+                <div className="h-64 overflow-y-scroll scrollbar-hide space-y-3 pr-2">
                   {safetyRecommendations.map((recommendation, index) => (
                     <div key={index} className={`flex items-center gap-3 p-3 ${currentTheme.innerCardBg} rounded-lg`}>
                       <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
@@ -556,7 +556,7 @@ export default function SafetyDashboard() {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="h-80 overflow-y-auto space-y-3 pr-2">
+            <div className="h-80 overflow-y-scroll scrollbar-hide space-y-3 pr-2">
               {liveDetections.map((detection) => (
                 <div key={detection.id} className={`flex items-center gap-4 p-3 ${currentTheme.innerCardBg} rounded-lg`}>
                   <img 
@@ -780,7 +780,7 @@ export default function SafetyDashboard() {
             <CardTitle className={`${currentTheme.text} text-base`}>Detection Summary</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="h-64 overflow-y-auto space-y-3 pr-2">
+            <div className="h-64 overflow-y-scroll scrollbar-hide space-y-3 pr-2">
               {detectionSummary.map((item, index) => (
                 <div key={index} className={`flex items-center justify-between p-3 ${currentTheme.innerCardBg} rounded-lg`}>
                   <div className="flex items-center gap-3">
@@ -807,7 +807,7 @@ export default function SafetyDashboard() {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="h-64 overflow-y-auto space-y-3 pr-2">
+            <div className="h-64 overflow-y-scroll scrollbar-hide space-y-3 pr-2">
               {camerasData.map((camera, index) => (
                 <div key={index} className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
@@ -840,7 +840,7 @@ export default function SafetyDashboard() {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="h-64 overflow-y-auto space-y-3 pr-2">
+            <div className="h-64 overflow-y-scroll scrollbar-hide space-y-3 pr-2">
               {sitesData.map((site, index) => (
                 <div key={index} className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
