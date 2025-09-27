@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ControlPanelSection } from "./sections/ControlPanelSection";
 import { EventSummarySection } from "./sections/EventSummarySection";
 import { CapturePage } from "./CapturePage";
@@ -21,6 +21,16 @@ import { Search, Settings, Bell, Moon, Sun } from "lucide-react";
 export const Frame = (): JSX.Element => {
   const [currentPage, setCurrentPage] = useState<string>("dashboard");
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
+
+  // Apply theme to document element
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === 'dark') {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+  }, [theme]);
 
   const toggleTheme = () => {
     setTheme(prev => prev === 'light' ? 'dark' : 'light');
@@ -144,9 +154,9 @@ export const Frame = (): JSX.Element => {
   const pageInfo = getPageTitle();
   
   return (
-    <div className="flex flex-col w-full min-h-screen bg-white border-2 border-solid border-[#ced4da]">
+    <div className="flex flex-col w-full min-h-screen bg-white dark:bg-gray-900 border-2 border-solid border-[#ced4da] dark:border-gray-700">
       {/* Top Header Bar */}
-      <header className="w-full bg-white border-b border-[#ced4da] px-6 py-3 flex items-center justify-between">
+      <header className="w-full bg-white dark:bg-gray-800 border-b border-[#ced4da] dark:border-gray-700 px-6 py-3 flex items-center justify-between">
         {/* Left side - SYRATE branding and page title */}
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-3">
@@ -154,14 +164,14 @@ export const Frame = (): JSX.Element => {
               <span className="text-white font-bold text-sm">S</span>
             </div>
             <div>
-              <div className="font-bold text-gray-800 text-sm">SYRATE</div>
-              <div className="text-xs text-gray-500">Safety Module</div>
+              <div className="font-bold text-gray-800 dark:text-gray-200 text-sm">SYRATE</div>
+              <div className="text-xs text-gray-500 dark:text-gray-400">Safety Module</div>
             </div>
           </div>
           
-          <div className="border-l border-gray-300 pl-6">
-            <h1 className="text-xl font-semibold text-[#0070F3]">{pageInfo.title}</h1>
-            <p className="text-sm text-gray-500">{pageInfo.subtitle}</p>
+          <div className="border-l border-gray-300 dark:border-gray-600 pl-6">
+            <h1 className="text-xl font-semibold text-[#0070F3] dark:text-blue-400">{pageInfo.title}</h1>
+            <p className="text-sm text-gray-500 dark:text-gray-400">{pageInfo.subtitle}</p>
           </div>
         </div>
 
@@ -171,41 +181,42 @@ export const Frame = (): JSX.Element => {
             <input
               type="text"
               placeholder="Search violations..."
-              className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg w-64 text-sm border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#0070F3] focus:border-transparent"
+              className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-lg w-64 text-sm border border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#0070F3] dark:focus:ring-blue-400 focus:border-transparent placeholder:text-gray-500 dark:placeholder:text-gray-400"
             />
-            <Search className="w-4 h-4 text-gray-400 absolute right-3 top-2.5" />
+            <Search className="w-4 h-4 text-gray-400 dark:text-gray-500 absolute right-3 top-2.5" />
           </div>
           
           <Button 
             variant="ghost" 
             size="sm" 
             onClick={toggleTheme}
-            className="text-gray-500 hover:text-gray-700"
+            className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+            data-testid="button-toggle-theme"
           >
             {theme === 'light' ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
           </Button>
           
-          <Button variant="ghost" size="sm" className="text-gray-500 hover:text-gray-700">
+          <Button variant="ghost" size="sm" className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
             <Settings className="w-4 h-4" />
           </Button>
           
-          <Button variant="ghost" size="sm" className="text-gray-500 hover:text-gray-700 relative">
+          <Button variant="ghost" size="sm" className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 relative">
             <Bell className="w-4 h-4" />
             <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
           </Button>
           
-          <div className="flex items-center gap-3 border-l border-gray-300 pl-4">
+          <div className="flex items-center gap-3 border-l border-gray-300 dark:border-gray-600 pl-4">
             <img src="/api/placeholder/32/32" alt="User" className="w-8 h-8 rounded-full" />
             <div className="text-sm">
-              <div className="font-medium text-gray-700">Safety Admin</div>
-              <div className="text-xs text-gray-500">Safety Manager</div>
+              <div className="font-medium text-gray-700 dark:text-gray-300">Safety Admin</div>
+              <div className="text-xs text-gray-500 dark:text-gray-400">Safety Manager</div>
             </div>
           </div>
         </div>
       </header>
 
       {/* Main content area */}
-      <div className="flex flex-1 bg-[linear-gradient(90deg,rgba(248,250,252,1)_0%,rgba(230,242,255,1)_100%)]">
+      <div className="flex flex-1 bg-[linear-gradient(90deg,rgba(248,250,252,1)_0%,rgba(230,242,255,1)_100%)] dark:bg-[linear-gradient(90deg,rgba(30,41,59,1)_0%,rgba(15,23,42,1)_100%)]">
         <div className="flex w-full">
           <EventSummarySection currentPage={currentPage} setCurrentPage={setCurrentPage} />
           <div className="flex-1">
