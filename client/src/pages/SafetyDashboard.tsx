@@ -339,7 +339,7 @@ export default function SafetyDashboard() {
       {/* Main Content Grid */}
       <div className="grid grid-cols-12 gap-6">
         {/* Safety Module Performance */}
-        <Card className="col-span-8 bg-white border border-gray-200">
+        <Card className="col-span-7 bg-white border border-gray-200">
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle className="text-gray-900 text-base font-medium">Safety Module Performance</CardTitle>
@@ -444,7 +444,7 @@ export default function SafetyDashboard() {
         </Card>
 
         {/* Live Detections */}
-        <Card className={`col-span-7 ${currentTheme.cardBg} ${currentTheme.cardBorder}`}>
+        <Card className={`col-span-5 ${currentTheme.cardBg} ${currentTheme.cardBorder}`}>
           <CardHeader>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
