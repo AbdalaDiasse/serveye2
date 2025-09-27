@@ -504,13 +504,15 @@ export default function SafetyDashboard() {
                     <Badge className={`${detection.statusColor} text-white text-xs px-3 py-1 rounded-full font-medium`}>
                       {detection.status}
                     </Badge>
-                    <Badge className={`${detection.severityColor} text-white text-xs px-3 py-1 rounded-full font-medium`}>
-                      {detection.severity}
-                    </Badge>
-                    <Button size="sm" className="h-7 px-3 bg-blue-500 hover:bg-blue-600 text-white text-xs font-medium rounded-full">
-                      <Settings className="w-3 h-3 mr-1" />
-                      Process
-                    </Button>
+                    <div className="flex items-center gap-2">
+                      <Badge className={`${detection.severityColor} text-white text-xs px-3 py-1 rounded-full font-medium`}>
+                        {detection.severity}
+                      </Badge>
+                      <Button size="sm" className="h-7 px-3 bg-blue-500 hover:bg-blue-600 text-white text-xs font-medium rounded-full">
+                        <Settings className="w-3 h-3 mr-1" />
+                        Process
+                      </Button>
+                    </div>
                   </div>
                 </div>
               ))}
