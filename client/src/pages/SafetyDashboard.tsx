@@ -957,7 +957,7 @@ export default function SafetyDashboard() {
           <CardContent>
             <div className="h-64 overflow-y-scroll scrollbar-hide space-y-3 pr-2">
               {camerasData.map((camera, index) => (
-                <div key={index} className="flex items-center justify-between">
+                <div key={index} className={`flex items-center justify-between p-3 ${currentTheme.innerCardBg} rounded-lg`}>
                   <div className="flex items-center gap-3">
                     <div className="p-2 bg-blue-600/20 rounded-lg">
                       <Camera className="w-4 h-4 text-blue-400" />
@@ -990,7 +990,7 @@ export default function SafetyDashboard() {
           <CardContent>
             <div className="h-64 overflow-y-scroll scrollbar-hide space-y-3 pr-2">
               {sitesData.map((site, index) => (
-                <div key={index} className="flex items-center justify-between">
+                <div key={index} className={`flex items-center justify-between p-3 ${currentTheme.innerCardBg} rounded-lg`}>
                   <div className="flex items-center gap-3">
                     <div className="p-2 bg-blue-600/20 rounded-lg">
                       <MapPin className="w-4 h-4 text-blue-400" />
