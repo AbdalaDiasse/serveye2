@@ -162,10 +162,35 @@ export default function SafetyDashboard() {
       title: 'Alert Threshold',
       description: 'Fine-tune alert sensitivity',
       icon: Settings
+    },
+    {
+      title: 'Emergency Procedures',
+      description: 'Review evacuation plans',
+      icon: AlertTriangle
+    },
+    {
+      title: 'Equipment Maintenance',
+      description: 'Schedule regular inspections',
+      icon: Settings
+    },
+    {
+      title: 'Staff Communication',
+      description: 'Improve safety notifications',
+      icon: Bell
+    },
+    {
+      title: 'Zone Monitoring',
+      description: 'Enhance restricted area access',
+      icon: MapPin
+    },
+    {
+      title: 'Incident Reporting',
+      description: 'Streamline violation reports',
+      icon: Shield
     }
   ];
 
-  // Live detections - exact from design
+  // Live detections - expanded for scrolling
   const liveDetections = [
     {
       id: 1,
@@ -210,6 +235,50 @@ export default function SafetyDashboard() {
       status: 'Resolved',
       statusColor: 'bg-gray-500',
       thumbnail: detectionImage4
+    },
+    {
+      id: 5,
+      type: 'No Uniform Detected',
+      location: 'Maintenance Bay',
+      area: 'Site B',
+      time: '15 mins ago',
+      camera: 'CAM-08',
+      status: 'New',
+      statusColor: 'bg-green-500',
+      thumbnail: detectionImage1
+    },
+    {
+      id: 6,
+      type: 'Fire Detected',
+      location: 'Chemical Storage',
+      area: 'Site C',
+      time: '18 mins ago',
+      camera: 'CAM-12',
+      status: 'Critical',
+      statusColor: 'bg-red-500',
+      thumbnail: detectionImage2
+    },
+    {
+      id: 7,
+      type: 'Unauthorized Access',
+      location: 'Restricted Zone',
+      area: 'Site A',
+      time: '22 mins ago',
+      camera: 'CAM-01',
+      status: 'In Review',
+      statusColor: 'bg-yellow-500',
+      thumbnail: detectionImage3
+    },
+    {
+      id: 8,
+      type: 'Equipment Malfunction',
+      location: 'Production Line',
+      area: 'Site B',
+      time: '25 mins ago',
+      camera: 'CAM-06',
+      status: 'Confirmed',
+      statusColor: 'bg-blue-500',
+      thumbnail: detectionImage4
     }
   ];
 
@@ -251,27 +320,46 @@ export default function SafetyDashboard() {
     { name: 'Leakage', value: 3.2, percentage: '3.2%', color: '#dbeafe' }
   ];
 
-  // Detection summary
+  // Detection summary - expanded
   const detectionSummary = [
     { type: 'Critical Violations', count: 108, icon: AlertTriangle },
-    { type: 'High\nPriority', count: 101, icon: User },
-    { type: 'Medium Priority', count: 31, icon: Shield }
+    { type: 'High Priority', count: 101, icon: User },
+    { type: 'Medium Priority', count: 31, icon: Shield },
+    { type: 'Low Priority', count: 45, icon: Users },
+    { type: 'Pending Review', count: 67, icon: RefreshCw },
+    { type: 'Resolved Today', count: 234, icon: CircleCheck },
+    { type: 'Equipment Issues', count: 18, icon: Settings },
+    { type: 'Training Required', count: 92, icon: HardHat }
   ];
 
-  // Detections per camera - exact from design
+  // Detections per camera - expanded
   const camerasData = [
     { name: 'CAM-05', zone: 'Construction Zone A', violations: 45 },
     { name: 'CAM-02', zone: 'Warehouse', violations: 38 },
     { name: 'CAM-03', zone: 'High Work Zone A', violations: 29 },
-    { name: 'CAM-07', zone: 'Factory Floor C', violations: 24 }
+    { name: 'CAM-07', zone: 'Factory Floor C', violations: 24 },
+    { name: 'CAM-01', zone: 'Main Entrance', violations: 19 },
+    { name: 'CAM-04', zone: 'Loading Dock', violations: 33 },
+    { name: 'CAM-06', zone: 'Production Line B', violations: 41 },
+    { name: 'CAM-08', zone: 'Maintenance Bay', violations: 15 },
+    { name: 'CAM-09', zone: 'Chemical Storage', violations: 27 },
+    { name: 'CAM-10', zone: 'Office Area', violations: 8 },
+    { name: 'CAM-11', zone: 'Parking Lot', violations: 12 },
+    { name: 'CAM-12', zone: 'Emergency Exit', violations: 22 }
   ];
 
-  // Detections per site - exact from design
+  // Detections per site - expanded
   const sitesData = [
     { name: 'Site A', zone: 'Construction Zone', violations: 123, total: 'total violations' },
     { name: 'Site B', zone: 'Warehouse Complex', violations: 87, total: 'total violations' },
     { name: 'Site C', zone: 'Factory Floor', violations: 64, total: 'total violations' },
-    { name: 'Site D', zone: '', violations: 48, total: 'total violations' }
+    { name: 'Site D', zone: 'Manufacturing Plant', violations: 48, total: 'total violations' },
+    { name: 'Site E', zone: 'Chemical Processing', violations: 76, total: 'total violations' },
+    { name: 'Site F', zone: 'Storage Facility', violations: 35, total: 'total violations' },
+    { name: 'Site G', zone: 'Quality Control', violations: 29, total: 'total violations' },
+    { name: 'Site H', zone: 'Shipping Department', violations: 42, total: 'total violations' },
+    { name: 'Site I', zone: 'Research Lab', violations: 18, total: 'total violations' },
+    { name: 'Site J', zone: 'Maintenance Shop', violations: 53, total: 'total violations' }
   ];
 
   return (
@@ -433,7 +521,7 @@ export default function SafetyDashboard() {
               </div>
               <div className="flex flex-col">
                 <h3 className={`text-base font-medium ${currentTheme.text} mb-4`}>Safety Recommendations</h3>
-                <div className="space-y-3">
+                <div className="h-64 overflow-y-auto space-y-3 pr-2">
                   {safetyRecommendations.map((recommendation, index) => (
                     <div key={index} className={`flex items-center gap-3 p-3 ${currentTheme.innerCardBg} rounded-lg`}>
                       <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
@@ -467,34 +555,36 @@ export default function SafetyDashboard() {
               </Button>
             </div>
           </CardHeader>
-          <CardContent className="space-y-3">
-            {liveDetections.map((detection) => (
-              <div key={detection.id} className={`flex items-center gap-4 p-3 ${currentTheme.innerCardBg} rounded-lg`}>
-                <img 
-                  src={detection.thumbnail} 
-                  alt={detection.type}
-                  className="w-24 h-16 object-cover rounded-lg border border-gray-600"
-                />
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-1">
-                    <h4 className={`text-sm font-medium ${currentTheme.text}`}>{detection.type}</h4>
+          <CardContent>
+            <div className="h-80 overflow-y-auto space-y-3 pr-2">
+              {liveDetections.map((detection) => (
+                <div key={detection.id} className={`flex items-center gap-4 p-3 ${currentTheme.innerCardBg} rounded-lg`}>
+                  <img 
+                    src={detection.thumbnail} 
+                    alt={detection.type}
+                    className="w-24 h-16 object-cover rounded-lg border border-gray-600"
+                  />
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <h4 className={`text-sm font-medium ${currentTheme.text}`}>{detection.type}</h4>
+                    </div>
+                    <div className={`flex items-center gap-4 text-xs ${currentTheme.textMuted}`}>
+                      <span>{detection.area} • {detection.location}</span>
+                      <span>{detection.time} • {detection.camera}</span>
+                    </div>
                   </div>
-                  <div className={`flex items-center gap-4 text-xs ${currentTheme.textMuted}`}>
-                    <span>{detection.area} • {detection.location}</span>
-                    <span>{detection.time} • {detection.camera}</span>
+                  <div className="flex items-center gap-2">
+                    <Badge className={`${detection.statusColor} text-white text-xs px-3 py-1`}>
+                      {detection.status}
+                    </Badge>
+                    <Button variant="ghost" size="sm" className={`h-8 px-2 ${currentTheme.textMuted}`}>
+                      <Settings className="w-4 h-4 mr-1" />
+                      Process
+                    </Button>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Badge className={`${detection.statusColor} text-white text-xs px-3 py-1`}>
-                    {detection.status}
-                  </Badge>
-                  <Button variant="ghost" size="sm" className={`h-8 px-2 ${currentTheme.textMuted}`}>
-                    <Settings className="w-4 h-4 mr-1" />
-                    Process
-                  </Button>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </CardContent>
         </Card>
 
@@ -689,18 +779,20 @@ export default function SafetyDashboard() {
           <CardHeader>
             <CardTitle className={`${currentTheme.text} text-base`}>Detection Summary</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-3">
-            {detectionSummary.map((item, index) => (
-              <div key={index} className={`flex items-center justify-between p-3 ${currentTheme.innerCardBg} rounded-lg`}>
-                <div className="flex items-center gap-3">
-                  <div className={`p-2 rounded-lg ${index === 0 ? 'bg-blue-600/20' : index === 1 ? 'bg-gray-600/20' : 'bg-gray-700/20'}`}>
-                    <item.icon className={`w-4 h-4 ${index === 0 ? 'text-blue-400' : currentTheme.textMuted}`} />
+          <CardContent>
+            <div className="h-64 overflow-y-auto space-y-3 pr-2">
+              {detectionSummary.map((item, index) => (
+                <div key={index} className={`flex items-center justify-between p-3 ${currentTheme.innerCardBg} rounded-lg`}>
+                  <div className="flex items-center gap-3">
+                    <div className={`p-2 rounded-lg ${index === 0 ? 'bg-blue-600/20' : index === 1 ? 'bg-gray-600/20' : 'bg-gray-700/20'}`}>
+                      <item.icon className={`w-4 h-4 ${index === 0 ? 'text-blue-400' : currentTheme.textMuted}`} />
+                    </div>
+                    <span className={`text-sm ${currentTheme.textSecondary}`}>{item.type}</span>
                   </div>
-                  <span className={`text-sm ${currentTheme.textSecondary}`}>{item.type}</span>
+                  <span className={`text-2xl font-bold ${currentTheme.text}`}>{item.count}</span>
                 </div>
-                <span className={`text-2xl font-bold ${currentTheme.text}`}>{item.count}</span>
-              </div>
-            ))}
+              ))}
+            </div>
           </CardContent>
         </Card>
 
@@ -714,24 +806,26 @@ export default function SafetyDashboard() {
               </Button>
             </div>
           </CardHeader>
-          <CardContent className="space-y-3">
-            {camerasData.map((camera, index) => (
-              <div key={index} className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-blue-600/20 rounded-lg">
-                    <Camera className="w-4 h-4 text-blue-400" />
+          <CardContent>
+            <div className="h-64 overflow-y-auto space-y-3 pr-2">
+              {camerasData.map((camera, index) => (
+                <div key={index} className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-blue-600/20 rounded-lg">
+                      <Camera className="w-4 h-4 text-blue-400" />
+                    </div>
+                    <div>
+                      <div className={`text-sm font-medium ${currentTheme.text}`}>{camera.name}</div>
+                      <div className={`text-xs ${currentTheme.textMuted}`}>{camera.zone}</div>
+                    </div>
                   </div>
-                  <div>
-                    <div className={`text-sm font-medium ${currentTheme.text}`}>{camera.name}</div>
-                    <div className={`text-xs ${currentTheme.textMuted}`}>{camera.zone}</div>
+                  <div className="text-right">
+                    <div className="text-xl font-bold text-blue-400">{camera.violations}</div>
+                    <div className={`text-xs ${currentTheme.textMuted}`}>violations</div>
                   </div>
                 </div>
-                <div className="text-right">
-                  <div className="text-xl font-bold text-blue-400">{camera.violations}</div>
-                  <div className={`text-xs ${currentTheme.textMuted}`}>violations</div>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </CardContent>
         </Card>
 
@@ -745,24 +839,26 @@ export default function SafetyDashboard() {
               </Button>
             </div>
           </CardHeader>
-          <CardContent className="space-y-3">
-            {sitesData.map((site, index) => (
-              <div key={index} className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-blue-600/20 rounded-lg">
-                    <MapPin className="w-4 h-4 text-blue-400" />
+          <CardContent>
+            <div className="h-64 overflow-y-auto space-y-3 pr-2">
+              {sitesData.map((site, index) => (
+                <div key={index} className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-blue-600/20 rounded-lg">
+                      <MapPin className="w-4 h-4 text-blue-400" />
+                    </div>
+                    <div>
+                      <div className={`text-sm font-medium ${currentTheme.text}`}>{site.name}</div>
+                      <div className={`text-xs ${currentTheme.textMuted}`}>{site.zone}</div>
+                    </div>
                   </div>
-                  <div>
-                    <div className={`text-sm font-medium ${currentTheme.text}`}>{site.name}</div>
-                    <div className={`text-xs ${currentTheme.textMuted}`}>{site.zone}</div>
+                  <div className="text-right">
+                    <div className="text-xl font-bold text-blue-400">{site.violations}</div>
+                    <div className={`text-xs ${currentTheme.textMuted}`}>{site.total}</div>
                   </div>
                 </div>
-                <div className="text-right">
-                  <div className="text-xl font-bold text-blue-400">{site.violations}</div>
-                  <div className={`text-xs ${currentTheme.textMuted}`}>{site.total}</div>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </CardContent>
         </Card>
       </div>
