@@ -448,8 +448,8 @@ export default function SafetyDashboard() {
               </div>
               <div className="flex flex-col">
                 <h3 className="text-base font-medium text-gray-900 dark:text-gray-100 mb-4">Safety Recommendations</h3>
-                <div className="h-[500px] overflow-y-scroll scrollbar-hide space-y-3 pr-2">
-                  {safetyRecommendations.slice(0, 6).map((recommendation, index) => (
+                <div className="h-80 overflow-y-scroll scrollbar-hide space-y-3 pr-2">
+                  {safetyRecommendations.map((recommendation, index) => (
                     <div key={index} className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
                       <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
                         <recommendation.icon className="w-4 h-4 text-white" />
