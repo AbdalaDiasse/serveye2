@@ -221,7 +221,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                       : isVSSActive
                       ? "shadow-md bg-gradient-to-r from-purple-500 to-indigo-600"
                       : isSafetyActive
-                      ? "shadow-md bg-gradient-to-r from-green-500 to-emerald-600"
+                      ? "shadow-md bg-gradient-to-r from-[#0070F3] to-[#0056D6]"
                       : isOtherActive
                       ? "shadow-md bg-gradient-to-r from-blue-600 to-blue-500"
                       : "hover:bg-gray-50"
@@ -295,7 +295,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                         : item.name === "VSS"
                         ? 'from-purple-400 to-indigo-500'
                         : item.name === "Safety"
-                        ? 'from-green-400 to-emerald-500'
+                        ? 'from-[#0070F3] to-[#0056D6]'
                         : 'from-teal-400 to-cyan-400';
                       
                       return (
