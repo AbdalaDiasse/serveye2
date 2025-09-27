@@ -14,6 +14,8 @@ import {
   ResponsiveContainer,
   LineChart,
   Line,
+  Area,
+  AreaChart,
   PieChart,
   Pie,
   Cell,
@@ -190,15 +192,19 @@ export default function SafetyDashboard() {
     { time: '20:00-22:00', violations: 25 }
   ];
 
-  // Safety violation trends data for line chart
+  // Safety violation trends data for line chart - matching screenshot scale (0-20)
   const violationTrendsData = [
-    { time: '06:00', helmet: 12, vest: 8, harness: 5, uniform: 3, smoke: 1, fire: 0, leakage: 1 },
-    { time: '08:00', helmet: 25, vest: 18, harness: 8, uniform: 5, smoke: 2, fire: 1, leakage: 2 },
-    { time: '10:00', helmet: 35, vest: 28, harness: 12, uniform: 8, smoke: 3, fire: 1, leakage: 2 },
-    { time: '12:00', helmet: 42, vest: 32, harness: 15, uniform: 10, smoke: 4, fire: 2, leakage: 3 },
-    { time: '14:00', helmet: 38, vest: 30, harness: 14, uniform: 9, smoke: 3, fire: 2, leakage: 2 },
-    { time: '16:00', helmet: 28, vest: 22, harness: 10, uniform: 7, smoke: 2, fire: 1, leakage: 2 },
-    { time: '18:00', helmet: 15, vest: 12, harness: 6, uniform: 4, smoke: 1, fire: 0, leakage: 1 }
+    { time: '08:00', helmet: 4, vest: 2, harness: 1, uniform: 1, smoke: 1, fire: 0, leakage: 1 },
+    { time: '09:00', helmet: 5, vest: 2, harness: 2, uniform: 1, smoke: 1, fire: 0, leakage: 1 },
+    { time: '10:00', helmet: 8, vest: 3, harness: 3, uniform: 2, smoke: 2, fire: 1, leakage: 2 },
+    { time: '11:00', helmet: 10, vest: 4, harness: 4, uniform: 2, smoke: 2, fire: 1, leakage: 2 },
+    { time: '12:00', helmet: 15, vest: 5, harness: 5, uniform: 3, smoke: 3, fire: 1, leakage: 3 },
+    { time: '13:00', helmet: 12, vest: 8, harness: 5, uniform: 3, smoke: 3, fire: 2, leakage: 3 },
+    { time: '14:00', helmet: 17, vest: 9, harness: 6, uniform: 4, smoke: 3, fire: 2, leakage: 4 },
+    { time: '15:00', helmet: 18, vest: 13, harness: 7, uniform: 4, smoke: 3, fire: 2, leakage: 4 },
+    { time: '16:00', helmet: 15, vest: 14, harness: 8, uniform: 2, smoke: 2, fire: 1, leakage: 3 },
+    { time: '17:00', helmet: 12, vest: 17, harness: 7, uniform: 3, smoke: 3, fire: 2, leakage: 2 },
+    { time: '18:00', helmet: 9, vest: 18, harness: 6, uniform: 3, smoke: 3, fire: 2, leakage: 2 }
   ];
 
   // Violation distribution
@@ -473,12 +479,12 @@ export default function SafetyDashboard() {
         </Card>
 
         {/* Safety Violation Trends */}
-        <Card className={`col-span-4 ${currentTheme.cardBg} ${currentTheme.cardBorder}`}>
+        <Card className="col-span-4 bg-white border border-gray-200">
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle className={`${currentTheme.text} text-base`}>Safety Violation Trends</CardTitle>
+              <CardTitle className="text-gray-900 text-base font-medium">Safety Violation Trends</CardTitle>
               <Select defaultValue="today">
-                <SelectTrigger className={`w-20 h-7 text-xs ${theme === 'light' ? 'bg-gray-100 border-gray-300' : 'bg-gray-700 border-gray-600'}`}>
+                <SelectTrigger className="w-20 h-8 text-xs bg-gray-50 border-gray-300 text-gray-700">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -490,66 +496,69 @@ export default function SafetyDashboard() {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="h-48">
+            <div className="h-52">
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={violationTrendsData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke={currentTheme.gridStroke} />
+                <AreaChart data={violationTrendsData}>
+                  <CartesianGrid strokeDasharray="1 1" stroke="#f0f0f0" />
                   <XAxis 
                     dataKey="time" 
                     axisLine={false} 
                     tickLine={false} 
-                    tick={{ fill: currentTheme.chartText, fontSize: 10 }}
+                    tick={{ fill: '#666666', fontSize: 11 }}
                   />
                   <YAxis 
+                    domain={[0, 20]}
+                    ticks={[0, 5, 10, 15, 20]}
                     axisLine={false} 
                     tickLine={false} 
-                    tick={{ fill: currentTheme.chartText, fontSize: 10 }}
+                    tick={{ fill: '#666666', fontSize: 11 }}
                   />
                   <Tooltip 
                     contentStyle={{ 
-                      backgroundColor: currentTheme.tooltipBg, 
-                      border: `1px solid ${currentTheme.tooltipBorder}`,
-                      borderRadius: '8px'
+                      backgroundColor: 'white', 
+                      border: '1px solid #e0e0e0',
+                      borderRadius: '8px',
+                      fontSize: '12px'
                     }}
                   />
-                  <Line type="monotone" dataKey="helmet" stroke="#3b82f6" strokeWidth={2} dot={false} name="No Helmet" />
-                  <Line type="monotone" dataKey="vest" stroke="#f59e0b" strokeWidth={2} dot={false} name="No Vest" />
-                  <Line type="monotone" dataKey="harness" stroke="#8b5cf6" strokeWidth={2} dot={false} name="No Harness" />
-                  <Line type="monotone" dataKey="uniform" stroke="#10b981" strokeWidth={2} dot={false} name="No Uniform" />
-                  <Line type="monotone" dataKey="smoke" stroke="#ef4444" strokeWidth={2} dot={false} name="Smoke" />
-                  <Line type="monotone" dataKey="fire" stroke="#f97316" strokeWidth={2} dot={false} name="Fire" />
-                  <Line type="monotone" dataKey="leakage" stroke="#06b6d4" strokeWidth={2} dot={false} name="Leakage" />
-                </LineChart>
+                  <Area type="monotone" dataKey="helmet" stroke="#3b82f6" fill="#3b82f610" strokeWidth={2} />
+                  <Area type="monotone" dataKey="vest" stroke="#ef4444" fill="#ef444410" strokeWidth={2} />
+                  <Line type="monotone" dataKey="harness" stroke="#f59e0b" strokeWidth={2} dot={false} />
+                  <Line type="monotone" dataKey="uniform" stroke="#8b5cf6" strokeWidth={2} dot={false} />
+                  <Line type="monotone" dataKey="smoke" stroke="#10b981" strokeWidth={2} dot={false} />
+                  <Line type="monotone" dataKey="fire" stroke="#ec4899" strokeWidth={2} dot={false} />
+                  <Line type="monotone" dataKey="leakage" stroke="#3b82f6" strokeWidth={2} dot={false} />
+                </AreaChart>
               </ResponsiveContainer>
             </div>
-            <div className="mt-2 flex flex-wrap gap-4 text-xs">
-              <div className="flex items-center gap-1">
-                <div className="w-3 h-0.5 bg-blue-500"></div>
-                <span className={currentTheme.textMuted}>No Helmet</span>
+            <div className="mt-4 grid grid-cols-4 gap-x-6 gap-y-2 text-xs">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                <span className="text-gray-600">No Helmet</span>
               </div>
-              <div className="flex items-center gap-1">
-                <div className="w-3 h-0.5 bg-yellow-500"></div>
-                <span className={currentTheme.textMuted}>No Vest</span>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                <span className="text-gray-600">No Vest</span>
               </div>
-              <div className="flex items-center gap-1">
-                <div className="w-3 h-0.5 bg-purple-500"></div>
-                <span className={currentTheme.textMuted}>No Harness</span>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                <span className="text-gray-600">No Harness</span>
               </div>
-              <div className="flex items-center gap-1">
-                <div className="w-3 h-0.5 bg-green-500"></div>
-                <span className={currentTheme.textMuted}>No Uniform</span>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                <span className="text-gray-600">No Uniform</span>
               </div>
-              <div className="flex items-center gap-1">
-                <div className="w-3 h-0.5 bg-red-500"></div>
-                <span className={currentTheme.textMuted}>Smoke</span>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                <span className="text-gray-600">Smoke</span>
               </div>
-              <div className="flex items-center gap-1">
-                <div className="w-3 h-0.5 bg-orange-500"></div>
-                <span className={currentTheme.textMuted}>Fire</span>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-pink-500 rounded-full"></div>
+                <span className="text-gray-600">Fire</span>
               </div>
-              <div className="flex items-center gap-1">
-                <div className="w-3 h-0.5 bg-cyan-500"></div>
-                <span className={currentTheme.textMuted}>Leakage</span>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                <span className="text-gray-600">Leakage</span>
               </div>
             </div>
           </CardContent>
