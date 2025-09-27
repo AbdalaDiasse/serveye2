@@ -367,9 +367,9 @@ export default function SafetyDashboard() {
           <CardContent>
             <div className="grid grid-cols-2 gap-8">
               <div className="flex flex-col">
-                <div className="h-64 mb-4">
+                <div className="h-64 mb-4 bg-transparent dark:bg-gray-800 rounded-lg p-4">
                   <ResponsiveContainer width="100%" height="100%">
-                    <RadarChart data={radarData}>
+                    <RadarChart data={radarData} style={{ backgroundColor: 'transparent' }}>
                       <PolarGrid 
                         gridType="polygon" 
                         radialLines={true}
@@ -390,7 +390,6 @@ export default function SafetyDashboard() {
                         className="dark:fill-gray-300"
                         tickCount={5}
                         axisLine={false}
-                        gridType="polygon"
                       />
                       <Radar
                         name="Current Week"
