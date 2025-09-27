@@ -230,16 +230,12 @@
     background-color: transparent !important;
   }
   
-  /* Radar chart background fix - explicit colors */
-  .radar-card .recharts-surface {
-    background: white !important;
-    background-color: white !important;
+  /* Radar chart dark mode fix - target specific recharts surface */
+  .radar-card .recharts-surface { 
+    background: transparent !important; 
   }
-  
-  /* Dark mode - set dark background for chart */
-  .dark .radar-card .recharts-surface {
-    background: hsl(var(--card)) !important;
-    background-color: hsl(var(--card)) !important;
+  .dark .radar-card .recharts-surface { 
+    background: transparent !important; 
   }
 }
 
