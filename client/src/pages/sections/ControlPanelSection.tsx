@@ -409,56 +409,6 @@ export const ControlPanelSection = (): JSX.Element => {
 
   return (
     <div className="w-full min-h-screen relative">
-{/* Header */}
-      <header className="w-full h-20 bg-white/80 backdrop-blur-sm border-b border-white/20 shadow-sm">
-<div className="flex items-center justify-between h-full px-8">
-<div className="flex items-center gap-6">
-<Menu className="w-[18px] h-7 text-gray-700" />
-<div>
-<h1 className="text-2xl font-bold text-transparent bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text [font-family:'Inter',Helvetica]">
-Dashboard
-              </h1>
-<p className="text-sm text-slate-500 [font-family:'Inter',Helvetica]">
-Tableau de bord de sécurité
-              </p>
-</div>
-</div>
-<div className="flex items-center gap-4">
-<div className="flex items-center gap-3">
-<div className="relative">
-<Input
-                  placeholder="Rechercher..."
-                  className="w-[268px] h-[38px] bg-white/50 border-white/30 rounded-xl pl-10 text-sm text-gray-600 placeholder:text-gray-400"
-                />
-<Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-</div>
-<Button variant="ghost" size="sm" className="h-auto p-2">
-<div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center relative">
-                  <Bell className="w-6 h-6 text-gray-700" />
-                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></div>
-                </div>
-</Button>
-</div>
-<div className="flex items-center gap-3 bg-white/50 rounded-xl p-2">
-<Avatar className="w-10 h-10">
-<AvatarImage src="/figmaAssets/img.png" />
-<AvatarFallback>AA</AvatarFallback>
-</Avatar>
-<div>
-<p className="text-sm font-semibold text-gray-900 [font-family:'Inter',Helvetica]">
-admin admin
-                </p>
-<p className="text-xs text-slate-500 [font-family:'Inter',Helvetica]">
-Administrateur
-                </p>
-</div>
-<Button variant="ghost" size="sm" className="h-auto p-1">
-<ChevronDown className="w-3 h-6 text-gray-700" />
-</Button>
-</div>
-</div>
-</div>
-</header>
 <div className="p-8 space-y-8">
 {/* Top Metric Cards */}
         <div className="grid grid-cols-5 gap-6">
