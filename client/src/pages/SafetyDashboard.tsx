@@ -112,15 +112,58 @@ export default function SafetyDashboard() {
 
   const currentTheme = themeColors[theme];
 
+  // Custom filled SVG icons
+  const FilledHelmetIcon = ({ className }: { className?: string }) => (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className || "w-12 h-12"}>
+      <path d="M12 2C8.5 2 5.5 4.5 5.5 7.5v3c0 1.5.5 3 1.5 4.5h10c1-1.5 1.5-3 1.5-4.5v-3C18.5 4.5 15.5 2 12 2zm-6 13.5v2c0 1.4 1.1 2.5 2.5 2.5h7c1.4 0 2.5-1.1 2.5-2.5v-2H6z"/>
+    </svg>
+  );
+
+  const FilledVestIcon = ({ className }: { className?: string }) => (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className || "w-12 h-12"}>
+      <path d="M12 2L9 4v2c0 .5-.5 1-1 1s-1-.5-1-1V4L4 6v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V6l-3-2v2c0 .5-.5 1-1 1s-1-.5-1-1V4l-3-2z"/>
+    </svg>
+  );
+
+  const FilledHarnessIcon = ({ className }: { className?: string }) => (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className || "w-12 h-12"}>
+      <path d="M8 4a4 4 0 1 1 8 0v1.5c0 1.4-1.1 2.5-2.5 2.5h-3C9.1 8 8 6.9 8 5.5V4zm-2 8a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-6zm3 0v4h2v-4H9zm4 0v4h2v-4h-2z"/>
+    </svg>
+  );
+
+  const FilledUniformIcon = ({ className }: { className?: string }) => (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className || "w-12 h-12"}>
+      <path d="M12 2C10.9 2 10 2.9 10 4s.9 2 2 2 2-.9 2-2-.9-2-2-2zM8 7v2c0 1.1.9 2 2 2h4c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2zm-1 5c-.6 0-1 .4-1 1v7c0 .6.4 1 1 1s1-.4 1-1v-7c0-.6-.4-1-1-1zm10 0c-.6 0-1 .4-1 1v7c0 .6.4 1 1 1s1-.4 1-1v-7c0-.6-.4-1-1-1z"/>
+    </svg>
+  );
+
+  const FilledSmokeIcon = ({ className }: { className?: string }) => (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className || "w-12 h-12"}>
+      <path d="M6 12c0-1 1-2 2-2s2 1 2 2-1 2-2 2-2-1-2-2zm4-4c0-1 1-2 2-2s2 1 2 2-1 2-2 2-2-1-2-2zm4 4c0-1 1-2 2-2s2 1 2 2-1 2-2 2-2-1-2-2zm-8 4c0-1 1-2 2-2s2 1 2 2-1 2-2 2-2-1-2-2zm4 0c0-1 1-2 2-2s2 1 2 2-1 2-2 2-2-1-2-2zm4 0c0-1 1-2 2-2s2 1 2 2-1 2-2 2-2-1-2-2z"/>
+    </svg>
+  );
+
+  const FilledFireIcon = ({ className }: { className?: string }) => (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className || "w-12 h-12"}>
+      <path d="M12 2c1.1 0 2 .9 2 2 0 2.8-2.2 5-5 5s-5-2.2-5-5c0-1.1.9-2 2-2zm5 10c0 2.8-2.2 5-5 5s-5-2.2-5-5c0-2.8 2.2-5 5-5s5 2.2 5 5z"/>
+    </svg>
+  );
+
+  const FilledLeakageIcon = ({ className }: { className?: string }) => (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className || "w-12 h-12"}>
+      <path d="M12 22C8.69 22 6 19.31 6 16c0-3.31 6-12 6-12s6 8.69 6 12c0 3.31-2.69 6-6 6z"/>
+    </svg>
+  );
+
   // Key safety metrics - exact values from design
   const safetyMetrics = [
-    { label: 'No Helmet', value: 89, icon: HardHat, change: '+12%', period: 'today' },
-    { label: 'No Vest', value: 67, icon: Shirt, change: '+8%', period: 'today' },
-    { label: 'No Harness', value: 34, icon: Shield, change: '+4%', period: 'today' },
-    { label: 'No Uniform', value: 23, icon: Users, change: '+3%', period: 'today' },
-    { label: 'Smoke', value: 19, icon: Flame, change: '+15%', period: 'today' },
-    { label: 'Fire', value: 12, icon: Flame, change: '+25%', period: 'today' },
-    { label: 'Leakage', value: 8, icon: Droplets, change: '+1%', period: 'today' }
+    { label: 'No Helmet', value: 89, icon: FilledHelmetIcon, change: '+12%', period: 'today' },
+    { label: 'No Vest', value: 67, icon: FilledVestIcon, change: '+8%', period: 'today' },
+    { label: 'No Harness', value: 34, icon: FilledHarnessIcon, change: '+4%', period: 'today' },
+    { label: 'No Uniform', value: 23, icon: FilledUniformIcon, change: '+3%', period: 'today' },
+    { label: 'Smoke', value: 19, icon: FilledSmokeIcon, change: '+15%', period: 'today' },
+    { label: 'Fire', value: 12, icon: FilledFireIcon, change: '+25%', period: 'today' },
+    { label: 'Leakage', value: 8, icon: FilledLeakageIcon, change: '+1%', period: 'today' }
   ];
 
   // Radar chart data for Safety Module Performance
