@@ -295,7 +295,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                         : item.name === "VSS"
                         ? 'from-purple-400 to-indigo-500'
                         : item.name === "Safety"
-                        ? 'from-[#0070F3] to-[#0056D6]'
+                        ? 'from-[#60a5fa] to-[#3b82f6]'
                         : 'from-teal-400 to-cyan-400';
                       
                       return (
