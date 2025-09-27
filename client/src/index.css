@@ -230,12 +230,33 @@
     background-color: transparent !important;
   }
   
-  /* Radar chart dark mode fix - target specific recharts surface */
-  .radar-card .recharts-surface { 
-    background: transparent !important; 
+  /* Comprehensive radar chart background fix */
+  .radar-card svg,
+  .radar-card .recharts-surface,
+  .radar-card .recharts-wrapper,
+  .radar-card .recharts-layer {
+    background: transparent !important;
+    background-color: transparent !important;
+    fill: none !important;
   }
-  .dark .radar-card .recharts-surface { 
-    background: transparent !important; 
+  
+  /* Dark mode - ensure chart area inherits card background */
+  .dark .radar-card {
+    background-color: transparent !important;
+  }
+  
+  .dark .radar-card svg,
+  .dark .radar-card .recharts-surface,
+  .dark .radar-card .recharts-wrapper,
+  .dark .radar-card .recharts-layer {
+    background: transparent !important;
+    background-color: transparent !important;
+    fill: none !important;
+  }
+  
+  /* Ensure radar areas maintain their opacity but no background */
+  .radar-card .recharts-radar-polygon {
+    fill-opacity: 0.15 !important;
   }
 }
 
