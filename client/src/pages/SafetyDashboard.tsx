@@ -282,16 +282,16 @@ export default function SafetyDashboard() {
     }
   ];
 
-  // Detection frequency data
+  // Detection frequency data - Enhanced with gradients
   const detectionFrequencyData = [
-    { time: '06:00-08:00', violations: 95 },
-    { time: '08:00-10:00', violations: 110 },
-    { time: '10:00-12:00', violations: 75 },
-    { time: '12:00-14:00', violations: 85 },
-    { time: '14:00-16:00', violations: 65 },
-    { time: '16:00-18:00', violations: 55 },
-    { time: '18:00-20:00', violations: 35 },
-    { time: '20:00-22:00', violations: 25 }
+    { time: '06:00-08:00', violations: 95, color: '#3b82f6' },
+    { time: '08:00-10:00', violations: 110, color: '#2563eb' },
+    { time: '10:00-12:00', violations: 75, color: '#1d4ed8' },
+    { time: '12:00-14:00', violations: 85, color: '#1e40af' },
+    { time: '14:00-16:00', violations: 65, color: '#1e3a8a' },
+    { time: '16:00-18:00', violations: 55, color: '#312e81' },
+    { time: '18:00-20:00', violations: 35, color: '#3730a3' },
+    { time: '20:00-22:00', violations: 25, color: '#4338ca' }
   ];
 
   // Safety violation trends data for line chart - matching screenshot scale (0-20)
@@ -309,15 +309,15 @@ export default function SafetyDashboard() {
     { time: '18:00', helmet: 9, vest: 18, harness: 6, uniform: 3, smoke: 3, fire: 2, leakage: 2 }
   ];
 
-  // Violation distribution - matching screenshot data
+  // Violation distribution - Enhanced with beautiful gradients
   const violationDistribution = [
-    { name: 'No Helmet', value: 35.3, percentage: '35.3%', color: '#2563eb' },
-    { name: 'No Vest', value: 26.6, percentage: '26.6%', color: '#1d4ed8' },
-    { name: 'No Harness', value: 12.5, percentage: '12.5%', color: '#3b82f6' },
-    { name: 'No Uniform', value: 9.1, percentage: '9.1%', color: '#60a5fa' },
-    { name: 'Smoke', value: 7.5, percentage: '7.5%', color: '#93c5fd' },
-    { name: 'Fire', value: 4.8, percentage: '4.8%', color: '#bfdbfe' },
-    { name: 'Leakage', value: 3.2, percentage: '3.2%', color: '#dbeafe' }
+    { name: 'No Helmet', value: 35.3, percentage: '35.3%', color: '#1e40af', gradientId: 'helmet' },
+    { name: 'No Vest', value: 26.6, percentage: '26.6%', color: '#2563eb', gradientId: 'vest' },
+    { name: 'No Harness', value: 12.5, percentage: '12.5%', color: '#3b82f6', gradientId: 'harness' },
+    { name: 'No Uniform', value: 9.1, percentage: '9.1%', color: '#60a5fa', gradientId: 'uniform' },
+    { name: 'Smoke', value: 7.5, percentage: '7.5%', color: '#93c5fd', gradientId: 'smoke' },
+    { name: 'Fire', value: 4.8, percentage: '4.8%', color: '#bfdbfe', gradientId: 'fire' },
+    { name: 'Leakage', value: 3.2, percentage: '3.2%', color: '#dbeafe', gradientId: 'leakage' }
   ];
 
   // Detection summary - expanded
@@ -588,23 +588,28 @@ export default function SafetyDashboard() {
           </CardContent>
         </Card>
 
-        {/* Detection Frequency */}
-        <Card className={`col-span-4 ${currentTheme.cardBg} ${currentTheme.cardBorder}`}>
+        {/* Detection Frequency - Enhanced Beautiful Version */}
+        <Card className={`col-span-4 ${currentTheme.cardBg} ${currentTheme.cardBorder} overflow-hidden`}>
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle className={`${currentTheme.text} text-base`}>Detection Frequency</CardTitle>
+              <div>
+                <CardTitle className={`${currentTheme.text} text-lg font-semibold flex items-center gap-2`}>
+                  📊 Detection Frequency
+                </CardTitle>
+                <p className={`text-xs ${currentTheme.textMuted} mt-1`}>Hourly violation patterns</p>
+              </div>
               <div className="flex gap-2">
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className="h-7 bg-blue-600 border-blue-600 text-white text-xs hover:bg-blue-700"
+                  className="h-8 bg-gradient-to-r from-blue-600 to-blue-700 border-blue-600 text-white text-xs hover:from-blue-700 hover:to-blue-800 shadow-lg"
                 >
                   Today
                 </Button>
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className={`h-7 bg-transparent text-xs ${theme === 'light' ? 'border-gray-400 text-gray-600 hover:bg-gray-100' : 'border-gray-600 text-gray-400 hover:bg-gray-700'}`}
+                  className={`h-8 bg-transparent text-xs ${theme === 'light' ? 'border-gray-300 text-gray-600 hover:bg-gray-50' : 'border-gray-600 text-gray-400 hover:bg-gray-700/50'} transition-all duration-200`}
                 >
                   Week
                 </Button>
@@ -612,35 +617,87 @@ export default function SafetyDashboard() {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="h-48">
+            <div className="h-52">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={detectionFrequencyData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke={currentTheme.gridStroke} />
+                <BarChart data={detectionFrequencyData} margin={{ top: 10, right: 10, left: 10, bottom: 10 }}>
+                  <defs>
+                    <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.9} />
+                      <stop offset="100%" stopColor="#1e40af" stopOpacity={0.6} />
+                    </linearGradient>
+                    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+                      <feDropShadow dx="0" dy="4" stdDeviation="3" floodColor="#1e40af" floodOpacity="0.3"/>
+                    </filter>
+                  </defs>
+                  <CartesianGrid 
+                    strokeDasharray="1 3" 
+                    stroke={currentTheme.gridStroke} 
+                    strokeOpacity={0.3}
+                    vertical={false}
+                  />
                   <XAxis 
                     dataKey="time" 
                     axisLine={false} 
                     tickLine={false} 
-                    tick={{ fill: currentTheme.chartText, fontSize: 9 }}
-                    angle={-45}
+                    tick={{ 
+                      fill: currentTheme.chartText, 
+                      fontSize: 10,
+                      fontWeight: 500
+                    }}
+                    angle={-35}
                     textAnchor="end"
                     height={60}
+                    interval={0}
                   />
                   <YAxis 
                     axisLine={false} 
                     tickLine={false} 
-                    tick={{ fill: currentTheme.chartText, fontSize: 10 }}
-                    ticks={[0, 25, 50, 75, 100, 125]}
+                    tick={{ 
+                      fill: currentTheme.chartText, 
+                      fontSize: 11,
+                      fontWeight: 500
+                    }}
+                    domain={[0, 'dataMax']}
+                    tickFormatter={(value) => `${value}`}
                   />
                   <Tooltip 
                     contentStyle={{ 
-                      backgroundColor: currentTheme.tooltipBg, 
+                      backgroundColor: theme === 'light' ? 'rgba(255,255,255,0.95)' : 'rgba(30,41,59,0.95)', 
                       border: `1px solid ${currentTheme.tooltipBorder}`,
-                      borderRadius: '8px'
+                      borderRadius: '12px',
+                      fontSize: '12px',
+                      fontWeight: '500',
+                      boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
+                      backdropFilter: 'blur(8px)'
+                    }}
+                    labelStyle={{ color: currentTheme.chartText, fontWeight: 600 }}
+                    formatter={(value) => [value + ' violations', 'Count']}
+                    labelFormatter={(label) => `Time: ${label}`}
+                  />
+                  <Bar 
+                    dataKey="violations" 
+                    fill="url(#barGradient)"
+                    radius={[6, 6, 0, 0]} 
+                    filter="url(#shadow)"
+                    strokeWidth={1}
+                    stroke="#2563eb"
+                    style={{
+                      transition: 'all 0.3s ease',
+                      cursor: 'pointer'
                     }}
                   />
-                  <Bar dataKey="violations" fill="#3b82f6" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
+            </div>
+            <div className="mt-4 flex items-center justify-between">
+              <div className="flex items-center gap-4 text-xs">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full"></div>
+                  <span className={currentTheme.textSecondary}>Violations detected</span>
+                </div>
+                <div className={`${currentTheme.textMuted}`}>Peak hours: 08:00-10:00</div>
+              </div>
+              <div className={`text-xs ${currentTheme.textMuted}`}>Last updated: 2 mins ago</div>
             </div>
           </CardContent>
         </Card>
@@ -731,12 +788,17 @@ export default function SafetyDashboard() {
           </CardContent>
         </Card>
 
-        {/* Violation Distribution */}
-        <Card className={`col-span-4 ${currentTheme.cardBg} ${currentTheme.cardBorder}`}>
+        {/* Violation Distribution - Enhanced Beautiful Version */}
+        <Card className={`col-span-4 ${currentTheme.cardBg} ${currentTheme.cardBorder} overflow-hidden`}>
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle className={`${currentTheme.text} text-base font-medium`}>Violation Distribution</CardTitle>
-              <button className={`w-6 h-6 flex items-center justify-center ${currentTheme.textMuted} hover:${currentTheme.textSecondary}`}>
+              <div>
+                <CardTitle className={`${currentTheme.text} text-lg font-semibold flex items-center gap-2`}>
+                  🥧 Violation Distribution
+                </CardTitle>
+                <p className={`text-xs ${currentTheme.textMuted} mt-1`}>Safety violation breakdown</p>
+              </div>
+              <button className={`w-8 h-8 flex items-center justify-center ${currentTheme.textMuted} hover:${currentTheme.textSecondary} rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200`}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M6 9l6 6 6-6"/>
                 </svg>
@@ -744,32 +806,119 @@ export default function SafetyDashboard() {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="h-64">
+            <div className="h-72">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
+                  <defs>
+                    <linearGradient id="helmet" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stopColor="#1e40af" stopOpacity={1} />
+                      <stop offset="100%" stopColor="#3b82f6" stopOpacity={0.8} />
+                    </linearGradient>
+                    <linearGradient id="vest" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stopColor="#2563eb" stopOpacity={1} />
+                      <stop offset="100%" stopColor="#60a5fa" stopOpacity={0.8} />
+                    </linearGradient>
+                    <linearGradient id="harness" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stopColor="#3b82f6" stopOpacity={1} />
+                      <stop offset="100%" stopColor="#93c5fd" stopOpacity={0.8} />
+                    </linearGradient>
+                    <linearGradient id="uniform" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stopColor="#60a5fa" stopOpacity={1} />
+                      <stop offset="100%" stopColor="#bfdbfe" stopOpacity={0.8} />
+                    </linearGradient>
+                    <linearGradient id="smoke" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stopColor="#93c5fd" stopOpacity={1} />
+                      <stop offset="100%" stopColor="#dbeafe" stopOpacity={0.8} />
+                    </linearGradient>
+                    <linearGradient id="fire" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stopColor="#bfdbfe" stopOpacity={1} />
+                      <stop offset="100%" stopColor="#eff6ff" stopOpacity={0.8} />
+                    </linearGradient>
+                    <linearGradient id="leakage" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stopColor="#dbeafe" stopOpacity={1} />
+                      <stop offset="100%" stopColor="#f0f9ff" stopOpacity={0.8} />
+                    </linearGradient>
+                    <filter id="pieShadow" x="-50%" y="-50%" width="200%" height="200%">
+                      <feDropShadow dx="0" dy="4" stdDeviation="8" floodColor="#1e40af" floodOpacity="0.15"/>
+                    </filter>
+                  </defs>
                   <Pie
                     data={violationDistribution}
                     cx="50%"
                     cy="50%"
-                    outerRadius={90}
+                    outerRadius={105}
+                    innerRadius={30}
                     dataKey="value"
-                    label={({ name, percentage }) => `${name}\n${percentage}`}
-                    labelLine={{ stroke: currentTheme.chartText, strokeWidth: 1 }}
+                    startAngle={90}
+                    endAngle={450}
+                    paddingAngle={2}
+                    filter="url(#pieShadow)"
+                    label={({ name, percentage, x, y }) => (
+                      <text 
+                        x={x} 
+                        y={y} 
+                        fill={currentTheme.chartText} 
+                        textAnchor={x > 200 ? 'start' : 'end'} 
+                        dominantBaseline="central"
+                        fontSize="11"
+                        fontWeight="600"
+                      >
+                        {percentage}
+                      </text>
+                    )}
+                    labelLine={{
+                      stroke: currentTheme.chartText, 
+                      strokeWidth: 1.5,
+                      strokeDasharray: '2 2'
+                    }}
                   >
                     {violationDistribution.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
+                      <Cell 
+                        key={`cell-${index}`} 
+                        fill={`url(#${entry.gradientId})`}
+                        stroke={theme === 'light' ? '#ffffff' : '#1e293b'}
+                        strokeWidth={2}
+                        style={{
+                          filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))',
+                          transition: 'all 0.3s ease'
+                        }}
+                      />
                     ))}
                   </Pie>
                   <Tooltip 
                     contentStyle={{ 
-                      backgroundColor: 'white', 
+                      backgroundColor: theme === 'light' ? 'rgba(255,255,255,0.95)' : 'rgba(30,41,59,0.95)', 
                       border: `1px solid ${currentTheme.tooltipBorder}`,
-                      borderRadius: '8px',
-                      fontSize: '12px'
+                      borderRadius: '12px',
+                      fontSize: '12px',
+                      fontWeight: '500',
+                      boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
+                      backdropFilter: 'blur(8px)'
                     }}
+                    formatter={(value, name) => [`${value}%`, name]}
+                    labelFormatter={(label) => `Violation: ${label}`}
                   />
                 </PieChart>
               </ResponsiveContainer>
+            </div>
+            <div className="mt-4">
+              <div className="grid grid-cols-2 gap-3">
+                {violationDistribution.slice(0, 4).map((item, index) => (
+                  <div key={index} className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div 
+                        className="w-3 h-3 rounded-full"
+                        style={{ background: `linear-gradient(135deg, ${item.color}, ${item.color}88)` }}
+                      ></div>
+                      <span className={`text-xs ${currentTheme.textSecondary} font-medium`}>{item.name}</span>
+                    </div>
+                    <span className={`text-xs font-semibold ${currentTheme.text}`}>{item.percentage}</span>
+                  </div>
+                ))}
+              </div>
+              <div className={`mt-3 pt-3 border-t ${currentTheme.cardBorder} text-center`}>
+                <div className={`text-xs ${currentTheme.textMuted}`}>Total violations tracked: 548 incidents</div>
+              </div>
             </div>
           </CardContent>
         </Card>
