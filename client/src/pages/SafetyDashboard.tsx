@@ -282,16 +282,15 @@ export default function SafetyDashboard() {
     }
   ];
 
-  // Detection frequency data - Enhanced with gradients
+  // Detection frequency data - By violation type
   const detectionFrequencyData = [
-    { time: '06:00-08:00', violations: 95, color: '#3b82f6' },
-    { time: '08:00-10:00', violations: 110, color: '#2563eb' },
-    { time: '10:00-12:00', violations: 75, color: '#1d4ed8' },
-    { time: '12:00-14:00', violations: 85, color: '#1e40af' },
-    { time: '14:00-16:00', violations: 65, color: '#1e3a8a' },
-    { time: '16:00-18:00', violations: 55, color: '#312e81' },
-    { time: '18:00-20:00', violations: 35, color: '#3730a3' },
-    { time: '20:00-22:00', violations: 25, color: '#4338ca' }
+    { type: 'No Helmet', violations: 95, color: '#1e40af' },
+    { type: 'No Vest', violations: 68, color: '#2563eb' },
+    { type: 'No Harness', violations: 35, color: '#3b82f6' },
+    { type: 'No Uniform', violations: 24, color: '#60a5fa' },
+    { type: 'Smoke', violations: 20, color: '#93c5fd' },
+    { type: 'Fire', violations: 12, color: '#bfdbfe' },
+    { type: 'Leakage', violations: 8, color: '#dbeafe' }
   ];
 
   // Safety violation trends data for line chart - matching screenshot scale (0-20)
@@ -636,7 +635,7 @@ export default function SafetyDashboard() {
                     vertical={false}
                   />
                   <XAxis 
-                    dataKey="time" 
+                    dataKey="type" 
                     axisLine={false} 
                     tickLine={false} 
                     tick={{ 
@@ -672,7 +671,7 @@ export default function SafetyDashboard() {
                     }}
                     labelStyle={{ color: currentTheme.chartText, fontWeight: 600 }}
                     formatter={(value) => [value + ' violations', 'Count']}
-                    labelFormatter={(label) => `Time: ${label}`}
+                    labelFormatter={(label) => `Type: ${label}`}
                   />
                   <Bar 
                     dataKey="violations" 
@@ -695,7 +694,7 @@ export default function SafetyDashboard() {
                   <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full"></div>
                   <span className={currentTheme.textSecondary}>Violations detected</span>
                 </div>
-                <div className={`${currentTheme.textMuted}`}>Peak hours: 08:00-10:00</div>
+                <div className={`${currentTheme.textMuted}`}>Most common: No Helmet violations</div>
               </div>
               <div className={`text-xs ${currentTheme.textMuted}`}>Last updated: 2 mins ago</div>
             </div>
