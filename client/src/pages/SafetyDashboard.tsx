@@ -374,36 +374,40 @@ export default function SafetyDashboard() {
                         gridType="polygon" 
                         radialLines={true}
                         stroke="#e5e7eb"
-                        className="dark:stroke-gray-600"
+                        className="dark:stroke-gray-400"
+                        strokeWidth={1.5}
                       />
                       <PolarAngleAxis 
                         dataKey="subject" 
-                        tick={{ fill: '#6b7280', fontSize: 10 }}
-                        className="dark:fill-gray-300"
+                        tick={{ fill: '#6b7280', fontSize: 11, fontWeight: 500 }}
+                        className="dark:fill-gray-200"
+                        tickFormatter={(value) => value}
                       />
                       <PolarRadiusAxis 
                         angle={90} 
                         domain={[0, 100]} 
-                        tick={false}
-                        tickCount={6}
+                        tick={{ fill: '#9ca3af', fontSize: 9 }}
+                        className="dark:fill-gray-400"
+                        tickCount={5}
+                        axisLine={false}
                       />
                       <Radar
                         name="Current Week"
                         dataKey="currentWeek"
-                        stroke="#2563eb"
-                        fill="#2563eb"
-                        fillOpacity={0.1}
-                        strokeWidth={2}
-                        dot={{ fill: '#2563eb', strokeWidth: 2, r: 4 }}
+                        stroke="#3b82f6"
+                        fill="#3b82f6"
+                        fillOpacity={0.2}
+                        strokeWidth={3}
+                        dot={{ fill: '#3b82f6', strokeWidth: 2, r: 5, className: 'dark:fill-blue-400' }}
                       />
                       <Radar
                         name="Previous Week"
                         dataKey="previousWeek"
-                        stroke="#94a3b8"
-                        fill="#94a3b8"
-                        fillOpacity={0.05}
+                        stroke="#6b7280"
+                        fill="#6b7280"
+                        fillOpacity={0.1}
                         strokeWidth={2}
-                        dot={{ fill: '#94a3b8', strokeWidth: 2, r: 3 }}
+                        dot={{ fill: '#6b7280', strokeWidth: 2, r: 4, className: 'dark:fill-gray-400' }}
                       />
                     </RadarChart>
                   </ResponsiveContainer>
