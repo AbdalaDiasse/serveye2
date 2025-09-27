@@ -207,7 +207,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                       ? "shadow-md bg-gradient-to-r from-[#0070F3] to-[#0056D6]"
                       : isOtherActive
                       ? "shadow-md bg-gradient-to-r from-blue-600 to-blue-500"
-                      : "hover:bg-gray-50"
+                      : "hover:bg-gray-50 dark:hover:bg-gray-700/50"
                   }`}
                   onClick={() => {
                     if (item.hasDropdown) {
@@ -228,11 +228,11 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                     }
                   }}
                 >
-                  {renderIcon(item.icon, `${(isPersonnesActive || isEventsActive || isVehiclesActive || isVSSActive || isSafetyActive || isOtherActive) ? "w-4 h-4 mr-3 text-white" : "w-4 h-4 mr-3 text-slate-600"}`)}
+                  {renderIcon(item.icon, `${(isPersonnesActive || isEventsActive || isVehiclesActive || isVSSActive || isSafetyActive || isOtherActive) ? "w-4 h-4 mr-3 text-white" : "w-4 h-4 mr-3 text-slate-600 dark:text-gray-300"}`)}
                   <span className={`[font-family:'Inter',Helvetica] text-base tracking-[0] truncate ${
                     (isPersonnesActive || isEventsActive || isVehiclesActive || isVSSActive || isSafetyActive || isOtherActive)
                       ? 'font-semibold text-white leading-[normal]'
-                      : 'font-normal text-slate-600 leading-6'
+                      : 'font-normal text-slate-600 dark:text-gray-300 leading-6'
                   }`}>
                     {item.name}
                   </span>
