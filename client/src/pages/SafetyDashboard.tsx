@@ -501,14 +501,17 @@ export default function SafetyDashboard() {
                     </div>
                   </div>
                   <div className="flex flex-col items-end gap-2">
-                    <Badge className={`${detection.statusColor} text-white text-xs px-3 py-1 rounded-full font-medium`}>
+                    {/* Status - Outlined style for informational purpose */}
+                    <div className={`border-2 ${detection.statusColor.replace('bg-', 'border-')} ${detection.statusColor.replace('bg-', 'text-')} text-xs px-2 py-1 rounded-md font-medium bg-transparent`}>
                       {detection.status}
-                    </Badge>
+                    </div>
                     <div className="flex items-center gap-2">
-                      <Badge className={`${detection.severityColor} text-white text-xs px-3 py-1 rounded-full font-medium`}>
+                      {/* Severity - Solid filled badge for urgency/danger */}
+                      <div className={`${detection.severityColor} text-white text-xs px-3 py-1 rounded-lg font-bold uppercase tracking-wide shadow-sm`}>
                         {detection.severity}
-                      </Badge>
-                      <Button size="sm" className="h-7 px-3 bg-blue-500 hover:bg-blue-600 text-white text-xs font-medium rounded-full">
+                      </div>
+                      {/* Process - Button style for action */}
+                      <Button size="sm" className="h-8 px-4 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-md border border-blue-700 shadow-sm transition-all duration-200 hover:shadow-md">
                         <Settings className="w-3 h-3 mr-1" />
                         Process
                       </Button>
