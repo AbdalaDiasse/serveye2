@@ -93,20 +93,20 @@ export default function SafetyDashboard() {
       innerCardBg: 'bg-gray-50'
     },
     dark: {
-      background: 'bg-[#0a0e27]',
-      cardBg: 'bg-[#1a1f3a]',
-      cardBorder: 'border-gray-800',
+      background: 'bg-[#1e293b]',
+      cardBg: 'bg-[#334155]',
+      cardBorder: 'border-gray-600',
       text: 'text-white',
-      textSecondary: 'text-gray-300',
-      textMuted: 'text-gray-400',
-      inputBg: 'bg-gray-800/50',
-      inputBorder: 'border-gray-700',
-      hoverBg: 'hover:bg-gray-800',
-      gridStroke: '#1f2937',
-      tooltipBg: '#1a1f3a',
-      tooltipBorder: '#374151',
-      chartText: '#9ca3af',
-      innerCardBg: 'bg-[#0a0e27]'
+      textSecondary: 'text-gray-200',
+      textMuted: 'text-gray-300',
+      inputBg: 'bg-gray-600/50',
+      inputBorder: 'border-gray-500',
+      hoverBg: 'hover:bg-gray-600',
+      gridStroke: '#475569',
+      tooltipBg: '#334155',
+      tooltipBorder: '#64748b',
+      chartText: '#cbd5e1',
+      innerCardBg: 'bg-[#475569]'
     }
   };
 
