@@ -485,7 +485,7 @@ export default function SafetyDashboard() {
           <CardContent>
             <div className="h-80 overflow-y-scroll scrollbar-hide space-y-3 pr-2">
               {liveDetections.map((detection) => (
-                <div key={detection.id} className="relative flex items-center gap-4 p-4 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
+                <div key={detection.id} className="relative flex items-center gap-4 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
                   <img 
                     src={detection.thumbnail} 
                     alt={detection.type}
