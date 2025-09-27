@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -42,11 +42,67 @@ import {
   RefreshCw,
   Filter,
   CircleCheck,
-  CircleX
+  CircleX,
+  Sun,
+  Moon
 } from 'lucide-react';
 
 export default function SafetyDashboard() {
   const [selectedPeriod, setSelectedPeriod] = useState('today');
+  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
+
+  // Load theme from localStorage on mount
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('safetyDashboardTheme') as 'light' | 'dark' | null;
+    if (savedTheme) {
+      setTheme(savedTheme);
+    }
+  }, []);
+
+  // Toggle theme function
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    localStorage.setItem('safetyDashboardTheme', newTheme);
+  };
+
+  // Theme colors
+  const themeColors = {
+    light: {
+      background: 'bg-gray-50',
+      cardBg: 'bg-white',
+      cardBorder: 'border-gray-200',
+      text: 'text-gray-900',
+      textSecondary: 'text-gray-600',
+      textMuted: 'text-gray-500',
+      inputBg: 'bg-gray-100',
+      inputBorder: 'border-gray-300',
+      hoverBg: 'hover:bg-gray-100',
+      gridStroke: '#e5e7eb',
+      tooltipBg: '#ffffff',
+      tooltipBorder: '#e5e7eb',
+      chartText: '#6b7280',
+      innerCardBg: 'bg-gray-50'
+    },
+    dark: {
+      background: 'bg-[#0a0e27]',
+      cardBg: 'bg-[#1a1f3a]',
+      cardBorder: 'border-gray-800',
+      text: 'text-white',
+      textSecondary: 'text-gray-300',
+      textMuted: 'text-gray-400',
+      inputBg: 'bg-gray-800/50',
+      inputBorder: 'border-gray-700',
+      hoverBg: 'hover:bg-gray-800',
+      gridStroke: '#1f2937',
+      tooltipBg: '#1a1f3a',
+      tooltipBorder: '#374151',
+      chartText: '#9ca3af',
+      innerCardBg: 'bg-[#0a0e27]'
+    }
+  };
+
+  const currentTheme = themeColors[theme];
 
   // Key safety metrics - exact values from design
   const safetyMetrics = [
@@ -171,34 +227,42 @@ export default function SafetyDashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0a0e27] text-white p-6">
+    <div className={`min-h-screen ${currentTheme.background} ${currentTheme.text} p-6`}>
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-white">Safety Dashboard</h1>
-          <p className="text-gray-400 text-sm">Real-time safety violation monitoring</p>
+          <h1 className={`text-2xl font-bold ${currentTheme.text}`}>Safety Dashboard</h1>
+          <p className={`${currentTheme.textMuted} text-sm`}>Real-time safety violation monitoring</p>
         </div>
         <div className="flex items-center gap-3">
           <div className="relative">
             <input
               type="text"
               placeholder="Search violations..."
-              className="bg-gray-800/50 text-gray-300 px-4 py-2 rounded-lg w-64 text-sm border border-gray-700"
+              className={`${currentTheme.inputBg} ${currentTheme.textSecondary} px-4 py-2 rounded-lg w-64 text-sm border ${currentTheme.inputBorder}`}
             />
-            <Search className="w-4 h-4 text-gray-400 absolute right-3 top-2.5" />
+            <Search className={`w-4 h-4 ${currentTheme.textMuted} absolute right-3 top-2.5`} />
           </div>
-          <Button variant="ghost" size="sm" className="text-gray-400">
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            onClick={toggleTheme}
+            className={`${currentTheme.textMuted} ${currentTheme.hoverBg}`}
+          >
+            {theme === 'light' ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
+          </Button>
+          <Button variant="ghost" size="sm" className={`${currentTheme.textMuted} ${currentTheme.hoverBg}`}>
             <Settings className="w-4 h-4" />
           </Button>
-          <Button variant="ghost" size="sm" className="text-gray-400 relative">
+          <Button variant="ghost" size="sm" className={`${currentTheme.textMuted} ${currentTheme.hoverBg} relative`}>
             <Bell className="w-4 h-4" />
             <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
           </Button>
           <div className="flex items-center gap-2">
             <img src="/api/placeholder/32/32" alt="User" className="w-8 h-8 rounded-full" />
             <div className="text-sm">
-              <div className="text-white font-medium">Safety Admin</div>
-              <div className="text-gray-400 text-xs">Safety Manager</div>
+              <div className={`${currentTheme.text} font-medium`}>Safety Admin</div>
+              <div className={`${currentTheme.textMuted} text-xs`}>Safety Manager</div>
             </div>
           </div>
         </div>
@@ -207,19 +271,19 @@ export default function SafetyDashboard() {
       {/* Key Metrics */}
       <div className="grid grid-cols-7 gap-4 mb-6">
         {safetyMetrics.map((metric, index) => (
-          <Card key={index} className="bg-[#1a1f3a] border-gray-800">
+          <Card key={index} className={`${currentTheme.cardBg} ${currentTheme.cardBorder}`}>
             <CardContent className="p-4">
               <div className="flex items-center justify-between mb-3">
-                <span className="text-gray-400 text-xs">No</span>
-                <span className="text-gray-400 text-xs">{metric.label.split(' ')[1]}</span>
+                <span className={`${currentTheme.textMuted} text-xs`}>No</span>
+                <span className={`${currentTheme.textMuted} text-xs`}>{metric.label.split(' ')[1]}</span>
               </div>
               <div className="flex items-center gap-3">
-                <div className="text-3xl font-bold text-white">{metric.value}</div>
+                <div className={`text-3xl font-bold ${currentTheme.text}`}>{metric.value}</div>
                 <metric.icon className="w-8 h-8 text-blue-400" />
               </div>
               <div className="flex items-center gap-1 mt-2">
                 <span className="text-green-400 text-xs font-medium">{metric.change}</span>
-                <span className="text-gray-500 text-xs">{metric.period}</span>
+                <span className={`${currentTheme.textMuted} text-xs`}>{metric.period}</span>
               </div>
             </CardContent>
           </Card>
@@ -229,10 +293,10 @@ export default function SafetyDashboard() {
       {/* Main Content Grid */}
       <div className="grid grid-cols-12 gap-6">
         {/* Safety Module Performance */}
-        <Card className="col-span-5 bg-[#1a1f3a] border-gray-800">
+        <Card className={`col-span-5 ${currentTheme.cardBg} ${currentTheme.cardBorder}`}>
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle className="text-white">Safety Module Performance</CardTitle>
+              <CardTitle className={currentTheme.text}>Safety Module Performance</CardTitle>
               <div className="flex gap-2">
                 <Button 
                   variant="outline" 
@@ -244,7 +308,7 @@ export default function SafetyDashboard() {
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className="bg-transparent border-gray-600 text-gray-400 hover:bg-gray-700"
+                  className={`bg-transparent ${theme === 'light' ? 'border-gray-400 text-gray-600 hover:bg-gray-100' : 'border-gray-600 text-gray-400 hover:bg-gray-700'}`}
                 >
                   Monthly
                 </Button>
@@ -258,16 +322,16 @@ export default function SafetyDashboard() {
                   <PolarGrid 
                     gridType="polygon" 
                     radialLines={true}
-                    stroke="#374151"
+                    stroke={theme === 'light' ? '#d1d5db' : '#374151'}
                   />
                   <PolarAngleAxis 
                     dataKey="subject" 
-                    tick={{ fill: '#9ca3af', fontSize: 10 }}
+                    tick={{ fill: currentTheme.chartText, fontSize: 10 }}
                   />
                   <PolarRadiusAxis 
                     angle={90} 
                     domain={[0, 100]} 
-                    tick={{ fill: '#6b7280', fontSize: 10 }}
+                    tick={{ fill: currentTheme.chartText, fontSize: 10 }}
                     tickCount={6}
                   />
                   <Radar
@@ -283,15 +347,15 @@ export default function SafetyDashboard() {
             </div>
             <div className="space-y-2">
               <div className="flex items-center justify-between text-xs">
-                <span className="text-gray-400">Zone Breaches</span>
-                <span className="text-gray-400">False Positive Rate</span>
+                <span className={currentTheme.textMuted}>Zone Breaches</span>
+                <span className={currentTheme.textMuted}>False Positive Rate</span>
               </div>
               <div className="flex gap-4 mt-4">
                 <Button variant="outline" size="sm" className="flex-1 bg-blue-600/20 border-blue-600 text-blue-400">
                   <CircleCheck className="w-4 h-4 mr-2" />
                   Current Week
                 </Button>
-                <Button variant="outline" size="sm" className="flex-1 border-gray-600 text-gray-400">
+                <Button variant="outline" size="sm" className={`flex-1 ${theme === 'light' ? 'border-gray-400 text-gray-600' : 'border-gray-600 text-gray-400'}`}>
                   <CircleX className="w-4 h-4 mr-2" />
                   Previous Week
                 </Button>
@@ -301,24 +365,24 @@ export default function SafetyDashboard() {
         </Card>
 
         {/* Live Detections */}
-        <Card className="col-span-7 bg-[#1a1f3a] border-gray-800">
+        <Card className={`col-span-7 ${currentTheme.cardBg} ${currentTheme.cardBorder}`}>
           <CardHeader>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <CardTitle className="text-white">Live Detections</CardTitle>
+                <CardTitle className={currentTheme.text}>Live Detections</CardTitle>
                 <div className="flex items-center gap-1">
                   <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
                   <span className="text-xs text-red-400">LIVE</span>
                 </div>
               </div>
-              <Button variant="ghost" size="sm" className="text-gray-400">
+              <Button variant="ghost" size="sm" className={currentTheme.textMuted}>
                 <Maximize2 className="w-4 h-4" />
               </Button>
             </div>
           </CardHeader>
           <CardContent className="space-y-3">
             {liveDetections.map((detection) => (
-              <div key={detection.id} className="flex items-center gap-4 p-3 bg-[#0a0e27] rounded-lg">
+              <div key={detection.id} className={`flex items-center gap-4 p-3 ${currentTheme.innerCardBg} rounded-lg`}>
                 <img 
                   src={detection.thumbnail} 
                   alt={detection.type}
@@ -326,9 +390,9 @@ export default function SafetyDashboard() {
                 />
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
-                    <h4 className="text-sm font-medium text-white">{detection.type}</h4>
+                    <h4 className={`text-sm font-medium ${currentTheme.text}`}>{detection.type}</h4>
                   </div>
-                  <div className="flex items-center gap-4 text-xs text-gray-400">
+                  <div className={`flex items-center gap-4 text-xs ${currentTheme.textMuted}`}>
                     <span>{detection.area} • {detection.location}</span>
                     <span>{detection.time} • {detection.camera}</span>
                   </div>
@@ -337,7 +401,7 @@ export default function SafetyDashboard() {
                   <Badge className={`${detection.statusColor} text-white text-xs px-3 py-1`}>
                     {detection.status}
                   </Badge>
-                  <Button variant="ghost" size="sm" className="h-8 px-2 text-gray-400">
+                  <Button variant="ghost" size="sm" className={`h-8 px-2 ${currentTheme.textMuted}`}>
                     <Settings className="w-4 h-4 mr-1" />
                     Process
                   </Button>
@@ -348,10 +412,10 @@ export default function SafetyDashboard() {
         </Card>
 
         {/* Detection Frequency */}
-        <Card className="col-span-4 bg-[#1a1f3a] border-gray-800">
+        <Card className={`col-span-4 ${currentTheme.cardBg} ${currentTheme.cardBorder}`}>
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle className="text-white text-base">Detection Frequency</CardTitle>
+              <CardTitle className={`${currentTheme.text} text-base`}>Detection Frequency</CardTitle>
               <div className="flex gap-2">
                 <Button 
                   variant="outline" 
@@ -363,7 +427,7 @@ export default function SafetyDashboard() {
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className="h-7 bg-transparent border-gray-600 text-gray-400 text-xs hover:bg-gray-700"
+                  className={`h-7 bg-transparent text-xs ${theme === 'light' ? 'border-gray-400 text-gray-600 hover:bg-gray-100' : 'border-gray-600 text-gray-400 hover:bg-gray-700'}`}
                 >
                   Week
                 </Button>
@@ -374,12 +438,12 @@ export default function SafetyDashboard() {
             <div className="h-48">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={detectionFrequencyData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#1f2937" />
+                  <CartesianGrid strokeDasharray="3 3" stroke={currentTheme.gridStroke} />
                   <XAxis 
                     dataKey="time" 
                     axisLine={false} 
                     tickLine={false} 
-                    tick={{ fill: '#6b7280', fontSize: 9 }}
+                    tick={{ fill: currentTheme.chartText, fontSize: 9 }}
                     angle={-45}
                     textAnchor="end"
                     height={60}
@@ -387,13 +451,13 @@ export default function SafetyDashboard() {
                   <YAxis 
                     axisLine={false} 
                     tickLine={false} 
-                    tick={{ fill: '#6b7280', fontSize: 10 }}
+                    tick={{ fill: currentTheme.chartText, fontSize: 10 }}
                     ticks={[0, 25, 50, 75, 100, 125]}
                   />
                   <Tooltip 
                     contentStyle={{ 
-                      backgroundColor: '#1a1f3a', 
-                      border: '1px solid #374151',
+                      backgroundColor: currentTheme.tooltipBg, 
+                      border: `1px solid ${currentTheme.tooltipBorder}`,
                       borderRadius: '8px'
                     }}
                   />
@@ -405,12 +469,12 @@ export default function SafetyDashboard() {
         </Card>
 
         {/* Safety Violation Trends */}
-        <Card className="col-span-4 bg-[#1a1f3a] border-gray-800">
+        <Card className={`col-span-4 ${currentTheme.cardBg} ${currentTheme.cardBorder}`}>
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle className="text-white text-base">Safety Violation Trends</CardTitle>
+              <CardTitle className={`${currentTheme.text} text-base`}>Safety Violation Trends</CardTitle>
               <Select defaultValue="today">
-                <SelectTrigger className="w-20 h-7 bg-gray-700 border-gray-600 text-xs">
+                <SelectTrigger className={`w-20 h-7 text-xs ${theme === 'light' ? 'bg-gray-100 border-gray-300' : 'bg-gray-700 border-gray-600'}`}>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -425,22 +489,22 @@ export default function SafetyDashboard() {
             <div className="h-48">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={violationTrendsData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#1f2937" />
+                  <CartesianGrid strokeDasharray="3 3" stroke={currentTheme.gridStroke} />
                   <XAxis 
                     dataKey="time" 
                     axisLine={false} 
                     tickLine={false} 
-                    tick={{ fill: '#6b7280', fontSize: 10 }}
+                    tick={{ fill: currentTheme.chartText, fontSize: 10 }}
                   />
                   <YAxis 
                     axisLine={false} 
                     tickLine={false} 
-                    tick={{ fill: '#6b7280', fontSize: 10 }}
+                    tick={{ fill: currentTheme.chartText, fontSize: 10 }}
                   />
                   <Tooltip 
                     contentStyle={{ 
-                      backgroundColor: '#1a1f3a', 
-                      border: '1px solid #374151',
+                      backgroundColor: currentTheme.tooltipBg, 
+                      border: `1px solid ${currentTheme.tooltipBorder}`,
                       borderRadius: '8px'
                     }}
                   />
@@ -457,42 +521,42 @@ export default function SafetyDashboard() {
             <div className="mt-2 flex flex-wrap gap-4 text-xs">
               <div className="flex items-center gap-1">
                 <div className="w-3 h-0.5 bg-blue-500"></div>
-                <span className="text-gray-400">No Helmet</span>
+                <span className={currentTheme.textMuted}>No Helmet</span>
               </div>
               <div className="flex items-center gap-1">
                 <div className="w-3 h-0.5 bg-yellow-500"></div>
-                <span className="text-gray-400">No Vest</span>
+                <span className={currentTheme.textMuted}>No Vest</span>
               </div>
               <div className="flex items-center gap-1">
                 <div className="w-3 h-0.5 bg-purple-500"></div>
-                <span className="text-gray-400">No Harness</span>
+                <span className={currentTheme.textMuted}>No Harness</span>
               </div>
               <div className="flex items-center gap-1">
                 <div className="w-3 h-0.5 bg-green-500"></div>
-                <span className="text-gray-400">No Uniform</span>
+                <span className={currentTheme.textMuted}>No Uniform</span>
               </div>
               <div className="flex items-center gap-1">
                 <div className="w-3 h-0.5 bg-red-500"></div>
-                <span className="text-gray-400">Smoke</span>
+                <span className={currentTheme.textMuted}>Smoke</span>
               </div>
               <div className="flex items-center gap-1">
                 <div className="w-3 h-0.5 bg-orange-500"></div>
-                <span className="text-gray-400">Fire</span>
+                <span className={currentTheme.textMuted}>Fire</span>
               </div>
               <div className="flex items-center gap-1">
                 <div className="w-3 h-0.5 bg-cyan-500"></div>
-                <span className="text-gray-400">Leakage</span>
+                <span className={currentTheme.textMuted}>Leakage</span>
               </div>
             </div>
           </CardContent>
         </Card>
 
         {/* Violation Distribution */}
-        <Card className="col-span-4 bg-[#1a1f3a] border-gray-800">
+        <Card className={`col-span-4 ${currentTheme.cardBg} ${currentTheme.cardBorder}`}>
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle className="text-white text-base">Violation Distribution</CardTitle>
-              <Button variant="ghost" size="sm" className="text-gray-400 h-6 p-0">
+              <CardTitle className={`${currentTheme.text} text-base`}>Violation Distribution</CardTitle>
+              <Button variant="ghost" size="sm" className={`${currentTheme.textMuted} h-6 p-0`}>
                 <Filter className="w-4 h-4" />
               </Button>
             </div>
@@ -516,8 +580,8 @@ export default function SafetyDashboard() {
                   </Pie>
                   <Tooltip 
                     contentStyle={{ 
-                      backgroundColor: '#1a1f3a', 
-                      border: '1px solid #374151',
+                      backgroundColor: currentTheme.tooltipBg, 
+                      border: `1px solid ${currentTheme.tooltipBorder}`,
                       borderRadius: '8px'
                     }}
                   />
@@ -528,31 +592,31 @@ export default function SafetyDashboard() {
               <div className="flex items-center justify-between text-xs">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded" style={{ backgroundColor: '#3b82f6' }}></div>
-                  <span className="text-gray-300">Fire 6.5%</span>
+                  <span className={currentTheme.textSecondary}>Fire 6.5%</span>
                 </div>
               </div>
               <div className="flex items-center justify-between text-xs">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded" style={{ backgroundColor: '#06b6d4' }}></div>
-                  <span className="text-gray-300">Smoke 3.1%</span>
+                  <span className={currentTheme.textSecondary}>Smoke 3.1%</span>
                 </div>
               </div>
               <div className="flex items-center justify-between text-xs">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded" style={{ backgroundColor: '#8b5cf6' }}></div>
-                  <span className="text-gray-300">No Harness 5.1%</span>
+                  <span className={currentTheme.textSecondary}>No Harness 5.1%</span>
                 </div>
               </div>
               <div className="flex items-center justify-between text-xs">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded" style={{ backgroundColor: '#6366f1' }}></div>
-                  <span className="text-gray-300">No Helmet 59.1%</span>
+                  <span className={currentTheme.textSecondary}>No Helmet 59.1%</span>
                 </div>
               </div>
               <div className="flex items-center justify-between text-xs">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded" style={{ backgroundColor: '#3b82f6' }}></div>
-                  <span className="text-gray-300">No Vest 26.3%</span>
+                  <span className={currentTheme.textSecondary}>No Vest 26.3%</span>
                 </div>
               </div>
             </div>
@@ -560,31 +624,31 @@ export default function SafetyDashboard() {
         </Card>
 
         {/* Detection Summary */}
-        <Card className="col-span-4 bg-[#1a1f3a] border-gray-800">
+        <Card className={`col-span-4 ${currentTheme.cardBg} ${currentTheme.cardBorder}`}>
           <CardHeader>
-            <CardTitle className="text-white text-base">Detection Summary</CardTitle>
+            <CardTitle className={`${currentTheme.text} text-base`}>Detection Summary</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
             {detectionSummary.map((item, index) => (
-              <div key={index} className="flex items-center justify-between p-3 bg-[#0a0e27] rounded-lg">
+              <div key={index} className={`flex items-center justify-between p-3 ${currentTheme.innerCardBg} rounded-lg`}>
                 <div className="flex items-center gap-3">
                   <div className={`p-2 rounded-lg ${index === 0 ? 'bg-blue-600/20' : index === 1 ? 'bg-gray-600/20' : 'bg-gray-700/20'}`}>
-                    <item.icon className={`w-4 h-4 ${index === 0 ? 'text-blue-400' : 'text-gray-400'}`} />
+                    <item.icon className={`w-4 h-4 ${index === 0 ? 'text-blue-400' : currentTheme.textMuted}`} />
                   </div>
-                  <span className="text-sm text-gray-300">{item.type}</span>
+                  <span className={`text-sm ${currentTheme.textSecondary}`}>{item.type}</span>
                 </div>
-                <span className="text-2xl font-bold text-white">{item.count}</span>
+                <span className={`text-2xl font-bold ${currentTheme.text}`}>{item.count}</span>
               </div>
             ))}
           </CardContent>
         </Card>
 
         {/* Detections per Camera */}
-        <Card className="col-span-4 bg-[#1a1f3a] border-gray-800">
+        <Card className={`col-span-4 ${currentTheme.cardBg} ${currentTheme.cardBorder}`}>
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle className="text-white text-base">Detections per Camera</CardTitle>
-              <Button variant="ghost" size="sm" className="text-gray-400 h-6 p-0">
+              <CardTitle className={`${currentTheme.text} text-base`}>Detections per Camera</CardTitle>
+              <Button variant="ghost" size="sm" className={`${currentTheme.textMuted} h-6 p-0`}>
                 <RefreshCw className="w-4 h-4" />
               </Button>
             </div>
@@ -597,13 +661,13 @@ export default function SafetyDashboard() {
                     <Camera className="w-4 h-4 text-blue-400" />
                   </div>
                   <div>
-                    <div className="text-sm font-medium text-white">{camera.name}</div>
-                    <div className="text-xs text-gray-400">{camera.zone}</div>
+                    <div className={`text-sm font-medium ${currentTheme.text}`}>{camera.name}</div>
+                    <div className={`text-xs ${currentTheme.textMuted}`}>{camera.zone}</div>
                   </div>
                 </div>
                 <div className="text-right">
                   <div className="text-xl font-bold text-blue-400">{camera.violations}</div>
-                  <div className="text-xs text-gray-400">violations</div>
+                  <div className={`text-xs ${currentTheme.textMuted}`}>violations</div>
                 </div>
               </div>
             ))}
@@ -611,11 +675,11 @@ export default function SafetyDashboard() {
         </Card>
 
         {/* Detections per Site */}
-        <Card className="col-span-4 bg-[#1a1f3a] border-gray-800">
+        <Card className={`col-span-4 ${currentTheme.cardBg} ${currentTheme.cardBorder}`}>
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle className="text-white text-base">Detections per Site</CardTitle>
-              <Button variant="ghost" size="sm" className="text-gray-400 h-6 p-0">
+              <CardTitle className={`${currentTheme.text} text-base`}>Detections per Site</CardTitle>
+              <Button variant="ghost" size="sm" className={`${currentTheme.textMuted} h-6 p-0`}>
                 <RefreshCw className="w-4 h-4" />
               </Button>
             </div>
@@ -628,13 +692,13 @@ export default function SafetyDashboard() {
                     <MapPin className="w-4 h-4 text-blue-400" />
                   </div>
                   <div>
-                    <div className="text-sm font-medium text-white">{site.name}</div>
-                    <div className="text-xs text-gray-400">{site.zone}</div>
+                    <div className={`text-sm font-medium ${currentTheme.text}`}>{site.name}</div>
+                    <div className={`text-xs ${currentTheme.textMuted}`}>{site.zone}</div>
                   </div>
                 </div>
                 <div className="text-right">
                   <div className="text-xl font-bold text-blue-400">{site.violations}</div>
-                  <div className="text-xs text-gray-400">{site.total}</div>
+                  <div className={`text-xs ${currentTheme.textMuted}`}>{site.total}</div>
                 </div>
               </div>
             ))}
