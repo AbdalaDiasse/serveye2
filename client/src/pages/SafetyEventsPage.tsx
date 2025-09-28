@@ -5,6 +5,13 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Search, Filter, Calendar, Camera, MapPin, AlertTriangle, Flame, Users, Eye, HardHat, Zap, Shield } from "lucide-react";
 
+// Import surveillance images
+import surveyImage1 from "@assets/stock_images/security_camera_surv_a6d7868d.jpg";
+import surveyImage2 from "@assets/stock_images/security_camera_surv_51993350.jpg"; 
+import surveyImage3 from "@assets/stock_images/security_camera_surv_61395d08.jpg";
+import surveyImage4 from "@assets/stock_images/security_camera_surv_f76cea15.jpg";
+import surveyImage5 from "@assets/stock_images/security_camera_surv_e3b2959c.jpg";
+
 const SafetyEventsPage = (): JSX.Element => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedEvent, setSelectedEvent] = useState("all");
@@ -34,6 +41,9 @@ const SafetyEventsPage = (): JSX.Element => {
   };
 
 
+  // Create array of surveillance images for rotation
+  const surveillanceImages = [surveyImage1, surveyImage2, surveyImage3, surveyImage4, surveyImage5];
+
   // Sample safety events data matching the design
   const safetyEvents = [
     {
@@ -45,7 +55,7 @@ const SafetyEventsPage = (): JSX.Element => {
       timestamp: "27 Jan 2025, 14:32",
       severity: "CRITIQUE",
       severityColor: "bg-red-500",
-      thumbnail: "/api/placeholder/160/120",
+      thumbnail: surveyImage1,
       icon: AlertTriangle,
     },
     {
@@ -57,7 +67,7 @@ const SafetyEventsPage = (): JSX.Element => {
       timestamp: "27 Jan 2025, 14:28",
       severity: "ALERTE",
       severityColor: "bg-orange-500",
-      thumbnail: "/api/placeholder/160/120",
+      thumbnail: surveillanceImages[(Math.floor(Math.random() * 5))],
       icon: HardHat,
     },
     {
@@ -69,7 +79,7 @@ const SafetyEventsPage = (): JSX.Element => {
       timestamp: "27 Jan 2025, 14:16",
       severity: "CRITIQUE",
       severityColor: "bg-red-500",
-      thumbnail: "/api/placeholder/160/120",
+      thumbnail: surveillanceImages[(Math.floor(Math.random() * 5))],
       icon: Flame,
     },
     {
@@ -81,7 +91,7 @@ const SafetyEventsPage = (): JSX.Element => {
       timestamp: "27 Jan 2025, 14:45",
       severity: "CRITIQUE",
       severityColor: "bg-red-500",
-      thumbnail: "/api/placeholder/160/120",
+      thumbnail: surveillanceImages[(Math.floor(Math.random() * 5))],
       icon: Users,
     },
     {
@@ -93,7 +103,7 @@ const SafetyEventsPage = (): JSX.Element => {
       timestamp: "27 Jan 2025, 13:32",
       severity: "ALERTE",
       severityColor: "bg-orange-500", 
-      thumbnail: "/api/placeholder/160/120",
+      thumbnail: surveillanceImages[(Math.floor(Math.random() * 5))],
       icon: Shield,
     },
     {
@@ -105,7 +115,7 @@ const SafetyEventsPage = (): JSX.Element => {
       timestamp: "27 Jan 2025, 13:18",
       severity: "ALERTE",
       severityColor: "bg-orange-500",
-      thumbnail: "/api/placeholder/160/120",
+      thumbnail: surveillanceImages[(Math.floor(Math.random() * 5))],
       icon: HardHat,
     },
     {
@@ -117,7 +127,7 @@ const SafetyEventsPage = (): JSX.Element => {
       timestamp: "27 Jan 2025, 12:09",
       severity: "CRITIQUE",
       severityColor: "bg-red-500",
-      thumbnail: "/api/placeholder/160/120",
+      thumbnail: surveillanceImages[(Math.floor(Math.random() * 5))],
       icon: Flame,
     },
     {
@@ -129,7 +139,7 @@ const SafetyEventsPage = (): JSX.Element => {
       timestamp: "27 Jan 2025, 11:48",
       severity: "CRITIQUE", 
       severityColor: "bg-red-500",
-      thumbnail: "/api/placeholder/160/120",
+      thumbnail: surveillanceImages[(Math.floor(Math.random() * 5))],
       icon: Flame,
     },
     {
@@ -141,7 +151,7 @@ const SafetyEventsPage = (): JSX.Element => {
       timestamp: "27 Jan 2025, 10:47",
       severity: "CRITIQUE",
       severityColor: "bg-red-500", 
-      thumbnail: "/api/placeholder/160/120",
+      thumbnail: surveillanceImages[(Math.floor(Math.random() * 5))],
       icon: Flame,
     },
     {
@@ -153,7 +163,7 @@ const SafetyEventsPage = (): JSX.Element => {
       timestamp: "27 Jan 2025, 10:16",
       severity: "CRITIQUE",
       severityColor: "bg-red-500",
-      thumbnail: "/api/placeholder/160/120",
+      thumbnail: surveillanceImages[(Math.floor(Math.random() * 5))],
       icon: MapPin,
     },
     {
@@ -165,7 +175,7 @@ const SafetyEventsPage = (): JSX.Element => {
       timestamp: "27 Jan 2025, 09:59",
       severity: "ALERTE", 
       severityColor: "bg-orange-500",
-      thumbnail: "/api/placeholder/160/120",
+      thumbnail: surveillanceImages[(Math.floor(Math.random() * 5))],
       icon: Shield,
     },
     {
@@ -177,7 +187,7 @@ const SafetyEventsPage = (): JSX.Element => {
       timestamp: "27 Jan 2025, 09:45",
       severity: "ALERTE",
       severityColor: "bg-orange-500",
-      thumbnail: "/api/placeholder/160/120", 
+      thumbnail: surveillanceImages[(Math.floor(Math.random() * 5))], 
       icon: HardHat,
     },
     {
@@ -189,7 +199,7 @@ const SafetyEventsPage = (): JSX.Element => {
       timestamp: "27 Jan 2025, 10:45",
       severity: "CRITIQUE",
       severityColor: "bg-red-500",
-      thumbnail: "/api/placeholder/160/120",
+      thumbnail: surveillanceImages[(Math.floor(Math.random() * 5))],
       icon: AlertTriangle,
     },
     {
@@ -201,7 +211,7 @@ const SafetyEventsPage = (): JSX.Element => {
       timestamp: "27 Jan 2025, 10:16",
       severity: "ALERTE",
       severityColor: "bg-orange-500",
-      thumbnail: "/api/placeholder/160/120",
+      thumbnail: surveillanceImages[(Math.floor(Math.random() * 5))],
       icon: HardHat,
     },
     {
@@ -213,7 +223,7 @@ const SafetyEventsPage = (): JSX.Element => {
       timestamp: "27 Jan 2025, 15:00",
       severity: "ALERTE",
       severityColor: "bg-orange-500", 
-      thumbnail: "/api/placeholder/160/120",
+      thumbnail: surveillanceImages[(Math.floor(Math.random() * 5))],
       icon: AlertTriangle,
     },
     {
@@ -225,7 +235,7 @@ const SafetyEventsPage = (): JSX.Element => {
       timestamp: "27 Jan 2025, 15:45",
       severity: "ALERTE",
       severityColor: "bg-orange-500",
-      thumbnail: "/api/placeholder/160/120", 
+      thumbnail: surveillanceImages[(Math.floor(Math.random() * 5))], 
       icon: Users,
     }
   ];
