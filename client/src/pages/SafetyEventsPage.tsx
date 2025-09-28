@@ -333,7 +333,7 @@ Exemples:
 • 'Événements de feu et fumée cette semaine'`}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="min-h-[200px] resize-none text-base bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 focus:border-[#0070F3] focus:ring-2 focus:ring-[#0070F3]/20 placeholder:text-gray-400 dark:placeholder:text-gray-500 rounded-lg px-4 py-3 pr-32"
+              className="min-h-[120px] resize-none text-base bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 focus:border-[#0070F3] focus:ring-2 focus:ring-[#0070F3]/20 placeholder:text-gray-400 dark:placeholder:text-gray-500 rounded-lg px-4 py-3 pr-32"
               data-testid="input-search-events"
             />
             <Button 
