@@ -429,7 +429,7 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
                 {/* Action Buttons */}
                 <div className="flex gap-2">
                   <Button 
-                    onClick={handleSave}
+                    onClick={handleAddComment}
                     className="flex-1 bg-blue-500 hover:bg-blue-600 text-white"
                     data-testid="button-save"
                   >
