@@ -2,7 +2,6 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertDomainConfigSchema } from "@shared/schema";
-import OpenAI from "openai";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Domain configuration routes
@@ -33,7 +32,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Safety event chat route
+  // Safety event chat route (Mock implementation)
   app.post("/api/safety/chat", async (req, res) => {
     try {
       const { message, eventContext } = req.body;
@@ -42,50 +41,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "Message is required" });
       }
 
-      // Initialize OpenAI client
-      const openai = new OpenAI({
-        apiKey: process.env.OPENAI_API_KEY,
-      });
-
-      if (!process.env.OPENAI_API_KEY) {
-        return res.json({
-          response: "I need an OpenAI API key to help investigate this event. Please configure the API key and try again."
-        });
-      }
-
-      // Create a context-aware prompt
-      const systemPrompt = `You are an AI safety investigator helping to analyze security and safety events. 
-      You are analyzing an event with the following context:
-      - Event Type: ${eventContext?.type || 'Unknown'}
-      - Location: ${eventContext?.location || 'Unknown'}
-      - Time: ${eventContext?.time || 'Unknown'}
-      - Description: ${eventContext?.description || 'No description'}
-      - Severity: ${eventContext?.severity || 'Unknown'}
+      // Mock responses based on message content
+      const lowerMessage = message.toLowerCase();
+      let response = "";
       
-      Provide helpful, analytical responses about the event. Be specific and detailed in your analysis.
-      If asked about how something happened, provide plausible explanations based on the context.
-      Focus on safety procedures, potential causes, and recommendations for prevention.`;
-
-      try {
-        const completion = await openai.chat.completions.create({
-          model: "gpt-3.5-turbo",
-          messages: [
-            { role: "system", content: systemPrompt },
-            { role: "user", content: message }
-          ],
-          temperature: 0.7,
-          max_tokens: 500
-        });
-
-        const response = completion.choices[0]?.message?.content || "I couldn't analyze this event at the moment.";
-        
-        res.json({ response });
-      } catch (openaiError) {
-        console.error("OpenAI API error:", openaiError);
-        res.json({ 
-          response: "I'm having trouble connecting to the AI service. Please check the API configuration and try again."
-        });
+      if (lowerMessage.includes('fire') && lowerMessage.includes('start')) {
+        response = "Based on the thermal imaging data and smoke detection patterns, the fire appears to have originated from the electrical panel in Zone B. The rapid temperature increase suggests an electrical short circuit as the likely cause.";
+      } else if (lowerMessage.includes('safety') && lowerMessage.includes('measure')) {
+        response = "Several safety measures were triggered: Automatic fire suppression system activated, emergency evacuation alerts sent to all personnel, and zone isolation protocols engaged.";
+      } else if (lowerMessage.includes('witness')) {
+        response = "According to access logs, 3 personnel were in the vicinity during the incident. All personnel were safely evacuated and their statements have been logged.";
+      } else {
+        response = `I've analyzed the ${eventContext?.type || 'event'} that occurred at ${eventContext?.time || 'the reported time'} in ${eventContext?.location || 'the monitored area'}. This incident requires immediate attention and follow-up investigation.`;
       }
+      
+      // Simulate processing delay
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      res.json({ response });
     } catch (error) {
       console.error("Error in safety chat:", error);
       res.status(500).json({ error: "Failed to process chat message" });

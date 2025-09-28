@@ -55,26 +55,41 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
   const [chatInput, setChatInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
 
-  // Chat mutation for AI responses
+  // Mock chat responses for demo
+  const getMockResponse = (message: string): string => {
+    const lowerMessage = message.toLowerCase();
+    
+    if (lowerMessage.includes('fire') && lowerMessage.includes('start')) {
+      return "Based on the thermal imaging data and smoke detection patterns, the fire appears to have originated from the electrical panel in Zone B. The rapid temperature increase at 14:32 suggests an electrical short circuit as the likely cause. Emergency protocols were activated within 30 seconds of detection.";
+    }
+    if (lowerMessage.includes('safety') && lowerMessage.includes('measure')) {
+      return "Several safety measures were triggered: 1) Automatic fire suppression system activated at 14:33, 2) Emergency evacuation alerts sent to all personnel, 3) Zone isolation protocols engaged. However, the backup sprinkler system in Section 2B experienced a 45-second delay due to a pressure valve issue that needs immediate attention.";
+    }
+    if (lowerMessage.includes('witness')) {
+      return "According to access logs, 3 personnel were in the vicinity: Technician James Wilson (Zone B maintenance), Supervisor Maria Garcia (routine inspection), and Security Officer Chen Li (patrol route). All personnel were safely evacuated. Their statements have been logged in the incident report.";
+    }
+    if (lowerMessage.includes('damage') || lowerMessage.includes('impact')) {
+      return "Preliminary assessment indicates: Minor structural damage to electrical panel B-7, smoke damage in a 10-meter radius, no injuries reported. Equipment affected includes 2 control units and wiring infrastructure. Estimated repair time: 48-72 hours. Production impact limited to Zone B operations.";
+    }
+    if (lowerMessage.includes('prevent') || lowerMessage.includes('recommendation')) {
+      return "Key recommendations: 1) Immediate inspection of all electrical panels in similar zones, 2) Upgrade thermal monitoring sensors to newer models with faster response times, 3) Review and update maintenance schedules for critical electrical infrastructure, 4) Conduct emergency response drill focusing on electrical fire scenarios within 2 weeks.";
+    }
+    
+    return `I've analyzed the ${event?.type || 'event'} that occurred at ${event?.time || 'the reported time'} in ${event?.location || 'the monitored area'}. The severity level is marked as ${event?.severity || 'significant'}. Based on the available data, this appears to be a safety-critical incident requiring immediate attention and follow-up investigation.`;
+  };
+
+  // Simulate chat mutation
   const chatMutation = useMutation({
     mutationFn: async (message: string) => {
-      const response = await apiRequest("POST", "/api/safety/chat", {
-        message,
-        eventContext: {
-          type: event?.type,
-          location: event?.location,
-          time: event?.time,
-          description: event?.description,
-          severity: event?.severity
-        }
-      });
-      return response.json();
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 1000));
+      return { response: getMockResponse(message) };
     },
     onSuccess: (data) => {
       setChatMessages(prev => [...prev, {
         id: Date.now().toString(),
         role: 'assistant',
-        content: data.response || data.message || "I've analyzed the event.",
+        content: data.response,
         timestamp: new Date()
       }]);
       setIsTyping(false);
@@ -120,9 +135,26 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
     setComment("");
   };
 
-  const handleShare = () => {
+  const handleShare = async () => {
     // Handle sharing functionality
-    console.log("Sharing event details");
+    const shareData = {
+      title: `Safety Event: ${event?.title}`,
+      text: `${event?.description} - Severity: ${event?.severity}, Status: ${event?.status}`,
+      url: window.location.href
+    };
+    
+    if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+      try {
+        await navigator.share(shareData);
+      } catch (err) {
+        console.log('Share cancelled or failed');
+      }
+    } else {
+      // Fallback: Copy to clipboard
+      const text = `${shareData.title}\n${shareData.text}\n${shareData.url}`;
+      navigator.clipboard.writeText(text);
+      console.log('Event details copied to clipboard');
+    }
   };
 
   const getSeverityColor = (severity: string) => {
@@ -146,7 +178,7 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
   if (!event) return null;
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="max-w-4xl max-h-[90vh] p-0 bg-white dark:bg-gray-800">
         <DialogHeader className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
           <DialogTitle className="text-xl font-semibold text-gray-900 dark:text-gray-100">
