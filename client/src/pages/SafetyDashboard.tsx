@@ -437,13 +437,10 @@ export default function SafetyDashboard() {
                   </div>
                 </div>
                 <div className="bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 p-4 rounded-xl border border-blue-200 dark:border-blue-700/50">
-                  <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">Critical Alert Ratio</h4>
-                  <div className="flex items-center justify-between text-sm">
-                    <div className="flex items-center gap-4">
-                      <span className="text-gray-600 dark:text-gray-300">Current: <span className="font-bold text-blue-600 dark:text-blue-400">68%</span></span>
-                      <span className="text-gray-600 dark:text-gray-300">Previous: <span className="font-bold text-gray-500 dark:text-gray-400">65%</span></span>
-                    </div>
-                    <span className="text-xs text-green-600 dark:text-green-400 font-medium">↗ +3%</span>
+                  <div className="text-center">
+                    <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">Safety Score</h4>
+                    <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">85</div>
+                    <div className="text-xs text-gray-600 dark:text-gray-300 mt-1">out of 100</div>
                   </div>
                 </div>
               </div>
