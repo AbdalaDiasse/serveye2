@@ -511,7 +511,7 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
                 </div>
 
                 {/* Chat Messages - Scrollable area */}
-                <ScrollArea className="flex-1 mb-4">
+                <div className="flex-1 mb-4 overflow-y-auto min-h-0">
                   <div className="space-y-4">
                     {chatMessages.map((message) => (
                       <div key={message.id} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
@@ -538,7 +538,7 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
                       </div>
                     )}
                   </div>
-                </ScrollArea>
+                </div>
 
                 {/* Chat Input - Always at bottom */}
                 <div className="flex gap-2 flex-shrink-0">
