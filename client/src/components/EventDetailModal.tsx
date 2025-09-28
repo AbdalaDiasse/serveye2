@@ -226,7 +226,7 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-5xl max-h-[95vh] p-0 bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 overflow-hidden">
+      <DialogContent className="max-w-5xl max-h-[90vh] p-0 bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 flex flex-col overflow-hidden">
         {/* Hidden title for accessibility */}
         <DialogTitle className="sr-only">Event Details - {event?.title}</DialogTitle>
         <DialogDescription className="sr-only">Details, actions and investigation tools for safety event {event?.id}</DialogDescription>
@@ -261,8 +261,8 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
           </div>
         </div>
 
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col">
-          <TabsList className="grid w-full grid-cols-3 px-6 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col overflow-hidden">
+          <TabsList className="grid w-full grid-cols-3 px-6 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
             <TabsTrigger value="details" className="data-[state=active]:bg-[#0070F3] data-[state=active]:text-white" data-testid="tab-details">
               <Info className="w-4 h-4 mr-2" />
               Details
@@ -277,7 +277,7 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
             </TabsTrigger>
           </TabsList>
 
-          <ScrollArea className="flex-1 px-6 py-6">
+          <div className="flex-1 overflow-y-auto px-6 py-6">
             <TabsContent value="details" className="space-y-6 mt-0">
               {/* Full Event Image */}
               <Card className="overflow-hidden border-gray-200 dark:border-gray-700">
@@ -642,7 +642,7 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
                 </CardContent>
               </Card>
             </TabsContent>
-          </ScrollArea>
+          </div>
         </Tabs>
       </DialogContent>
     </Dialog>
