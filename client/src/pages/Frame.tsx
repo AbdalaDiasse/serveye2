@@ -175,21 +175,21 @@ export const Frame = (): JSX.Element => {
         
         {/* Center - Page title with hamburger menu */}
         <div className="flex-1 px-6 py-3 flex items-center gap-4">
-          <div>
-            <h1 className="text-xl font-semibold text-[#0070F3] dark:text-blue-400">{pageInfo.title}</h1>
-            <p className="text-sm text-gray-500 dark:text-gray-400">{pageInfo.subtitle}</p>
-          </div>
-          
           {/* Hamburger Menu Button */}
           <button 
             onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-            className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors w-6 h-6 flex items-center justify-center flex-shrink-0 ml-auto"
+            className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors w-6 h-6 flex items-center justify-center flex-shrink-0"
             data-testid="button-toggle-sidebar"
           >
             <svg className="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
+          
+          <div>
+            <h1 className="text-xl font-semibold text-[#0070F3] dark:text-blue-400">{pageInfo.title}</h1>
+            <p className="text-sm text-gray-500 dark:text-gray-400">{pageInfo.subtitle}</p>
+          </div>
         </div>
 
         {/* Right side - Search and user controls */}
