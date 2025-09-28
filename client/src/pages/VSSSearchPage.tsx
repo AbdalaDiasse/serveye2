@@ -179,22 +179,21 @@ export default function VSSSearchPage() {
             </div>
             
             {/* Search Content */}
-            <CardContent className="p-6">
+            <div className="bg-blue-50/50 dark:bg-gray-800 p-6 rounded-b-lg">
               {/* Large Textarea with Placeholder Examples */}
-              <div className="relative mb-4">
+              <div className="relative">
                 <Textarea
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder={`Décrivez ce que vous cherchez en langage naturel...
-
 Exemples:
 • 'Montre-moi toutes les intrusions détectées hier'
 • 'Événements de feu et fumée cette semaine'`}
-                  className="min-h-[120px] resize-none text-base border-gray-200 dark:border-gray-600 focus:border-[#0070F3] focus:ring-[#0070F3] placeholder:text-gray-400 dark:placeholder:text-gray-500"
+                  className="min-h-[160px] resize-none text-base bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 focus:border-[#0070F3] focus:ring-2 focus:ring-[#0070F3]/20 placeholder:text-gray-400 dark:placeholder:text-gray-500 rounded-lg px-4 py-3 pr-32"
                   data-testid="textarea-intelligent-search"
                 />
                 <Button 
-                  className="absolute bottom-3 right-3 bg-[#0070F3] hover:bg-blue-600 text-white px-6"
+                  className="absolute bottom-3 right-3 bg-[#0070F3] hover:bg-blue-600 text-white px-6 py-2 rounded-md"
                   data-testid="button-search-intelligent"
                 >
                   <Search className="w-4 h-4 mr-2" />
@@ -203,14 +202,14 @@ Exemples:
               </div>
               
               {/* Suggestions */}
-              <div className="space-y-2">
+              <div className="mt-4">
                 <span className="text-sm text-gray-600 dark:text-gray-400">Suggestions:</span>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 mt-2">
                   {popularSearches.map((search, idx) => (
                     <Badge 
                       key={idx} 
                       variant="secondary" 
-                      className={`${search.color} cursor-pointer transition-colors`}
+                      className={`${search.color} cursor-pointer transition-colors px-3 py-1.5`}
                       onClick={() => setSearchQuery(search.text)}
                       data-testid={`suggestion-${search.text.replace(/\s+/g, '-').toLowerCase()}`}
                     >
@@ -219,7 +218,7 @@ Exemples:
                   ))}
                 </div>
               </div>
-            </CardContent>
+            </div>
           </Card>
         </div>
       </div>
