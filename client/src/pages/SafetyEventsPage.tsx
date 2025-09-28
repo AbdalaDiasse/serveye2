@@ -588,7 +588,7 @@ Exemples:
                 <img 
                   src={event.thumbnail} 
                   alt={event.title}
-                  className="w-full h-32 object-cover"
+                  className="w-full h-48 object-cover"
                 />
               </div>
               
