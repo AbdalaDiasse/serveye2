@@ -162,7 +162,7 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-7xl max-h-[95vh] p-0 bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 flex flex-col overflow-hidden">
+      <DialogContent className="max-w-7xl h-[98vh] p-0 bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 flex flex-col overflow-hidden">
         {/* Hidden title for accessibility */}
         <DialogTitle className="sr-only">Détails de l'événement - {event?.title}</DialogTitle>
         <DialogDescription className="sr-only">Détails, actions et outils d'investigation pour l'événement de sécurité {event?.id}</DialogDescription>
@@ -493,6 +493,27 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
                 </Button>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* Footer with Update/Save Button */}
+        <div className="border-t border-gray-200 dark:border-gray-700 p-4 bg-gray-50 dark:bg-gray-800">
+          <div className="flex justify-end gap-3">
+            <Button 
+              variant="outline"
+              onClick={onClose}
+              className="px-6"
+              data-testid="button-cancel"
+            >
+              Annuler
+            </Button>
+            <Button 
+              onClick={handleSave}
+              className="bg-blue-500 hover:bg-blue-600 text-white px-6"
+              data-testid="button-update-save"
+            >
+              💾 Mettre à jour
+            </Button>
           </div>
         </div>
       </DialogContent>
