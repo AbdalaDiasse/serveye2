@@ -22,7 +22,7 @@ import {
 
 const navigationItems = [
   {
-    name: "main dashboard",
+    name: "Dashbord",
     icon: "LayoutDashboard",
     isActive: false,
   },
