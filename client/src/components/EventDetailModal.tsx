@@ -279,15 +279,18 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
               </div>
             </div>
 
-            {/* Update History */}
-            <div className="px-4 pb-4 flex-1 overflow-y-auto">
+            {/* Update History Header - Fixed */}
+            <div className="px-4 pt-4 border-t border-gray-200 dark:border-gray-700">
               <div className="flex items-center gap-2 mb-3">
                 <Clock className="w-4 h-4 text-blue-500" />
                 <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100">
                   Update History
                 </h3>
               </div>
-              
+            </div>
+
+            {/* Update History Content - Scrollable */}
+            <div className="px-4 pb-4 flex-1 overflow-y-auto">
               <div className="space-y-3">
                 <div className="flex items-center gap-3 text-sm">
                   <div className="w-2 h-2 bg-green-500 rounded-full"></div>
