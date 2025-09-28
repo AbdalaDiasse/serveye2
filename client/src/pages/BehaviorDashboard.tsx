@@ -530,7 +530,7 @@ export default function BehaviorDashboard() {
                 <CardTitle className="text-gray-900 dark:text-gray-100 text-lg font-semibold flex items-center gap-2">
                   📊 Detection Frequency
                 </CardTitle>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Hourly behavior patterns</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Hourly violation patterns</p>
               </div>
               <div className="flex gap-2">
                 <Button 
@@ -719,9 +719,9 @@ export default function BehaviorDashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <CardTitle className="text-gray-900 dark:text-gray-100 text-lg font-semibold flex items-center gap-2">
-                  🥧 Behavior Distribution
+                  🥧 Violation Distribution
                 </CardTitle>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Behavior detection breakdown</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Behavior violation breakdown</p>
               </div>
               <button className="w-8 h-8 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
