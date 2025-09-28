@@ -577,7 +577,7 @@ Exemples:
           {filteredEvents.map((event) => (
             <Card 
               key={event.id} 
-              className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-lg transition-shadow cursor-pointer" 
+              className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-lg transition-shadow cursor-pointer relative" 
               data-testid={`card-event-${event.id}`}
               onClick={() => {
                 setSelectedEventDetail(event);
@@ -592,7 +592,7 @@ Exemples:
                 />
               </div>
               
-              <CardContent className="p-4">
+              <CardContent className="p-4 pb-16">
                 <div className="flex items-start gap-2 mb-2">
                   <div className="w-8 h-8 bg-[#0070F3]/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
                     <event.icon className="w-4 h-4 text-[#0070F3]" />
@@ -604,28 +604,6 @@ Exemples:
                     <p className="text-xs text-gray-600 dark:text-gray-400">
                       {event.description}
                     </p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2 mb-3">
-                  {/* Status Badge */}
-                  <div className={`border-2 text-xs px-2 py-1 rounded-md font-medium bg-transparent ${
-                    (event.statusColor === 'bg-green-500' || event.status === 'New') ? 'border-green-500 text-green-600 dark:border-green-400 dark:text-green-400' :
-                    (event.statusColor === 'bg-yellow-500' || event.status === 'In Review') ? 'border-yellow-500 text-yellow-600 dark:border-yellow-400 dark:text-yellow-400' :
-                    (event.statusColor === 'bg-blue-500' || event.status === 'Confirmed') ? 'border-blue-500 text-blue-600 dark:border-blue-400 dark:text-blue-400' :
-                    (event.statusColor === 'bg-gray-500' || event.status === 'Resolved') ? 'border-gray-500 text-gray-600 dark:border-gray-400 dark:text-gray-300' :
-                    (event.statusColor === 'bg-red-500' || event.status === 'Critical') ? 'border-red-500 text-red-600 dark:border-red-400 dark:text-red-400' :
-                    'border-green-500 text-green-600 dark:border-green-400 dark:text-green-400'
-                  }`}>
-                    {event.status || 'New'}
-                  </div>
-                  {/* Severity Badge */}
-                  <div className={`border-2 ${
-                    event.severity === "CRITIQUE" 
-                      ? "border-red-500 text-red-600 dark:text-red-400" 
-                      : "border-orange-500 text-orange-600 dark:text-orange-400"
-                  } bg-transparent text-xs px-2 py-1 rounded-md font-bold uppercase`}>
-                    {event.severity}
                   </div>
                 </div>
 
@@ -644,6 +622,29 @@ Exemples:
                   </div>
                 </div>
               </CardContent>
+
+              {/* Status and Severity Badges - Bottom Right */}
+              <div className="absolute bottom-2 right-2 flex gap-1">
+                {/* Status Badge */}
+                <div className={`border-2 text-xs px-2 py-1 rounded-md font-medium bg-white dark:bg-gray-800 ${
+                  (event.statusColor === 'bg-green-500' || event.status === 'New') ? 'border-green-500 text-green-600 dark:border-green-400 dark:text-green-400' :
+                  (event.statusColor === 'bg-yellow-500' || event.status === 'In Review') ? 'border-yellow-500 text-yellow-600 dark:border-yellow-400 dark:text-yellow-400' :
+                  (event.statusColor === 'bg-blue-500' || event.status === 'Confirmed') ? 'border-blue-500 text-blue-600 dark:border-blue-400 dark:text-blue-400' :
+                  (event.statusColor === 'bg-gray-500' || event.status === 'Resolved') ? 'border-gray-500 text-gray-600 dark:border-gray-400 dark:text-gray-300' :
+                  (event.statusColor === 'bg-red-500' || event.status === 'Critical') ? 'border-red-500 text-red-600 dark:border-red-400 dark:text-red-400' :
+                  'border-green-500 text-green-600 dark:border-green-400 dark:text-green-400'
+                }`}>
+                  {event.status || 'New'}
+                </div>
+                {/* Severity Badge */}
+                <div className={`border-2 ${
+                  event.severity === "CRITIQUE" 
+                    ? "border-red-500 text-red-600 dark:text-red-400" 
+                    : "border-orange-500 text-orange-600 dark:text-orange-400"
+                } bg-white dark:bg-gray-800 text-xs px-2 py-1 rounded-md font-bold uppercase`}>
+                  {event.severity}
+                </div>
+              </div>
             </Card>
           ))}
         </div>
