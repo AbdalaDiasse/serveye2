@@ -48,7 +48,9 @@ import {
   CircleX,
   Sun,
   Moon,
-  BarChart3
+  BarChart3,
+  Shield,
+  HardHat
 } from 'lucide-react';
 
 // Import behavior detection images
@@ -69,6 +71,17 @@ export default function BehaviorDashboard() {
     { label: 'Running', value: 45, icon: Zap, change: '+12%', period: 'today' },
     { label: 'Calling', value: 19, icon: Phone, change: '+3%', period: 'today' },
     { label: 'Weapon', value: 3, icon: ShieldAlert, change: '+1%', period: 'today' }
+  ];
+
+  const behaviorDetectionSummary = [
+    { type: 'Critical Behaviors', count: 124, icon: AlertTriangle },
+    { type: 'High Priority', count: 89, icon: User },
+    { type: 'Medium Priority', count: 67, icon: Shield },
+    { type: 'Low Priority', count: 45, icon: Users },
+    { type: 'Pending Review', count: 78, icon: RefreshCw },
+    { type: 'Resolved Today', count: 201, icon: CircleCheck },
+    { type: 'Camera Issues', count: 15, icon: Settings },
+    { type: 'Training Required', count: 83, icon: HardHat }
   ];
 
   // Radar chart data for Behavior Module Performance - matching screenshot design
@@ -975,6 +988,28 @@ export default function BehaviorDashboard() {
             </CardContent>
           </Card>
         </div>
+
+        {/* Detection Summary */}
+        <Card className="col-span-4 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+          <CardHeader>
+            <CardTitle className="text-gray-900 dark:text-gray-100 text-base">Detection Summary</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="h-64 overflow-y-scroll scrollbar-hide space-y-3 pr-2">
+              {behaviorDetectionSummary.map((item, index) => (
+                <div key={index} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-lg bg-[#D32F2F]/10 dark:bg-[#D32F2F]/20">
+                      <item.icon className="w-4 h-4 text-[#D32F2F]" />
+                    </div>
+                    <span className="text-sm text-gray-600 dark:text-gray-300">{item.type}</span>
+                  </div>
+                  <span className="text-2xl font-bold text-[#D32F2F]">{item.count}</span>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
