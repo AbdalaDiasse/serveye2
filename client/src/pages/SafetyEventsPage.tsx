@@ -55,6 +55,8 @@ const SafetyEventsPage = (): JSX.Element => {
       timestamp: "27 Jan 2025, 14:32",
       severity: "CRITIQUE",
       severityColor: "bg-red-500",
+      status: "New",
+      statusColor: "bg-green-500",
       thumbnail: surveyImage1,
       icon: AlertTriangle,
     },
@@ -67,6 +69,8 @@ const SafetyEventsPage = (): JSX.Element => {
       timestamp: "27 Jan 2025, 14:28",
       severity: "ALERTE",
       severityColor: "bg-orange-500",
+      status: "In Review",
+      statusColor: "bg-yellow-500",
       thumbnail: surveillanceImages[(Math.floor(Math.random() * 5))],
       icon: HardHat,
     },
@@ -79,6 +83,8 @@ const SafetyEventsPage = (): JSX.Element => {
       timestamp: "27 Jan 2025, 14:16",
       severity: "CRITIQUE",
       severityColor: "bg-red-500",
+      status: "Confirmed",
+      statusColor: "bg-blue-500",
       thumbnail: surveillanceImages[(Math.floor(Math.random() * 5))],
       icon: Flame,
     },
@@ -91,6 +97,8 @@ const SafetyEventsPage = (): JSX.Element => {
       timestamp: "27 Jan 2025, 14:45",
       severity: "CRITIQUE",
       severityColor: "bg-red-500",
+      status: "Resolved",
+      statusColor: "bg-gray-500",
       thumbnail: surveillanceImages[(Math.floor(Math.random() * 5))],
       icon: Users,
     },
@@ -102,7 +110,9 @@ const SafetyEventsPage = (): JSX.Element => {
       zone: "Sécurité",
       timestamp: "27 Jan 2025, 13:32",
       severity: "ALERTE",
-      severityColor: "bg-orange-500", 
+      severityColor: "bg-orange-500",
+      status: "New",
+      statusColor: "bg-green-500", 
       thumbnail: surveillanceImages[(Math.floor(Math.random() * 5))],
       icon: Shield,
     },
@@ -115,6 +125,8 @@ const SafetyEventsPage = (): JSX.Element => {
       timestamp: "27 Jan 2025, 13:18",
       severity: "ALERTE",
       severityColor: "bg-orange-500",
+      status: "In Review",
+      statusColor: "bg-yellow-500",
       thumbnail: surveillanceImages[(Math.floor(Math.random() * 5))],
       icon: HardHat,
     },
@@ -127,6 +139,8 @@ const SafetyEventsPage = (): JSX.Element => {
       timestamp: "27 Jan 2025, 12:09",
       severity: "CRITIQUE",
       severityColor: "bg-red-500",
+      status: "Critical",
+      statusColor: "bg-red-500",
       thumbnail: surveillanceImages[(Math.floor(Math.random() * 5))],
       icon: Flame,
     },
@@ -139,6 +153,8 @@ const SafetyEventsPage = (): JSX.Element => {
       timestamp: "27 Jan 2025, 11:48",
       severity: "CRITIQUE", 
       severityColor: "bg-red-500",
+      status: "Confirmed",
+      statusColor: "bg-blue-500",
       thumbnail: surveillanceImages[(Math.floor(Math.random() * 5))],
       icon: Flame,
     },
@@ -518,13 +534,6 @@ const SafetyEventsPage = (): JSX.Element => {
                   alt={event.title}
                   className="w-full h-32 object-cover"
                 />
-                <div className={`absolute top-2 right-2 border-2 ${
-                  event.severity === "CRITIQUE" 
-                    ? "border-red-500 text-red-600 dark:text-red-400" 
-                    : "border-orange-500 text-orange-600 dark:text-orange-400"
-                } bg-transparent text-xs px-2 py-1 rounded-md font-bold uppercase`}>
-                  {event.severity}
-                </div>
               </div>
               
               <CardContent className="p-4">
@@ -539,6 +548,28 @@ const SafetyEventsPage = (): JSX.Element => {
                     <p className="text-xs text-gray-600 dark:text-gray-400">
                       {event.description}
                     </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 mb-3">
+                  {/* Status Badge */}
+                  <div className={`border-2 text-xs px-2 py-1 rounded-md font-medium bg-transparent ${
+                    (event.statusColor === 'bg-green-500' || event.status === 'New') ? 'border-green-500 text-green-600 dark:border-green-400 dark:text-green-400' :
+                    (event.statusColor === 'bg-yellow-500' || event.status === 'In Review') ? 'border-yellow-500 text-yellow-600 dark:border-yellow-400 dark:text-yellow-400' :
+                    (event.statusColor === 'bg-blue-500' || event.status === 'Confirmed') ? 'border-blue-500 text-blue-600 dark:border-blue-400 dark:text-blue-400' :
+                    (event.statusColor === 'bg-gray-500' || event.status === 'Resolved') ? 'border-gray-500 text-gray-600 dark:border-gray-400 dark:text-gray-300' :
+                    (event.statusColor === 'bg-red-500' || event.status === 'Critical') ? 'border-red-500 text-red-600 dark:border-red-400 dark:text-red-400' :
+                    'border-green-500 text-green-600 dark:border-green-400 dark:text-green-400'
+                  }`}>
+                    {event.status || 'New'}
+                  </div>
+                  {/* Severity Badge */}
+                  <div className={`border-2 ${
+                    event.severity === "CRITIQUE" 
+                      ? "border-red-500 text-red-600 dark:text-red-400" 
+                      : "border-orange-500 text-orange-600 dark:text-orange-400"
+                  } bg-transparent text-xs px-2 py-1 rounded-md font-bold uppercase`}>
+                    {event.severity}
                   </div>
                 </div>
 
