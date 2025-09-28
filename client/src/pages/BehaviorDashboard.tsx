@@ -350,7 +350,7 @@ export default function BehaviorDashboard() {
         <Card className="col-span-7 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle className="text-gray-900 dark:text-gray-100 text-base font-medium">Behavior Module Performance</CardTitle>
+              <CardTitle className="text-gray-900 dark:text-gray-100 text-lg font-semibold">Behavior Module Performance</CardTitle>
               <div className="flex gap-2">
                 <Button 
                   variant="outline" 
@@ -463,7 +463,7 @@ export default function BehaviorDashboard() {
           <CardHeader>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <CardTitle className="text-gray-900 dark:text-gray-100">Live Detections</CardTitle>
+                <CardTitle className="text-gray-900 dark:text-gray-100 text-lg font-semibold">Live Detections</CardTitle>
                 <div className="flex items-center gap-1">
                   <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
                   <span className="text-xs text-red-400">LIVE</span>
@@ -627,7 +627,7 @@ export default function BehaviorDashboard() {
         <Card className="col-span-4 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle className="text-gray-900 dark:text-gray-100 text-base font-medium">Behavior Violation Trends</CardTitle>
+              <CardTitle className="text-gray-900 dark:text-gray-100 text-lg font-semibold">Behavior Violation Trends</CardTitle>
               <Select defaultValue="today">
                 <SelectTrigger className="w-20 h-8 text-xs bg-gray-100 dark:bg-gray-600 border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300">
                   <SelectValue />
