@@ -127,6 +127,7 @@ const navigationItems = [
 interface EventSummarySectionProps {
   currentPage?: string;
   setCurrentPage?: (page: string) => void;
+  isCollapsed?: boolean;
 }
 
 const renderIcon = (icon: string, className: string) => {
@@ -146,7 +147,7 @@ const renderIcon = (icon: string, className: string) => {
   );
 };
 
-export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage }: EventSummarySectionProps): JSX.Element => {
+export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage, isCollapsed = false }: EventSummarySectionProps): JSX.Element => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(
     // Ouvrir automatiquement le dropdown approprié selon la page
     (currentPage === "capture" || currentPage === "reconnaissance" || currentPage === "persons" || currentPage === "personnesDashboard" || currentPage === "clientAnalysis") ? "Personnes" : 
@@ -179,7 +180,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
   };
 
   return (
-    <aside className="w-72 h-full bg-[#ffffffcc] dark:bg-gray-800/90 border-r border-[#ffffff33] dark:border-gray-700/50 shadow-[0px_25px_50px_#00000040] dark:shadow-[0px_25px_50px_#00000080] flex flex-col overflow-hidden flex-shrink-0">
+    <aside className={`${isCollapsed ? 'w-16' : 'w-72'} h-full bg-[#ffffffcc] dark:bg-gray-800/90 border-r border-[#ffffff33] dark:border-gray-700/50 shadow-[0px_25px_50px_#00000040] dark:shadow-[0px_25px_50px_#00000080] flex flex-col overflow-hidden flex-shrink-0 transition-all duration-300`}>
 
       <nav className="flex-1 p-4 overflow-hidden">
         <div className="space-y-2">
@@ -194,7 +195,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
             return (
               <div key={index} className="relative">
                 <div 
-                  className={`h-12 rounded-xl flex items-center px-4 cursor-pointer transition-all ${
+                  className={`h-12 rounded-xl flex items-center ${isCollapsed ? 'px-2 justify-center' : 'px-4'} cursor-pointer transition-all ${
                     isPersonnesActive
                       ? "shadow-md bg-gradient-to-r from-teal-500 to-cyan-500"
                       : isEventsActive
@@ -228,25 +229,29 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
                     }
                   }}
                 >
-                  {renderIcon(item.icon, `${(isPersonnesActive || isEventsActive || isVehiclesActive || isVSSActive || isSafetyActive || isOtherActive) ? "w-4 h-4 mr-3 text-white" : "w-4 h-4 mr-3 text-slate-600 dark:text-gray-300"}`)}
-                  <span className={`[font-family:'Inter',Helvetica] text-base tracking-[0] truncate ${
-                    (isPersonnesActive || isEventsActive || isVehiclesActive || isVSSActive || isSafetyActive || isOtherActive)
-                      ? 'font-semibold text-white leading-[normal]'
-                      : 'font-normal text-slate-600 dark:text-gray-300 leading-6'
-                  }`}>
-                    {item.name}
-                  </span>
-                  {item.hasDropdown && (
-                    <img
-                      className={`w-3 h-3 ml-auto transition-transform duration-200 ${
-                        openDropdown === item.name ? 'rotate-180' : ''
-                      } ${(isPersonnesActive || isVehiclesActive || isVSSActive || isSafetyActive) ? 'filter brightness-0 invert' : ''}`}
-                      alt="Dropdown"
-                      src="/figmaAssets/frame-7.svg"
-                    />
+                  {renderIcon(item.icon, `${(isPersonnesActive || isEventsActive || isVehiclesActive || isVSSActive || isSafetyActive || isOtherActive) ? "w-4 h-4 text-white" : "w-4 h-4 text-slate-600 dark:text-gray-300"} ${isCollapsed ? '' : 'mr-3'}`)}
+                  {!isCollapsed && (
+                    <>
+                      <span className={`[font-family:'Inter',Helvetica] text-base tracking-[0] truncate ${
+                        (isPersonnesActive || isEventsActive || isVehiclesActive || isVSSActive || isSafetyActive || isOtherActive)
+                          ? 'font-semibold text-white leading-[normal]'
+                          : 'font-normal text-slate-600 dark:text-gray-300 leading-6'
+                      }`}>
+                        {item.name}
+                      </span>
+                      {item.hasDropdown && (
+                        <img
+                          className={`w-3 h-3 ml-auto transition-transform duration-200 ${
+                            openDropdown === item.name ? 'rotate-180' : ''
+                          } ${(isPersonnesActive || isVehiclesActive || isVSSActive || isSafetyActive) ? 'filter brightness-0 invert' : ''}`}
+                          alt="Dropdown"
+                          src="/figmaAssets/frame-7.svg"
+                        />
+                      )}
+                    </>
                   )}
                 </div>
-                {item.subItems && openDropdown === item.name && (
+                {item.subItems && openDropdown === item.name && !isCollapsed && (
                   <div className="ml-6 mt-1 space-y-1">
                     {item.subItems.map((subItem, subIndex) => {
                       const subPageName = item.name === "Vehicules" && subItem.name === "Captures" 
@@ -314,21 +319,23 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage 
         </div>
       </nav>
 
-      <div className="p-4">
-        <Card className="rounded-xl border border-[#10b98133] dark:border-emerald-700/50 bg-[linear-gradient(90deg,rgba(16,185,129,0.1)_0%,rgba(6,182,212,0.1)_100%)] dark:bg-[linear-gradient(90deg,rgba(16,185,129,0.2)_0%,rgba(6,182,212,0.2)_100%)]">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <div className="w-2 h-2 bg-emerald-500 rounded-full opacity-90" />
-              <span className="[font-family:'Inter',Helvetica] font-semibold text-emerald-500 text-sm tracking-[0] leading-5">
-                Système Actif
-              </span>
-            </div>
-            <div className="[font-family:'Inter',Helvetica] font-normal text-slate-600 dark:text-gray-300 text-xs tracking-[0] leading-4">
-              Surveillance en cours
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      {!isCollapsed && (
+        <div className="p-4">
+          <Card className="rounded-xl border border-[#10b98133] dark:border-emerald-700/50 bg-[linear-gradient(90deg,rgba(16,185,129,0.1)_0%,rgba(6,182,212,0.1)_100%)] dark:bg-[linear-gradient(90deg,rgba(16,185,129,0.2)_0%,rgba(6,182,212,0.2)_100%)]">
+            <CardContent className="p-4">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-2 h-2 bg-emerald-500 rounded-full opacity-90" />
+                <span className="[font-family:'Inter',Helvetica] font-semibold text-emerald-500 text-sm tracking-[0] leading-5">
+                  Système Actif
+                </span>
+              </div>
+              <div className="[font-family:'Inter',Helvetica] font-normal text-slate-600 dark:text-gray-300 text-xs tracking-[0] leading-4">
+                Surveillance en cours
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </aside>
   );
 };

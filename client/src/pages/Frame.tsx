@@ -21,6 +21,7 @@ import { Search, Settings, Bell, Moon, Sun } from "lucide-react";
 export const Frame = (): JSX.Element => {
   const [currentPage, setCurrentPage] = useState<string>("dashboard");
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(false);
 
   // Apply theme to document element
   useEffect(() => {
@@ -157,8 +158,19 @@ export const Frame = (): JSX.Element => {
     <div className="flex flex-col w-full min-h-screen bg-white dark:bg-gray-900 border-2 border-solid border-[#ced4da] dark:border-gray-700">
       {/* Top Header Bar */}
       <header className="w-full bg-white dark:bg-gray-800 border-b border-[#ced4da] dark:border-gray-700 px-6 py-3 flex items-center justify-between">
-        {/* Left side - SYRATE branding and page title */}
-        <div className="flex items-center gap-6">
+        {/* Left side - Menu button, SYRATE branding and page title */}
+        <div className="flex items-center gap-4">
+          {/* Hamburger Menu Button */}
+          <button 
+            onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+            data-testid="button-toggle-sidebar"
+          >
+            <svg className="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 bg-[#0070F3] rounded flex items-center justify-center">
               <span className="text-white font-bold text-sm">S</span>
@@ -218,7 +230,11 @@ export const Frame = (): JSX.Element => {
       {/* Main content area */}
       <div className="flex flex-1 bg-[linear-gradient(90deg,rgba(248,250,252,1)_0%,rgba(230,242,255,1)_100%)] dark:bg-[linear-gradient(90deg,rgba(30,41,59,1)_0%,rgba(15,23,42,1)_100%)]">
         <div className="flex w-full">
-          <EventSummarySection currentPage={currentPage} setCurrentPage={setCurrentPage} />
+          <EventSummarySection 
+            currentPage={currentPage} 
+            setCurrentPage={setCurrentPage}
+            isCollapsed={isSidebarCollapsed}
+          />
           <div className="flex-1">
             {renderContent()}
           </div>
