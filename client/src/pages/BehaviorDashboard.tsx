@@ -308,181 +308,181 @@ export default function BehaviorDashboard() {
         ))}
       </div>
 
-      <div className="grid grid-cols-12 gap-6">
-        {/* First Row: Behavior Module Performance (Left) and Live Behavior Detections (Right) */}
-        
-        {/* Behavior Module Performance with Recommendations */}
-        <div className="col-span-8">
-          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 h-[500px]">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                  Behavior Module Performance
-                </CardTitle>
-                <div className="flex gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="text-[#D32F2F] border-[#D32F2F] hover:bg-[#D32F2F] hover:text-white"
-                  >
-                    Weekly
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-gray-500 hover:text-gray-700"
-                  >
-                    Monthly
-                  </Button>
-                </div>
+      <div className="grid grid-cols-12 gap-4">
+        {/* Behavior Module Performance */}
+        <Card className="col-span-7 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-gray-900 dark:text-gray-100 text-base font-medium">Behavior Module Performance</CardTitle>
+              <div className="flex gap-2">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="bg-[#D32F2F] border-[#D32F2F] text-white hover:bg-[#B71C1C] h-8 px-4 text-xs"
+                >
+                  Weekly
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="bg-transparent border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 h-8 px-4 text-xs"
+                >
+                  Monthly
+                </Button>
               </div>
-            </CardHeader>
-            <CardContent className="h-[400px]">
-              <div className="flex gap-6 h-full">
-                {/* Radar Chart */}
-                <div className="flex-1">
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-2 gap-8">
+              <div className="flex flex-col items-center">
+                <div className="radar-card h-80 mb-4 w-full max-w-md">
                   <ResponsiveContainer width="100%" height="100%">
-                    <RadarChart data={radarData} margin={{ top: 20, right: 30, bottom: 20, left: 30 }}>
-                      <PolarGrid stroke="#374151" />
+                    <RadarChart data={radarData}>
+                      <PolarGrid 
+                        gridType="polygon" 
+                        radialLines={true}
+                        stroke="#9ca3af"
+                        strokeWidth={1}
+                        strokeOpacity={0.5}
+                      />
                       <PolarAngleAxis 
                         dataKey="subject" 
-                        tick={{ fontSize: 11, fill: '#6B7280' }}
+                        tick={{ fill: '#6b7280', fontSize: 11, fontWeight: 500 }}
+                        tickFormatter={(value) => value}
                       />
                       <PolarRadiusAxis 
                         angle={90} 
                         domain={[0, 100]} 
-                        tick={{ fontSize: 10, fill: '#6B7280' }}
+                        tick={{ fill: '#9ca3af', fontSize: 10 }}
+                        tickCount={5}
+                        axisLine={false}
                       />
                       <Radar
                         name="Current Week"
                         dataKey="currentWeek"
                         stroke="#D32F2F"
                         fill="#D32F2F"
-                        fillOpacity={0.1}
-                        strokeWidth={2}
+                        fillOpacity={0.2}
+                        strokeWidth={3}
+                        dot={{ fill: '#D32F2F', strokeWidth: 3, r: 6 }}
                       />
                       <Radar
                         name="Previous Week"
                         dataKey="previousWeek"
-                        stroke="#6B7280"
-                        fill="#6B7280"
-                        fillOpacity={0.05}
-                        strokeWidth={1.5}
-                        strokeDasharray="5 5"
-                      />
-                      <Legend 
-                        wrapperStyle={{ 
-                          fontSize: '12px',
-                          paddingTop: '20px'
-                        }}
+                        stroke="#6b7280"
+                        fill="#6b7280"
+                        fillOpacity={0.1}
+                        strokeWidth={2}
+                        dot={{ fill: '#6b7280', strokeWidth: 2, r: 4 }}
                       />
                     </RadarChart>
                   </ResponsiveContainer>
                 </div>
-
-                {/* Behavior Recommendations */}
-                <div className="w-80 flex flex-col">
-                  <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-4">
-                    Behavior Recommendations
-                  </h3>
-                  <div className="space-y-3 flex-1 overflow-y-auto">
-                    {behaviorRecommendations.map((recommendation, index) => (
-                      <div key={index} className="flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-700/30 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors">
-                        <div className="w-8 h-8 bg-[#D32F2F] rounded-lg flex items-center justify-center flex-shrink-0">
-                          <recommendation.icon className="w-4 h-4 text-white" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
-                            {recommendation.title}
-                          </h4>
-                          <p className="text-xs text-gray-600 dark:text-gray-400 truncate">
-                            {recommendation.description}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
+                <div className="flex items-center justify-center gap-6 text-sm mb-6">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 bg-[#D32F2F] rounded-full"></div>
+                    <span className="text-gray-600 dark:text-gray-300 font-medium">Current Week</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 bg-gray-400 rounded-full"></div>
+                    <span className="text-gray-600 dark:text-gray-300 font-medium">Previous Week</span>
                   </div>
                 </div>
+                
+                {/* Behavior Score Display */}
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-1">87.2%</div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">Behavior Score</div>
+                </div>
               </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Live Behavior Detections */}
-        <div className="col-span-4">
-          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 h-[500px] flex flex-col">
-            <CardHeader className="pb-4 border-b border-gray-200 dark:border-gray-700">
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                  Live Behavior Detections
-                </CardTitle>
-                <Button variant="ghost" size="sm" className="text-[#D32F2F] hover:text-[#B71C1C] hover:bg-[#D32F2F]/10">
-                  <RefreshCw className="w-4 h-4" />
-                </Button>
-              </div>
-            </CardHeader>
-            <CardContent className="flex-1 p-0 overflow-hidden">
-              <div className="h-full overflow-y-auto">
-                {liveDetections.map((detection, index) => (
-                  <div key={index} className="p-4 border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors cursor-pointer">
-                    <div className="flex items-start gap-3">
-                      <img 
-                        src={detection.thumbnail} 
-                        alt={detection.type}
-                        className="w-16 h-12 object-cover rounded-lg border border-gray-200 dark:border-gray-600"
-                      />
+              
+              {/* Behavior Recommendations */}
+              <div className="space-y-4">
+                <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-4">Behavior Recommendations</h3>
+                <div className="space-y-3 h-80 overflow-y-auto scrollbar-hide">
+                  {behaviorRecommendations.map((recommendation, index) => (
+                    <div key={index} className="flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-700/30 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors cursor-pointer">
+                      <div className="w-8 h-8 bg-[#D32F2F] rounded-lg flex items-center justify-center flex-shrink-0">
+                        <recommendation.icon className="w-4 h-4 text-white" />
+                      </div>
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-start justify-between mb-2">
-                          <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
-                            {detection.type}
-                          </h4>
-                          <div className="flex gap-1 ml-2">
-                            <Badge 
-                              variant="outline" 
-                              className={`text-xs px-2 py-0.5 border-2 ${
-                                detection.severity === 'Critical' ? 'border-red-500 text-red-600 dark:border-red-400 dark:text-red-400' :
-                                detection.severity === 'High' ? 'border-orange-500 text-orange-600 dark:border-orange-400 dark:text-orange-400' :
-                                detection.severity === 'Medium' ? 'border-blue-500 text-blue-600 dark:border-blue-400 dark:text-blue-400' :
-                                detection.severity === 'Alert' ? 'border-yellow-500 text-yellow-600 dark:border-yellow-400 dark:text-yellow-400' :
-                                'border-green-500 text-green-600 dark:border-green-400 dark:text-green-400'
-                              }`}
-                            >
-                              {detection.severity}
-                            </Badge>
-                          </div>
-                        </div>
-                        <div className="space-y-1">
-                          <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
-                            <MapPin className="w-3 h-3" />
-                            <span>{detection.location} • {detection.area}</span>
-                          </div>
-                          <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
-                            <Camera className="w-3 h-3" />
-                            <span>{detection.camera}</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="text-xs text-gray-500 dark:text-gray-400">{detection.time}</span>
-                            <Badge 
-                              variant="outline" 
-                              className={`text-xs px-2 py-0.5 border ${
-                                detection.status === 'New' ? 'border-green-500 text-green-600 dark:border-green-400 dark:text-green-400' :
-                                detection.status === 'In Review' ? 'border-yellow-500 text-yellow-600 dark:border-yellow-400 dark:text-yellow-400' :
-                                detection.status === 'Confirmed' ? 'border-blue-500 text-blue-600 dark:border-blue-400 dark:text-blue-400' :
-                                'border-gray-500 text-gray-600 dark:border-gray-400 dark:text-gray-300'
-                              }`}
-                            >
-                              {detection.status}
-                            </Badge>
-                          </div>
-                        </div>
+                        <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
+                          {recommendation.title}
+                        </h4>
+                        <p className="text-xs text-gray-600 dark:text-gray-400 truncate">
+                          {recommendation.description}
+                        </p>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </CardContent>
-          </Card>
-        </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Live Detections */}
+        <Card className="col-span-5 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <CardTitle className="text-gray-900 dark:text-gray-100">Live Detections</CardTitle>
+                <div className="flex items-center gap-1">
+                  <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+                  <span className="text-xs text-red-400">LIVE</span>
+                </div>
+              </div>
+              <Button variant="ghost" size="sm" className="text-gray-500 dark:text-gray-400">
+                <Maximize2 className="w-4 h-4" />
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="h-[450px] overflow-y-scroll scrollbar-hide space-y-3 pr-2">
+              {liveDetections.map((detection) => (
+                <div key={detection.id} className="relative flex items-center gap-4 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                  <img 
+                    src={detection.thumbnail} 
+                    alt={detection.type}
+                    className="w-28 h-20 object-cover rounded-lg"
+                  />
+                  <div className="flex-1">
+                    <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">{detection.type}</h4>
+                    <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">
+                      {detection.area} • {detection.location}
+                    </div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400">
+                      {detection.time} • {detection.camera}
+                    </div>
+                  </div>
+                  <div className="flex flex-col items-end gap-2">
+                    {/* Status - Outlined style for informational purpose */}
+                    <div className={`border-2 text-xs px-2 py-1 rounded-md font-medium bg-transparent ${
+                      detection.statusColor === 'bg-green-500' ? 'border-green-500 text-green-600 dark:border-green-400 dark:text-green-400' :
+                      detection.statusColor === 'bg-yellow-500' ? 'border-yellow-500 text-yellow-600 dark:border-yellow-400 dark:text-yellow-400' :
+                      detection.statusColor === 'bg-blue-500' ? 'border-blue-500 text-blue-600 dark:border-blue-400 dark:text-blue-400' :
+                      detection.statusColor === 'bg-gray-500' ? 'border-gray-500 text-gray-600 dark:border-gray-400 dark:text-gray-300' :
+                      'border-red-500 text-red-600 dark:border-red-400 dark:text-red-400'
+                    }`}>
+                      {detection.status}
+                    </div>
+                    
+                    {/* Severity - Filled style for visual impact */}
+                    <div className={`text-xs px-2 py-1 rounded-md font-medium text-white ${
+                      detection.severityColor === 'bg-red-500' ? 'bg-red-500' :
+                      detection.severityColor === 'bg-orange-500' ? 'bg-orange-500' :
+                      detection.severityColor === 'bg-yellow-400' ? 'bg-yellow-400 text-yellow-900' :
+                      detection.severityColor === 'bg-blue-500' ? 'bg-blue-500' :
+                      'bg-gray-500'
+                    }`}>
+                      {detection.severity}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Weekly Behavior Trends */}
         <div className="col-span-8">
