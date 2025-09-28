@@ -276,15 +276,6 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
                     {event.timestamp || '25 Jan 2025, 14:32'}
                   </span>
                 </div>
-                <div className="pt-2">
-                  <div className="flex justify-between mb-1">
-                    <span className="text-gray-600 dark:text-gray-400">Confidence:</span>
-                    <span className="font-medium text-gray-900 dark:text-gray-100">94%</span>
-                  </div>
-                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                    <div className="bg-red-500 h-2 rounded-full" style={{ width: '94%' }}></div>
-                  </div>
-                </div>
               </div>
             </div>
 
