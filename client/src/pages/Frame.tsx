@@ -160,17 +160,17 @@ export const Frame = (): JSX.Element => {
       <header className="w-full bg-white dark:bg-gray-800 border-b border-[#ced4da] dark:border-gray-700 flex items-center">
         {/* Left side - SYRATE branding - matches sidebar width */}
         <div className={`${isSidebarCollapsed ? 'w-16' : 'w-60'} flex items-center justify-center px-6 py-3 border-r border-gray-300 dark:border-gray-600 transition-all duration-300`}>
-          {!isSidebarCollapsed && (
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-[#0070F3] rounded flex items-center justify-center">
-                <span className="text-white font-bold text-sm">S</span>
-              </div>
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-[#0070F3] rounded flex items-center justify-center">
+              <span className="text-white font-bold text-sm">S</span>
+            </div>
+            {!isSidebarCollapsed && (
               <div>
                 <div className="font-bold text-gray-800 dark:text-gray-200 text-base">SYRATE</div>
                 <div className="text-xs text-gray-500 dark:text-gray-400">Safety Module</div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
         
         {/* Center - Page title with hamburger menu */}
