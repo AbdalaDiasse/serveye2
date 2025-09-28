@@ -141,17 +141,6 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
   };
 
   const handleSave = () => {
-    // Add current comment if there's one
-    if (comment.trim()) {
-      const newComment = {
-        id: Date.now().toString(),
-        text: comment,
-        timestamp: new Date(),
-        author: "Security Agent A"
-      };
-      setComments(prev => [...prev, newComment]);
-      setComment(""); // Clear the input after saving
-    }
     console.log("Saving event details");
   };
 
@@ -550,7 +539,7 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
               className="bg-blue-500 hover:bg-blue-600 text-white px-6"
               data-testid="button-update-save"
             >
-              💾 Save & Update
+              💾 Update
             </Button>
           </div>
         </div>
