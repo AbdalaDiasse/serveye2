@@ -180,7 +180,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage,
   };
 
   return (
-    <aside className={`${isCollapsed ? 'w-16' : 'w-72'} h-full bg-[#ffffffcc] dark:bg-gray-800/90 border-r border-[#ffffff33] dark:border-gray-700/50 shadow-[0px_25px_50px_#00000040] dark:shadow-[0px_25px_50px_#00000080] flex flex-col overflow-hidden flex-shrink-0 transition-all duration-300`}>
+    <aside className={`${isCollapsed ? 'w-16' : 'w-60'} h-full bg-[#ffffffcc] dark:bg-gray-800/90 border-r border-[#ffffff33] dark:border-gray-700/50 shadow-[0px_25px_50px_#00000040] dark:shadow-[0px_25px_50px_#00000080] flex flex-col overflow-hidden flex-shrink-0 transition-all duration-300`}>
 
       <nav className="flex-1 p-4 overflow-hidden">
         <div className="space-y-2">
