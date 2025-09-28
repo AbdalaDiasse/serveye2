@@ -11,8 +11,6 @@ import VSSAgentPage from "@/pages/VSSAgentPage";
 import VSSResumePage from "@/pages/VSSResumePage";
 import VSSSearchPage from "@/pages/VSSSearchPage";
 import SafetyDashboard from "@/pages/SafetyDashboard";
-import BehaviorDashboard from "@/pages/BehaviorDashboard";
-import BehaviorEventsPage from "@/pages/BehaviorEventsPage";
 
 function Router() {
   return (
@@ -23,8 +21,6 @@ function Router() {
       <Route path="/vss-agent" component={VSSAgentPage} />
       <Route path="/vss-resume" component={VSSResumePage} />
       <Route path="/vss-search" component={VSSSearchPage} />
-      <Route path="/behavior-dashboard" component={BehaviorDashboard} />
-      <Route path="/behavior-events" component={BehaviorEventsPage} />
       {/* Fallback to 404 */}
       <Route component={NotFound} />
     </Switch>
