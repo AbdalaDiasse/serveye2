@@ -522,7 +522,7 @@ const SafetyEventsPage = (): JSX.Element => {
                   event.severity === "CRITIQUE" 
                     ? "border-red-500 text-red-600 dark:text-red-400" 
                     : "border-orange-500 text-orange-600 dark:text-orange-400"
-                } bg-white dark:bg-gray-800 text-xs px-2 py-1 rounded-md font-bold uppercase`}>
+                } bg-transparent text-xs px-2 py-1 rounded-md font-bold uppercase`}>
                   {event.severity}
                 </div>
               </div>
