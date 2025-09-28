@@ -382,8 +382,8 @@ export default function SafetyDashboard() {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 gap-8">
-              <div className="flex flex-col">
-                <div className="radar-card h-80 mb-4">
+              <div className="flex flex-col items-center">
+                <div className="radar-card h-80 mb-4 w-full max-w-md">
                   <ResponsiveContainer width="100%" height="100%">
                     <RadarChart data={radarData}>
                       <PolarGrid 
@@ -426,23 +426,32 @@ export default function SafetyDashboard() {
                     </RadarChart>
                   </ResponsiveContainer>
                 </div>
-                <div className="flex items-center gap-6 text-xs">
+                <div className="flex items-center justify-center gap-6 text-sm mb-6">
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
-                    <span className="text-gray-600 dark:text-gray-300">Current Week</span>
+                    <div className="w-3 h-3 bg-blue-600 rounded-full"></div>
+                    <span className="text-gray-600 dark:text-gray-300 font-medium">Current Week</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
-                    <span className="text-gray-600 dark:text-gray-300">Previous Week</span>
+                    <div className="w-3 h-3 bg-gray-400 rounded-full"></div>
+                    <span className="text-gray-600 dark:text-gray-300 font-medium">Previous Week</span>
                   </div>
                 </div>
-                <div className="mt-4 text-xs text-gray-600 dark:text-gray-300">
-                  <div className="mb-2">
-                    <span className="font-medium">Critical Alert Ratio</span>
-                  </div>
-                  <div className="text-xs">
-                    <span>• Current Week: <span className="font-medium">68%</span></span><br/>
-                    <span>• Previous Week: <span className="font-medium">65%</span></span>
+                <div className="bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 p-6 rounded-xl border border-blue-200 dark:border-blue-700/50">
+                  <div className="text-center">
+                    <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Critical Alert Ratio</h4>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">68%</div>
+                        <div className="text-sm text-gray-600 dark:text-gray-300 mt-1">Current Week</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-gray-500 dark:text-gray-400">65%</div>
+                        <div className="text-sm text-gray-600 dark:text-gray-300 mt-1">Previous Week</div>
+                      </div>
+                    </div>
+                    <div className="mt-3 text-xs text-green-600 dark:text-green-400 font-medium">
+                      ↗ +3% improvement from last week
+                    </div>
                   </div>
                 </div>
               </div>
