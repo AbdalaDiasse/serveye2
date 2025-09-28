@@ -48,6 +48,7 @@ import {
   Sun,
   Moon
 } from 'lucide-react';
+import { CameraPerformanceModal } from '@/components/CameraPerformanceModal';
 
 // Import safety detection images
 import detectionImage1 from '@assets/stock_images/construction_worker__9d5e7150.jpg';
@@ -57,6 +58,8 @@ import detectionImage4 from '@assets/stock_images/construction_worker__b0637b73.
 
 export default function SafetyDashboard() {
   const [selectedPeriod, setSelectedPeriod] = useState('today');
+  const [selectedCamera, setSelectedCamera] = useState<any>(null);
+  const [isCameraModalOpen, setIsCameraModalOpen] = useState(false);
 
 
   // Key safety metrics - exact values from design
@@ -947,7 +950,14 @@ export default function SafetyDashboard() {
           <CardContent>
             <div className="h-64 overflow-y-scroll scrollbar-hide space-y-3 pr-2">
               {camerasData.map((camera, index) => (
-                <div key={index} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                <div 
+                  key={index} 
+                  className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                  onClick={() => {
+                    setSelectedCamera(camera);
+                    setIsCameraModalOpen(true);
+                  }}
+                >
                   <div className="flex items-center gap-3">
                     <div className="p-2 bg-blue-600/20 rounded-lg">
                       <Camera className="w-4 h-4 text-blue-400" />
@@ -1000,6 +1010,14 @@ export default function SafetyDashboard() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Camera Performance Modal */}
+      <CameraPerformanceModal
+        camera={selectedCamera}
+        isOpen={isCameraModalOpen}
+        onClose={() => setIsCameraModalOpen(false)}
+        colorScheme="blue"
+      />
     </div>
   );
 }

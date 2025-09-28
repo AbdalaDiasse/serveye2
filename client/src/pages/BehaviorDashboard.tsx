@@ -52,6 +52,7 @@ import {
   Shield,
   HardHat
 } from 'lucide-react';
+import { CameraPerformanceModal } from '@/components/CameraPerformanceModal';
 
 // Import behavior detection images
 import detectionImage1 from '@assets/stock_images/construction_worker__9d5e7150.jpg';
@@ -61,6 +62,8 @@ import detectionImage4 from '@assets/stock_images/construction_worker__b0637b73.
 
 export default function BehaviorDashboard() {
   const [selectedPeriod, setSelectedPeriod] = useState('today');
+  const [selectedCamera, setSelectedCamera] = useState<any>(null);
+  const [isCameraModalOpen, setIsCameraModalOpen] = useState(false);
 
   // Key behavior metrics - focused on behavior detection
   const behaviorMetrics = [
@@ -920,7 +923,14 @@ export default function BehaviorDashboard() {
             <CardContent className="overflow-y-auto h-[400px]">
               <div className="space-y-3">
                 {camerasData.map((camera, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                  <div 
+                    key={index} 
+                    className="flex items-center justify-between p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors cursor-pointer"
+                    onClick={() => {
+                      setSelectedCamera(camera);
+                      setIsCameraModalOpen(true);
+                    }}
+                  >
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 bg-[#D32F2F]/10 rounded-lg flex items-center justify-center">
                         <Camera className="w-4 h-4 text-[#D32F2F]" />
@@ -1011,6 +1021,14 @@ export default function BehaviorDashboard() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Camera Performance Modal */}
+      <CameraPerformanceModal
+        camera={selectedCamera}
+        isOpen={isCameraModalOpen}
+        onClose={() => setIsCameraModalOpen(false)}
+        colorScheme="red"
+      />
     </div>
   );
 }
