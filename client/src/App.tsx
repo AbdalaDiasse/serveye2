@@ -23,8 +23,6 @@ function Router() {
       <Route path="/vss-agent" component={VSSAgentPage} />
       <Route path="/vss-resume" component={VSSResumePage} />
       <Route path="/vss-search" component={VSSSearchPage} />
-      <Route path="/behavior" component={BehaviorDashboard} />
-      <Route path="/behavior/events" component={BehaviorEventsPage} />
       {/* Fallback to 404 */}
       <Route component={NotFound} />
     </Switch>
