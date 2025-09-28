@@ -575,13 +575,14 @@ export default function BehaviorDashboard() {
                     tickLine={false} 
                     tick={{ 
                       fill: '#6b7280', 
-                      fontSize: 10, 
-                      fontWeight: 500 
+                      fontSize: 10,
+                      fontWeight: 500
                     }}
-                    interval={0}
-                    angle={-45}
+                    className="dark:fill-gray-300"
+                    angle={-35}
                     textAnchor="end"
-                    height={80}
+                    height={60}
+                    interval={0}
                   />
                   <YAxis 
                     axisLine={false} 
