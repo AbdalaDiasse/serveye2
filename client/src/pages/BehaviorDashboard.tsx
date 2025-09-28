@@ -223,7 +223,7 @@ export default function BehaviorDashboard() {
     { site: 'Site D', area: 'Zone', detections: 63 }
   ];
 
-  const handleEventClick = (event) => {
+  const handleEventClick = (event: any) => {
     setSelectedEvent(event);
     setIsModalOpen(true);
   };
