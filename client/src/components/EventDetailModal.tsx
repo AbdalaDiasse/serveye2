@@ -129,7 +129,8 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
   const handleAddComment = () => {
     if (!comment.trim()) return;
     console.log("Adding comment:", comment);
-    setComment("");
+    // Keep the comment so it shows in the history
+    // setComment(""); // Don't clear immediately so it shows in updates
   };
 
   const handleSave = () => {
@@ -192,7 +193,7 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
         {/* Main Content */}
         <div className="flex-1 flex overflow-hidden">
           {/* Left Panel */}
-          <div className="flex-1 flex flex-col border-r border-gray-200 dark:border-gray-700">
+          <div className="flex-1 flex flex-col border-r border-gray-200 dark:border-gray-700 overflow-y-auto">
             {/* Image and Tabs */}
             <div className="p-4">
               <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
@@ -312,22 +313,39 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
                         <span className="text-gray-500 dark:text-gray-400">25 Jan 14:35</span>
                       </div>
                       <p className="text-gray-600 dark:text-gray-400 text-xs">
-                        Nouveau → En cours par Agent Sécurité A
+                        Nouveau → {eventStatus} par Agent Sécurité A
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {assignedAgent && (
+                  <div className="flex items-center gap-3 text-sm">
+                    <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                    <div className="flex-1">
+                      <div className="flex justify-between">
+                        <span className="text-gray-900 dark:text-gray-100">Agent assigné</span>
+                        <span className="text-gray-500 dark:text-gray-400">Maintenant</span>
+                      </div>
+                      <p className="text-gray-600 dark:text-gray-400 text-xs">
+                        Assigné à {assignedAgent === 'agent1' ? 'Agent Sécurité A' : 
+                                  assignedAgent === 'agent2' ? 'Agent Sécurité B' : 
+                                  assignedAgent === 'agent3' ? 'Agent Sécurité C' : 'Superviseur Sécurité'}
                       </p>
                     </div>
                   </div>
                 )}
                 
-                {comment && (
+                {comment.trim() && (
                   <div className="flex items-center gap-3 text-sm">
                     <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
                     <div className="flex-1">
                       <div className="flex justify-between">
                         <span className="text-gray-900 dark:text-gray-100">Commentaire ajouté</span>
-                        <span className="text-gray-500 dark:text-gray-400">25 Jan 14:38</span>
+                        <span className="text-gray-500 dark:text-gray-400">Maintenant</span>
                       </div>
                       <p className="text-gray-600 dark:text-gray-400 text-xs">
-                        "Équipe de sécurité dépêchée sur zone" - Agent Sécurité A
+                        "{comment}" - Agent Sécurité A
                       </p>
                     </div>
                   </div>
@@ -337,9 +355,9 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
           </div>
 
           {/* Right Panel */}
-          <div className="w-[480px] flex flex-col">
+          <div className="w-[480px] flex flex-col overflow-y-auto">
             {/* Actions Section */}
-            <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+            <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
               <div className="flex items-center gap-2 mb-4">
                 <UserPlus className="w-4 h-4 text-blue-500" />
                 <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100">
