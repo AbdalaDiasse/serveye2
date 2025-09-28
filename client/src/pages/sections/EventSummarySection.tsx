@@ -271,6 +271,11 @@ export const EventSummarySection = ({
       currentPage === "safetyEvents"
     ) {
       setOpenDropdown("Safety");
+    } else if (
+      currentPage === "behaviorDashboard" ||
+      currentPage === "behaviorEvents"
+    ) {
+      setOpenDropdown("Behavior");
     }
   }, [currentPage]);
 
@@ -338,7 +343,7 @@ export const EventSummarySection = ({
                           : isSafetyActive
                             ? "shadow-md bg-gradient-to-r from-[#0070F3] to-[#0056D6]"
                             : isBehaviorActive
-                              ? "shadow-md bg-gradient-to-r from-purple-500 to-indigo-600"
+                              ? "shadow-md bg-gradient-to-r from-[#D32F2F] to-[#B71C1C]"
                               : isSmartSpaceActive
                                 ? "shadow-md bg-gradient-to-r from-emerald-500 to-emerald-600"
                                 : isZoneMonitoringActive
@@ -453,7 +458,7 @@ export const EventSummarySection = ({
                             : item.name === "Safety"
                               ? "from-[#60a5fa] to-[#3b82f6]"
                               : item.name === "Behavior"
-                                ? "from-purple-400 to-indigo-500"
+                                ? "from-[#EF5350] to-[#D32F2F]"
                                 : item.name === "Smart Space"
                                   ? "from-emerald-400 to-emerald-500"
                                   : item.name === "Zone monitoring"
