@@ -288,60 +288,41 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
                 />
               </Card>
 
-              {/* Event Metadata Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900 border-blue-200 dark:border-blue-800">
-                  <CardContent className="p-4">
-                    <div className="flex items-center justify-between mb-3">
-                      <Calendar className="w-8 h-8 text-blue-600 dark:text-blue-400" />
-                      <ChevronRight className="w-4 h-4 text-blue-400" />
+              {/* Event Metadata - Simplified */}
+              <Card className="border-gray-200 dark:border-gray-700">
+                <CardContent className="p-4">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div className="text-center">
+                      <Calendar className="w-5 h-5 text-gray-600 dark:text-gray-400 mx-auto mb-2" />
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Date & Time</p>
+                      <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+                        {event.timestamp || event.time}
+                      </p>
                     </div>
-                    <p className="text-xs text-blue-600 dark:text-blue-400 font-medium mb-1">Detection Time</p>
-                    <p className="text-sm font-bold text-blue-900 dark:text-blue-100">
-                      {event.time}
-                    </p>
-                  </CardContent>
-                </Card>
-
-                <Card className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-950 dark:to-purple-900 border-purple-200 dark:border-purple-800">
-                  <CardContent className="p-4">
-                    <div className="flex items-center justify-between mb-3">
-                      <Camera className="w-8 h-8 text-purple-600 dark:text-purple-400" />
-                      <ChevronRight className="w-4 h-4 text-purple-400" />
+                    <div className="text-center">
+                      <Camera className="w-5 h-5 text-gray-600 dark:text-gray-400 mx-auto mb-2" />
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Camera</p>
+                      <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+                        {event.camera || 'Camera A'}
+                      </p>
                     </div>
-                    <p className="text-xs text-purple-600 dark:text-purple-400 font-medium mb-1">Camera</p>
-                    <p className="text-sm font-bold text-purple-900 dark:text-purple-100">
-                      {event.camera || 'Camera A'}
-                    </p>
-                  </CardContent>
-                </Card>
-
-                <Card className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-950 dark:to-green-900 border-green-200 dark:border-green-800">
-                  <CardContent className="p-4">
-                    <div className="flex items-center justify-between mb-3">
-                      <MapPin className="w-8 h-8 text-green-600 dark:text-green-400" />
-                      <ChevronRight className="w-4 h-4 text-green-400" />
+                    <div className="text-center">
+                      <MapPin className="w-5 h-5 text-gray-600 dark:text-gray-400 mx-auto mb-2" />
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Zone</p>
+                      <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+                        {event.zone || event.location}
+                      </p>
                     </div>
-                    <p className="text-xs text-green-600 dark:text-green-400 font-medium mb-1">Zone</p>
-                    <p className="text-sm font-bold text-green-900 dark:text-green-100">
-                      {event.zone || event.location}
-                    </p>
-                  </CardContent>
-                </Card>
-
-                <Card className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-950 dark:to-orange-900 border-orange-200 dark:border-orange-800">
-                  <CardContent className="p-4">
-                    <div className="flex items-center justify-between mb-3">
-                      <Building className="w-8 h-8 text-orange-600 dark:text-orange-400" />
-                      <ChevronRight className="w-4 h-4 text-orange-400" />
+                    <div className="text-center">
+                      <Building className="w-5 h-5 text-gray-600 dark:text-gray-400 mx-auto mb-2" />
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Site</p>
+                      <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+                        {event.site || 'Production'}
+                      </p>
                     </div>
-                    <p className="text-xs text-orange-600 dark:text-orange-400 font-medium mb-1">Site</p>
-                    <p className="text-sm font-bold text-orange-900 dark:text-orange-100">
-                      {event.site || 'Production'}
-                    </p>
-                  </CardContent>
-                </Card>
-              </div>
+                  </div>
+                </CardContent>
+              </Card>
 
               {/* Event Description */}
               <Card className="border-gray-200 dark:border-gray-700">
@@ -358,32 +339,42 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
                 </CardContent>
               </Card>
 
-              {/* Additional Details */}
+              {/* Event Updates Progression */}
               <Card className="border-gray-200 dark:border-gray-700">
                 <CardHeader className="pb-3">
                   <CardTitle className="text-base flex items-center gap-2">
                     <Activity className="w-5 h-5 text-[#0070F3]" />
-                    Event Analytics
+                    Event Updates
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div className="text-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                      <p className="text-2xl font-bold text-[#0070F3]">98%</p>
-                      <p className="text-xs text-gray-600 dark:text-gray-400">Confidence</p>
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-3 text-sm">
+                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                      <span className="text-gray-600 dark:text-gray-400">Event Created</span>
+                      <span className="text-gray-500 dark:text-gray-500 ml-auto">{event.timestamp}</span>
                     </div>
-                    <div className="text-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                      <p className="text-2xl font-bold text-green-600">0.8s</p>
-                      <p className="text-xs text-gray-600 dark:text-gray-400">Response Time</p>
-                    </div>
-                    <div className="text-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                      <p className="text-2xl font-bold text-orange-600">3</p>
-                      <p className="text-xs text-gray-600 dark:text-gray-400">Alerts Sent</p>
-                    </div>
-                    <div className="text-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                      <p className="text-2xl font-bold text-purple-600">A1</p>
-                      <p className="text-xs text-gray-600 dark:text-gray-400">Protocol</p>
-                    </div>
+                    {eventStatus !== 'New' && (
+                      <div className="flex items-center gap-3 text-sm">
+                        <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                        <span className="text-gray-600 dark:text-gray-400">Status changed to {eventStatus}</span>
+                        <span className="text-gray-500 dark:text-gray-500 ml-auto">Just now</span>
+                      </div>
+                    )}
+                    {assignedAgent && (
+                      <div className="flex items-center gap-3 text-sm">
+                        <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                        <span className="text-gray-600 dark:text-gray-400">Assigned to agent</span>
+                        <span className="text-gray-500 dark:text-gray-500 ml-auto">Just now</span>
+                      </div>
+                    )}
+                    {comment && (
+                      <div className="flex items-center gap-3 text-sm">
+                        <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                        <span className="text-gray-600 dark:text-gray-400">Comment added</span>
+                        <span className="text-gray-500 dark:text-gray-500 ml-auto">Just now</span>
+                      </div>
+                    )}
                   </div>
                 </CardContent>
               </Card>
