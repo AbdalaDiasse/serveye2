@@ -493,8 +493,8 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
                 </h3>
               </div>
               
-              {/* Chat Content Area */}
-              <div className="h-[300px] flex flex-col">
+              {/* Chat Content Area - Fill remaining space */}
+              <div className="flex-1 flex flex-col min-h-0">
                 {/* Initial AI Message */}
                 <div className="mb-4 flex-shrink-0">
                   <div className="flex items-start gap-2">
@@ -510,7 +510,7 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
                   </div>
                 </div>
 
-                {/* Chat Messages */}
+                {/* Chat Messages - Scrollable area */}
                 <ScrollArea className="flex-1 mb-4">
                   <div className="space-y-4">
                     {chatMessages.map((message) => (
