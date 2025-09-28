@@ -776,6 +776,24 @@ export default function BehaviorDashboard() {
                     paddingAngle={2}
                     dataKey="value"
                     filter="url(#pieShadow)"
+                    label={({ name, percentage, x, y }) => (
+                      <text 
+                        x={x} 
+                        y={y} 
+                        fill="#6b7280" 
+                        textAnchor={x > 200 ? 'start' : 'end'} 
+                        dominantBaseline="central"
+                        fontSize="11"
+                        fontWeight="600"
+                      >
+                        {percentage}
+                      </text>
+                    )}
+                    labelLine={{
+                      stroke: '#6b7280', 
+                      strokeWidth: 1.5,
+                      strokeDasharray: '2 2'
+                    }}
                   >
                     {behaviorDistribution.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={`url(#${entry.gradientId})`} />
