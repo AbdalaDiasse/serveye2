@@ -308,18 +308,6 @@ const SafetyEventsPage = (): JSX.Element => {
 
   return (
     <div className="p-6 bg-gray-50 dark:bg-gray-900 min-h-full">
-      {/* Header Section */}
-      <div className="mb-6">
-        <div className="flex items-center gap-2 mb-2">
-          <Shield className="w-6 h-6 text-[#0070F3]" />
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-            Événements de
-          </h1>
-        </div>
-        <p className="text-gray-600 dark:text-gray-400 text-sm">
-          Surveillance des infractions détectées
-        </p>
-      </div>
 
       {/* Smart Search Section */}
       <Card className="mb-6 bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
