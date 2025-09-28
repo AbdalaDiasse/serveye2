@@ -240,7 +240,7 @@ export const Frame = (): JSX.Element => {
             setCurrentPage={setCurrentPage}
             isCollapsed={isSidebarCollapsed}
           />
-          <div className="flex-1">
+          <div className="flex-1 border-l border-gray-300 dark:border-gray-600">
             {renderContent()}
           </div>
         </div>
