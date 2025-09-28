@@ -861,7 +861,7 @@ export default function SafetyDashboard() {
                 ))}
               </div>
               <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700 text-center">
-                <div className="text-xs text-gray-500 dark:text-gray-400">Total violations tracked: 548 incidents</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400">Total violations tracked: <span className="font-semibold text-[#0070F3]">548</span> incidents</div>
               </div>
             </div>
           </CardContent>
@@ -877,12 +877,12 @@ export default function SafetyDashboard() {
               {detectionSummary.map((item, index) => (
                 <div key={index} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
                   <div className="flex items-center gap-3">
-                    <div className={`p-2 rounded-lg ${index === 0 ? 'bg-blue-600/20' : index === 1 ? 'bg-gray-600/20' : 'bg-gray-700/20'}`}>
-                      <item.icon className={`w-4 h-4 ${index === 0 ? 'text-blue-400' : 'text-gray-500 dark:text-gray-400'}`} />
+                    <div className="p-2 rounded-lg bg-blue-100/50 dark:bg-blue-900/30">
+                      <item.icon className="w-4 h-4 text-[#0070F3]" />
                     </div>
                     <span className="text-sm text-gray-600 dark:text-gray-300">{item.type}</span>
                   </div>
-                  <span className="text-2xl font-bold text-gray-900 dark:text-gray-100">{item.count}</span>
+                  <span className="text-2xl font-bold text-[#0070F3]">{item.count}</span>
                 </div>
               ))}
             </div>
