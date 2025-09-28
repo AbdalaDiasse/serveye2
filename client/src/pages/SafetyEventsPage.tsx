@@ -470,35 +470,35 @@ Exemples:
 
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                Sévérité
+                Severity
               </label>
               <Select value={selectedSeverity} onValueChange={setSelectedSeverity}>
                 <SelectTrigger className="bg-white dark:bg-gray-700" data-testid="select-severity">
-                  <SelectValue placeholder="Toutes" />
+                  <SelectValue placeholder="All" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">Toutes</SelectItem>
-                  <SelectItem value="CRITIQUE">Critique</SelectItem>
-                  <SelectItem value="ALERTE">Alerte</SelectItem>
+                  <SelectItem value="all">All</SelectItem>
+                  <SelectItem value="CRITIQUE">Critical</SelectItem>
+                  <SelectItem value="ALERTE">Alert</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                Statut
+                Status
               </label>
               <Select value={selectedStatus} onValueChange={setSelectedStatus}>
                 <SelectTrigger className="bg-white dark:bg-gray-700" data-testid="select-status">
-                  <SelectValue placeholder="Tous" />
+                  <SelectValue placeholder="All" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">Tous</SelectItem>
-                  <SelectItem value="New">Nouveau</SelectItem>
-                  <SelectItem value="In Review">En révision</SelectItem>
-                  <SelectItem value="Confirmed">Confirmé</SelectItem>
-                  <SelectItem value="Resolved">Résolu</SelectItem>
-                  <SelectItem value="Critical">Critique</SelectItem>
+                  <SelectItem value="all">All</SelectItem>
+                  <SelectItem value="New">New</SelectItem>
+                  <SelectItem value="In Review">In Review</SelectItem>
+                  <SelectItem value="Confirmed">Confirmed</SelectItem>
+                  <SelectItem value="Resolved">Resolved</SelectItem>
+                  <SelectItem value="Critical">Critical</SelectItem>
                 </SelectContent>
               </Select>
             </div>
