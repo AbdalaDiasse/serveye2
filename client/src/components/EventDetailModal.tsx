@@ -210,7 +210,7 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
                     <img 
                       src={event.thumbnail || '/api/placeholder/400/300'} 
                       alt={event.title}
-                      className="w-full h-64 object-cover rounded-lg border border-gray-200 dark:border-gray-700"
+                      className="w-full h-80 object-contain rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
                     />
                     <div className="absolute top-3 right-3">
                       {getSeverityBadge(event.severity)}
@@ -223,7 +223,7 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
                     <img 
                       src={event.thumbnail || '/api/placeholder/400/300'} 
                       alt={event.title}
-                      className="w-full h-64 object-cover rounded-lg border border-gray-200 dark:border-gray-700"
+                      className="w-full h-80 object-contain rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
                     />
                     <div className="absolute top-3 right-3">
                       {getSeverityBadge(event.severity)}
