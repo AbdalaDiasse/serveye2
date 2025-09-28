@@ -43,6 +43,19 @@ const SafetyEventsPage = (): JSX.Element => {
     console.log("Filters applied:", { selectedEvent, selectedCamera, selectedSite, selectedZone, selectedSeverity, selectedStatus, dateFrom, dateTo });
   };
 
+  // Reset filters functionality
+  const resetFilters = () => {
+    setSelectedEvent("all");
+    setSelectedCamera("all");
+    setSelectedSite("all");
+    setSelectedZone("all");
+    setSelectedSeverity("all");
+    setSelectedStatus("all");
+    setDateFrom("");
+    setDateTo("");
+    setSearchQuery("");
+  };
+
 
   // Create array of surveillance images for rotation
   const surveillanceImages = [surveyImage1, surveyImage2, surveyImage3, surveyImage4, surveyImage5];
@@ -379,11 +392,34 @@ Exemples:
       {/* Filters Section */}
       <Card className="mb-6 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
         <CardContent className="p-6">
-          <div className="flex items-center gap-2 mb-4">
-            <Filter className="w-5 h-5 text-gray-600 dark:text-gray-300" />
-            <h3 className="text-base font-medium text-gray-900 dark:text-gray-100">
-              Filtres
-            </h3>
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <Filter className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+              <h3 className="text-base font-medium text-gray-900 dark:text-gray-100">
+                Filtres
+              </h3>
+            </div>
+            <div className="flex items-center gap-2">
+              <Button 
+                variant="outline" 
+                size="sm"
+                className="text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                data-testid="button-reset-filters"
+                onClick={resetFilters}
+              >
+                Reset
+              </Button>
+              <Button 
+                variant="outline" 
+                size="sm"
+                className="border-[#0070F3] text-[#0070F3] hover:bg-blue-50 dark:hover:bg-blue-900/20"
+                data-testid="button-apply-filters"
+                onClick={applyFilters}
+              >
+                <Filter className="w-4 h-4 mr-2" />
+                Apply
+              </Button>
+            </div>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
@@ -520,17 +556,6 @@ Exemples:
             </div>
           </div>
 
-          <div className="mt-4 flex justify-end">
-            <Button 
-              variant="outline" 
-              className="border-[#0070F3] text-[#0070F3] hover:bg-blue-50 dark:hover:bg-blue-900/20"
-              data-testid="button-apply-filters"
-              onClick={applyFilters}
-            >
-              <Filter className="w-4 h-4 mr-2" />
-              Appliquer les filtres
-            </Button>
-          </div>
         </CardContent>
       </Card>
 
