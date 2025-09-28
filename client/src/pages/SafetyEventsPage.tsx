@@ -19,6 +19,8 @@ const SafetyEventsPage = (): JSX.Element => {
   const [selectedCamera, setSelectedCamera] = useState("all");
   const [selectedSite, setSelectedSite] = useState("all");
   const [selectedZone, setSelectedZone] = useState("all");
+  const [selectedSeverity, setSelectedSeverity] = useState("all");
+  const [selectedStatus, setSelectedStatus] = useState("all");
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
 
@@ -38,7 +40,7 @@ const SafetyEventsPage = (): JSX.Element => {
   const applyFilters = () => {
     // Filters are automatically applied through useMemo dependencies
     // This button can provide user feedback about filter application
-    console.log("Filters applied:", { selectedEvent, selectedCamera, selectedSite, selectedZone, dateFrom, dateTo });
+    console.log("Filters applied:", { selectedEvent, selectedCamera, selectedSite, selectedZone, selectedSeverity, selectedStatus, dateFrom, dateTo });
   };
 
 
@@ -286,6 +288,12 @@ const SafetyEventsPage = (): JSX.Element => {
       // Zone filter  
       const matchesZone = selectedZone === "all" || event.zone.toLowerCase().includes(selectedZone.toLowerCase());
 
+      // Severity filter
+      const matchesSeverity = selectedSeverity === "all" || event.severity === selectedSeverity;
+
+      // Status filter
+      const matchesStatus = selectedStatus === "all" || (event.status && event.status === selectedStatus) || (selectedStatus === "New" && !event.status);
+
       // Date filters - basic date range checking
       const eventDate = new Date(event.timestamp);
       const fromDate = dateFrom ? new Date(dateFrom) : null;
@@ -294,9 +302,9 @@ const SafetyEventsPage = (): JSX.Element => {
       const matchesDateFrom = !fromDate || eventDate >= fromDate;
       const matchesDateTo = !toDate || eventDate <= toDate;
 
-      return matchesSearch && matchesEventType && matchesCamera && matchesSite && matchesZone && matchesDateFrom && matchesDateTo;
+      return matchesSearch && matchesEventType && matchesCamera && matchesSite && matchesZone && matchesSeverity && matchesStatus && matchesDateFrom && matchesDateTo;
     });
-  }, [safetyEvents, searchQuery, selectedEvent, selectedCamera, selectedSite, selectedZone, dateFrom, dateTo]);
+  }, [safetyEvents, searchQuery, selectedEvent, selectedCamera, selectedSite, selectedZone, selectedSeverity, selectedStatus, dateFrom, dateTo]);
 
   return (
     <div className="p-6 bg-gray-50 dark:bg-gray-900 min-h-full">
@@ -456,6 +464,41 @@ Exemples:
                   <SelectItem value="zone-a">Zone A</SelectItem>
                   <SelectItem value="zone-b">Zone B</SelectItem>
                   <SelectItem value="zone-c">Zone C</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                Sévérité
+              </label>
+              <Select value={selectedSeverity} onValueChange={setSelectedSeverity}>
+                <SelectTrigger className="bg-white dark:bg-gray-700" data-testid="select-severity">
+                  <SelectValue placeholder="Toutes" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Toutes</SelectItem>
+                  <SelectItem value="CRITIQUE">Critique</SelectItem>
+                  <SelectItem value="ALERTE">Alerte</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                Statut
+              </label>
+              <Select value={selectedStatus} onValueChange={setSelectedStatus}>
+                <SelectTrigger className="bg-white dark:bg-gray-700" data-testid="select-status">
+                  <SelectValue placeholder="Tous" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Tous</SelectItem>
+                  <SelectItem value="New">Nouveau</SelectItem>
+                  <SelectItem value="In Review">En révision</SelectItem>
+                  <SelectItem value="Confirmed">Confirmé</SelectItem>
+                  <SelectItem value="Resolved">Résolu</SelectItem>
+                  <SelectItem value="Critical">Critique</SelectItem>
                 </SelectContent>
               </Select>
             </div>
