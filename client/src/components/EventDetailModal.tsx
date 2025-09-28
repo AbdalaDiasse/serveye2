@@ -58,6 +58,14 @@ interface ChatMessage {
   timestamp: Date;
 }
 
+interface UpdateHistoryEntry {
+  id: string;
+  type: 'status_change' | 'assignment_change' | 'comment';
+  description: string;
+  timestamp: Date;
+  author: string;
+}
+
 export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalProps) {
   const [activeTab, setActiveTab] = useState("image-complete");
   const [comment, setComment] = useState("");
@@ -67,6 +75,15 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [chatInput, setChatInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [updateHistory, setUpdateHistory] = useState<UpdateHistoryEntry[]>([
+    {
+      id: '1',
+      type: 'status_change',
+      description: 'Event created with status: New',
+      timestamp: new Date(Date.now() - 2 * 60 * 1000), // 2 minutes ago
+      author: 'System'
+    }
+  ]);
 
   // Mock chat responses for demo
   const getMockResponse = (message: string): string => {
@@ -122,9 +139,26 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
     chatMutation.mutate(chatInput);
   };
 
-  const handleAssignAgent = () => {
-    if (!assignedAgent) return;
-    console.log("Assigning to agent:", assignedAgent);
+  const handleAssignAgent = (agentValue: string) => {
+    if (!agentValue) return;
+    
+    const agentName = agentValue === 'agent1' ? 'Security Agent A' : 
+                     agentValue === 'agent2' ? 'Security Agent B' : 
+                     agentValue === 'agent3' ? 'Security Agent C' : 'Security Supervisor';
+    
+    setAssignedAgent(agentValue);
+    
+    // Add new entry to update history
+    const newHistoryEntry: UpdateHistoryEntry = {
+      id: Date.now().toString(),
+      type: 'assignment_change',
+      description: `Event assigned to ${agentName}`,
+      timestamp: new Date(),
+      author: 'Security Agent A'
+    };
+    
+    setUpdateHistory(prev => [...prev, newHistoryEntry]);
+    console.log("Assigning to agent:", agentValue);
   };
 
   const handleAddComment = () => {
@@ -136,6 +170,17 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
       author: "Security Agent A"
     };
     setComments(prev => [...prev, newComment]);
+    
+    // Add new entry to update history
+    const newHistoryEntry: UpdateHistoryEntry = {
+      id: (Date.now() + 1).toString(),
+      type: 'comment',
+      description: `Comment added: "${comment.length > 50 ? comment.substring(0, 50) + '...' : comment}"`,
+      timestamp: new Date(),
+      author: 'Security Agent A'
+    };
+    
+    setUpdateHistory(prev => [...prev, newHistoryEntry]);
     setComment(""); // Clear the input for new comment
     console.log("Adding comment:", comment);
   };
@@ -149,7 +194,19 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
   };
 
   const handleStatusChange = (newStatus: string) => {
+    const previousStatus = eventStatus;
     setEventStatus(newStatus);
+    
+    // Add new entry to update history
+    const newHistoryEntry: UpdateHistoryEntry = {
+      id: Date.now().toString(),
+      type: 'status_change',
+      description: `Status changed from "${previousStatus}" to "${newStatus}"`,
+      timestamp: new Date(),
+      author: 'Security Agent A'
+    };
+    
+    setUpdateHistory(prev => [...prev, newHistoryEntry]);
     console.log("Status changed to:", newStatus);
   };
 
@@ -316,63 +373,26 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
             {/* Update History Content */}
             <div className="px-4 pb-4 flex-1 max-h-[300px] overflow-y-auto">
               <div className="space-y-3">
-                <div className="flex items-center gap-3 text-sm">
-                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <div className="flex-1">
-                    <div className="flex justify-between">
-                      <span className="text-gray-900 dark:text-gray-100">Événement créé</span>
-                      <span className="text-gray-500 dark:text-gray-400">25 Jan 14:32</span>
-                    </div>
-                    <p className="text-gray-600 dark:text-gray-400 text-xs">
-                      Détection automatique par {event.camera || 'Caméra 02'}
-                    </p>
-                  </div>
-                </div>
-                
-                {eventStatus !== 'Nouveau' && (
-                  <div className="flex items-center gap-3 text-sm">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                {updateHistory.map((historyItem) => (
+                  <div key={historyItem.id} className="flex items-center gap-3 text-sm">
+                    <div className={`w-2 h-2 rounded-full ${
+                      historyItem.type === 'status_change' ? 'bg-blue-500' :
+                      historyItem.type === 'assignment_change' ? 'bg-purple-500' :
+                      'bg-orange-500'
+                    }`}></div>
                     <div className="flex-1">
                       <div className="flex justify-between">
-                        <span className="text-gray-900 dark:text-gray-100">Statut modifié</span>
-                        <span className="text-gray-500 dark:text-gray-400">25 Jan 14:35</span>
-                      </div>
-                      <p className="text-gray-600 dark:text-gray-400 text-xs">
-                        Nouveau → {eventStatus} par Agent Sécurité A
-                      </p>
-                    </div>
-                  </div>
-                )}
-
-                {assignedAgent && (
-                  <div className="flex items-center gap-3 text-sm">
-                    <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-                    <div className="flex-1">
-                      <div className="flex justify-between">
-                        <span className="text-gray-900 dark:text-gray-100">Agent assigné</span>
-                        <span className="text-gray-500 dark:text-gray-400">Maintenant</span>
-                      </div>
-                      <p className="text-gray-600 dark:text-gray-400 text-xs">
-                        Assigné à {assignedAgent === 'agent1' ? 'Agent Sécurité A' : 
-                                  assignedAgent === 'agent2' ? 'Agent Sécurité B' : 
-                                  assignedAgent === 'agent3' ? 'Agent Sécurité C' : 'Superviseur Sécurité'}
-                      </p>
-                    </div>
-                  </div>
-                )}
-                
-                {comments.map((commentItem) => (
-                  <div key={commentItem.id} className="flex items-center gap-3 text-sm">
-                    <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-                    <div className="flex-1">
-                      <div className="flex justify-between">
-                        <span className="text-gray-900 dark:text-gray-100">Comment Added</span>
+                        <span className="text-gray-900 dark:text-gray-100">
+                          {historyItem.type === 'status_change' ? 'Status Changed' :
+                           historyItem.type === 'assignment_change' ? 'Agent Assigned' :
+                           'Comment Added'}
+                        </span>
                         <span className="text-gray-500 dark:text-gray-400">
-                          {commentItem.timestamp.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                          {historyItem.timestamp.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
                         </span>
                       </div>
                       <p className="text-gray-600 dark:text-gray-400 text-xs">
-                        "{commentItem.text}" - {commentItem.author}
+                        {historyItem.description} - {historyItem.author}
                       </p>
                     </div>
                   </div>
@@ -417,7 +437,7 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
                   <label className="text-xs text-gray-600 dark:text-gray-400 mb-1 block">
                     Assign to
                   </label>
-                  <Select value={assignedAgent} onValueChange={setAssignedAgent}>
+                  <Select value={assignedAgent} onValueChange={handleAssignAgent}>
                     <SelectTrigger className="w-full" data-testid="select-agent">
                       <SelectValue placeholder="Select a user" />
                     </SelectTrigger>
