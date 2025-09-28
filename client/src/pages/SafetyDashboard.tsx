@@ -511,8 +511,14 @@ export default function SafetyDashboard() {
                       {detection.status}
                     </div>
                     <div className="flex items-center gap-2">
-                      {/* Severity - Solid filled badge for urgency/danger */}
-                      <div className={`${detection.severityColor} text-white text-xs px-3 py-1 rounded-lg font-bold uppercase tracking-wide shadow-sm`}>
+                      {/* Severity - Border-only badge for urgency/danger */}
+                      <div className={`border-2 bg-transparent text-xs px-3 py-1 rounded-lg font-bold uppercase tracking-wide ${
+                        detection.severityColor === 'bg-red-500' || detection.severityColor === 'bg-red-600' ? 'border-red-500 text-red-600 dark:border-red-400 dark:text-red-400' :
+                        detection.severityColor === 'bg-orange-500' ? 'border-orange-500 text-orange-600 dark:border-orange-400 dark:text-orange-400' :
+                        detection.severityColor === 'bg-yellow-400' ? 'border-yellow-500 text-yellow-600 dark:border-yellow-400 dark:text-yellow-400' :
+                        detection.severityColor === 'bg-blue-500' ? 'border-blue-500 text-blue-600 dark:border-blue-400 dark:text-blue-400' :
+                        'border-gray-500 text-gray-600 dark:border-gray-400 dark:text-gray-300'
+                      }`}>
                         {detection.severity}
                       </div>
                       {/* Process - Button style for action */}
