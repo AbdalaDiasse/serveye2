@@ -643,16 +643,36 @@ export default function BehaviorDashboard() {
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle className="text-gray-900 dark:text-gray-100 text-lg font-semibold">Behavior Violation Trends</CardTitle>
-              <Select defaultValue="today">
-                <SelectTrigger className="w-20 h-8 text-xs bg-gray-100 dark:bg-gray-600 border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="today">Today</SelectItem>
-                  <SelectItem value="week">Week</SelectItem>
-                  <SelectItem value="month">Month</SelectItem>
-                </SelectContent>
-              </Select>
+              <div className="flex gap-2">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="h-8 bg-gradient-to-r from-[#D32F2F] to-[#B71C1C] border-[#D32F2F] text-white text-xs hover:from-[#B71C1C] hover:to-[#8E0000] shadow-lg"
+                >
+                  Today
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="h-8 bg-transparent text-xs border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-all duration-200"
+                >
+                  Week
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="h-8 bg-transparent text-xs border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-all duration-200"
+                >
+                  Month
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="h-8 bg-transparent text-xs border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-all duration-200"
+                >
+                  Year
+                </Button>
+              </div>
             </div>
           </CardHeader>
           <CardContent>
