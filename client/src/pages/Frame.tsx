@@ -159,29 +159,29 @@ export const Frame = (): JSX.Element => {
       {/* Top Header Bar */}
       <header className="w-full bg-white dark:bg-gray-800 border-b border-[#ced4da] dark:border-gray-700 px-6 py-3 flex items-center justify-between">
         {/* Left side - Menu button, SYRATE branding and page title */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
           {/* Hamburger Menu Button */}
           <button 
             onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+            className="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
             data-testid="button-toggle-sidebar"
           >
-            <svg className="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 min-w-[140px]">
             <div className="w-8 h-8 bg-[#0070F3] rounded flex items-center justify-center">
               <span className="text-white font-bold text-sm">S</span>
             </div>
             <div>
-              <div className="font-bold text-gray-800 dark:text-gray-200 text-sm">SYRATE</div>
+              <div className="font-bold text-gray-800 dark:text-gray-200 text-base">SYRATE</div>
               <div className="text-xs text-gray-500 dark:text-gray-400">Safety Module</div>
             </div>
           </div>
           
-          <div className="border-l border-gray-300 dark:border-gray-600 pl-6">
+          <div className="border-l border-gray-300 dark:border-gray-600 pl-6 ml-2">
             <h1 className="text-xl font-semibold text-[#0070F3] dark:text-blue-400">{pageInfo.title}</h1>
             <p className="text-sm text-gray-500 dark:text-gray-400">{pageInfo.subtitle}</p>
           </div>
