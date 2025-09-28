@@ -772,10 +772,12 @@ export default function BehaviorDashboard() {
                     data={behaviorDistribution}
                     cx="50%"
                     cy="50%"
-                    innerRadius={40}
-                    outerRadius={85}
-                    paddingAngle={2}
+                    outerRadius={105}
+                    innerRadius={30}
                     dataKey="value"
+                    startAngle={90}
+                    endAngle={450}
+                    paddingAngle={2}
                     filter="url(#pieShadow)"
                     label={({ name, percentage, x, y }) => (
                       <text 
