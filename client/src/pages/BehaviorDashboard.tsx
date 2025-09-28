@@ -350,10 +350,11 @@ export default function BehaviorDashboard() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                     </svg>
                     <span className="text-xs text-green-500 font-medium">{metric.change}</span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">{metric.period}</span>
                   </div>
                 </div>
-                <div className="w-8 h-8 bg-[#D32F2F]/10 rounded-lg flex items-center justify-center">
-                  <metric.icon className="w-4 h-4 text-[#D32F2F]" />
+                <div className="ml-4">
+                  <metric.icon className="w-8 h-8 text-[#D32F2F]" />
                 </div>
               </div>
             </CardContent>
