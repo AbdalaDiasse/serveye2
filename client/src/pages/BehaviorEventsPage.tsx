@@ -555,15 +555,24 @@ Examples:
         </Card>
       </div>
 
-      {/* Events Grid */}
-      <div className="flex-1 overflow-auto p-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      {/* Events Grid Section */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+            Événements Détectés
+          </h3>
+          <div className="text-sm text-[#D32F2F] font-medium">
+            {filteredEvents.length} événements
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {filteredEvents.map((event) => (
             <Card 
               key={event.id}
-              className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow cursor-pointer"
+              className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-lg transition-shadow cursor-pointer relative"
               onClick={() => openEventModal(event)}
-              data-testid={`event-card-${event.id}`}
+              data-testid={`card-event-${event.id}`}
             >
               <div className="relative">
                 <img 
