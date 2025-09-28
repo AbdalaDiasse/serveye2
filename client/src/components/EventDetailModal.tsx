@@ -227,7 +227,7 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-7xl h-[90vh] p-0 bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 flex flex-col overflow-y-auto">
+      <DialogContent className="max-w-7xl max-h-[90vh] p-0 bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 flex flex-col overflow-y-auto">
         {/* Hidden title for accessibility */}
         <DialogTitle className="sr-only">Event Details - {event?.title}</DialogTitle>
         <DialogDescription className="sr-only">Details, actions and investigation tools for security event {event?.id}</DialogDescription>
