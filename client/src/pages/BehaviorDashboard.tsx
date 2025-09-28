@@ -953,44 +953,37 @@ export default function BehaviorDashboard() {
         </Card>
 
         {/* Site Detection Summary */}
-        <div className="col-span-6">
-          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 h-[500px]">
-            <CardHeader>
-              <CardTitle className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                Site Detection Summary
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="overflow-y-auto h-[400px]">
-              <div className="space-y-3">
-                {sitesData.map((site, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-[#D32F2F]/10 rounded-lg flex items-center justify-center">
-                        <MapPin className="w-4 h-4 text-[#D32F2F]" />
-                      </div>
-                      <div>
-                        <div className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                          {site.name}
-                        </div>
-                        <div className="text-xs text-gray-600 dark:text-gray-400">
-                          {site.zone}
-                        </div>
-                      </div>
+        <Card className="col-span-4 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-gray-900 dark:text-gray-100 text-base">Site Detection Summary</CardTitle>
+              <Button variant="ghost" size="sm" className="text-gray-500 dark:text-gray-400 h-6 p-0">
+                <RefreshCw className="w-4 h-4" />
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="h-64 overflow-y-scroll scrollbar-hide space-y-3 pr-2">
+              {sitesData.map((site, index) => (
+                <div key={index} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-[#D32F2F]/20 rounded-lg">
+                      <MapPin className="w-4 h-4 text-[#D32F2F]" />
                     </div>
-                    <div className="text-right">
-                      <div className="text-sm font-semibold text-gray-900 dark:text-gray-100">
-                        {site.violations}
-                      </div>
-                      <div className="text-xs text-gray-500 dark:text-gray-400">
-                        {site.total}
-                      </div>
+                    <div>
+                      <div className="text-sm font-medium text-gray-900 dark:text-gray-100">{site.name}</div>
+                      <div className="text-xs text-gray-500 dark:text-gray-400">{site.zone}</div>
                     </div>
                   </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+                  <div className="text-right">
+                    <div className="text-xl font-bold text-[#D32F2F]">{site.violations}</div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400">{site.total}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Detection Summary */}
         <Card className="col-span-4 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
