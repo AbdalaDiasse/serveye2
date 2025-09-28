@@ -916,7 +916,7 @@ export default function BehaviorDashboard() {
         <Card className="col-span-4 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle className="text-gray-900 dark:text-gray-100 text-base">Camera Performance</CardTitle>
+              <CardTitle className="text-gray-900 dark:text-gray-100 text-base">Camera Summary</CardTitle>
               <Button variant="ghost" size="sm" className="text-gray-500 dark:text-gray-400 h-6 p-0">
                 <RefreshCw className="w-4 h-4" />
               </Button>
@@ -956,7 +956,7 @@ export default function BehaviorDashboard() {
         <Card className="col-span-4 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle className="text-gray-900 dark:text-gray-100 text-base">Site Detection Summary</CardTitle>
+              <CardTitle className="text-gray-900 dark:text-gray-100 text-base">Site Summary</CardTitle>
               <Button variant="ghost" size="sm" className="text-gray-500 dark:text-gray-400 h-6 p-0">
                 <RefreshCw className="w-4 h-4" />
               </Button>
