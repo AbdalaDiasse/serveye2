@@ -2,6 +2,7 @@ import React, { useState, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Search, Filter, Calendar, Camera, MapPin, AlertTriangle, Flame, Users, Eye, HardHat, Zap, Shield } from "lucide-react";
 
@@ -324,31 +325,19 @@ const SafetyEventsPage = (): JSX.Element => {
             </h3>
           </div>
           
-          <div className="mb-4">
-            <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
-              Décrivez ce que vous cherchez en langage naturel...
-            </p>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">
-              Exemples:
-            </p>
-            <ul className="text-sm text-gray-500 dark:text-gray-400 list-disc list-inside space-y-1 mb-4">
-              <li>Montre-moi toutes les intrusions détectées hier</li>
-              <li>Équipements de feu et fumée cette semaine</li>
-            </ul>
-          </div>
-
-          <div className="flex gap-2">
-            <div className="flex-1 relative">
-              <Input
-                placeholder="Tapez votre recherche ici..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600"
-                data-testid="input-search-events"
-              />
-            </div>
+          <div className="relative">
+            <Textarea
+              placeholder={`Décrivez ce que vous cherchez en langage naturel...
+Exemples:
+• 'Montre-moi toutes les intrusions détectées hier'
+• 'Événements de feu et fumée cette semaine'`}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="min-h-[200px] resize-none text-base bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 focus:border-[#0070F3] focus:ring-2 focus:ring-[#0070F3]/20 placeholder:text-gray-400 dark:placeholder:text-gray-500 rounded-lg px-4 py-3 pr-32"
+              data-testid="input-search-events"
+            />
             <Button 
-              className="bg-[#0070F3] hover:bg-blue-700 text-white px-6" 
+              className="absolute bottom-3 right-3 bg-[#0070F3] hover:bg-blue-700 text-white px-6 py-2 rounded-md" 
               data-testid="button-search"
               onClick={handleSearch}
             >
