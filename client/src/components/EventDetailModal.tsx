@@ -170,7 +170,7 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-7xl h-[98vh] p-0 bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 flex flex-col overflow-hidden">
+      <DialogContent className="max-w-[95vw] h-[95vh] p-0 bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 flex flex-col overflow-hidden">
         {/* Hidden title for accessibility */}
         <DialogTitle className="sr-only">Event Details - {event?.title}</DialogTitle>
         <DialogDescription className="sr-only">Details, actions and investigation tools for security event {event?.id}</DialogDescription>
@@ -210,7 +210,7 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
                     <img 
                       src={event.thumbnail || '/api/placeholder/400/300'} 
                       alt={activeTab === "image-complete" ? "Full Image" : "Detection View"}
-                      className="w-full h-80 object-contain rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
+                      className="w-full h-[600px] object-contain rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
                     />
                     <div className="absolute top-3 right-3">
                       {getSeverityBadge(event.severity)}
@@ -382,7 +382,7 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
           </div>
 
           {/* Right Panel */}
-          <div className="w-[480px] flex flex-col overflow-y-auto">
+          <div className="w-[420px] flex flex-col overflow-y-auto">
             {/* Actions Section */}
             <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
               <div className="flex items-center gap-2 mb-4">
