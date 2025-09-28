@@ -189,7 +189,7 @@ export default function VSSSearchPage() {
 Exemples:
 • 'Montre-moi toutes les intrusions détectées hier'
 • 'Événements de feu et fumée cette semaine'`}
-                  className="min-h-[160px] resize-none text-base bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 focus:border-[#0070F3] focus:ring-2 focus:ring-[#0070F3]/20 placeholder:text-gray-400 dark:placeholder:text-gray-500 rounded-lg px-4 py-3 pr-32"
+                  className="min-h-[250px] resize-none text-base bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 focus:border-[#0070F3] focus:ring-2 focus:ring-[#0070F3]/20 placeholder:text-gray-400 dark:placeholder:text-gray-500 rounded-lg px-4 py-3 pr-32"
                   data-testid="textarea-intelligent-search"
                 />
                 <Button 
