@@ -493,69 +493,72 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
                 </h3>
               </div>
               
-              {/* Initial AI Message */}
-              <div className="mb-4">
-                <div className="flex items-start gap-2">
-                  <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
-                    <MessageSquare className="w-4 h-4 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-sm text-gray-700 dark:text-gray-300">
-                      Hello! I can help you analyze this event. What would you like to know?
-                    </p>
-                    <p className="text-xs text-gray-500 mt-1">2 min ago</p>
+              {/* Chat Content Area */}
+              <div className="flex-1 flex flex-col min-h-0">
+                {/* Initial AI Message */}
+                <div className="mb-4 flex-shrink-0">
+                  <div className="flex items-start gap-2">
+                    <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+                      <MessageSquare className="w-4 h-4 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm text-gray-700 dark:text-gray-300">
+                        Hello! I can help you analyze this event. What would you like to know?
+                      </p>
+                      <p className="text-xs text-gray-500 mt-1">2 min ago</p>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Chat Messages */}
-              <ScrollArea className="flex-1 mb-4 max-h-[300px]">
-                <div className="space-y-4">
-                  {chatMessages.map((message) => (
-                    <div key={message.id} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                      <div className={`max-w-[80%] p-3 rounded-lg text-sm ${
-                        message.role === 'user' 
-                          ? 'bg-blue-500 text-white' 
-                          : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100'
-                      }`}>
-                        <p className="whitespace-pre-wrap">{message.content}</p>
-                        <p className={`text-xs mt-1 ${
-                          message.role === 'user' ? 'text-blue-100' : 'text-gray-500'
+                {/* Chat Messages */}
+                <ScrollArea className="flex-1 mb-4">
+                  <div className="space-y-4">
+                    {chatMessages.map((message) => (
+                      <div key={message.id} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                        <div className={`max-w-[80%] p-3 rounded-lg text-sm ${
+                          message.role === 'user' 
+                            ? 'bg-blue-500 text-white' 
+                            : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100'
                         }`}>
-                          {message.role === 'user' ? 'Now' : '1 min ago'}
-                        </p>
+                          <p className="whitespace-pre-wrap">{message.content}</p>
+                          <p className={`text-xs mt-1 ${
+                            message.role === 'user' ? 'text-blue-100' : 'text-gray-500'
+                          }`}>
+                            {message.role === 'user' ? 'Now' : '1 min ago'}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                  
-                  {isTyping && (
-                    <div className="flex justify-start">
-                      <div className="bg-gray-100 dark:bg-gray-800 p-3 rounded-lg">
-                        <Loader2 className="w-4 h-4 animate-spin" />
+                    ))}
+                    
+                    {isTyping && (
+                      <div className="flex justify-start">
+                        <div className="bg-gray-100 dark:bg-gray-800 p-3 rounded-lg">
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                        </div>
                       </div>
-                    </div>
-                  )}
-                </div>
-              </ScrollArea>
+                    )}
+                  </div>
+                </ScrollArea>
 
-              {/* Chat Input */}
-              <div className="flex gap-2">
-                <Input
-                  placeholder="Were there other intrusions in this zone this week?"
-                  value={chatInput}
-                  onChange={(e) => setChatInput(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                  className="flex-1 text-sm"
-                  data-testid="input-chat"
-                />
-                <Button 
-                  onClick={handleSendMessage}
-                  disabled={!chatInput.trim() || isTyping}
-                  className="bg-blue-500 hover:bg-blue-600 text-white px-3"
-                  data-testid="button-send-chat"
-                >
-                  <Send className="w-4 h-4" />
-                </Button>
+                {/* Chat Input - Always at bottom */}
+                <div className="flex gap-2 flex-shrink-0">
+                  <Input
+                    placeholder="Were there other intrusions in this zone this week?"
+                    value={chatInput}
+                    onChange={(e) => setChatInput(e.target.value)}
+                    onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                    className="flex-1 text-sm"
+                    data-testid="input-chat"
+                  />
+                  <Button 
+                    onClick={handleSendMessage}
+                    disabled={!chatInput.trim() || isTyping}
+                    className="bg-blue-500 hover:bg-blue-600 text-white px-3"
+                    data-testid="button-send-chat"
+                  >
+                    <Send className="w-4 h-4" />
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
