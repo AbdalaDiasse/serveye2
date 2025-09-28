@@ -511,7 +511,7 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
                 </div>
 
                 {/* Chat Messages */}
-                <ScrollArea className="flex-1 mb-4">
+                <ScrollArea className="flex-1 mb-4 max-h-[300px]">
                   <div className="space-y-4">
                     {chatMessages.map((message) => (
                       <div key={message.id} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
