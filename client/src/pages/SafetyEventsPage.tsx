@@ -518,7 +518,11 @@ const SafetyEventsPage = (): JSX.Element => {
                   alt={event.title}
                   className="w-full h-32 object-cover"
                 />
-                <div className={`absolute top-2 right-2 ${event.severityColor} text-white text-xs px-2 py-1 rounded-md font-bold uppercase`}>
+                <div className={`absolute top-2 right-2 border-2 ${
+                  event.severity === "CRITIQUE" 
+                    ? "border-red-500 text-red-600 dark:text-red-400" 
+                    : "border-orange-500 text-orange-600 dark:text-orange-400"
+                } bg-white dark:bg-gray-800 text-xs px-2 py-1 rounded-md font-bold uppercase`}>
                   {event.severity}
                 </div>
               </div>
