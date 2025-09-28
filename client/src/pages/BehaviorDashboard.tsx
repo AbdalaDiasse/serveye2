@@ -643,13 +643,7 @@ export default function BehaviorDashboard() {
           <CardContent>
             <div className="h-52">
               <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={behaviorTrendsData}>
-                  <defs>
-                    <linearGradient id="totalGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#D32F2F" stopOpacity={0.8} />
-                      <stop offset="100%" stopColor="#D32F2F" stopOpacity={0.1} />
-                    </linearGradient>
-                  </defs>
+                <LineChart data={behaviorTrendsData}>
                   <CartesianGrid strokeDasharray="1 1" stroke="#e5e7eb" className="dark:stroke-gray-600" />
                   <XAxis 
                     dataKey="time" 
@@ -659,8 +653,8 @@ export default function BehaviorDashboard() {
                     className="dark:fill-gray-300"
                   />
                   <YAxis 
-                    domain={[0, 50]}
-                    ticks={[0, 10, 20, 30, 40, 50]}
+                    domain={[0, 12]}
+                    ticks={[0, 2, 4, 6, 8, 10, 12]}
                     axisLine={false} 
                     tickLine={false} 
                     tick={{ fill: '#6b7280', fontSize: 11 }}
@@ -673,25 +667,47 @@ export default function BehaviorDashboard() {
                       borderRadius: '8px',
                       fontSize: '12px'
                     }}
-                    formatter={(value, name) => [`${value} detections`, 'Total Behavior Detections']}
                   />
-                  <Area 
-                    type="monotone" 
-                    dataKey="total" 
-                    stroke="#D32F2F" 
-                    fill="url(#totalGradient)" 
-                    strokeWidth={3}
-                    dot={{ fill: '#D32F2F', strokeWidth: 2, r: 4 }}
-                  />
-                </AreaChart>
+                  <Line type="monotone" dataKey="fights" stroke="#D32F2F" strokeWidth={2} dot={{ fill: '#D32F2F', r: 3 }} />
+                  <Line type="monotone" dataKey="falls" stroke="#B71C1C" strokeWidth={2} dot={{ fill: '#B71C1C', r: 3 }} />
+                  <Line type="monotone" dataKey="crowds" stroke="#F44336" strokeWidth={2} dot={{ fill: '#F44336', r: 3 }} />
+                  <Line type="monotone" dataKey="smoking" stroke="#E53935" strokeWidth={2} dot={{ fill: '#E53935', r: 3 }} />
+                  <Line type="monotone" dataKey="running" stroke="#EF5350" strokeWidth={2} dot={{ fill: '#EF5350', r: 3 }} />
+                  <Line type="monotone" dataKey="calling" stroke="#F48FB1" strokeWidth={2} dot={{ fill: '#F48FB1', r: 3 }} />
+                  <Line type="monotone" dataKey="weapons" stroke="#FFCDD2" strokeWidth={2} dot={{ fill: '#FFCDD2', r: 3 }} />
+                </LineChart>
               </ResponsiveContainer>
             </div>
             
             {/* Legend */}
-            <div className="mt-3 flex items-center justify-center">
-              <div className="flex items-center gap-2 text-xs">
-                <div className="w-3 h-3 bg-[#D32F2F] rounded-full"></div>
-                <span className="text-gray-600 dark:text-gray-300 font-medium">Total Behavior Detections</span>
+            <div className="mt-3 grid grid-cols-4 gap-2 text-xs">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-[#D32F2F] rounded-full"></div>
+                <span className="text-gray-600 dark:text-gray-300">Fights</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-[#B71C1C] rounded-full"></div>
+                <span className="text-gray-600 dark:text-gray-300">Falls</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-[#F44336] rounded-full"></div>
+                <span className="text-gray-600 dark:text-gray-300">Crowds</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-[#E53935] rounded-full"></div>
+                <span className="text-gray-600 dark:text-gray-300">Smoking</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-[#EF5350] rounded-full"></div>
+                <span className="text-gray-600 dark:text-gray-300">Running</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-[#F48FB1] rounded-full"></div>
+                <span className="text-gray-600 dark:text-gray-300">Calling</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-[#FFCDD2] rounded-full"></div>
+                <span className="text-gray-600 dark:text-gray-300">Weapons</span>
               </div>
             </div>
           </CardContent>
