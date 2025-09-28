@@ -162,7 +162,7 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-6xl max-h-[95vh] p-0 bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 flex flex-col overflow-hidden">
+      <DialogContent className="max-w-7xl max-h-[95vh] p-0 bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 flex flex-col overflow-hidden">
         {/* Hidden title for accessibility */}
         <DialogTitle className="sr-only">Détails de l'événement - {event?.title}</DialogTitle>
         <DialogDescription className="sr-only">Détails, actions et outils d'investigation pour l'événement de sécurité {event?.id}</DialogDescription>
@@ -337,7 +337,7 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
           </div>
 
           {/* Right Panel */}
-          <div className="w-96 flex flex-col">
+          <div className="w-[480px] flex flex-col">
             {/* Actions Section */}
             <div className="p-4 border-b border-gray-200 dark:border-gray-700">
               <div className="flex items-center gap-2 mb-4">
