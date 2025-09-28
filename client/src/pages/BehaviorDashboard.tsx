@@ -47,7 +47,8 @@ import {
   CircleCheck,
   CircleX,
   Sun,
-  Moon
+  Moon,
+  BarChart3
 } from 'lucide-react';
 
 // Import behavior detection images
@@ -70,69 +71,44 @@ export default function BehaviorDashboard() {
     { label: 'Weapon', value: 3, icon: ShieldAlert, change: '+1%', period: 'today' }
   ];
 
-  // Radar chart data for Behavior Module Performance
+  // Radar chart data for Behavior Module Performance - matching screenshot design
   const radarData = [
-    { subject: 'Fight Detection', currentWeek: 88, previousWeek: 82, fullMark: 100 },
-    { subject: 'Fall Detection', currentWeek: 92, previousWeek: 88, fullMark: 100 },
+    { subject: 'Coverage Rate', currentWeek: 85, previousWeek: 78, fullMark: 100 },
+    { subject: 'Fight Detection', currentWeek: 92, previousWeek: 88, fullMark: 100 },
+    { subject: 'Fall Detection', currentWeek: 89, previousWeek: 82, fullMark: 100 },
     { subject: 'Crowd Analysis', currentWeek: 76, previousWeek: 72, fullMark: 100 },
-    { subject: 'False Positive Rate', currentWeek: 25, previousWeek: 32, fullMark: 100 },
-    { subject: 'Smoking Detection', currentWeek: 84, previousWeek: 78, fullMark: 100 },
-    { subject: 'Detection Coverage', currentWeek: 89, previousWeek: 85, fullMark: 100 },
-    { subject: 'Response Time', currentWeek: 91, previousWeek: 87, fullMark: 100 },
-    { subject: 'Critical Alert Ratio', currentWeek: 73, previousWeek: 68, fullMark: 100 }
+    { subject: 'Weapon Detection', currentWeek: 94, previousWeek: 90, fullMark: 100 },
+    { subject: 'Behavior Accuracy', currentWeek: 87, previousWeek: 83, fullMark: 100 },
+    { subject: 'Response Time', currentWeek: 81, previousWeek: 75, fullMark: 100 },
+    { subject: 'Alert Precision', currentWeek: 88, previousWeek: 85, fullMark: 100 }
   ];
 
-  // Behavior recommendations data
+  // Behavior recommendations data - matching screenshot design
   const behaviorRecommendations = [
     {
-      title: 'Enhanced Fight Detection',
-      description: 'Improve altercation recognition',
-      icon: Sword
+      title: 'Update behavior policies',
+      description: 'Update behavior policies',
+      icon: RefreshCw
     },
     {
-      title: 'Fall Prevention Alerts',
-      description: 'Setup proactive fall detection',
-      icon: User
+      title: 'Alert Threshold',
+      description: 'Fine-tune detection sensitivity',
+      icon: AlertTriangle
     },
     {
-      title: 'Crowd Density Monitoring',
-      description: 'Optimize gathering detection',
+      title: 'Staff Training',
+      description: 'Enhance behavior awareness',
       icon: Users
     },
     {
-      title: 'Smoking Policy Enforcement',
-      description: 'Strengthen no-smoking zones',
-      icon: Cigarette
+      title: 'Equipment Maintenance',
+      description: 'Regular security checks',
+      icon: Settings
     },
     {
-      title: 'Running Detection Tuning',
-      description: 'Fine-tune movement analysis',
-      icon: Zap
-    },
-    {
-      title: 'Communication Monitoring',
-      description: 'Phone usage compliance',
-      icon: Phone
-    },
-    {
-      title: 'Weapon Detection Training',
-      description: 'Enhance security protocols',
-      icon: ShieldAlert
-    },
-    {
-      title: 'Gathering Restrictions',
-      description: 'Monitor group formations',
-      icon: UserCheck
-    },
-    {
-      title: 'Zone Monitoring',
-      description: 'Enhance restricted area access',
-      icon: MapPin
-    },
-    {
-      title: 'Incident Reporting',
-      description: 'Streamline behavior reports',
-      icon: AlertTriangle
+      title: 'Performance Analytics',
+      description: 'Monitor behavior metrics',
+      icon: BarChart3
     }
   ];
 
