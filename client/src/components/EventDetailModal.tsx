@@ -371,7 +371,7 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
             </div>
 
             {/* Update History Content */}
-            <div className="px-4 pb-4 flex-1 max-h-[300px] overflow-y-auto">
+            <div className="px-4 pb-4 flex-1 h-[300px] overflow-y-auto">
               <div className="space-y-3">
                 {updateHistory.map((historyItem) => (
                   <div key={historyItem.id} className="flex items-center gap-3 text-sm">
