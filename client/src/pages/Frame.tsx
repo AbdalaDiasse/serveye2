@@ -14,6 +14,8 @@ import VSSResumePage from "./VSSResumePage";
 import VSSSearchPage from "./VSSSearchPage";
 import SafetyDashboard from "./SafetyDashboard";
 import SafetyEventsPage from "./SafetyEventsPage";
+import BehaviorDashboard from "./BehaviorDashboard";
+import BehaviorEventsPage from "./BehaviorEventsPage";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from "recharts";
@@ -72,6 +74,10 @@ export const Frame = (): JSX.Element => {
         return { title: "Safety Dashboard", subtitle: "Real-time safety violation monitoring" };
       case "safetyEvents":
         return { title: "Safety Events", subtitle: "Safety event management" };
+      case "behaviorDashboard":
+        return { title: "Behavior Dashboard", subtitle: "Real-time behavior monitoring and analysis" };
+      case "behaviorEvents":
+        return { title: "Behavior Events", subtitle: "Behavior event management" };
       case "sites":
         return { title: "Sites", subtitle: "Site management and monitoring" };
       case "cameras":
@@ -150,6 +156,10 @@ export const Frame = (): JSX.Element => {
         return <SafetyDashboard />;
       case "safetyEvents":
         return <SafetyEventsPage />;
+      case "behaviorDashboard":
+        return <BehaviorDashboard />;
+      case "behaviorEvents":
+        return <BehaviorEventsPage />;
       default:
         return <ControlPanelSection />;
     }
