@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 
 const navigationItems = [
-  // Main Navigation
   {
     name: "Dashboard",
     icon: "dashboard",
@@ -14,22 +13,12 @@ const navigationItems = [
     isActive: false,
   },
   {
-    name: "Sites",
-    icon: "/figmaAssets/frame-3.svg",
-    isActive: false,
-  },
-  {
     name: "Boxes",
     icon: "/figmaAssets/frame-5.svg",
     isActive: false,
   },
   {
-    name: "Event Center",
-    icon: "/figmaAssets/frame-4.svg",
-    isActive: false,
-  },
-  {
-    name: "Personnes Intelligence",
+    name: "Personnes",
     icon: "/figmaAssets/frame-2.svg",
     hasDropdown: true,
     isActive: false,
@@ -57,7 +46,7 @@ const navigationItems = [
     ],
   },
   {
-    name: "Vehicule Intelligence",
+    name: "Vehicules",
     icon: "/figmaAssets/frame-6.svg",
     isActive: false,
     hasDropdown: true,
@@ -65,20 +54,50 @@ const navigationItems = [
       {
         name: "Dashboard",
         icon: "/figmaAssets/frame-1.svg",
+      },
+      {
+        name: "Captures",
+        icon: "/figmaAssets/frame-2.svg",
+      },
+    ],
+  },
+  {
+    name: "Événements",
+    icon: "/figmaAssets/frame-4.svg",
+    isActive: false,
+  },
+  {
+    name: "VSS",
+    icon: "/figmaAssets/frame-4.svg",
+    isActive: false,
+    hasDropdown: true,
+    subItems: [
+      {
+        name: "Agent VSS",
+        icon: "/figmaAssets/frame-1.svg",
         isActive: false,
       },
       {
-        name: "Capture",
+        name: "Résumé",
+        icon: "/figmaAssets/frame-1.svg",
+        isActive: false,
+      },
+      {
+        name: "Recherche",
+        icon: "/figmaAssets/frame-2.svg",
+        isActive: false,
+      },
+      {
+        name: "Alertes",
+        icon: "/figmaAssets/frame-2.svg",
+        isActive: false,
+      },
+      {
+        name: "Q/R",
         icon: "/figmaAssets/frame-2.svg",
         isActive: false,
       },
     ],
-  },
-  // Section separator for grouping
-  {
-    name: "_separator_safety",
-    isSection: true,
-    sectionTitle: "SAFETY",
   },
   {
     name: "Safety",
@@ -87,7 +106,7 @@ const navigationItems = [
     hasDropdown: true,
     subItems: [
       {
-        name: "Dashboard",
+        name: "Safety Dashboard",
         icon: "/figmaAssets/frame-1.svg",
         isActive: false,
       },
@@ -98,65 +117,10 @@ const navigationItems = [
       },
     ],
   },
-  // Section separator for grouping
   {
-    name: "_separator_behavior",
-    isSection: true,
-    sectionTitle: "BEHAVIOR",
-  },
-  {
-    name: "Behavior",
-    icon: "/figmaAssets/frame-4.svg",
+    name: "Sites",
+    icon: "/figmaAssets/frame-3.svg",
     isActive: false,
-    hasDropdown: true,
-    subItems: [
-      {
-        name: "Dashboard",
-        icon: "/figmaAssets/frame-1.svg",
-        isActive: false,
-      },
-      {
-        name: "Events List",
-        icon: "/figmaAssets/frame-2.svg",
-        isActive: false,
-      },
-    ],
-  },
-  {
-    name: "Smart Space",
-    icon: "/figmaAssets/frame-4.svg",
-    isActive: false,
-    hasDropdown: true,
-    subItems: [
-      {
-        name: "Dashboard",
-        icon: "/figmaAssets/frame-1.svg",
-        isActive: false,
-      },
-      {
-        name: "Events List",
-        icon: "/figmaAssets/frame-2.svg",
-        isActive: false,
-      },
-    ],
-  },
-  {
-    name: "Zone Monitoring",
-    icon: "/figmaAssets/frame-4.svg",
-    isActive: false,
-    hasDropdown: true,
-    subItems: [
-      {
-        name: "Dashboard",
-        icon: "/figmaAssets/frame-1.svg",
-        isActive: false,
-      },
-      {
-        name: "Events List",
-        icon: "/figmaAssets/frame-2.svg",
-        isActive: false,
-      },
-    ],
   },
 ];
 
@@ -186,8 +150,9 @@ const renderIcon = (icon: string, className: string) => {
 export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage, isCollapsed = false }: EventSummarySectionProps): JSX.Element => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(
     // Ouvrir automatiquement le dropdown approprié selon la page
-    (currentPage === "capture" || currentPage === "reconnaissance" || currentPage === "persons" || currentPage === "personnesDashboard" || currentPage === "clientAnalysis") ? "Personnes Intelligence" : 
-    (currentPage === "vehicles" || currentPage === "vehicleCapture") ? "Vehicule Intelligence" : 
+    (currentPage === "capture" || currentPage === "reconnaissance" || currentPage === "persons" || currentPage === "personnesDashboard" || currentPage === "clientAnalysis") ? "Personnes" : 
+    (currentPage === "vehicles" || currentPage === "vehicleCapture") ? "Vehicules" : 
+    (currentPage === "vssAgent" || currentPage === "vssSummarize" || currentPage === "vssSearch" || currentPage === "vssAlerts" || currentPage === "vssQA") ? "VSS" : 
     (currentPage === "safetyDashboard" || currentPage === "safetyEvents") ? "Safety" : null
   );
 
@@ -198,9 +163,11 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage,
   // Effet pour ouvrir automatiquement le dropdown approprié selon la page
   useEffect(() => {
     if (currentPage === "capture" || currentPage === "reconnaissance" || currentPage === "persons" || currentPage === "personnesDashboard" || currentPage === "clientAnalysis") {
-      setOpenDropdown("Personnes Intelligence");
+      setOpenDropdown("Personnes");
     } else if (currentPage === "vehicles" || currentPage === "vehicleCapture") {
-      setOpenDropdown("Vehicule Intelligence");
+      setOpenDropdown("Vehicules");
+    } else if (currentPage === "vssAgent" || currentPage === "vssSummarize" || currentPage === "vssSearch" || currentPage === "vssAlerts" || currentPage === "vssQA") {
+      setOpenDropdown("VSS");
     } else if (currentPage === "safetyDashboard" || currentPage === "safetyEvents") {
       setOpenDropdown("Safety");
     }
@@ -218,22 +185,12 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage,
       <nav className="flex-1 p-4 overflow-hidden">
         <div className="space-y-2">
           {navigationItems.map((item, index) => {
-            // Handle section separators
-            if ((item as any).isSection) {
-              return (
-                <div key={index} className={`mt-6 mb-3 ${isCollapsed ? 'hidden' : ''}`}>
-                  <div className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider px-2">
-                    {(item as any).sectionTitle}
-                  </div>
-                </div>
-              );
-            }
-
-            const isPersonnesActive = item.name === "Personnes Intelligence" && (currentPage === "persons" || currentPage === "capture" || currentPage === "reconnaissance" || currentPage === "personnesDashboard" || currentPage === "clientAnalysis");
-            const isEventsActive = item.name === "Event Center" && currentPage === "events";
-            const isVehiclesActive = item.name === "Vehicule Intelligence" && (currentPage === "vehicles" || currentPage === "vehicleCapture");
+            const isPersonnesActive = item.name === "Personnes" && (currentPage === "persons" || currentPage === "capture" || currentPage === "reconnaissance" || currentPage === "personnesDashboard" || currentPage === "clientAnalysis");
+            const isEventsActive = (item.name === "Évènements" || item.name === "Événements") && currentPage === "events";
+            const isVehiclesActive = item.name === "Vehicules" && (currentPage === "vehicles" || currentPage === "vehicleCapture");
+            const isVSSActive = item.name === "VSS" && (currentPage === "vssAgent" || currentPage === "vssSummarize" || currentPage === "vssSearch" || currentPage === "vssAlerts" || currentPage === "vssQA");
             const isSafetyActive = item.name === "Safety" && (currentPage === "safetyDashboard" || currentPage === "safetyEvents");
-            const isOtherActive = currentPage === item.name.toLowerCase().replace(/ /g, '') && !isPersonnesActive && !isEventsActive && !isVehiclesActive && !isSafetyActive;
+            const isOtherActive = currentPage === item.name.toLowerCase() && item.name !== "Personnes" && item.name !== "Évènements" && item.name !== "Événements" && item.name !== "Vehicules" && item.name !== "VSS" && item.name !== "Safety";
             
             return (
               <div key={index} className="relative">
@@ -245,6 +202,8 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage,
                       ? "shadow-md bg-gradient-to-r from-red-500 to-red-600"
                       : isVehiclesActive
                       ? "shadow-md bg-gradient-to-r from-orange-500 to-orange-600"
+                      : isVSSActive
+                      ? "shadow-md bg-gradient-to-r from-purple-500 to-indigo-600"
                       : isSafetyActive
                       ? "shadow-md bg-gradient-to-r from-[#0070F3] to-[#0056D6]"
                       : isOtherActive
@@ -254,18 +213,27 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage,
                   onClick={() => {
                     if (item.hasDropdown) {
                       toggleDropdown(item.name);
-                    } else if (item.name === "Event Center") {
+                      if (item.name === "Personnes" && openDropdown !== item.name) {
+                        // Ne pas naviguer automatiquement, seulement ouvrir le dropdown
+                      } else if (item.name === "VSS" && openDropdown !== item.name) {
+                        // Ne pas naviguer automatiquement pour VSS, seulement ouvrir le dropdown
+                      }
+                    } else if (item.name === "Évènements" || item.name === "Événements") {
                       handleNavigation("events");
+                    } else if (item.name === "Vehicules") {
+                      if (openDropdown !== item.name) {
+                        handleNavigation("vehicles");
+                      }
                     } else {
-                      handleNavigation(item.name.toLowerCase().replace(/ /g, ''));
+                      handleNavigation(item.name.toLowerCase());
                     }
                   }}
                 >
-                  {item.icon && renderIcon(item.icon, `${(isPersonnesActive || isEventsActive || isVehiclesActive || isSafetyActive || isOtherActive) ? "w-4 h-4 text-white" : "w-4 h-4 text-slate-600 dark:text-gray-300"} ${isCollapsed ? '' : 'mr-3'}`)}
+                  {renderIcon(item.icon, `${(isPersonnesActive || isEventsActive || isVehiclesActive || isVSSActive || isSafetyActive || isOtherActive) ? "w-4 h-4 text-white" : "w-4 h-4 text-slate-600 dark:text-gray-300"} ${isCollapsed ? '' : 'mr-3'}`)}
                   {!isCollapsed && (
                     <>
                       <span className={`[font-family:'Inter',Helvetica] text-base tracking-[0] truncate ${
-                        (isPersonnesActive || isEventsActive || isVehiclesActive || isSafetyActive || isOtherActive)
+                        (isPersonnesActive || isEventsActive || isVehiclesActive || isVSSActive || isSafetyActive || isOtherActive)
                           ? 'font-semibold text-white leading-[normal]'
                           : 'font-normal text-slate-600 dark:text-gray-300 leading-6'
                       }`}>
@@ -275,7 +243,7 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage,
                         <img
                           className={`w-3 h-3 ml-auto transition-transform duration-200 ${
                             openDropdown === item.name ? 'rotate-180' : ''
-                          } ${(isPersonnesActive || isVehiclesActive || isSafetyActive) ? 'filter brightness-0 invert' : ''}`}
+                          } ${(isPersonnesActive || isVehiclesActive || isVSSActive || isSafetyActive) ? 'filter brightness-0 invert' : ''}`}
                           alt="Dropdown"
                           src="/figmaAssets/frame-7.svg"
                         />
@@ -286,27 +254,37 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage,
                 {item.subItems && openDropdown === item.name && !isCollapsed && (
                   <div className="ml-6 mt-1 space-y-1">
                     {item.subItems.map((subItem, subIndex) => {
-                      const subPageName = item.name === "Vehicule Intelligence" && subItem.name === "Capture" 
+                      const subPageName = item.name === "Vehicules" && subItem.name === "Captures" 
                         ? "vehicleCapture" 
-                        : item.name === "Vehicule Intelligence" && subItem.name === "Dashboard"
+                        : item.name === "Vehicules" && subItem.name === "Dashboard"
                         ? "vehicles"
-                        : item.name === "Personnes Intelligence" && subItem.name === "Dashboard"
+                        : item.name === "Personnes" && subItem.name === "Dashboard"
                         ? "personnesDashboard"
-                        : item.name === "Personnes Intelligence" && subItem.name === "Analyse Client"
+                        : item.name === "Personnes" && subItem.name === "Analyse Client"
                         ? "clientAnalysis"
-                        : item.name === "Safety" && subItem.name === "Dashboard"
+                        : item.name === "VSS" && subItem.name === "Agent VSS"
+                        ? "vssAgent"
+                        : item.name === "VSS" && subItem.name === "Résumé"
+                        ? "vssSummarize"
+                        : item.name === "VSS" && subItem.name === "Recherche"
+                        ? "vssSearch"
+                        : item.name === "VSS" && subItem.name === "Alertes"
+                        ? "vssAlerts"
+                        : item.name === "VSS" && subItem.name === "Q/R"
+                        ? "vssQA"
+                        : item.name === "Safety" && subItem.name === "Safety Dashboard"
                         ? "safetyDashboard"
                         : item.name === "Safety" && subItem.name === "Events List"
                         ? "safetyEvents"
-                        : "dashboard"; // Default to dashboard for new menu items
+                        : subItem.name.toLowerCase();
                       const isSubActive = currentPage === subPageName;
-                      const gradientClass = item.name === "Vehicule Intelligence" 
+                      const gradientClass = item.name === "Vehicules" 
                         ? 'from-orange-400 to-orange-500' 
+                        : item.name === "VSS"
+                        ? 'from-purple-400 to-indigo-500'
                         : item.name === "Safety"
                         ? 'from-[#60a5fa] to-[#3b82f6]'
-                        : item.name === "Personnes Intelligence"
-                        ? 'from-teal-400 to-cyan-400'
-                        : 'from-blue-400 to-blue-500';
+                        : 'from-teal-400 to-cyan-400';
                       
                       return (
                         <div
