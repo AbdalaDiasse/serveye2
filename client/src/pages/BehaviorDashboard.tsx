@@ -264,6 +264,43 @@ export default function BehaviorDashboard() {
     { name: 'CAM-12', zone: 'Emergency Exit', violations: 29 }
   ];
 
+  // Behavior detection frequency data
+  const detectionFrequencyData = [
+    { type: 'Fight Detection', violations: 78, color: '#D32F2F' },
+    { type: 'Falls', violations: 45, color: '#B71C1C' },
+    { type: 'Crowd Movement', violations: 34, color: '#F44336' },
+    { type: 'Smoking', violations: 23, color: '#E53935' },
+    { type: 'Running', violations: 19, color: '#EF5350' },
+    { type: 'Calling', violations: 15, color: '#F48FB1' },
+    { type: 'Weapon Detection', violations: 8, color: '#FFCDD2' }
+  ];
+
+  // Behavior trends data
+  const behaviorTrendsData = [
+    { time: '08:00', fights: 2, falls: 1, crowds: 3, smoking: 1, running: 4, calling: 2, weapons: 0 },
+    { time: '09:00', fights: 3, falls: 2, crowds: 4, smoking: 2, running: 5, calling: 3, weapons: 0 },
+    { time: '10:00', fights: 5, falls: 3, crowds: 6, smoking: 3, running: 7, calling: 4, weapons: 1 },
+    { time: '11:00', fights: 4, falls: 2, crowds: 5, smoking: 2, running: 6, calling: 3, weapons: 0 },
+    { time: '12:00', fights: 8, falls: 4, crowds: 9, smoking: 4, running: 8, calling: 5, weapons: 1 },
+    { time: '13:00', fights: 6, falls: 3, crowds: 7, smoking: 3, running: 9, calling: 4, weapons: 1 },
+    { time: '14:00', fights: 9, falls: 5, crowds: 8, smoking: 5, running: 10, calling: 6, weapons: 2 },
+    { time: '15:00', fights: 7, falls: 4, crowds: 6, smoking: 4, running: 8, calling: 5, weapons: 1 },
+    { time: '16:00', fights: 5, falls: 3, crowds: 5, smoking: 3, running: 7, calling: 4, weapons: 1 },
+    { time: '17:00', fights: 4, falls: 2, crowds: 4, smoking: 2, running: 6, calling: 3, weapons: 0 },
+    { time: '18:00', fights: 3, falls: 1, crowds: 3, smoking: 2, running: 5, calling: 2, weapons: 0 }
+  ];
+
+  // Behavior distribution data
+  const behaviorDistribution = [
+    { name: 'Fight Detection', value: 32.5, percentage: '32.5%', color: '#D32F2F', gradientId: 'fights' },
+    { name: 'Falls', value: 24.8, percentage: '24.8%', color: '#B71C1C', gradientId: 'falls' },
+    { name: 'Crowd Movement', value: 16.3, percentage: '16.3%', color: '#F44336', gradientId: 'crowds' },
+    { name: 'Smoking', value: 12.1, percentage: '12.1%', color: '#E53935', gradientId: 'smoking' },
+    { name: 'Running', value: 8.7, percentage: '8.7%', color: '#EF5350', gradientId: 'running' },
+    { name: 'Calling', value: 3.9, percentage: '3.9%', color: '#F48FB1', gradientId: 'calling' },
+    { name: 'Weapon Detection', value: 1.7, percentage: '1.7%', color: '#FFCDD2', gradientId: 'weapons' }
+  ];
+
   // Detections per site - expanded
   const sitesData = [
     { name: 'Site A', zone: 'Main Building', violations: 156, total: 'total detections' },
@@ -586,6 +623,299 @@ export default function BehaviorDashboard() {
           </Card>
         </div>
 
+        {/* Detection Frequency - Enhanced Beautiful Version */}
+        <Card className="col-span-4 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 overflow-hidden">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle className="text-gray-900 dark:text-gray-100 text-lg font-semibold flex items-center gap-2">
+                  📊 Detection Frequency
+                </CardTitle>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Hourly behavior patterns</p>
+              </div>
+              <div className="flex gap-2">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="h-8 bg-gradient-to-r from-[#D32F2F] to-[#B71C1C] border-[#D32F2F] text-white text-xs hover:from-[#B71C1C] hover:to-[#8E0000] shadow-lg"
+                >
+                  Today
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="h-8 bg-transparent text-xs border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-all duration-200"
+                >
+                  Week
+                </Button>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="h-52">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={detectionFrequencyData} margin={{ top: 10, right: 10, left: 10, bottom: 10 }}>
+                  <defs>
+                    <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#D32F2F" stopOpacity={0.9} />
+                      <stop offset="100%" stopColor="#B71C1C" stopOpacity={0.6} />
+                    </linearGradient>
+                    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+                      <feDropShadow dx="0" dy="4" stdDeviation="3" floodColor="#B71C1C" floodOpacity="0.3"/>
+                    </filter>
+                  </defs>
+                  <CartesianGrid 
+                    strokeDasharray="1 3" 
+                    stroke="#e5e7eb" className="dark:stroke-gray-600" 
+                    strokeOpacity={0.3}
+                    vertical={false}
+                  />
+                  <XAxis 
+                    dataKey="type" 
+                    axisLine={false} 
+                    tickLine={false} 
+                    tick={{ 
+                      fill: '#6b7280', 
+                      fontSize: 10, 
+                      fontWeight: 500 
+                    }}
+                    interval={0}
+                    angle={-45}
+                    textAnchor="end"
+                    height={80}
+                  />
+                  <YAxis 
+                    axisLine={false} 
+                    tickLine={false} 
+                    tick={{ 
+                      fill: '#9ca3af', 
+                      fontSize: 11 
+                    }}
+                    domain={[0, 100]}
+                  />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'rgba(255, 255, 255, 0.95)', 
+                      border: '1px solid #e5e7eb',
+                      borderRadius: '12px', 
+                      boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
+                      fontSize: '12px',
+                      fontWeight: 500
+                    }}
+                    cursor={{ fill: 'rgba(211, 47, 47, 0.1)' }}
+                  />
+                  <Bar 
+                    dataKey="violations" 
+                    fill="url(#barGradient)" 
+                    radius={[4, 4, 0, 0]}
+                    filter="url(#shadow)"
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+            
+            {/* Frequency Summary */}
+            <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700">
+              <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+                <span>Total Detections</span>
+                <span className="font-semibold text-[#D32F2F]">242</span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Behavior Violation Trends */}
+        <Card className="col-span-4 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-gray-900 dark:text-gray-100 text-base font-medium">Behavior Violation Trends</CardTitle>
+              <Select defaultValue="today">
+                <SelectTrigger className="w-20 h-8 text-xs bg-gray-100 dark:bg-gray-600 border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="today">Today</SelectItem>
+                  <SelectItem value="week">Week</SelectItem>
+                  <SelectItem value="month">Month</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="h-52">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={behaviorTrendsData}>
+                  <CartesianGrid strokeDasharray="1 1" stroke="#e5e7eb" className="dark:stroke-gray-600" />
+                  <XAxis 
+                    dataKey="time" 
+                    axisLine={false} 
+                    tickLine={false} 
+                    tick={{ fill: '#6b7280', fontSize: 11 }}
+                    className="dark:fill-gray-300"
+                  />
+                  <YAxis 
+                    domain={[0, 20]}
+                    ticks={[0, 5, 10, 15, 20]}
+                    axisLine={false} 
+                    tickLine={false} 
+                    tick={{ fill: '#6b7280', fontSize: 11 }}
+                    className="dark:fill-gray-300"
+                  />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'white', 
+                      border: '1px solid #e0e0e0',
+                      borderRadius: '8px',
+                      fontSize: '12px'
+                    }}
+                  />
+                  <Area type="monotone" dataKey="fights" stroke="#D32F2F" fill="#D32F2F10" strokeWidth={2} />
+                  <Area type="monotone" dataKey="falls" stroke="#B71C1C" fill="#B71C1C10" strokeWidth={2} />
+                  <Line type="monotone" dataKey="crowds" stroke="#F44336" strokeWidth={2} dot={false} />
+                  <Line type="monotone" dataKey="smoking" stroke="#E53935" strokeWidth={2} dot={false} />
+                  <Line type="monotone" dataKey="running" stroke="#EF5350" strokeWidth={2} dot={false} />
+                  <Line type="monotone" dataKey="calling" stroke="#F48FB1" strokeWidth={2} dot={false} />
+                  <Line type="monotone" dataKey="weapons" stroke="#FFCDD2" strokeWidth={2} dot={false} />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+            
+            {/* Legend */}
+            <div className="mt-3 grid grid-cols-4 gap-2 text-xs">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-[#D32F2F] rounded-full"></div>
+                <span className="text-gray-600 dark:text-gray-300">Fights</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-[#B71C1C] rounded-full"></div>
+                <span className="text-gray-600 dark:text-gray-300">Falls</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-[#F44336] rounded-full"></div>
+                <span className="text-gray-600 dark:text-gray-300">Crowds</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-[#E53935] rounded-full"></div>
+                <span className="text-gray-600 dark:text-gray-300">Smoking</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-[#EF5350] rounded-full"></div>
+                <span className="text-gray-600 dark:text-gray-300">Running</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-[#F48FB1] rounded-full"></div>
+                <span className="text-gray-600 dark:text-gray-300">Calling</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-[#FFCDD2] rounded-full"></div>
+                <span className="text-gray-600 dark:text-gray-300">Weapons</span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Violation Distribution - Enhanced Beautiful Version */}
+        <Card className="col-span-4 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 overflow-hidden">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle className="text-gray-900 dark:text-gray-100 text-lg font-semibold flex items-center gap-2">
+                  🥧 Behavior Distribution
+                </CardTitle>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Behavior detection breakdown</p>
+              </div>
+              <button className="w-8 h-8 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M6 9l6 6 6-6"/>
+                </svg>
+              </button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="h-72">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <defs>
+                    <linearGradient id="fights" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stopColor="#D32F2F" stopOpacity={1} />
+                      <stop offset="100%" stopColor="#B71C1C" stopOpacity={0.8} />
+                    </linearGradient>
+                    <linearGradient id="falls" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stopColor="#B71C1C" stopOpacity={1} />
+                      <stop offset="100%" stopColor="#8E0000" stopOpacity={0.8} />
+                    </linearGradient>
+                    <linearGradient id="crowds" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stopColor="#F44336" stopOpacity={1} />
+                      <stop offset="100%" stopColor="#D32F2F" stopOpacity={0.8} />
+                    </linearGradient>
+                    <linearGradient id="smoking" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stopColor="#E53935" stopOpacity={1} />
+                      <stop offset="100%" stopColor="#C62828" stopOpacity={0.8} />
+                    </linearGradient>
+                    <linearGradient id="running" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stopColor="#EF5350" stopOpacity={1} />
+                      <stop offset="100%" stopColor="#E53935" stopOpacity={0.8} />
+                    </linearGradient>
+                    <linearGradient id="calling" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stopColor="#F48FB1" stopOpacity={1} />
+                      <stop offset="100%" stopColor="#F06292" stopOpacity={0.8} />
+                    </linearGradient>
+                    <linearGradient id="weapons" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stopColor="#FFCDD2" stopOpacity={1} />
+                      <stop offset="100%" stopColor="#FFAB91" stopOpacity={0.8} />
+                    </linearGradient>
+                    <filter id="pieShadow" x="-50%" y="-50%" width="200%" height="200%">
+                      <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#000000" floodOpacity="0.1"/>
+                    </filter>
+                  </defs>
+                  <Pie
+                    data={behaviorDistribution}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={40}
+                    outerRadius={85}
+                    paddingAngle={2}
+                    dataKey="value"
+                    filter="url(#pieShadow)"
+                  >
+                    {behaviorDistribution.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={`url(#${entry.gradientId})`} />
+                    ))}
+                  </Pie>
+                  <Tooltip 
+                    contentStyle={{
+                      backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                      border: '1px solid #e5e7eb',
+                      borderRadius: '8px',
+                      boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                      fontSize: '12px'
+                    }}
+                    formatter={(value, name) => [`${value}%`, name]}
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+            
+            {/* Distribution Summary */}
+            <div className="mt-4 space-y-2">
+              {behaviorDistribution.slice(0, 4).map((item, index) => (
+                <div key={index} className="flex items-center justify-between text-xs">
+                  <div className="flex items-center gap-2">
+                    <div className={`w-2 h-2 rounded-full`} style={{ backgroundColor: item.color }}></div>
+                    <span className="text-gray-600 dark:text-gray-300">{item.name}</span>
+                  </div>
+                  <span className="font-semibold text-gray-900 dark:text-gray-100">{item.percentage}</span>
+                </div>
+              ))}
+              <div className="pt-2 border-t border-gray-100 dark:border-gray-700">
+                <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+                  <span>Total Tracked</span>
+                  <span className="font-semibold text-[#D32F2F]">2,847</span>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Camera Performance */}
         <div className="col-span-6">
