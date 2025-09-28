@@ -1,146 +1,165 @@
 import React, { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  LayoutDashboard,
+  Camera,
+  Building2,
+  Package,
+  Activity,
+  Users,
+  Car,
+  Shield,
+  Brain,
+  Zap,
+  Radar,
+  BarChart3,
+  List,
+  ScanLine,
+  Search,
+  TrendingUp,
+  ChevronDown
+} from "lucide-react";
 
 const navigationItems = [
   {
     name: "Dashboard",
-    icon: "dashboard",
+    icon: "LayoutDashboard",
     isActive: false,
   },
   {
     name: "Cameras",
-    icon: "/figmaAssets/frame.svg",
+    icon: "Camera",
     isActive: false,
   },
   {
     name: "Sites",
-    icon: "/figmaAssets/frame-3.svg",
+    icon: "Building2",
     isActive: false,
   },
   {
     name: "Box",
-    icon: "/figmaAssets/frame-5.svg",
+    icon: "Package",
     isActive: false,
   },
   {
     name: "Event Center",
-    icon: "/figmaAssets/frame-4.svg",
+    icon: "Activity",
     isActive: false,
   },
   {
     name: "Personnes",
-    icon: "/figmaAssets/frame-2.svg",
+    icon: "Users",
     hasDropdown: true,
     isActive: false,
     subItems: [
       {
         name: "Dashboard",
-        icon: "/figmaAssets/frame-1.svg",
+        icon: "BarChart3",
         isActive: false,
       },
       {
         name: "Capture",
-        icon: "/figmaAssets/frame-1.svg",
+        icon: "ScanLine",
         isActive: false,
       },
       {
         name: "Reconnaissance",
-        icon: "/figmaAssets/frame-2.svg",
+        icon: "Search",
         isActive: false,
       },
       {
         name: "Analyse Client",
-        icon: "/figmaAssets/frame-2.svg",
+        icon: "TrendingUp",
         isActive: false,
       },
     ],
   },
   {
     name: "Vehicules",
-    icon: "/figmaAssets/frame-6.svg",
+    icon: "Car",
     isActive: false,
     hasDropdown: true,
     subItems: [
       {
         name: "Dashboard",
-        icon: "/figmaAssets/frame-1.svg",
+        icon: "BarChart3",
         isActive: false,
       },
       {
         name: "Capture",
-        icon: "/figmaAssets/frame-2.svg",
+        icon: "ScanLine",
         isActive: false,
       },
     ],
   },
   {
     name: "Safety",
-    icon: "/figmaAssets/frame-4.svg",
+    icon: "Shield",
     isActive: false,
     hasDropdown: true,
     subItems: [
       {
         name: "Dashboard",
-        icon: "/figmaAssets/frame-1.svg",
+        icon: "BarChart3",
         isActive: false,
       },
       {
         name: "Events List",
-        icon: "/figmaAssets/frame-2.svg",
+        icon: "List",
         isActive: false,
       },
     ],
   },
   {
     name: "Behavior",
-    icon: "/figmaAssets/frame-4.svg",
+    icon: "Brain",
     isActive: false,
     hasDropdown: true,
     subItems: [
       {
         name: "Dashboard",
-        icon: "/figmaAssets/frame-1.svg",
+        icon: "BarChart3",
         isActive: false,
       },
       {
         name: "Events List",
-        icon: "/figmaAssets/frame-2.svg",
+        icon: "List",
         isActive: false,
       },
     ],
   },
   {
     name: "Smart Space",
-    icon: "/figmaAssets/frame-4.svg",
+    icon: "Zap",
     isActive: false,
     hasDropdown: true,
     subItems: [
       {
         name: "Dashboard",
-        icon: "/figmaAssets/frame-1.svg",
+        icon: "BarChart3",
         isActive: false,
       },
       {
         name: "Events List",
-        icon: "/figmaAssets/frame-2.svg",
+        icon: "List",
         isActive: false,
       },
     ],
   },
   {
     name: "Zone monitoring",
-    icon: "/figmaAssets/frame-4.svg",
+    icon: "Radar",
     isActive: false,
     hasDropdown: true,
     subItems: [
       {
         name: "Dashboard",
-        icon: "/figmaAssets/frame-1.svg",
+        icon: "BarChart3",
         isActive: false,
       },
       {
         name: "Events List",
-        icon: "/figmaAssets/frame-2.svg",
+        icon: "List",
         isActive: false,
       },
     ],
@@ -153,21 +172,45 @@ interface EventSummarySectionProps {
   isCollapsed?: boolean;
 }
 
-const renderIcon = (icon: string, className: string) => {
-  if (icon === "dashboard") {
-    return (
-      <svg className={className} fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style={{background: 'none'}}>
-        <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
-      </svg>
-    );
+const renderIcon = (iconName: string, className: string) => {
+  const iconProps = { className, strokeWidth: 1.5 };
+  
+  switch (iconName) {
+    case 'LayoutDashboard':
+      return <LayoutDashboard {...iconProps} />;
+    case 'Camera':
+      return <Camera {...iconProps} />;
+    case 'Building2':
+      return <Building2 {...iconProps} />;
+    case 'Package':
+      return <Package {...iconProps} />;
+    case 'Activity':
+      return <Activity {...iconProps} />;
+    case 'Users':
+      return <Users {...iconProps} />;
+    case 'Car':
+      return <Car {...iconProps} />;
+    case 'Shield':
+      return <Shield {...iconProps} />;
+    case 'Brain':
+      return <Brain {...iconProps} />;
+    case 'Zap':
+      return <Zap {...iconProps} />;
+    case 'Radar':
+      return <Radar {...iconProps} />;
+    case 'BarChart3':
+      return <BarChart3 {...iconProps} />;
+    case 'List':
+      return <List {...iconProps} />;
+    case 'ScanLine':
+      return <ScanLine {...iconProps} />;
+    case 'Search':
+      return <Search {...iconProps} />;
+    case 'TrendingUp':
+      return <TrendingUp {...iconProps} />;
+    default:
+      return <LayoutDashboard {...iconProps} />;
   }
-  return (
-    <img
-      className={className}
-      alt="Icon"
-      src={icon}
-    />
-  );
 };
 
 export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage, isCollapsed = false }: EventSummarySectionProps): JSX.Element => {
@@ -269,12 +312,11 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage,
                         {item.name}
                       </span>
                       {item.hasDropdown && (
-                        <img
+                        <ChevronDown
                           className={`w-3 h-3 ml-auto transition-transform duration-200 ${
                             openDropdown === item.name ? 'rotate-180' : ''
-                          } ${(isPersonnesActive || isVehiclesActive || isSafetyActive || isBehaviorActive || isSmartSpaceActive || isZoneMonitoringActive) ? 'filter brightness-0 invert' : ''}`}
-                          alt="Dropdown"
-                          src="/figmaAssets/frame-7.svg"
+                          } ${(isPersonnesActive || isVehiclesActive || isSafetyActive || isBehaviorActive || isSmartSpaceActive || isZoneMonitoringActive) ? 'text-white' : 'text-slate-600 dark:text-gray-300'}`}
+                          strokeWidth={2}
                         />
                       )}
                     </>
@@ -331,11 +373,9 @@ export const EventSummarySection = ({ currentPage = "dashboard", setCurrentPage,
                           }`}
                           onClick={() => handleNavigation(subPageName)}
                         >
-                        <img
-                          className="w-3 h-3 mr-3"
-                          alt={subItem.name}
-                          src={subItem.icon}
-                        />
+                        {renderIcon(subItem.icon, `w-3 h-3 mr-3 ${
+                          isSubActive ? 'text-white' : 'text-slate-500 dark:text-gray-300'
+                        }`)}
                         <span className={`[font-family:'Inter',Helvetica] text-sm tracking-[0] leading-5 truncate ${
                           isSubActive
                             ? 'font-semibold text-white'
