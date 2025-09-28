@@ -170,7 +170,7 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-[95vw] h-[95vh] p-0 bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 flex flex-col overflow-hidden">
+      <DialogContent className="max-w-7xl h-[95vh] p-0 bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 flex flex-col overflow-y-auto">
         {/* Hidden title for accessibility */}
         <DialogTitle className="sr-only">Event Details - {event?.title}</DialogTitle>
         <DialogDescription className="sr-only">Details, actions and investigation tools for security event {event?.id}</DialogDescription>
@@ -198,9 +198,9 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
         </div>
 
         {/* Main Content */}
-        <div className="flex-1 flex overflow-hidden">
+        <div className="flex-1 flex">
           {/* Left Panel */}
-          <div className="flex-1 flex flex-col border-r border-gray-200 dark:border-gray-700 overflow-y-auto">
+          <div className="flex-1 flex flex-col border-r border-gray-200 dark:border-gray-700">
             {/* Image Display with Thumbnails */}
             <div className="p-4">
               <div className="flex gap-4">
@@ -313,8 +313,8 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
               </div>
             </div>
 
-            {/* Update History Content - Scrollable */}
-            <div className="px-4 pb-4 flex-1 overflow-y-auto">
+            {/* Update History Content */}
+            <div className="px-4 pb-4 flex-1">
               <div className="space-y-3">
                 <div className="flex items-center gap-3 text-sm">
                   <div className="w-2 h-2 bg-green-500 rounded-full"></div>
@@ -382,7 +382,7 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
           </div>
 
           {/* Right Panel */}
-          <div className="w-[420px] flex flex-col overflow-y-auto">
+          <div className="w-[420px] flex flex-col">
             {/* Actions Section */}
             <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
               <div className="flex items-center gap-2 mb-4">
