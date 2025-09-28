@@ -335,154 +335,224 @@ const BehaviorEventsPage = (): JSX.Element => {
           </div>
         </div>
 
-        {/* Search Bar */}
-        <div className="mb-4">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-            <Input
-              type="text"
-              placeholder="Search behavior events, zones, cameras..."
-              className="pl-10 bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              data-testid="input-search"
-            />
-            <Button
-              onClick={handleSearch}
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-[#D32F2F] hover:bg-[#B71C1C] text-white px-4 py-1 h-8"
-              data-testid="button-search"
-            >
-              Search
-            </Button>
-          </div>
-          
-          {/* Search Suggestions */}
-          <div className="mt-2 flex flex-wrap gap-2">
-            {searchSuggestions.map((suggestion, index) => (
-              <button
-                key={index}
-                onClick={() => handleSuggestionClick(suggestion)}
-                className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-2 py-1 rounded-full hover:bg-[#D32F2F] hover:text-white transition-colors"
-                data-testid={`suggestion-${suggestion.toLowerCase().replace(/\s+/g, '-')}`}
+        {/* Smart Search Section */}
+        <Card className="mb-6 bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800">
+          <CardContent className="p-6">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-8 h-8 bg-[#D32F2F] rounded-lg flex items-center justify-center">
+                <Search className="w-4 h-4 text-white" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                Smart Search
+              </h3>
+            </div>
+            
+            <div className="relative">
+              <Textarea
+                placeholder={`Describe what you're looking for in natural language...
+Examples:
+• 'Show me all fight detections yesterday'
+• 'Smoking and weapon events this week'`}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="min-h-[120px] resize-none text-base bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 focus:border-[#D32F2F] focus:ring-2 focus:ring-[#D32F2F]/20 placeholder:text-gray-400 dark:placeholder:text-gray-500 rounded-lg px-4 py-3 pr-32"
+                data-testid="input-search-events"
+              />
+              <Button 
+                className="absolute bottom-3 right-3 bg-[#D32F2F] hover:bg-[#B71C1C] text-white px-6 py-2 rounded-md" 
+                data-testid="button-search"
+                onClick={handleSearch}
               >
-                {suggestion}
+                <Search className="w-4 h-4 mr-2" />
+                Search
+              </Button>
+            </div>
+
+            <div className="flex gap-2 mt-4 text-sm">
+              <span className="text-gray-500 dark:text-gray-400">Suggestions:</span>
+              <button 
+                className="text-[#D32F2F] hover:underline" 
+                data-testid="button-suggestion-fights"
+                onClick={() => handleSuggestionClick("fight")}
+              >
+                Fights
               </button>
-            ))}
-          </div>
-        </div>
+              <button 
+                className="text-[#D32F2F] hover:underline" 
+                data-testid="button-suggestion-falls"
+                onClick={() => handleSuggestionClick("fall")}
+              >
+                Falls
+              </button>
+              <button 
+                className="text-[#D32F2F] hover:underline" 
+                data-testid="button-suggestion-weapons"
+                onClick={() => handleSuggestionClick("weapon")}
+              >
+                Weapons
+              </button>
+              <button 
+                className="text-[#D32F2F] hover:underline" 
+                data-testid="button-suggestion-smoking"
+                onClick={() => handleSuggestionClick("smoking")}
+              >
+                Smoking
+              </button>
+            </div>
+          </CardContent>
+        </Card>
 
-        {/* Filters */}
-        <div className="grid grid-cols-8 gap-4">
-          {/* Event Type Filter */}
-          <Select value={selectedEvent} onValueChange={setSelectedEvent}>
-            <SelectTrigger data-testid="select-event-type">
-              <SelectValue placeholder="Event Type" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Events</SelectItem>
-              <SelectItem value="fight">Fight Detection</SelectItem>
-              <SelectItem value="fall">Fall Detection</SelectItem>
-              <SelectItem value="crowd">Crowd Movement</SelectItem>
-              <SelectItem value="smoking">Smoking</SelectItem>
-              <SelectItem value="running">Running</SelectItem>
-              <SelectItem value="phone">Phone Usage</SelectItem>
-              <SelectItem value="weapon">Weapon</SelectItem>
-              <SelectItem value="gathering">Gathering</SelectItem>
-            </SelectContent>
-          </Select>
+        {/* Filter Section */}
+        <Card className="mb-6 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <Filter className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+                <h3 className="text-base font-medium text-gray-900 dark:text-gray-100">
+                  Filters
+                </h3>
+              </div>
+              <div className="flex items-center gap-2">
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  className="text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                  data-testid="button-reset-filters"
+                  onClick={resetFilters}
+                >
+                  Reset
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  className="border-[#D32F2F] text-[#D32F2F] hover:bg-red-50 dark:hover:bg-red-900/20"
+                  data-testid="button-apply-filters"
+                  onClick={applyFilters}
+                >
+                  <Filter className="w-4 h-4 mr-2" />
+                  Apply
+                </Button>
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Events
+                </label>
+                <Select value={selectedEvent} onValueChange={setSelectedEvent}>
+                  <SelectTrigger className="bg-white dark:bg-gray-700" data-testid="select-events">
+                    <SelectValue placeholder="All Events" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Events</SelectItem>
+                    <SelectItem value="fight">Fight Detection</SelectItem>
+                    <SelectItem value="fall">Fall Detection</SelectItem>
+                    <SelectItem value="crowd">Crowd Movement</SelectItem>
+                    <SelectItem value="smoking">Smoking</SelectItem>
+                    <SelectItem value="running">Running</SelectItem>
+                    <SelectItem value="phone">Phone Usage</SelectItem>
+                    <SelectItem value="weapon">Weapon</SelectItem>
+                    <SelectItem value="gathering">Gathering</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
 
-          {/* Camera Filter */}
-          <Select value={selectedCamera} onValueChange={setSelectedCamera}>
-            <SelectTrigger data-testid="select-camera">
-              <SelectValue placeholder="Camera" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Cameras</SelectItem>
-              <SelectItem value="Caméra A">Caméra A</SelectItem>
-              <SelectItem value="Caméra B">Caméra B</SelectItem>
-              <SelectItem value="Caméra C">Caméra C</SelectItem>
-              <SelectItem value="Caméra D">Caméra D</SelectItem>
-              <SelectItem value="Caméra E">Caméra E</SelectItem>
-            </SelectContent>
-          </Select>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Cameras
+                </label>
+                <Select value={selectedCamera} onValueChange={setSelectedCamera}>
+                  <SelectTrigger className="bg-white dark:bg-gray-700" data-testid="select-cameras">
+                    <SelectValue placeholder="All Cameras" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Cameras</SelectItem>
+                    <SelectItem value="Caméra A">Caméra A</SelectItem>
+                    <SelectItem value="Caméra B">Caméra B</SelectItem>
+                    <SelectItem value="Caméra C">Caméra C</SelectItem>
+                    <SelectItem value="Caméra D">Caméra D</SelectItem>
+                    <SelectItem value="Caméra E">Caméra E</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
 
-          {/* Site Filter */}
-          <Select value={selectedSite} onValueChange={setSelectedSite}>
-            <SelectTrigger data-testid="select-site">
-              <SelectValue placeholder="Site" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Sites</SelectItem>
-              <SelectItem value="Main">Main Building</SelectItem>
-              <SelectItem value="Production">Production Area</SelectItem>
-              <SelectItem value="Office">Office Area</SelectItem>
-              <SelectItem value="Warehouse">Warehouse</SelectItem>
-            </SelectContent>
-          </Select>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Sites
+                </label>
+                <Select value={selectedSite} onValueChange={setSelectedSite}>
+                  <SelectTrigger className="bg-white dark:bg-gray-700" data-testid="select-sites">
+                    <SelectValue placeholder="All Sites" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Sites</SelectItem>
+                    <SelectItem value="Main">Main Building</SelectItem>
+                    <SelectItem value="Production">Production Area</SelectItem>
+                    <SelectItem value="Office">Office Area</SelectItem>
+                    <SelectItem value="Warehouse">Warehouse</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
 
-          {/* Zone Filter */}
-          <Select value={selectedZone} onValueChange={setSelectedZone}>
-            <SelectTrigger data-testid="select-zone">
-              <SelectValue placeholder="Zone" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Zones</SelectItem>
-              <SelectItem value="Cafeteria">Cafeteria</SelectItem>
-              <SelectItem value="Stairwell">Stairwell</SelectItem>
-              <SelectItem value="Main Entrance">Main Entrance</SelectItem>
-              <SelectItem value="Production Floor">Production Floor</SelectItem>
-              <SelectItem value="Corridor">Corridor</SelectItem>
-              <SelectItem value="Break Room">Break Room</SelectItem>
-            </SelectContent>
-          </Select>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Zones
+                </label>
+                <Select value={selectedZone} onValueChange={setSelectedZone}>
+                  <SelectTrigger className="bg-white dark:bg-gray-700" data-testid="select-zones">
+                    <SelectValue placeholder="All Zones" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Zones</SelectItem>
+                    <SelectItem value="Cafeteria">Cafeteria</SelectItem>
+                    <SelectItem value="Stairwell">Stairwell</SelectItem>
+                    <SelectItem value="Main Entrance">Main Entrance</SelectItem>
+                    <SelectItem value="Production Floor">Production Floor</SelectItem>
+                    <SelectItem value="Corridor">Corridor</SelectItem>
+                    <SelectItem value="Break Room">Break Room</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
 
-          {/* Severity Filter */}
-          <Select value={selectedSeverity} onValueChange={setSelectedSeverity}>
-            <SelectTrigger data-testid="select-severity">
-              <SelectValue placeholder="Severity" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Severities</SelectItem>
-              <SelectItem value="CRITIQUE">Critical</SelectItem>
-              <SelectItem value="ALERTE">Alert</SelectItem>
-              <SelectItem value="MODÉRÉE">Moderate</SelectItem>
-              <SelectItem value="FAIBLE">Low</SelectItem>
-            </SelectContent>
-          </Select>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Severity
+                </label>
+                <Select value={selectedSeverity} onValueChange={setSelectedSeverity}>
+                  <SelectTrigger className="bg-white dark:bg-gray-700" data-testid="select-severity">
+                    <SelectValue placeholder="All Severities" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Severities</SelectItem>
+                    <SelectItem value="CRITIQUE">Critical</SelectItem>
+                    <SelectItem value="ALERTE">Alert</SelectItem>
+                    <SelectItem value="MODÉRÉE">Moderate</SelectItem>
+                    <SelectItem value="FAIBLE">Low</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
 
-          {/* Status Filter */}
-          <Select value={selectedStatus} onValueChange={setSelectedStatus}>
-            <SelectTrigger data-testid="select-status">
-              <SelectValue placeholder="Status" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Status</SelectItem>
-              <SelectItem value="New">New</SelectItem>
-              <SelectItem value="In Review">In Review</SelectItem>
-              <SelectItem value="Confirmed">Confirmed</SelectItem>
-              <SelectItem value="Resolved">Resolved</SelectItem>
-            </SelectContent>
-          </Select>
-
-          {/* Action Buttons */}
-          <Button
-            onClick={applyFilters}
-            className="bg-[#D32F2F] hover:bg-[#B71C1C] text-white"
-            data-testid="button-apply-filters"
-          >
-            <Filter className="w-4 h-4 mr-2" />
-            Apply
-          </Button>
-
-          <Button
-            onClick={resetFilters}
-            variant="outline"
-            className="border-gray-300 dark:border-gray-600"
-            data-testid="button-reset-filters"
-          >
-            Reset
-          </Button>
-        </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Status
+                </label>
+                <Select value={selectedStatus} onValueChange={setSelectedStatus}>
+                  <SelectTrigger className="bg-white dark:bg-gray-700" data-testid="select-status">
+                    <SelectValue placeholder="All Status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Status</SelectItem>
+                    <SelectItem value="New">New</SelectItem>
+                    <SelectItem value="In Review">In Review</SelectItem>
+                    <SelectItem value="Confirmed">Confirmed</SelectItem>
+                    <SelectItem value="Resolved">Resolved</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Events Grid */}
