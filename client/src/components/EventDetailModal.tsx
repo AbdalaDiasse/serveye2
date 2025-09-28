@@ -201,45 +201,69 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
         <div className="flex-1 flex overflow-hidden">
           {/* Left Panel */}
           <div className="flex-1 flex flex-col border-r border-gray-200 dark:border-gray-700 overflow-y-auto">
-            {/* Image and Tabs */}
+            {/* Image Display with Thumbnails */}
             <div className="p-4">
-              <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                <TabsList className="grid w-full grid-cols-2 mb-4">
-                  <TabsTrigger value="image-complete" className="text-sm" data-testid="tab-image-complete">
-                    📷 Full Image
-                  </TabsTrigger>
-                  <TabsTrigger value="detection" className="text-sm" data-testid="tab-detection">
-                    🔍 Detection
-                  </TabsTrigger>
-                </TabsList>
-
-                <TabsContent value="image-complete" className="mt-0">
+              <div className="flex gap-4">
+                {/* Main Image */}
+                <div className="flex-1">
                   <div className="relative">
                     <img 
                       src={event.thumbnail || '/api/placeholder/400/300'} 
-                      alt={event.title}
+                      alt={activeTab === "image-complete" ? "Full Image" : "Detection View"}
                       className="w-full h-80 object-contain rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
                     />
                     <div className="absolute top-3 right-3">
                       {getSeverityBadge(event.severity)}
                     </div>
+                    {activeTab === "detection" && (
+                      <div className="absolute bottom-3 left-3 text-xs bg-black/70 text-white px-2 py-1 rounded">
+                        🔍 Detection View
+                      </div>
+                    )}
                   </div>
-                </TabsContent>
+                </div>
 
-                <TabsContent value="detection" className="mt-0">
-                  <div className="relative">
+                {/* Thumbnail Selectors */}
+                <div className="w-24 space-y-3">
+                  <div 
+                    className={`cursor-pointer border-2 rounded-lg overflow-hidden transition-all ${
+                      activeTab === "image-complete" 
+                        ? "border-blue-500 ring-2 ring-blue-200" 
+                        : "border-gray-200 dark:border-gray-700 hover:border-gray-300"
+                    }`}
+                    onClick={() => setActiveTab("image-complete")}
+                    data-testid="thumbnail-full-image"
+                  >
                     <img 
                       src={event.thumbnail || '/api/placeholder/400/300'} 
-                      alt={event.title}
-                      className="w-full h-80 object-contain rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
+                      alt="Full Image"
+                      className="w-full h-16 object-cover"
                     />
-                    <div className="absolute top-3 right-3">
-                      {getSeverityBadge(event.severity)}
+                    <div className="p-1 text-center">
+                      <p className="text-xs font-medium text-gray-700 dark:text-gray-300">📷 Full</p>
                     </div>
-                    {/* Detection overlay could be added here */}
                   </div>
-                </TabsContent>
-              </Tabs>
+
+                  <div 
+                    className={`cursor-pointer border-2 rounded-lg overflow-hidden transition-all ${
+                      activeTab === "detection" 
+                        ? "border-blue-500 ring-2 ring-blue-200" 
+                        : "border-gray-200 dark:border-gray-700 hover:border-gray-300"
+                    }`}
+                    onClick={() => setActiveTab("detection")}
+                    data-testid="thumbnail-detection"
+                  >
+                    <img 
+                      src={event.thumbnail || '/api/placeholder/400/300'} 
+                      alt="Detection View"
+                      className="w-full h-16 object-cover"
+                    />
+                    <div className="p-1 text-center">
+                      <p className="text-xs font-medium text-gray-700 dark:text-gray-300">🔍 Detection</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Detection Information */}
