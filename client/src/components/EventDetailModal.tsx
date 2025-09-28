@@ -494,7 +494,7 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
               </div>
               
               {/* Chat Content Area */}
-              <div className="flex-1 flex flex-col min-h-0">
+              <div className="h-[300px] flex flex-col">
                 {/* Initial AI Message */}
                 <div className="mb-4 flex-shrink-0">
                   <div className="flex items-start gap-2">
@@ -511,7 +511,7 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
                 </div>
 
                 {/* Chat Messages */}
-                <ScrollArea className="flex-1 mb-4 max-h-[300px]">
+                <ScrollArea className="flex-1 mb-4">
                   <div className="space-y-4">
                     {chatMessages.map((message) => (
                       <div key={message.id} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
