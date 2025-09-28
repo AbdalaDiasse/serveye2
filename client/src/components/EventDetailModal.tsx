@@ -170,7 +170,7 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-7xl h-[95vh] p-0 bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 flex flex-col overflow-y-auto">
+      <DialogContent className="max-w-7xl max-h-[90vh] p-0 bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 flex flex-col overflow-y-auto">
         {/* Hidden title for accessibility */}
         <DialogTitle className="sr-only">Event Details - {event?.title}</DialogTitle>
         <DialogDescription className="sr-only">Details, actions and investigation tools for security event {event?.id}</DialogDescription>
@@ -314,7 +314,7 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
             </div>
 
             {/* Update History Content */}
-            <div className="px-4 pb-4 flex-1">
+            <div className="px-4 pb-4 flex-1 max-h-[300px] overflow-y-auto">
               <div className="space-y-3">
                 <div className="flex items-center gap-3 text-sm">
                   <div className="w-2 h-2 bg-green-500 rounded-full"></div>
@@ -489,7 +489,7 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
               </div>
 
               {/* Chat Messages */}
-              <ScrollArea className="flex-1 mb-4">
+              <ScrollArea className="flex-1 mb-4 max-h-[300px]">
                 <div className="space-y-4">
                   {chatMessages.map((message) => (
                     <div key={message.id} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
