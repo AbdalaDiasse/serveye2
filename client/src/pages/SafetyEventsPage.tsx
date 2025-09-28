@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,6 +13,26 @@ const SafetyEventsPage = (): JSX.Element => {
   const [selectedZone, setSelectedZone] = useState("all");
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
+
+  // Handle search functionality
+  const handleSearch = () => {
+    // Search is already handled by the controlled input
+    // This button can be used for additional search actions if needed
+    console.log("Search triggered for:", searchQuery);
+  };
+
+  // Handle suggestion clicks
+  const handleSuggestionClick = (suggestion: string) => {
+    setSearchQuery(suggestion);
+  };
+
+  // Apply filters functionality
+  const applyFilters = () => {
+    // Filters are automatically applied through useMemo dependencies
+    // This button can provide user feedback about filter application
+    console.log("Filters applied:", { selectedEvent, selectedCamera, selectedSite, selectedZone, dateFrom, dateTo });
+  };
+
 
   // Sample safety events data matching the design
   const safetyEvents = [
@@ -210,6 +230,47 @@ const SafetyEventsPage = (): JSX.Element => {
     }
   ];
 
+  // Filtered events based on search query and filters
+  const filteredEvents = useMemo(() => {
+    return safetyEvents.filter(event => {
+      // Search query filter
+      const matchesSearch = searchQuery === "" || 
+        event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        event.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        event.camera.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        event.zone.toLowerCase().includes(searchQuery.toLowerCase());
+
+      // Event type filter
+      const matchesEventType = selectedEvent === "all" || 
+        (selectedEvent === "intrusion" && event.title.toLowerCase().includes("intrusion")) ||
+        (selectedEvent === "epi" && event.title.toLowerCase().includes("epi")) ||
+        (selectedEvent === "fire" && (event.title.toLowerCase().includes("feu") || event.title.toLowerCase().includes("fumée") || event.title.toLowerCase().includes("incendie"))) ||
+        (selectedEvent === "fight" && event.title.toLowerCase().includes("bagarre"));
+
+      // Camera filter
+      const matchesCamera = selectedCamera === "all" || 
+        event.camera.toLowerCase().includes(selectedCamera.toLowerCase().replace("cam-", "caméra "));
+
+      // Site filter (based on zone/description)
+      const matchesSite = selectedSite === "all" || 
+        event.zone.toLowerCase().includes(selectedSite.toLowerCase()) ||
+        event.description.toLowerCase().includes(selectedSite.toLowerCase());
+
+      // Zone filter  
+      const matchesZone = selectedZone === "all" || event.zone.toLowerCase().includes(selectedZone.toLowerCase());
+
+      // Date filters - basic date range checking
+      const eventDate = new Date(event.timestamp);
+      const fromDate = dateFrom ? new Date(dateFrom) : null;
+      const toDate = dateTo ? new Date(dateTo) : null;
+      
+      const matchesDateFrom = !fromDate || eventDate >= fromDate;
+      const matchesDateTo = !toDate || eventDate <= toDate;
+
+      return matchesSearch && matchesEventType && matchesCamera && matchesSite && matchesZone && matchesDateFrom && matchesDateTo;
+    });
+  }, [safetyEvents, searchQuery, selectedEvent, selectedCamera, selectedSite, selectedZone, dateFrom, dateTo]);
+
   return (
     <div className="p-6 bg-gray-50 dark:bg-gray-900 min-h-full">
       {/* Header Section */}
@@ -260,7 +321,11 @@ const SafetyEventsPage = (): JSX.Element => {
                 data-testid="input-search-events"
               />
             </div>
-            <Button className="bg-[#0070F3] hover:bg-blue-700 text-white px-6" data-testid="button-search">
+            <Button 
+              className="bg-[#0070F3] hover:bg-blue-700 text-white px-6" 
+              data-testid="button-search"
+              onClick={handleSearch}
+            >
               <Search className="w-4 h-4 mr-2" />
               Rechercher
             </Button>
@@ -268,10 +333,34 @@ const SafetyEventsPage = (): JSX.Element => {
 
           <div className="flex gap-2 mt-4 text-sm">
             <span className="text-gray-500 dark:text-gray-400">Suggestions:</span>
-            <button className="text-[#0070F3] hover:underline" data-testid="button-suggestion-intrusions">Intrusions</button>
-            <button className="text-[#0070F3] hover:underline" data-testid="button-suggestion-epi">EPI manquants</button>
-            <button className="text-[#0070F3] hover:underline" data-testid="button-suggestion-incendies">Incendies</button>
-            <button className="text-[#0070F3] hover:underline" data-testid="button-suggestion-securite">Sécurité</button>
+            <button 
+              className="text-[#0070F3] hover:underline" 
+              data-testid="button-suggestion-intrusions"
+              onClick={() => handleSuggestionClick("intrusion")}
+            >
+              Intrusions
+            </button>
+            <button 
+              className="text-[#0070F3] hover:underline" 
+              data-testid="button-suggestion-epi"
+              onClick={() => handleSuggestionClick("EPI manquant")}
+            >
+              EPI manquants
+            </button>
+            <button 
+              className="text-[#0070F3] hover:underline" 
+              data-testid="button-suggestion-incendies"
+              onClick={() => handleSuggestionClick("feu")}
+            >
+              Incendies
+            </button>
+            <button 
+              className="text-[#0070F3] hover:underline" 
+              data-testid="button-suggestion-securite"
+              onClick={() => handleSuggestionClick("sécurité")}
+            >
+              Sécurité
+            </button>
           </div>
         </CardContent>
       </Card>
@@ -390,6 +479,7 @@ const SafetyEventsPage = (): JSX.Element => {
               variant="outline" 
               className="border-[#0070F3] text-[#0070F3] hover:bg-blue-50 dark:hover:bg-blue-900/20"
               data-testid="button-apply-filters"
+              onClick={applyFilters}
             >
               <Filter className="w-4 h-4 mr-2" />
               Appliquer les filtres
@@ -405,12 +495,12 @@ const SafetyEventsPage = (): JSX.Element => {
             Événements Détectés
           </h3>
           <div className="text-sm text-[#0070F3] font-medium">
-            {safetyEvents.length} événements
+            {filteredEvents.length} événements
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {safetyEvents.map((event) => (
+          {filteredEvents.map((event) => (
             <Card key={event.id} className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-lg transition-shadow cursor-pointer" data-testid={`card-event-${event.id}`}>
               <div className="relative">
                 <img 

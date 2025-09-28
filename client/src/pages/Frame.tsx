@@ -13,6 +13,7 @@ import VSSAgentPage from "./VSSAgentPage";
 import VSSResumePage from "./VSSResumePage";
 import VSSSearchPage from "./VSSSearchPage";
 import SafetyDashboard from "./SafetyDashboard";
+import SafetyEventsPage from "./SafetyEventsPage";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from "recharts";
@@ -147,6 +148,8 @@ export const Frame = (): JSX.Element => {
         </div>;
       case "safetyDashboard":
         return <SafetyDashboard />;
+      case "safetyEvents":
+        return <SafetyEventsPage />;
       default:
         return <ControlPanelSection />;
     }
