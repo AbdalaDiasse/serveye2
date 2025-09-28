@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { EventDetailModal } from "@/components/EventDetailModal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -23,6 +24,8 @@ const SafetyEventsPage = (): JSX.Element => {
   const [selectedStatus, setSelectedStatus] = useState("all");
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
+  const [selectedEventDetail, setSelectedEventDetail] = useState<any>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Handle search functionality
   const handleSearch = () => {
@@ -572,7 +575,15 @@ Exemples:
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {filteredEvents.map((event) => (
-            <Card key={event.id} className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-lg transition-shadow cursor-pointer" data-testid={`card-event-${event.id}`}>
+            <Card 
+              key={event.id} 
+              className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-lg transition-shadow cursor-pointer" 
+              data-testid={`card-event-${event.id}`}
+              onClick={() => {
+                setSelectedEventDetail(event);
+                setIsModalOpen(true);
+              }}
+            >
               <div className="relative">
                 <img 
                   src={event.thumbnail} 
@@ -637,6 +648,16 @@ Exemples:
           ))}
         </div>
       </div>
+
+      {/* Event Detail Modal */}
+      <EventDetailModal
+        event={selectedEventDetail}
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+          setSelectedEventDetail(null);
+        }}
+      />
     </div>
   );
 };
