@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -49,11 +50,9 @@ export default function VSSSearchPage() {
   });
   
   const popularSearches = [
-    { icon: User, text: 'Person in red shirt', color: 'bg-blue-100 text-blue-700' },
-    { icon: Car, text: 'Vehicle license ABC123', color: 'bg-green-100 text-green-700' },
-    { icon: Clock, text: 'After 2pm today', color: 'bg-purple-100 text-purple-700' },
-    { icon: AlertTriangle, text: 'Suspicious behavior', color: 'bg-orange-100 text-orange-700' },
-    { icon: Package, text: 'Package delivery', color: 'bg-cyan-100 text-cyan-700' }
+    { text: 'Intrusions récentes', color: 'bg-blue-100 text-blue-700 hover:bg-blue-200' },
+    { text: 'EPI manquants', color: 'bg-blue-100 text-blue-700 hover:bg-blue-200' },
+    { text: 'Incidents incendie', color: 'bg-blue-100 text-blue-700 hover:bg-blue-200' }
   ];
 
   const searchResults = [
@@ -165,65 +164,66 @@ export default function VSSSearchPage() {
       </div>
 
       {/* Main Search Section */}
-      <div className="bg-gradient-to-b from-blue-50 to-white">
-        <div className="max-w-7xl mx-auto px-6 py-8">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">Natural Language Video Search</h2>
-            <p className="text-gray-600">Ask questions in plain English and get instant video results powered by AI</p>
-          </div>
-
-          {/* Search Bar */}
-          <div className="max-w-4xl mx-auto mb-6">
-            <div className="relative">
-              <div className="flex items-center bg-white rounded-lg border border-gray-200 shadow-sm">
-                <Search className="w-5 h-5 text-gray-400 ml-4" />
-                <Input
-                  type="text"
-                  placeholder='Ask anything... e.g., "Show all times a person in red entered the store between 2pm and 4pm"'
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="flex-1 border-0 focus:ring-0 text-base px-4 py-4"
-                />
-                <Button className="bg-blue-600 hover:bg-blue-700 text-white m-2 px-6">
-                  <Search className="w-4 h-4 mr-2" />
-                  Search
-                </Button>
+      <div className="bg-gray-50 dark:bg-gray-900">
+        <div className="max-w-5xl mx-auto px-6 py-8">
+          {/* Intelligent Search Card */}
+          <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg">
+            {/* Blue Header */}
+            <div className="bg-[#0070F3] text-white p-4 rounded-t-lg">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
+                  <Search className="w-5 h-5 text-white" />
+                </div>
+                <h2 className="text-lg font-semibold">Recherche Intelligente</h2>
               </div>
             </div>
-          </div>
+            
+            {/* Search Content */}
+            <CardContent className="p-6">
+              {/* Large Textarea with Placeholder Examples */}
+              <div className="relative mb-4">
+                <Textarea
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder={`Décrivez ce que vous cherchez en langage naturel...
 
-          {/* Popular Searches */}
-          <div className="flex items-center justify-center gap-2 flex-wrap mb-4">
-            <span className="text-sm text-gray-500">Popular searches:</span>
-            {popularSearches.map((search, idx) => (
-              <Badge 
-                key={idx} 
-                variant="secondary" 
-                className={`${search.color} cursor-pointer hover:opacity-80 transition-opacity`}
-              >
-                <search.icon className="w-3 h-3 mr-1" />
-                {search.text}
-              </Badge>
-            ))}
-          </div>
-
-          {/* Action Buttons */}
-          <div className="flex items-center justify-center gap-3">
-            <Button variant="outline" size="sm">
-              <Mic className="w-4 h-4 mr-2" />
-              Voice Search
-            </Button>
-            <Button variant="outline" size="sm">
-              <Filter className="w-4 h-4 mr-2" />
-              Advanced Filters
-            </Button>
-            <Button variant="outline" size="sm">
-              <Clock className="w-4 h-4 mr-2" />
-              Search History
-            </Button>
-          </div>
+Exemples:
+• 'Montre-moi toutes les intrusions détectées hier'
+• 'Événements de feu et fumée cette semaine'`}
+                  className="min-h-[120px] resize-none text-base border-gray-200 dark:border-gray-600 focus:border-[#0070F3] focus:ring-[#0070F3] placeholder:text-gray-400 dark:placeholder:text-gray-500"
+                  data-testid="textarea-intelligent-search"
+                />
+                <Button 
+                  className="absolute bottom-3 right-3 bg-[#0070F3] hover:bg-blue-600 text-white px-6"
+                  data-testid="button-search-intelligent"
+                >
+                  <Search className="w-4 h-4 mr-2" />
+                  Rechercher
+                </Button>
+              </div>
+              
+              {/* Suggestions */}
+              <div className="space-y-2">
+                <span className="text-sm text-gray-600 dark:text-gray-400">Suggestions:</span>
+                <div className="flex flex-wrap gap-2">
+                  {popularSearches.map((search, idx) => (
+                    <Badge 
+                      key={idx} 
+                      variant="secondary" 
+                      className={`${search.color} cursor-pointer transition-colors`}
+                      onClick={() => setSearchQuery(search.text)}
+                      data-testid={`suggestion-${search.text.replace(/\s+/g, '-').toLowerCase()}`}
+                    >
+                      {search.text}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
+
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 py-6">
