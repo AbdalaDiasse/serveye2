@@ -277,17 +277,17 @@ export default function BehaviorDashboard() {
 
   // Behavior trends data
   const behaviorTrendsData = [
-    { time: '08:00', fights: 2, falls: 1, crowds: 3, smoking: 1, running: 4, calling: 2, weapons: 0 },
-    { time: '09:00', fights: 3, falls: 2, crowds: 4, smoking: 2, running: 5, calling: 3, weapons: 0 },
-    { time: '10:00', fights: 5, falls: 3, crowds: 6, smoking: 3, running: 7, calling: 4, weapons: 1 },
-    { time: '11:00', fights: 4, falls: 2, crowds: 5, smoking: 2, running: 6, calling: 3, weapons: 0 },
-    { time: '12:00', fights: 8, falls: 4, crowds: 9, smoking: 4, running: 8, calling: 5, weapons: 1 },
-    { time: '13:00', fights: 6, falls: 3, crowds: 7, smoking: 3, running: 9, calling: 4, weapons: 1 },
-    { time: '14:00', fights: 9, falls: 5, crowds: 8, smoking: 5, running: 10, calling: 6, weapons: 2 },
-    { time: '15:00', fights: 7, falls: 4, crowds: 6, smoking: 4, running: 8, calling: 5, weapons: 1 },
-    { time: '16:00', fights: 5, falls: 3, crowds: 5, smoking: 3, running: 7, calling: 4, weapons: 1 },
-    { time: '17:00', fights: 4, falls: 2, crowds: 4, smoking: 2, running: 6, calling: 3, weapons: 0 },
-    { time: '18:00', fights: 3, falls: 1, crowds: 3, smoking: 2, running: 5, calling: 2, weapons: 0 }
+    { time: '08:00', total: 13, fights: 2, falls: 1, crowds: 3, smoking: 1, running: 4, calling: 2, weapons: 0 },
+    { time: '09:00', total: 19, fights: 3, falls: 2, crowds: 4, smoking: 2, running: 5, calling: 3, weapons: 0 },
+    { time: '10:00', total: 29, fights: 5, falls: 3, crowds: 6, smoking: 3, running: 7, calling: 4, weapons: 1 },
+    { time: '11:00', total: 22, fights: 4, falls: 2, crowds: 5, smoking: 2, running: 6, calling: 3, weapons: 0 },
+    { time: '12:00', total: 39, fights: 8, falls: 4, crowds: 9, smoking: 4, running: 8, calling: 5, weapons: 1 },
+    { time: '13:00', total: 33, fights: 6, falls: 3, crowds: 7, smoking: 3, running: 9, calling: 4, weapons: 1 },
+    { time: '14:00', total: 45, fights: 9, falls: 5, crowds: 8, smoking: 5, running: 10, calling: 6, weapons: 2 },
+    { time: '15:00', total: 35, fights: 7, falls: 4, crowds: 6, smoking: 4, running: 8, calling: 5, weapons: 1 },
+    { time: '16:00', total: 28, fights: 5, falls: 3, crowds: 5, smoking: 3, running: 7, calling: 4, weapons: 1 },
+    { time: '17:00', total: 21, fights: 4, falls: 2, crowds: 4, smoking: 2, running: 6, calling: 3, weapons: 0 },
+    { time: '18:00', total: 16, fights: 3, falls: 1, crowds: 3, smoking: 2, running: 5, calling: 2, weapons: 0 }
   ];
 
   // Behavior distribution data
@@ -644,6 +644,12 @@ export default function BehaviorDashboard() {
             <div className="h-52">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={behaviorTrendsData}>
+                  <defs>
+                    <linearGradient id="totalGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#D32F2F" stopOpacity={0.8} />
+                      <stop offset="100%" stopColor="#D32F2F" stopOpacity={0.1} />
+                    </linearGradient>
+                  </defs>
                   <CartesianGrid strokeDasharray="1 1" stroke="#e5e7eb" className="dark:stroke-gray-600" />
                   <XAxis 
                     dataKey="time" 
@@ -653,8 +659,8 @@ export default function BehaviorDashboard() {
                     className="dark:fill-gray-300"
                   />
                   <YAxis 
-                    domain={[0, 20]}
-                    ticks={[0, 5, 10, 15, 20]}
+                    domain={[0, 50]}
+                    ticks={[0, 10, 20, 30, 40, 50]}
                     axisLine={false} 
                     tickLine={false} 
                     tick={{ fill: '#6b7280', fontSize: 11 }}
@@ -667,47 +673,25 @@ export default function BehaviorDashboard() {
                       borderRadius: '8px',
                       fontSize: '12px'
                     }}
+                    formatter={(value, name) => [`${value} detections`, 'Total Behavior Detections']}
                   />
-                  <Area type="monotone" dataKey="fights" stroke="#D32F2F" fill="#D32F2F10" strokeWidth={2} />
-                  <Area type="monotone" dataKey="falls" stroke="#B71C1C" fill="#B71C1C10" strokeWidth={2} />
-                  <Line type="monotone" dataKey="crowds" stroke="#F44336" strokeWidth={2} dot={false} />
-                  <Line type="monotone" dataKey="smoking" stroke="#E53935" strokeWidth={2} dot={false} />
-                  <Line type="monotone" dataKey="running" stroke="#EF5350" strokeWidth={2} dot={false} />
-                  <Line type="monotone" dataKey="calling" stroke="#F48FB1" strokeWidth={2} dot={false} />
-                  <Line type="monotone" dataKey="weapons" stroke="#FFCDD2" strokeWidth={2} dot={false} />
+                  <Area 
+                    type="monotone" 
+                    dataKey="total" 
+                    stroke="#D32F2F" 
+                    fill="url(#totalGradient)" 
+                    strokeWidth={3}
+                    dot={{ fill: '#D32F2F', strokeWidth: 2, r: 4 }}
+                  />
                 </AreaChart>
               </ResponsiveContainer>
             </div>
             
             {/* Legend */}
-            <div className="mt-3 grid grid-cols-4 gap-2 text-xs">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-[#D32F2F] rounded-full"></div>
-                <span className="text-gray-600 dark:text-gray-300">Fights</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-[#B71C1C] rounded-full"></div>
-                <span className="text-gray-600 dark:text-gray-300">Falls</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-[#F44336] rounded-full"></div>
-                <span className="text-gray-600 dark:text-gray-300">Crowds</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-[#E53935] rounded-full"></div>
-                <span className="text-gray-600 dark:text-gray-300">Smoking</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-[#EF5350] rounded-full"></div>
-                <span className="text-gray-600 dark:text-gray-300">Running</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-[#F48FB1] rounded-full"></div>
-                <span className="text-gray-600 dark:text-gray-300">Calling</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-[#FFCDD2] rounded-full"></div>
-                <span className="text-gray-600 dark:text-gray-300">Weapons</span>
+            <div className="mt-3 flex items-center justify-center">
+              <div className="flex items-center gap-2 text-xs">
+                <div className="w-3 h-3 bg-[#D32F2F] rounded-full"></div>
+                <span className="text-gray-600 dark:text-gray-300 font-medium">Total Behavior Detections</span>
               </div>
             </div>
           </CardContent>
