@@ -309,9 +309,108 @@ export default function BehaviorDashboard() {
       </div>
 
       <div className="grid grid-cols-12 gap-6">
+        {/* First Row: Behavior Module Performance (Left) and Live Behavior Detections (Right) */}
+        
+        {/* Behavior Module Performance with Recommendations */}
+        <div className="col-span-8">
+          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 h-[500px]">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                  Behavior Module Performance
+                </CardTitle>
+                <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="text-[#D32F2F] border-[#D32F2F] hover:bg-[#D32F2F] hover:text-white"
+                  >
+                    Weekly
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-gray-500 hover:text-gray-700"
+                  >
+                    Monthly
+                  </Button>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent className="h-[400px]">
+              <div className="flex gap-6 h-full">
+                {/* Radar Chart */}
+                <div className="flex-1">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <RadarChart data={radarData} margin={{ top: 20, right: 30, bottom: 20, left: 30 }}>
+                      <PolarGrid stroke="#374151" />
+                      <PolarAngleAxis 
+                        dataKey="subject" 
+                        tick={{ fontSize: 11, fill: '#6B7280' }}
+                      />
+                      <PolarRadiusAxis 
+                        angle={90} 
+                        domain={[0, 100]} 
+                        tick={{ fontSize: 10, fill: '#6B7280' }}
+                      />
+                      <Radar
+                        name="Current Week"
+                        dataKey="currentWeek"
+                        stroke="#D32F2F"
+                        fill="#D32F2F"
+                        fillOpacity={0.1}
+                        strokeWidth={2}
+                      />
+                      <Radar
+                        name="Previous Week"
+                        dataKey="previousWeek"
+                        stroke="#6B7280"
+                        fill="#6B7280"
+                        fillOpacity={0.05}
+                        strokeWidth={1.5}
+                        strokeDasharray="5 5"
+                      />
+                      <Legend 
+                        wrapperStyle={{ 
+                          fontSize: '12px',
+                          paddingTop: '20px'
+                        }}
+                      />
+                    </RadarChart>
+                  </ResponsiveContainer>
+                </div>
+
+                {/* Behavior Recommendations */}
+                <div className="w-80 flex flex-col">
+                  <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-4">
+                    Behavior Recommendations
+                  </h3>
+                  <div className="space-y-3 flex-1 overflow-y-auto">
+                    {behaviorRecommendations.map((recommendation, index) => (
+                      <div key={index} className="flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-700/30 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors">
+                        <div className="w-8 h-8 bg-[#D32F2F] rounded-lg flex items-center justify-center flex-shrink-0">
+                          <recommendation.icon className="w-4 h-4 text-white" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
+                            {recommendation.title}
+                          </h4>
+                          <p className="text-xs text-gray-600 dark:text-gray-400 truncate">
+                            {recommendation.description}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
         {/* Live Behavior Detections */}
         <div className="col-span-4">
-          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 h-[800px] flex flex-col">
+          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 h-[500px] flex flex-col">
             <CardHeader className="pb-4 border-b border-gray-200 dark:border-gray-700">
               <div className="flex items-center justify-between">
                 <CardTitle className="text-lg font-semibold text-gray-900 dark:text-gray-100">
@@ -487,102 +586,6 @@ export default function BehaviorDashboard() {
           </Card>
         </div>
 
-        {/* Behavior Module Performance with Recommendations */}
-        <div className="col-span-12">
-          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 h-[500px]">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                  Behavior Module Performance
-                </CardTitle>
-                <div className="flex gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="text-[#D32F2F] border-[#D32F2F] hover:bg-[#D32F2F] hover:text-white"
-                  >
-                    Weekly
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-gray-500 hover:text-gray-700"
-                  >
-                    Monthly
-                  </Button>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent className="h-[400px]">
-              <div className="flex gap-6 h-full">
-                {/* Radar Chart */}
-                <div className="flex-1">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <RadarChart data={radarData} margin={{ top: 20, right: 30, bottom: 20, left: 30 }}>
-                      <PolarGrid stroke="#374151" />
-                      <PolarAngleAxis 
-                        dataKey="subject" 
-                        tick={{ fontSize: 11, fill: '#6B7280' }}
-                      />
-                      <PolarRadiusAxis 
-                        angle={90} 
-                        domain={[0, 100]} 
-                        tick={{ fontSize: 10, fill: '#6B7280' }}
-                      />
-                      <Radar
-                        name="Current Week"
-                        dataKey="currentWeek"
-                        stroke="#D32F2F"
-                        fill="#D32F2F"
-                        fillOpacity={0.1}
-                        strokeWidth={2}
-                      />
-                      <Radar
-                        name="Previous Week"
-                        dataKey="previousWeek"
-                        stroke="#6B7280"
-                        fill="#6B7280"
-                        fillOpacity={0.05}
-                        strokeWidth={1.5}
-                        strokeDasharray="5 5"
-                      />
-                      <Legend 
-                        wrapperStyle={{ 
-                          fontSize: '12px',
-                          paddingTop: '20px'
-                        }}
-                      />
-                    </RadarChart>
-                  </ResponsiveContainer>
-                </div>
-
-                {/* Behavior Recommendations */}
-                <div className="w-80 flex flex-col">
-                  <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-4">
-                    Behavior Recommendations
-                  </h3>
-                  <div className="space-y-3 flex-1 overflow-y-auto">
-                    {behaviorRecommendations.map((recommendation, index) => (
-                      <div key={index} className="flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-700/30 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors">
-                        <div className="w-8 h-8 bg-[#D32F2F] rounded-lg flex items-center justify-center flex-shrink-0">
-                          <recommendation.icon className="w-4 h-4 text-white" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
-                            {recommendation.title}
-                          </h4>
-                          <p className="text-xs text-gray-600 dark:text-gray-400 truncate">
-                            {recommendation.description}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
 
         {/* Camera Performance */}
         <div className="col-span-6">
