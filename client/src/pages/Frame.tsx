@@ -171,6 +171,37 @@ export const Frame = (): JSX.Element => {
   };
 
   const pageInfo = getPageTitle();
+
+  const getTitleColor = () => {
+    switch (currentPage) {
+      case "persons":
+      case "personnesDashboard":
+      case "capture":
+      case "reconnaissance":
+      case "clientAnalysis":
+        return "text-[#3fb5b5] dark:text-teal-400";
+      case "events":
+      case "eventCenter":
+        return "text-[#FF9800] dark:text-orange-400";
+      case "safetyDashboard":
+      case "safetyEvents":
+        return "text-[#0070F3] dark:text-blue-400";
+      case "behaviorDashboard":
+      case "behaviorEvents":
+        return "text-[#D32F2F] dark:text-red-400";
+      case "vehicles":
+      case "vehicleCapture":
+        return "text-orange-500 dark:text-orange-400";
+      case "smartSpaceDashboard":
+      case "smartSpaceEvents":
+        return "text-emerald-500 dark:text-emerald-400";
+      case "zoneMonitoringDashboard":
+      case "zoneMonitoringEvents":
+        return "text-indigo-500 dark:text-indigo-400";
+      default:
+        return "text-[#0070F3] dark:text-blue-400";
+    }
+  };
   
   return (
     <div className="flex flex-col w-full min-h-screen bg-white dark:bg-gray-900 border-2 border-solid border-[#ced4da] dark:border-gray-700">
@@ -205,7 +236,7 @@ export const Frame = (): JSX.Element => {
           </button>
           
           <div>
-            <h1 className="text-xl font-semibold text-[#0070F3] dark:text-blue-400">{pageInfo.title}</h1>
+            <h1 className={`text-xl font-semibold ${getTitleColor()}`}>{pageInfo.title}</h1>
             <p className="text-sm text-gray-500 dark:text-gray-400">{pageInfo.subtitle}</p>
           </div>
         </div>
