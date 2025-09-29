@@ -16,6 +16,7 @@ import SafetyDashboard from "./SafetyDashboard";
 import SafetyEventsPage from "./SafetyEventsPage";
 import BehaviorDashboard from "./BehaviorDashboard";
 import BehaviorEventsPage from "./BehaviorEventsPage";
+import PersonnelDashboard from "./PersonnelDashboard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from "recharts";
@@ -49,7 +50,7 @@ export const Frame = (): JSX.Element => {
       case "reconnaissance":
         return { title: "Reconnaissance", subtitle: "Person recognition system" };
       case "persons":
-        return { title: "Dashboard Personnes", subtitle: "Person detection and tracking" };
+        return { title: "Personnel Dashboard", subtitle: "Personnel monitoring and management" };
       case "personnesDashboard":
         return { title: "Dashboard Personnes", subtitle: "Analyse et surveillance des personnes" };
       case "clientAnalysis":
@@ -125,7 +126,7 @@ export const Frame = (): JSX.Element => {
       case "reconnaissance":
         return <ReconnaissancePage />;
       case "persons":
-        return <PersonsDashboard />;
+        return <PersonnelDashboard />;
       case "personnesDashboard":
         return <PersonnesDashboardPage />;
       case "events":
