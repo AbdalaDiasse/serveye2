@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef } from "react";
+import React, { useState, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -31,8 +31,6 @@ import {
   LayoutGrid,
   List,
   Grid3X3,
-  ChevronLeft,
-  ChevronRight
 } from "lucide-react";
 
 // Import personnel images
@@ -55,7 +53,6 @@ export const EventCenterPage = (): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [viewMode, setViewMode] = useState<"list" | "grid">("list");
   const [gridSize, setGridSize] = useState<"small" | "medium" | "large">("medium");
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   // Comprehensive event data from all modules
   const allEvents = [
@@ -361,25 +358,6 @@ export const EventCenterPage = (): JSX.Element => {
     setSearchQuery(suggestion);
   };
 
-  // Handle carousel navigation
-  const scrollLeft = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({
-        left: -300,
-        behavior: 'smooth'
-      });
-    }
-  };
-
-  const scrollRight = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({
-        left: 300,
-        behavior: 'smooth'
-      });
-    }
-  };
-
   return (
     <div className="p-6 bg-gray-50 dark:bg-gray-900 min-h-full">
       {/* Page Header with Statistics */}
@@ -395,31 +373,31 @@ export const EventCenterPage = (): JSX.Element => {
         </div>
 
         {/* Key Metrics - Horizontal Scrollable Row */}
-        <div className="relative mb-6">
-          {/* Left Arrow */}
-          <Button
-            onClick={scrollLeft}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg hover:bg-gray-50 dark:hover:bg-gray-700 p-2 h-10 w-10"
-            data-testid="button-scroll-left"
-          >
-            <ChevronLeft className="w-4 h-4 text-gray-600 dark:text-gray-300" />
-          </Button>
-
-          {/* Right Arrow */}
-          <Button
-            onClick={scrollRight}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg hover:bg-gray-50 dark:hover:bg-gray-700 p-2 h-10 w-10"
-            data-testid="button-scroll-right"
-          >
-            <ChevronRight className="w-4 h-4 text-gray-600 dark:text-gray-300" />
-          </Button>
-
+        <div className="mb-6">
           <div 
-            ref={scrollContainerRef}
-            className="overflow-x-auto overflow-y-hidden pb-4 mx-12" 
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            className="overflow-x-auto overflow-y-hidden pb-4" 
+            style={{ 
+              scrollbarWidth: 'thin',
+              scrollbarColor: '#FF9800 transparent'
+            }}
           >
-            <div className="flex gap-6" style={{ width: 'max-content' }}>
+            <style jsx>{`
+              div::-webkit-scrollbar {
+                height: 8px;
+              }
+              div::-webkit-scrollbar-track {
+                background: rgba(255, 152, 0, 0.1);
+                border-radius: 4px;
+              }
+              div::-webkit-scrollbar-thumb {
+                background: #FF9800;
+                border-radius: 4px;
+              }
+              div::-webkit-scrollbar-thumb:hover {
+                background: #e68900;
+              }
+            `}</style>
+            <div className="flex gap-6" style={{ width: 'max-content', minWidth: '100%' }}>
             {[
               {
                 title: allEvents.filter(e => e.status === "Active").length.toString(),
