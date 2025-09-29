@@ -805,111 +805,86 @@ Exemples:
               gridSize === "small" 
                 ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5" 
                 : gridSize === "medium" 
-                  ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" 
-                  : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+                  ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" 
+                  : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
             }`}>
               {filteredEvents.map((event) => {
                 const IconComponent = event.icon;
+                const moduleColor = moduleStats[event.module as keyof typeof moduleStats]?.color || "#FF9800";
                 return (
                   <Card 
                     key={event.id}
-                    className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:shadow-lg hover:border-[#FF9800]/30 cursor-pointer transition-all duration-200"
+                    className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-lg transition-shadow cursor-pointer relative"
                     onClick={() => handleEventClick(event)}
                     data-testid={`event-card-${event.id}`}
                   >
-                    <CardContent className={`p-3 ${gridSize === "small" ? "p-2" : gridSize === "large" ? "p-4" : "p-3"}`}>
-                      <div className="space-y-3">
-                        {/* Header */}
-                        <div className="flex items-start justify-between">
-                          <div className="flex items-center gap-2">
-                            <Badge 
-                              className={`text-xs text-white px-2 py-1 ${event.severityColor}`}
-                              data-testid={`badge-severity-${event.id}`}
-                            >
-                              {event.severity}
-                            </Badge>
-                            <Badge 
-                              variant="outline"
-                              className="text-xs px-2 py-1"
-                              style={{ borderColor: moduleStats[event.module as keyof typeof moduleStats]?.color, color: moduleStats[event.module as keyof typeof moduleStats]?.color }}
-                              data-testid={`badge-module-${event.id}`}
-                            >
-                              {event.module}
-                            </Badge>
-                          </div>
-                          <Badge 
-                            className={`text-xs text-white px-2 py-1 ${event.statusColor}`}
-                            data-testid={`badge-status-${event.id}`}
-                          >
-                            {event.status}
-                          </Badge>
-                        </div>
-
-                        {/* Image */}
-                        <div className="relative">
-                          <img 
-                            src={event.thumbnail} 
-                            alt="Event"
-                            className={`w-full object-cover rounded-lg ${
-                              gridSize === "small" ? "h-20" : gridSize === "large" ? "h-32" : "h-24"
-                            }`}
+                    <div className="relative">
+                      <img 
+                        src={event.thumbnail} 
+                        alt={event.title}
+                        className={`w-full object-cover ${
+                          gridSize === "small" ? "h-32" : gridSize === "large" ? "h-56" : "h-48"
+                        }`}
+                      />
+                    </div>
+                    
+                    <CardContent className="p-4">
+                      <div className="flex items-start gap-2 mb-2">
+                        <div 
+                          className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-1"
+                          style={{ backgroundColor: `${moduleColor}10` }}
+                        >
+                          <IconComponent 
+                            className="w-4 h-4" 
+                            style={{ color: moduleColor }}
                           />
-                          <div className="absolute top-2 left-2 bg-black/60 backdrop-blur-sm rounded-full p-1">
-                            <IconComponent className="w-3 h-3 text-white" />
-                          </div>
                         </div>
-
-                        {/* Content */}
-                        <div className="space-y-2">
-                          <h4 className={`font-medium text-gray-900 dark:text-gray-100 leading-tight ${
-                            gridSize === "small" ? "text-xs" : "text-sm"
-                          }`}>
+                        <div className="flex-1">
+                          <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-1">
                             {event.title}
                           </h4>
-                          {gridSize !== "small" && (
-                            <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed line-clamp-2">
-                              {event.description}
-                            </p>
-                          )}
-                          
-                          {/* Event Type */}
-                          <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
-                            <span className="truncate">{event.type}</span>
-                          </div>
+                          <p className="text-xs text-gray-600 dark:text-gray-400">
+                            {event.description}
+                          </p>
+                        </div>
+                      </div>
 
-                          {/* Metadata */}
-                          <div className="space-y-1">
-                            <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
-                              <MapPin className="w-3 h-3 flex-shrink-0" />
-                              <span className="truncate">{event.location}</span>
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+                          <Camera className="w-3 h-3" />
+                          <span>{event.camera}</span>
+                        </div>
+                        <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+                          <MapPin className="w-3 h-3" />
+                          <span>{event.location}</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+                            <Clock className="w-3 h-3" />
+                            <span>{event.timestamp}</span>
+                          </div>
+                          
+                          {/* Status and Severity Badges */}
+                          <div className="flex gap-1">
+                            {/* Status Badge */}
+                            <div className={`border-2 text-xs px-2 py-1 rounded-md font-medium bg-transparent ${
+                              event.status === 'Active' ? 'border-red-500 text-red-600 dark:border-red-400 dark:text-red-400' :
+                              event.status === 'Investigating' ? 'border-yellow-500 text-yellow-600 dark:border-yellow-400 dark:text-yellow-400' :
+                              event.status === 'Monitoring' ? 'border-blue-500 text-blue-600 dark:border-blue-400 dark:text-blue-400' :
+                              event.status === 'Resolved' || event.status === 'Completed' ? 'border-green-500 text-green-600 dark:border-green-400 dark:text-green-400' :
+                              'border-gray-500 text-gray-600 dark:border-gray-400 dark:text-gray-300'
+                            }`}>
+                              {event.status}
                             </div>
-                            
-                            {gridSize === "large" && (
-                              <>
-                                <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
-                                  <Camera className="w-3 h-3 flex-shrink-0" />
-                                  <span className="truncate">{event.camera}</span>
-                                </div>
-                                <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
-                                  <Clock className="w-3 h-3 flex-shrink-0" />
-                                  <span className="truncate">{event.timestamp}</span>
-                                </div>
-                              </>
-                            )}
-                            
-                            <div className="flex items-center justify-between text-xs">
-                              <div className="flex items-center gap-1 text-gray-500 dark:text-gray-400">
-                                <Activity className="w-3 h-3" />
-                                <span>{event.confidence}%</span>
-                              </div>
-                              <div className={`px-2 py-1 rounded text-xs ${
-                                event.priority === 'Critical' ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' :
-                                event.priority === 'High' ? 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200' :
-                                event.priority === 'Medium' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' :
-                                'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-                              }`}>
-                                {event.priority}
-                              </div>
+                            {/* Severity Badge */}
+                            <div className={`border-2 ${
+                              event.severity === "Critical" 
+                                ? "border-red-500 text-red-600 dark:text-red-400" 
+                                : event.severity === "Warning"
+                                  ? "border-orange-500 text-orange-600 dark:text-orange-400"
+                                  : "border-blue-500 text-blue-600 dark:text-blue-400"
+                            } bg-transparent text-xs px-2 py-1 rounded-md font-bold uppercase`}>
+                              {event.severity}
                             </div>
                           </div>
                         </div>
