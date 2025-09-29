@@ -247,10 +247,11 @@ export function EventDetailModal({ event, isOpen, onClose }: EventDetailModalPro
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700"
+            className="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
             data-testid="button-close"
+            aria-label="Close modal"
           >
-            <X className="w-5 h-5 text-gray-500" />
+            <X className="w-6 h-6 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white" />
           </button>
         </div>
 
