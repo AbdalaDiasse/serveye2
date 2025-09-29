@@ -372,46 +372,40 @@ export const EventCenterPage = (): JSX.Element => {
           </span>
         </div>
 
-        {/* Module Statistics Cards */}
-        <div className="grid grid-cols-5 gap-4 mb-6">
-          {Object.entries(moduleStats).map(([module, stats]) => {
-            const IconComponent = stats.icon;
-            return (
-              <Card key={module} className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
-                <CardContent className="p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                      <div 
-                        className="w-8 h-8 rounded-lg flex items-center justify-center"
-                        style={{ backgroundColor: stats.color }}
-                      >
-                        <IconComponent className="w-4 h-4 text-white" />
-                      </div>
-                      <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                        {module}
-                      </span>
+        {/* Key Metrics */}
+        <div className="grid grid-cols-7 gap-4 mb-6">
+          {[
+            { label: 'Événements Critiques', value: allEvents.filter(e => e.severity === "Critical").length, icon: AlertTriangle, change: '+12%', period: 'today' },
+            { label: 'Événements Actifs', value: allEvents.filter(e => e.status === "Active").length, icon: Activity, change: '+8%', period: 'today' },
+            { label: 'Modules Safety', value: moduleStats.Safety.total, icon: Shield, change: '+15%', period: 'today' },
+            { label: 'Modules Behavior', value: moduleStats.Behavior.total, icon: Eye, change: '+5%', period: 'today' },
+            { label: 'Modules Personnel', value: moduleStats.Personnel.total, icon: Users, change: '+3%', period: 'today' },
+            { label: 'Modules Vehicles', value: moduleStats.Vehicles.total, icon: Car, change: '+7%', period: 'today' },
+            { label: 'Modules Zones', value: moduleStats["Zone Monitoring"].total, icon: MapPin, change: '+10%', period: 'today' }
+          ].map((metric, index) => (
+            <Card key={index} className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 shadow-sm relative overflow-hidden">
+              {/* Orange left accent border */}
+              <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#FF9800]"></div>
+              <CardContent className="p-4 pl-6">
+                <div className="flex items-start justify-between">
+                  <div className="flex flex-col">
+                    <div className="text-xs text-gray-500 dark:text-gray-400 mb-2">{metric.label}</div>
+                    <div className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">{metric.value}</div>
+                    <div className="flex items-center gap-1">
+                      <svg className={`w-3 h-3 ${metric.change.startsWith('+') ? 'text-green-500' : 'text-red-500'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={metric.change.startsWith('+') ? "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" : "M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"} />
+                      </svg>
+                      <span className={`text-xs font-medium ${metric.change.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>{metric.change}</span>
+                      <span className="text-xs text-gray-500 dark:text-gray-400">{metric.period}</span>
                     </div>
                   </div>
-                  <div className="space-y-1">
-                    <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                      {stats.total}
-                    </div>
-                    <div className="flex gap-3 text-xs">
-                      <span className="text-red-600 dark:text-red-400">
-                        {stats.critical} critiques
-                      </span>
-                      <span className="text-yellow-600 dark:text-yellow-400">
-                        {stats.warning} alertes
-                      </span>
-                    </div>
-                    <div className="text-xs text-gray-500 dark:text-gray-400">
-                      {stats.active} actifs
-                    </div>
+                  <div className="ml-4">
+                    <metric.icon className="w-8 h-8 text-[#FF9800]" />
                   </div>
-                </CardContent>
-              </Card>
-            );
-          })}
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </div>
 
