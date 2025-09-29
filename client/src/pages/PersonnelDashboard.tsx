@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
   BarChart, 
   Bar, 
@@ -19,11 +20,6 @@ import {
   PieChart,
   Pie,
   Cell,
-  RadarChart,
-  PolarGrid,
-  PolarAngleAxis,
-  PolarRadiusAxis,
-  Radar,
   Legend
 } from 'recharts';
 import { 
@@ -48,7 +44,11 @@ import {
   Moon,
   Crown,
   Shield,
-  Activity
+  Activity,
+  Clock,
+  KeyRound,
+  LogIn,
+  LogOut
 } from 'lucide-react';
 import { CameraPerformanceModal } from '@/components/CameraPerformanceModal';
 
@@ -75,69 +75,135 @@ export default function PersonnelDashboard() {
     { label: 'Alerts', value: 19, icon: AlertTriangle, change: '+5%', period: 'today' }
   ];
 
-  // Radar chart data for Personnel Module Performance
-  const radarData = [
-    { subject: 'Face Recognition', currentWeek: 92, previousWeek: 89, fullMark: 100 },
-    { subject: 'Identity Verification', currentWeek: 88, previousWeek: 85, fullMark: 100 },
-    { subject: 'Access Control', currentWeek: 85, previousWeek: 82, fullMark: 100 },
-    { subject: 'Visitor Management', currentWeek: 78, previousWeek: 75, fullMark: 100 },
-    { subject: 'Unauthorized Detection', currentWeek: 95, previousWeek: 90, fullMark: 100 },
-    { subject: 'Entry/Exit Tracking', currentWeek: 82, previousWeek: 80, fullMark: 100 },
-    { subject: 'VIP Recognition', currentWeek: 90, previousWeek: 87, fullMark: 100 },
-    { subject: 'Response Time', currentWeek: 85, previousWeek: 83, fullMark: 100 }
+  // State for active tab
+  const [activeTab, setActiveTab] = useState('attendance');
+
+  // Attendance data
+  const attendanceData = [
+    {
+      id: 1,
+      name: 'Marc Dubois',
+      image: businessmanPhoto,
+      arrivalTime: '08:15',
+      departureTime: '18:32',
+      device: 'Face Recognition',
+      location: 'Entrée principale',
+      status: 'Departed',
+      workingHours: '10h 17m'
+    },
+    {
+      id: 2,
+      name: 'Sophie Bernard',
+      image: elderlyWomanPhoto,
+      arrivalTime: '08:45',
+      departureTime: '-',
+      device: 'Badge + Face',
+      location: 'Réception',
+      status: 'Present',
+      workingHours: '7h 30m'
+    },
+    {
+      id: 3,
+      name: 'Pierre Martin',
+      image: casualManPhoto,
+      arrivalTime: '09:12',
+      departureTime: '17:45',
+      device: 'Face Recognition',
+      location: 'Bureau',
+      status: 'Departed',
+      workingHours: '8h 33m'
+    },
+    {
+      id: 4,
+      name: 'Marie Leroy',
+      image: womanPhoto,
+      arrivalTime: '08:30',
+      departureTime: '-',
+      device: 'FacePad Terminal',
+      location: 'Laboratoire',
+      status: 'Present',
+      workingHours: '7h 45m'
+    },
+    {
+      id: 5,
+      name: 'Jean Dupont',
+      image: businessmanPhoto,
+      arrivalTime: '08:00',
+      departureTime: '17:30',
+      device: 'Badge + Face',
+      location: 'Direction',
+      status: 'Departed',
+      workingHours: '9h 30m'
+    }
   ];
 
-  // Personnel recommendations data
-  const personnelRecommendations = [
+  // Access control data
+  const accessControlData = [
     {
-      title: 'Improve Face Recognition',
-      description: 'Enhance lighting in dark areas',
-      icon: Eye
+      id: 1,
+      name: 'Marc Dubois',
+      image: businessmanPhoto,
+      type: 'Entry',
+      time: '08:15',
+      location: 'Entrée principale',
+      device: 'Caméra A + Face Recognition',
+      status: 'Authorized',
+      confidence: 96
     },
     {
-      title: 'Update Access List',
-      description: 'Refresh employee database',
-      icon: User
+      id: 2,
+      name: 'Sophie Bernard',
+      image: elderlyWomanPhoto,
+      type: 'Entry',
+      time: '08:45',
+      location: 'Réception',
+      device: 'Badge + Face Recognition',
+      status: 'Authorized',
+      confidence: 94
     },
     {
-      title: 'Visitor Management',
-      description: 'Streamline check-in process',
-      icon: UserCheck
+      id: 3,
+      name: 'Unknown Person',
+      image: youngManPhoto,
+      type: 'Entry',
+      time: '09:33',
+      location: 'Zone restreinte',
+      device: 'Caméra C',
+      status: 'Denied',
+      confidence: 45
     },
     {
-      title: 'Security Training',
-      description: 'Update recognition protocols',
-      icon: Shield
+      id: 4,
+      name: 'Pierre Martin',
+      image: casualManPhoto,
+      type: 'Exit',
+      time: '17:45',
+      location: 'Sortie parking',
+      device: 'Face Recognition',
+      status: 'Authorized',
+      confidence: 91
     },
     {
-      title: 'Camera Coverage',
-      description: 'Add cameras to blind spots',
-      icon: Camera
+      id: 5,
+      name: 'Marie Leroy',
+      image: womanPhoto,
+      type: 'Entry',
+      time: '08:30',
+      location: 'Laboratoire',
+      device: 'FacePad Terminal 3',
+      status: 'Authorized',
+      confidence: 98
     },
     {
-      title: 'VIP Protection',
-      description: 'Review VIP access routes',
-      icon: Crown
-    },
-    {
-      title: 'Access Control',
-      description: 'Upgrade entry systems',
-      icon: DoorOpen
-    },
-    {
-      title: 'Alert System',
-      description: 'Fine-tune alert thresholds',
-      icon: Bell
-    },
-    {
-      title: 'Zone Monitoring',
-      description: 'Enhance restricted area tracking',
-      icon: MapPin
-    },
-    {
-      title: 'Incident Response',
-      description: 'Improve security response time',
-      icon: RefreshCw
+      id: 6,
+      name: 'Jean Dupont',
+      image: businessmanPhoto,
+      type: 'Exit',
+      time: '17:30',
+      location: 'Sortie principale',
+      device: 'Badge + Face Recognition',
+      status: 'Authorized',
+      confidence: 95
     }
   ];
 
@@ -361,11 +427,11 @@ export default function PersonnelDashboard() {
 
       {/* Main Content Grid */}
       <div className="grid grid-cols-12 gap-6">
-        {/* Personnel Module Performance */}
+        {/* Access Control and Attendance */}
         <Card className="col-span-7 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle className="text-gray-900 dark:text-gray-100 text-base font-medium">Personnel Module Performance</CardTitle>
+              <CardTitle className="text-gray-900 dark:text-gray-100 text-base font-medium">Access Control & Attendance</CardTitle>
               <div className="flex gap-2">
                 <Button 
                   variant="outline" 
@@ -373,99 +439,136 @@ export default function PersonnelDashboard() {
                   className="text-white h-8 px-4 text-xs hover:opacity-90"
                   style={{backgroundColor: '#3fb5b5', borderColor: '#3fb5b5'}}
                 >
-                  Weekly
+                  Today
                 </Button>
                 <Button 
                   variant="outline" 
                   size="sm" 
                   className="bg-transparent border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 h-8 px-4 text-xs"
                 >
-                  Monthly
+                  Weekly
                 </Button>
               </div>
             </div>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-2 gap-8">
-              <div className="flex flex-col items-center">
-                <div className="radar-card h-80 mb-4 w-full max-w-md">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <RadarChart data={radarData}>
-                      <PolarGrid 
-                        gridType="polygon" 
-                        radialLines={true}
-                        stroke="#9ca3af"
-                        strokeWidth={1}
-                        strokeOpacity={0.5}
-                      />
-                      <PolarAngleAxis 
-                        dataKey="subject" 
-                        tick={{ fill: '#6b7280', fontSize: 11, fontWeight: 500 }}
-                        tickFormatter={(value) => value}
-                      />
-                      <PolarRadiusAxis 
-                        angle={90} 
-                        domain={[0, 100]} 
-                        tick={{ fill: '#9ca3af', fontSize: 10 }}
-                        tickCount={5}
-                        axisLine={false}
-                      />
-                      <Radar
-                        name="Current Week"
-                        dataKey="currentWeek"
-                        stroke="#3fb5b5"
-                        fill="#3fb5b5"
-                        fillOpacity={0.2}
-                        strokeWidth={3}
-                        dot={{ fill: '#3fb5b5', strokeWidth: 3, r: 6 }}
-                      />
-                      <Radar
-                        name="Previous Week"
-                        dataKey="previousWeek"
-                        stroke="#6b7280"
-                        fill="#6b7280"
-                        fillOpacity={0.1}
-                        strokeWidth={2}
-                        dot={{ fill: '#6b7280', strokeWidth: 2, r: 4 }}
-                      />
-                    </RadarChart>
-                  </ResponsiveContainer>
-                </div>
-                <div className="flex items-center justify-center gap-6 text-sm mb-6">
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full" style={{backgroundColor: '#3fb5b5'}}></div>
-                    <span className="text-gray-600 dark:text-gray-300 font-medium">Current Week</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-gray-400 rounded-full"></div>
-                    <span className="text-gray-600 dark:text-gray-300 font-medium">Previous Week</span>
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+              <TabsList className="grid w-full grid-cols-2 mb-6">
+                <TabsTrigger 
+                  value="attendance" 
+                  className="flex items-center gap-2 data-[state=active]:bg-[#3fb5b5] data-[state=active]:text-white"
+                >
+                  <Clock className="w-4 h-4" />
+                  Attendance
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="access-control" 
+                  className="flex items-center gap-2 data-[state=active]:bg-[#3fb5b5] data-[state=active]:text-white"
+                >
+                  <KeyRound className="w-4 h-4" />
+                  Access Control
+                </TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="attendance" className="space-y-4">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100">Employee Attendance Today</h3>
+                  <div className="text-xs text-gray-500 dark:text-gray-400">
+                    {attendanceData.filter(emp => emp.status === 'Present').length} Present • {attendanceData.filter(emp => emp.status === 'Departed').length} Departed
                   </div>
                 </div>
-                <div className="p-4 rounded-xl border" style={{background: 'linear-gradient(to right, #f0fdfa, #e6fffa)', borderColor: '#a7f3d0'}} data-dark-style="background: linear-gradient(to right, rgba(63, 181, 181, 0.1), rgba(63, 181, 181, 0.15)); border-color: rgba(63, 181, 181, 0.3)">
-                  <div className="text-center">
-                    <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">Personnel Score</h4>
-                    <div className="text-3xl font-bold" style={{color: '#3fb5b5'}}>87</div>
-                    <div className="text-xs text-gray-600 dark:text-gray-300 mt-1">out of 100</div>
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-col">
-                <h3 className="text-base font-medium text-gray-900 dark:text-gray-100 mb-4">Personnel Recommendations</h3>
-                <div className="h-96 overflow-y-scroll scrollbar-hide space-y-3 pr-2">
-                  {personnelRecommendations.map((recommendation, index) => (
-                    <div key={index} className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                      <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{backgroundColor: '#3fb5b5'}}>
-                        <recommendation.icon className="w-4 h-4 text-white" />
+                <div className="h-[400px] overflow-y-auto space-y-3 pr-2">
+                  {attendanceData.map((employee) => (
+                    <div key={employee.id} className="flex items-center gap-4 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                      <img 
+                        src={employee.image} 
+                        alt={employee.name}
+                        className="w-12 h-12 object-cover rounded-full"
+                      />
+                      <div className="flex-1">
+                        <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100">{employee.name}</h4>
+                        <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                          {employee.location} • {employee.device}
+                        </div>
                       </div>
-                      <div>
-                        <div className="text-sm font-medium text-gray-900 dark:text-gray-100">{recommendation.title}</div>
-                        <div className="text-xs text-gray-600 dark:text-gray-300">{recommendation.description}</div>
+                      <div className="text-right">
+                        <div className="flex items-center gap-3 text-xs">
+                          <div className="flex items-center gap-1">
+                            <LogIn className="w-3 h-3 text-green-600" />
+                            <span className="text-gray-600 dark:text-gray-300">{employee.arrivalTime}</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <LogOut className="w-3 h-3 text-red-600" />
+                            <span className="text-gray-600 dark:text-gray-300">{employee.departureTime}</span>
+                          </div>
+                        </div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                          {employee.workingHours}
+                        </div>
+                        <div className={`inline-block mt-1 px-2 py-1 rounded-full text-xs font-medium ${
+                          employee.status === 'Present' 
+                            ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' 
+                            : 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200'
+                        }`}>
+                          {employee.status}
+                        </div>
                       </div>
                     </div>
                   ))}
                 </div>
-              </div>
-            </div>
+              </TabsContent>
+
+              <TabsContent value="access-control" className="space-y-4">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100">Access Control Records Today</h3>
+                  <div className="text-xs text-gray-500 dark:text-gray-400">
+                    {accessControlData.filter(record => record.status === 'Authorized').length} Authorized • {accessControlData.filter(record => record.status === 'Denied').length} Denied
+                  </div>
+                </div>
+                <div className="h-[400px] overflow-y-auto space-y-3 pr-2">
+                  {accessControlData.map((record) => (
+                    <div key={record.id} className="flex items-center gap-4 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                      <img 
+                        src={record.image} 
+                        alt={record.name}
+                        className="w-12 h-12 object-cover rounded-full"
+                      />
+                      <div className="flex-1">
+                        <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100">{record.name}</h4>
+                        <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                          {record.location} • {record.device}
+                        </div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">
+                          {record.time}
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="flex items-center gap-2 mb-2">
+                          <div className={`flex items-center gap-1 px-2 py-1 rounded text-xs ${
+                            record.type === 'Entry' 
+                              ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' 
+                              : 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200'
+                          }`}>
+                            {record.type === 'Entry' ? <LogIn className="w-3 h-3" /> : <LogOut className="w-3 h-3" />}
+                            {record.type}
+                          </div>
+                        </div>
+                        <div className={`inline-block mb-1 px-2 py-1 rounded-full text-xs font-medium ${
+                          record.status === 'Authorized' 
+                            ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' 
+                            : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+                        }`}>
+                          {record.status}
+                        </div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">
+                          Confidence: {record.confidence}%
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </TabsContent>
+            </Tabs>
           </CardContent>
         </Card>
 
