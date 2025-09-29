@@ -380,8 +380,8 @@ export const EventCenterPage = (): JSX.Element => {
             { label: 'Modules Safety', value: moduleStats.Safety.total, icon: Shield, change: '+15%', period: 'today' },
             { label: 'Modules Behavior', value: moduleStats.Behavior.total, icon: Eye, change: '+5%', period: 'today' },
             { label: 'Modules Personnel', value: moduleStats.Personnel.total, icon: Users, change: '+3%', period: 'today' },
-            { label: 'Modules Vehicles', value: moduleStats.Vehicles.total, icon: Car, change: '+7%', period: 'today' },
-            { label: 'Modules Zones', value: moduleStats["Zone Monitoring"].total, icon: MapPin, change: '+10%', period: 'today' }
+            { label: 'Modules Vehicles', value: moduleStats.Vehicle.total, icon: Car, change: '+7%', period: 'today' },
+            { label: 'Modules Zones', value: moduleStats.Zone.total, icon: MapPin, change: '+10%', period: 'today' }
           ].map((metric, index) => (
             <Card key={index} className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 shadow-sm relative overflow-hidden">
               {/* Orange left accent border */}
