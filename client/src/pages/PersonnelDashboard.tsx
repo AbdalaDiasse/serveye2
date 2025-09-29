@@ -717,6 +717,7 @@ export default function PersonnelDashboard() {
           </CardContent>
         </Card>
 
+        {/* Bottom Row: Detection Summary, Cameras, and Site - All on same row */}
         {/* Detection Summary */}
         <Card className="col-span-4 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
           <CardHeader>
