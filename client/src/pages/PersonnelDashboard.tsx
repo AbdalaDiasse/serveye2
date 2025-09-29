@@ -593,61 +593,8 @@ export default function PersonnelDashboard() {
           </CardContent>
         </Card>
 
-        {/* Personnel Detection Trends */}
-        <Card className="col-span-8 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <CardTitle className="text-gray-900 dark:text-gray-100 text-lg font-semibold flex items-center gap-2">
-                📈 Personnel Detection Trends
-              </CardTitle>
-              <Select defaultValue={selectedPeriod} onValueChange={setSelectedPeriod}>
-                <SelectTrigger className="w-28 h-8 text-xs border-gray-300 dark:border-gray-600">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="today" className="text-xs">Today</SelectItem>
-                  <SelectItem value="week" className="text-xs">Week</SelectItem>
-                  <SelectItem value="month" className="text-xs">Month</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="h-80">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={detectionTrendsData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" strokeOpacity={0.5} />
-                  <XAxis 
-                    dataKey="time" 
-                    tick={{ fontSize: 11, fill: '#6b7280' }}
-                  />
-                  <YAxis 
-                    tick={{ fontSize: 11, fill: '#6b7280' }}
-                    domain={[0, 350]}
-                  />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: '#f9fafb',
-                      border: '1px solid #e5e7eb',
-                      borderRadius: '8px',
-                      fontSize: '12px'
-                    }}
-                  />
-                  <Legend />
-                  <Line type="monotone" dataKey="employees" stroke="#3fb5b5" strokeWidth={3} dot={{ fill: '#3fb5b5', r: 4 }} />
-                  <Line type="monotone" dataKey="visitors" stroke="#5eced1" strokeWidth={2} dot={{ fill: '#5eced1', r: 3 }} />
-                  <Line type="monotone" dataKey="vip" stroke="#7dd3d8" strokeWidth={2} dot={{ fill: '#7dd3d8', r: 3 }} />
-                  <Line type="monotone" dataKey="unauthorized" stroke="#f44336" strokeWidth={2} dot={{ fill: '#f44336', r: 3 }} />
-                  <Line type="monotone" dataKey="unknown" stroke="#9ecccf" strokeWidth={2} dot={{ fill: '#9ecccf', r: 3 }} />
-                  <Line type="monotone" dataKey="alerts" stroke="#ff9800" strokeWidth={2} dot={{ fill: '#ff9800', r: 3 }} />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Detection Distribution Pie Chart */}
-        <Card className="col-span-6 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+        {/* Detection Distribution Pie Chart - MOVED TO SAME ROW */}
+        <Card className="col-span-4 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
           <CardHeader>
             <CardTitle className="text-gray-900 dark:text-gray-100 text-lg font-semibold flex items-center gap-2">
               🥧 Detection Distribution
@@ -716,6 +663,60 @@ export default function PersonnelDashboard() {
             </div>
           </CardContent>
         </Card>
+
+        {/* Personnel Detection Trends */}
+        <Card className="col-span-4 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-gray-900 dark:text-gray-100 text-lg font-semibold flex items-center gap-2">
+                📈 Personnel Detection Trends
+              </CardTitle>
+              <Select defaultValue={selectedPeriod} onValueChange={setSelectedPeriod}>
+                <SelectTrigger className="w-28 h-8 text-xs border-gray-300 dark:border-gray-600">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="today" className="text-xs">Today</SelectItem>
+                  <SelectItem value="week" className="text-xs">Week</SelectItem>
+                  <SelectItem value="month" className="text-xs">Month</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="h-80">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={detectionTrendsData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" strokeOpacity={0.5} />
+                  <XAxis 
+                    dataKey="time" 
+                    tick={{ fontSize: 11, fill: '#6b7280' }}
+                  />
+                  <YAxis 
+                    tick={{ fontSize: 11, fill: '#6b7280' }}
+                    domain={[0, 350]}
+                  />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: '#f9fafb',
+                      border: '1px solid #e5e7eb',
+                      borderRadius: '8px',
+                      fontSize: '12px'
+                    }}
+                  />
+                  <Legend />
+                  <Line type="monotone" dataKey="employees" stroke="#3fb5b5" strokeWidth={3} dot={{ fill: '#3fb5b5', r: 4 }} />
+                  <Line type="monotone" dataKey="visitors" stroke="#5eced1" strokeWidth={2} dot={{ fill: '#5eced1', r: 3 }} />
+                  <Line type="monotone" dataKey="vip" stroke="#7dd3d8" strokeWidth={2} dot={{ fill: '#7dd3d8', r: 3 }} />
+                  <Line type="monotone" dataKey="unauthorized" stroke="#f44336" strokeWidth={2} dot={{ fill: '#f44336', r: 3 }} />
+                  <Line type="monotone" dataKey="unknown" stroke="#9ecccf" strokeWidth={2} dot={{ fill: '#9ecccf', r: 3 }} />
+                  <Line type="monotone" dataKey="alerts" stroke="#ff9800" strokeWidth={2} dot={{ fill: '#ff9800', r: 3 }} />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </CardContent>
+        </Card>
+
 
         {/* Bottom Row: Detection Summary, Cameras, and Site - All on same row */}
         {/* Detection Summary */}
