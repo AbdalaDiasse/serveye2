@@ -23,7 +23,9 @@ import {
   Activity,
   TrendingUp,
   Eye,
-  Clock
+  Clock,
+  CreditCard,
+  DoorOpen
 } from "lucide-react";
 
 // Import personnel images
@@ -239,115 +241,40 @@ export const AccessControlPage = (): JSX.Element => {
           </span>
         </div>
 
-        {/* Statistics Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-6">
-          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                    Total Accès
-                  </p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                    {accessStats.totalAccess}
-                  </p>
+        {/* Key Metrics */}
+        <div className="grid grid-cols-7 gap-4 mb-6">
+          {[
+            { label: 'Accès Autorisés', value: accessStats.granted, icon: LockOpen, change: '+5%', period: 'today' },
+            { label: 'Accès Refusés', value: accessStats.denied, icon: Lock, change: '+8%', period: 'today' },
+            { label: 'Violations', value: accessStats.violations, icon: AlertTriangle, change: '+15%', period: 'today' },
+            { label: 'Accès H. Ouverture', value: 12, icon: Clock, change: '+20%', period: 'today' },
+            { label: 'Intrusions', value: 3, icon: Shield, change: '+50%', period: 'today' },
+            { label: 'Problèmes Badge', value: 7, icon: CreditCard, change: '+12%', period: 'today' },
+            { label: 'Sorties Urgence', value: accessStats.emergency, icon: DoorOpen, change: '+25%', period: 'today' }
+          ].map((metric, index) => (
+            <Card key={index} className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 shadow-sm relative overflow-hidden">
+              {/* Teal left accent border */}
+              <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#3fb5b5]"></div>
+              <CardContent className="p-4 pl-6">
+                <div className="flex items-start justify-between">
+                  <div className="flex flex-col">
+                    <div className="text-xs text-gray-500 dark:text-gray-400 mb-2">{metric.label}</div>
+                    <div className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">{metric.value}</div>
+                    <div className="flex items-center gap-1">
+                      <svg className={`w-3 h-3 ${metric.change.startsWith('+') ? 'text-red-500' : 'text-green-500'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={metric.change.startsWith('+') ? "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" : "M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"} />
+                      </svg>
+                      <span className={`text-xs font-medium ${metric.change.startsWith('+') ? 'text-red-500' : 'text-green-500'}`}>{metric.change}</span>
+                      <span className="text-xs text-gray-500 dark:text-gray-400">{metric.period}</span>
+                    </div>
+                  </div>
+                  <div className="ml-4">
+                    <metric.icon className="w-8 h-8 text-[#3fb5b5]" />
+                  </div>
                 </div>
-                <div className="w-8 h-8 bg-[#3fb5b5]/10 rounded-lg flex items-center justify-center">
-                  <Activity className="w-4 h-4 text-[#3fb5b5]" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                    Autorisés
-                  </p>
-                  <p className="text-2xl font-bold text-green-600 dark:text-green-400">
-                    {accessStats.granted}
-                  </p>
-                </div>
-                <div className="w-8 h-8 bg-green-100 dark:bg-green-900/20 rounded-lg flex items-center justify-center">
-                  <LockOpen className="w-4 h-4 text-green-600 dark:text-green-400" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                    Refusés
-                  </p>
-                  <p className="text-2xl font-bold text-red-600 dark:text-red-400">
-                    {accessStats.denied}
-                  </p>
-                </div>
-                <div className="w-8 h-8 bg-red-100 dark:bg-red-900/20 rounded-lg flex items-center justify-center">
-                  <Lock className="w-4 h-4 text-red-600 dark:text-red-400" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                    Violations
-                  </p>
-                  <p className="text-2xl font-bold text-orange-600 dark:text-orange-400">
-                    {accessStats.violations}
-                  </p>
-                </div>
-                <div className="w-8 h-8 bg-orange-100 dark:bg-orange-900/20 rounded-lg flex items-center justify-center">
-                  <AlertTriangle className="w-4 h-4 text-orange-600 dark:text-orange-400" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                    Urgences
-                  </p>
-                  <p className="text-2xl font-bold text-purple-600 dark:text-purple-400">
-                    {accessStats.emergency}
-                  </p>
-                </div>
-                <div className="w-8 h-8 bg-purple-100 dark:bg-purple-900/20 rounded-lg flex items-center justify-center">
-                  <AlertTriangle className="w-4 h-4 text-purple-600 dark:text-purple-400" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                    Taux Succès
-                  </p>
-                  <p className="text-2xl font-bold text-[#3fb5b5]">
-                    {accessStats.successRate}%
-                  </p>
-                </div>
-                <div className="w-8 h-8 bg-[#3fb5b5]/10 rounded-lg flex items-center justify-center">
-                  <TrendingUp className="w-4 h-4 text-[#3fb5b5]" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </div>
 

@@ -20,7 +20,8 @@ import {
   Activity,
   TrendingUp,
   AlertTriangle,
-  Eye
+  Eye,
+  Coffee
 } from "lucide-react";
 
 // Import personnel images
@@ -213,115 +214,40 @@ export const AttendancePage = (): JSX.Element => {
           </span>
         </div>
 
-        {/* Statistics Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-6">
-          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                    Employés Total
-                  </p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                    {attendanceStats.totalEmployees}
-                  </p>
+        {/* Key Metrics */}
+        <div className="grid grid-cols-7 gap-4 mb-6">
+          {[
+            { label: 'Présents', value: attendanceStats.present, icon: UserCheck, change: '+5%', period: 'today' },
+            { label: 'Absents', value: attendanceStats.absent, icon: UserX, change: '+2%', period: 'today' },
+            { label: 'Retards', value: attendanceStats.late, icon: AlertTriangle, change: '+3%', period: 'today' },
+            { label: 'En Pause', value: attendanceStats.onBreak, icon: Clock, change: '-2%', period: 'today' },
+            { label: 'Pauses Dépassées', value: 5, icon: Coffee, change: '+1%', period: 'today' },
+            { label: 'Heures Sup.', value: 18, icon: TrendingUp, change: '+8%', period: 'today' },
+            { label: 'Demandes Congés', value: 14, icon: Calendar, change: '+4%', period: 'today' }
+          ].map((metric, index) => (
+            <Card key={index} className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 shadow-sm relative overflow-hidden">
+              {/* Teal left accent border */}
+              <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#3fb5b5]"></div>
+              <CardContent className="p-4 pl-6">
+                <div className="flex items-start justify-between">
+                  <div className="flex flex-col">
+                    <div className="text-xs text-gray-500 dark:text-gray-400 mb-2">{metric.label}</div>
+                    <div className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">{metric.value}</div>
+                    <div className="flex items-center gap-1">
+                      <svg className={`w-3 h-3 ${metric.change.startsWith('+') ? 'text-green-500' : 'text-red-500'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={metric.change.startsWith('+') ? "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" : "M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"} />
+                      </svg>
+                      <span className={`text-xs font-medium ${metric.change.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>{metric.change}</span>
+                      <span className="text-xs text-gray-500 dark:text-gray-400">{metric.period}</span>
+                    </div>
+                  </div>
+                  <div className="ml-4">
+                    <metric.icon className="w-8 h-8 text-[#3fb5b5]" />
+                  </div>
                 </div>
-                <div className="w-8 h-8 bg-[#3fb5b5]/10 rounded-lg flex items-center justify-center">
-                  <Users className="w-4 h-4 text-[#3fb5b5]" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                    Présents
-                  </p>
-                  <p className="text-2xl font-bold text-green-600 dark:text-green-400">
-                    {attendanceStats.present}
-                  </p>
-                </div>
-                <div className="w-8 h-8 bg-green-100 dark:bg-green-900/20 rounded-lg flex items-center justify-center">
-                  <UserCheck className="w-4 h-4 text-green-600 dark:text-green-400" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                    Absents
-                  </p>
-                  <p className="text-2xl font-bold text-red-600 dark:text-red-400">
-                    {attendanceStats.absent}
-                  </p>
-                </div>
-                <div className="w-8 h-8 bg-red-100 dark:bg-red-900/20 rounded-lg flex items-center justify-center">
-                  <UserX className="w-4 h-4 text-red-600 dark:text-red-400" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                    Retards
-                  </p>
-                  <p className="text-2xl font-bold text-yellow-600 dark:text-yellow-400">
-                    {attendanceStats.late}
-                  </p>
-                </div>
-                <div className="w-8 h-8 bg-yellow-100 dark:bg-yellow-900/20 rounded-lg flex items-center justify-center">
-                  <AlertTriangle className="w-4 h-4 text-yellow-600 dark:text-yellow-400" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                    En Pause
-                  </p>
-                  <p className="text-2xl font-bold text-blue-600 dark:text-blue-400">
-                    {attendanceStats.onBreak}
-                  </p>
-                </div>
-                <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/20 rounded-lg flex items-center justify-center">
-                  <Clock className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                    Taux Présence
-                  </p>
-                  <p className="text-2xl font-bold text-[#3fb5b5]">
-                    {attendanceStats.attendanceRate}%
-                  </p>
-                </div>
-                <div className="w-8 h-8 bg-[#3fb5b5]/10 rounded-lg flex items-center justify-center">
-                  <TrendingUp className="w-4 h-4 text-[#3fb5b5]" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </div>
 
