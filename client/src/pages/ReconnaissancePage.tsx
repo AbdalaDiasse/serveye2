@@ -579,139 +579,92 @@ Exemples:
         </CardContent>
       </Card>
 
-      {/* Results Section */}
-      <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
-            <Eye className="w-5 h-5 text-[#3fb5b5]" />
-            Reconnaissance faciale ({filteredRecognitions.length} résultats)
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          {filteredRecognitions.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {filteredRecognitions.map((recognition) => (
-                <Card
-                  key={recognition.id}
-                  className="cursor-pointer hover:shadow-md transition-all duration-200 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600"
-                  onClick={() => handleRecognitionClick(recognition)}
-                  data-testid={`card-recognition-${recognition.id}`}
-                >
-                  <CardContent className="p-4">
-                    {/* Header with severity indicator */}
-                    <div className="flex items-center justify-between mb-3">
-                      <div className={`px-2 py-1 rounded-full text-xs font-medium ${
-                        recognition.severity === "SUCCESS" ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200" :
-                        recognition.severity === "CRITIQUE" ? "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200" :
-                        recognition.severity === "WARNING" ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200" :
-                        "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
-                      }`}>
-                        {recognition.severity}
-                      </div>
-                      <div className="text-xs text-gray-500 dark:text-gray-400">
-                        #{recognition.id}
-                      </div>
-                    </div>
+      {/* Recognition Grid Section */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+            Reconnaissance Faciale
+          </h3>
+          <div className="text-sm text-[#3fb5b5] font-medium">
+            {filteredRecognitions.length} reconnaissances
+          </div>
+        </div>
 
-                    {/* Image */}
-                    <div className="relative mb-3">
-                      <img
-                        src={recognition.thumbnail}
-                        alt={recognition.title}
-                        className="w-full h-32 object-cover rounded-lg"
-                      />
-                      {/* Confidence overlay */}
-                      <div className="absolute top-2 left-2 bg-black/75 text-white px-2 py-1 rounded text-xs font-medium">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          {filteredRecognitions.map((recognition) => (
+            <Card 
+              key={recognition.id} 
+              className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-lg transition-shadow cursor-pointer relative" 
+              data-testid={`card-recognition-${recognition.id}`}
+              onClick={() => handleRecognitionClick(recognition)}
+            >
+              <div className="relative">
+                <img 
+                  src={recognition.thumbnail} 
+                  alt={recognition.title}
+                  className="w-full h-48 object-cover"
+                />
+              </div>
+              
+              <CardContent className="p-4">
+                <div className="flex items-start gap-2 mb-2">
+                  <div className="w-8 h-8 bg-[#3fb5b5]/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                    <recognition.icon className="w-4 h-4 text-[#3fb5b5]" />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-1" data-testid={`text-title-${recognition.id}`}>
+                      {recognition.title}
+                    </h4>
+                    <p className="text-xs text-gray-600 dark:text-gray-400" data-testid={`text-description-${recognition.id}`}>
+                      {recognition.description}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+                    <Camera className="w-3 h-3" />
+                    <span>{recognition.camera}</span>
+                  </div>
+                  <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+                    <MapPin className="w-3 h-3" />
+                    <span data-testid={`text-zone-${recognition.id}`}>{recognition.zone}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+                      <Calendar className="w-3 h-3" />
+                      <span data-testid={`text-timestamp-${recognition.id}`}>{recognition.timestamp}</span>
+                    </div>
+                    {/* Status and Confidence Badges */}
+                    <div className="flex gap-1">
+                      {/* Status Badge */}
+                      <div className={`border-2 text-xs px-2 py-1 rounded-md font-medium bg-transparent ${
+                        (recognition.statusColor === 'bg-green-500' || recognition.status === 'Confirmed') ? 'border-green-500 text-green-600 dark:border-green-400 dark:text-green-400' :
+                        (recognition.statusColor === 'bg-yellow-500' || recognition.status === 'Pending') ? 'border-yellow-500 text-yellow-600 dark:border-yellow-400 dark:text-yellow-400' :
+                        (recognition.statusColor === 'bg-blue-500' || recognition.status === 'New') ? 'border-blue-500 text-blue-600 dark:border-blue-400 dark:text-blue-400' :
+                        (recognition.statusColor === 'bg-red-500' || recognition.status === 'Critical') ? 'border-red-500 text-red-600 dark:border-red-400 dark:text-red-400' :
+                        'border-green-500 text-green-600 dark:border-green-400 dark:text-green-400'
+                      }`}>
+                        {recognition.status}
+                      </div>
+                      {/* Confidence Badge */}
+                      <div className={`border-2 ${
+                        recognition.confidence >= 80 
+                          ? "border-green-500 text-green-600 dark:text-green-400" 
+                          : recognition.confidence >= 50
+                          ? "border-yellow-500 text-yellow-600 dark:text-yellow-400"
+                          : "border-red-500 text-red-600 dark:text-red-400"
+                      } bg-transparent text-xs px-2 py-1 rounded-md font-bold`}>
                         {recognition.confidence}%
                       </div>
-                      {/* Camera overlay */}
-                      <div className="absolute top-2 right-2 bg-[#3fb5b5] text-white px-2 py-1 rounded text-xs">
-                        <Camera className="w-3 h-3 inline mr-1" />
-                        {recognition.camera.replace("Caméra ", "")}
-                      </div>
                     </div>
-
-                    {/* Title and info */}
-                    <div className="space-y-2">
-                      <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-sm leading-tight" data-testid={`text-title-${recognition.id}`}>
-                        {recognition.title}
-                      </h3>
-                      
-                      <p className="text-xs text-gray-600 dark:text-gray-400" data-testid={`text-description-${recognition.id}`}>
-                        {recognition.description}
-                      </p>
-                      
-                      <div className="flex items-center text-xs text-gray-500 dark:text-gray-400">
-                        <MapPin className="w-3 h-3 mr-1" />
-                        <span data-testid={`text-zone-${recognition.id}`}>{recognition.zone}</span>
-                      </div>
-                      
-                      <div className="text-xs text-gray-500 dark:text-gray-400" data-testid={`text-timestamp-${recognition.id}`}>
-                        {recognition.timestamp}
-                      </div>
-
-                      {/* Recognition Status */}
-                      <div className="flex items-center justify-between">
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                          recognition.recognitionStatus === "Reconnu" ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200" :
-                          recognition.recognitionStatus === "Suspect" ? "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200" :
-                          "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200"
-                        }`}>
-                          {recognition.recognitionStatus}
-                        </span>
-                        <span className="text-xs text-gray-500 dark:text-gray-400">
-                          {recognition.gender}, {recognition.age} ans
-                        </span>
-                      </div>
-
-                      {/* Confidence bar */}
-                      <div className="space-y-1">
-                        <div className="flex justify-between text-xs">
-                          <span className="text-gray-600 dark:text-gray-400">Confiance</span>
-                          <span className={`font-medium ${
-                            recognition.confidence >= 80 ? "text-green-600" :
-                            recognition.confidence >= 50 ? "text-yellow-600" :
-                            "text-red-600"
-                          }`}>
-                            {recognition.confidence}%
-                          </span>
-                        </div>
-                        <div className="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-1.5">
-                          <div
-                            className={`h-1.5 rounded-full transition-all duration-300 ${
-                              recognition.confidence >= 80 ? "bg-green-500" :
-                              recognition.confidence >= 50 ? "bg-yellow-500" :
-                              "bg-red-500"
-                            }`}
-                            style={{ width: `${recognition.confidence}%` }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-12">
-              <Eye className="w-12 h-12 text-gray-400 dark:text-gray-600 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">
-                Aucune reconnaissance trouvée
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-4">
-                Aucun résultat ne correspond à vos critères de recherche.
-              </p>
-              <Button 
-                onClick={resetFilters}
-                variant="outline"
-                data-testid="button-reset-empty-state"
-              >
-                Réinitialiser les filtres
-              </Button>
-            </div>
-          )}
-        </CardContent>
-      </Card>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
 
       {/* Recognition Detail Modal */}
       <EventDetailModal
