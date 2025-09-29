@@ -373,8 +373,8 @@ export const EventCenterPage = (): JSX.Element => {
         </div>
 
         {/* Key Metrics - Horizontal Scrollable Row */}
-        <div className="overflow-x-auto pb-4 mb-6">
-          <div className="flex gap-6 min-w-max">
+        <div className="overflow-x-auto overflow-y-hidden pb-4 mb-6" style={{ scrollbarWidth: 'thin' }}>
+          <div className="flex gap-6" style={{ width: 'max-content' }}>
             {[
               {
                 title: allEvents.filter(e => e.status === "Active").length.toString(),
@@ -426,7 +426,7 @@ export const EventCenterPage = (): JSX.Element => {
                 icon: <MapPin className="w-7 h-8 text-white" />
               }
             ].map((metric, index) => (
-              <Card key={index} className="relative overflow-hidden border-0 shadow-lg flex-shrink-0 w-64">
+              <Card key={index} className="relative overflow-hidden border-0 shadow-lg flex-shrink-0" style={{ minWidth: '280px', width: '280px' }}>
                 <div className={`${metric.gradient} h-full`}>
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between text-white">
