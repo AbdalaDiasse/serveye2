@@ -52,7 +52,7 @@ export const Frame = (): JSX.Element => {
       case "persons":
         return { title: "Personnel Dashboard", subtitle: "Personnel monitoring and management" };
       case "personnesDashboard":
-        return { title: "Dashboard Personnes", subtitle: "Analyse et surveillance des personnes" };
+        return { title: "Personnel Dashboard", subtitle: "Personnel monitoring and management" };
       case "clientAnalysis":
         return { title: "Analyse Client", subtitle: "Client analysis and insights" };
       case "events":
@@ -128,7 +128,7 @@ export const Frame = (): JSX.Element => {
       case "persons":
         return <PersonnelDashboard />;
       case "personnesDashboard":
-        return <PersonnesDashboardPage />;
+        return <PersonnelDashboard />;
       case "events":
         return <EventsPage />;
       case "vehicles":
