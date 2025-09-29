@@ -372,107 +372,82 @@ export const EventCenterPage = (): JSX.Element => {
           </span>
         </div>
 
-        {/* Key Metrics */}
-        <div className="grid grid-cols-3 gap-6 mb-4">
-          {[
-            {
-              title: allEvents.filter(e => e.status === "Active").length.toString(),
-              subtitle: "Événements Actifs",
-              badge: "Live",
-              gradient: "bg-gradient-to-r from-blue-500 to-blue-700",
-              icon: <Activity className="w-7 h-8 text-white" />
-            },
-            {
-              title: allEvents.filter(e => e.severity === "Critical").length.toString(),
-              subtitle: "Événements Critiques",
-              badge: "Urgent",
-              gradient: "bg-gradient-to-r from-orange-500 to-red-500",
-              icon: <AlertTriangle className="w-7 h-8 text-white" />
-            },
-            {
-              title: moduleStats.Safety.total.toString(),
-              subtitle: "Modules Safety",
-              badge: "Today",
-              gradient: "bg-gradient-to-r from-red-500 to-red-700",
-              icon: <Shield className="w-7 h-8 text-white" />
-            }
-          ].map((metric, index) => (
-            <Card key={index} className="relative overflow-hidden border-0 shadow-lg">
-              <div className={`${metric.gradient} h-full`}>
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between text-white">
-                    <div className="flex flex-col">
-                      <div className="text-3xl font-bold mb-1">{metric.title}</div>
-                      <div className="text-sm opacity-90 mb-2">{metric.subtitle}</div>
-                      <div className="inline-block">
-                        <span className="bg-white/20 text-white text-xs px-2 py-1 rounded-full font-medium">
-                          {metric.badge}
-                        </span>
+        {/* Key Metrics - Horizontal Scrollable Row */}
+        <div className="overflow-x-auto pb-4 mb-6">
+          <div className="flex gap-6 min-w-max">
+            {[
+              {
+                title: allEvents.filter(e => e.status === "Active").length.toString(),
+                subtitle: "Événements Actifs",
+                badge: "Live",
+                gradient: "bg-gradient-to-r from-blue-500 to-blue-700",
+                icon: <Activity className="w-7 h-8 text-white" />
+              },
+              {
+                title: allEvents.filter(e => e.severity === "Critical").length.toString(),
+                subtitle: "Événements Critiques",
+                badge: "Urgent",
+                gradient: "bg-gradient-to-r from-orange-500 to-red-500",
+                icon: <AlertTriangle className="w-7 h-8 text-white" />
+              },
+              {
+                title: moduleStats.Safety.total.toString(),
+                subtitle: "Modules Safety",
+                badge: "Today",
+                gradient: "bg-gradient-to-r from-red-500 to-red-700",
+                icon: <Shield className="w-7 h-8 text-white" />
+              },
+              {
+                title: moduleStats.Vehicle.total.toString(),
+                subtitle: "Modules Voiture",
+                badge: "Active",
+                gradient: "bg-gradient-to-r from-emerald-500 to-green-600",
+                icon: <Car className="w-7 h-8 text-white" />
+              },
+              {
+                title: moduleStats.Behavior.total.toString(),
+                subtitle: "Modules Behavior",
+                badge: "Active",
+                gradient: "bg-gradient-to-r from-violet-500 to-purple-600",
+                icon: <Eye className="w-7 h-8 text-white" />
+              },
+              {
+                title: moduleStats.Personnel.total.toString(),
+                subtitle: "Smart Space",
+                badge: "Active",
+                gradient: "bg-gradient-to-r from-cyan-500 to-blue-500",
+                icon: <Users className="w-7 h-8 text-white" />
+              },
+              {
+                title: moduleStats.Zone.total.toString(),
+                subtitle: "Modules Zone",
+                badge: "Active",
+                gradient: "bg-gradient-to-r from-amber-500 to-orange-600",
+                icon: <MapPin className="w-7 h-8 text-white" />
+              }
+            ].map((metric, index) => (
+              <Card key={index} className="relative overflow-hidden border-0 shadow-lg flex-shrink-0 w-64">
+                <div className={`${metric.gradient} h-full`}>
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between text-white">
+                      <div className="flex flex-col">
+                        <div className="text-3xl font-bold mb-1">{metric.title}</div>
+                        <div className="text-sm opacity-90 mb-2">{metric.subtitle}</div>
+                        <div className="inline-block">
+                          <span className="bg-white/20 text-white text-xs px-2 py-1 rounded-full font-medium">
+                            {metric.badge}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="ml-4">
+                        {metric.icon}
                       </div>
                     </div>
-                    <div className="ml-4">
-                      {metric.icon}
-                    </div>
-                  </div>
-                </CardContent>
-              </div>
-            </Card>
-          ))}
-        </div>
-
-        {/* Module Metrics */}
-        <div className="grid grid-cols-4 gap-6 mb-6">
-          {[
-            {
-              title: moduleStats.Vehicle.total.toString(),
-              subtitle: "Modules Voiture",
-              badge: "Active",
-              gradient: "bg-gradient-to-r from-emerald-500 to-green-600",
-              icon: <Car className="w-7 h-8 text-white" />
-            },
-            {
-              title: moduleStats.Behavior.total.toString(),
-              subtitle: "Modules Behavior",
-              badge: "Active",
-              gradient: "bg-gradient-to-r from-violet-500 to-purple-600",
-              icon: <Eye className="w-7 h-8 text-white" />
-            },
-            {
-              title: moduleStats.Personnel.total.toString(),
-              subtitle: "Smart Space",
-              badge: "Active",
-              gradient: "bg-gradient-to-r from-cyan-500 to-blue-500",
-              icon: <Users className="w-7 h-8 text-white" />
-            },
-            {
-              title: moduleStats.Zone.total.toString(),
-              subtitle: "Modules Zone",
-              badge: "Active",
-              gradient: "bg-gradient-to-r from-amber-500 to-orange-600",
-              icon: <MapPin className="w-7 h-8 text-white" />
-            }
-          ].map((metric, index) => (
-            <Card key={index} className="relative overflow-hidden border-0 shadow-lg">
-              <div className={`${metric.gradient} h-full`}>
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between text-white">
-                    <div className="flex flex-col">
-                      <div className="text-3xl font-bold mb-1">{metric.title}</div>
-                      <div className="text-sm opacity-90 mb-2">{metric.subtitle}</div>
-                      <div className="inline-block">
-                        <span className="bg-white/20 text-white text-xs px-2 py-1 rounded-full font-medium">
-                          {metric.badge}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="ml-4">
-                      {metric.icon}
-                    </div>
-                  </div>
-                </CardContent>
-              </div>
-            </Card>
-          ))}
+                  </CardContent>
+                </div>
+              </Card>
+            ))}
+          </div>
         </div>
       </div>
 
