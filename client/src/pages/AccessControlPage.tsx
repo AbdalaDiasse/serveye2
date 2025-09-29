@@ -42,6 +42,7 @@ export const AccessControlPage = (): JSX.Element => {
   const [selectedSite, setSelectedSite] = useState("all");
   const [selectedZone, setSelectedZone] = useState("all");
   const [selectedStatus, setSelectedStatus] = useState("all");
+  const [selectedName, setSelectedName] = useState("");
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
   const [selectedEventDetail, setSelectedEventDetail] = useState<any>(null);
@@ -69,6 +70,7 @@ export const AccessControlPage = (): JSX.Element => {
     setSelectedSite("all");
     setSelectedZone("all");
     setSelectedStatus("all");
+    setSelectedName("");
     setDateFrom("");
     setDateTo("");
     setSearchQuery("");
@@ -214,6 +216,10 @@ export const AccessControlPage = (): JSX.Element => {
         event.department.toLowerCase().includes(searchQuery.toLowerCase()) ||
         event.cardId.toLowerCase().includes(searchQuery.toLowerCase());
 
+      // Name filter
+      const matchesName = selectedName === "" || 
+        event.title.toLowerCase().includes(selectedName.toLowerCase());
+
       // Status filter
       const matchesStatus = selectedStatus === "all" || event.status === selectedStatus;
 
@@ -223,9 +229,9 @@ export const AccessControlPage = (): JSX.Element => {
       // Zone filter
       const matchesZone = selectedZone === "all" || event.zone === selectedZone;
 
-      return matchesSearch && matchesStatus && matchesCamera && matchesZone;
+      return matchesSearch && matchesName && matchesStatus && matchesCamera && matchesZone;
     });
-  }, [accessControlEvents, searchQuery, selectedStatus, selectedCamera, selectedZone]);
+  }, [accessControlEvents, searchQuery, selectedName, selectedStatus, selectedCamera, selectedZone]);
 
   return (
     <div className="p-6 bg-gray-50 dark:bg-gray-900 min-h-full">
@@ -381,7 +387,20 @@ Exemples:
             </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                Nom
+              </label>
+              <Input 
+                value={selectedName}
+                onChange={(e) => setSelectedName(e.target.value)}
+                placeholder="Rechercher par nom..."
+                className="bg-white dark:bg-gray-700"
+                data-testid="input-name-filter"
+              />
+            </div>
+
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
                 Statut
