@@ -251,13 +251,13 @@ export default function PersonnelDashboard() {
 
   // Detection frequency data - By detection type
   const detectionFrequencyData = [
-    { type: 'Employees', violations: 342, color: '#3f51b5' },
-    { type: 'Visitors', violations: 89, color: '#5c6bc0' },
-    { type: 'VIP', violations: 12, color: '#7986cb' },
-    { type: 'Unauthorized', violations: 7, color: '#9fa8da' },
-    { type: 'Unknown', violations: 23, color: '#c5cae9' },
-    { type: 'Alerts', violations: 19, color: '#e1bee7' },
-    { type: 'Incidents', violations: 5, color: '#f3e5f5' }
+    { type: 'Employees', violations: 342, color: '#3fb5b5' },
+    { type: 'Visitors', violations: 89, color: '#5eced1' },
+    { type: 'VIP', violations: 12, color: '#7dd3d8' },
+    { type: 'Unauthorized', violations: 7, color: '#9ecccf' },
+    { type: 'Unknown', violations: 23, color: '#b8d4da' },
+    { type: 'Alerts', violations: 19, color: '#d1e7ea' },
+    { type: 'Incidents', violations: 5, color: '#eaf4f4' }
   ];
 
   // Personnel detection trends data for line chart
@@ -277,13 +277,13 @@ export default function PersonnelDashboard() {
 
   // Detection distribution - Enhanced with beautiful gradients
   const detectionDistribution = [
-    { name: 'Employees', value: 68.5, percentage: '68.5%', color: '#3f51b5', gradientId: 'employees' },
-    { name: 'Visitors', value: 17.8, percentage: '17.8%', color: '#5c6bc0', gradientId: 'visitors' },
-    { name: 'Unknown', value: 4.6, percentage: '4.6%', color: '#7986cb', gradientId: 'unknown' },
-    { name: 'Alerts', value: 3.8, percentage: '3.8%', color: '#9fa8da', gradientId: 'alerts' },
-    { name: 'VIP', value: 2.4, percentage: '2.4%', color: '#c5cae9', gradientId: 'vip' },
-    { name: 'Unauthorized', value: 1.4, percentage: '1.4%', color: '#e1bee7', gradientId: 'unauthorized' },
-    { name: 'Incidents', value: 1.0, percentage: '1.0%', color: '#f3e5f5', gradientId: 'incidents' }
+    { name: 'Employees', value: 68.5, percentage: '68.5%', color: '#3fb5b5', gradientId: 'employees' },
+    { name: 'Visitors', value: 17.8, percentage: '17.8%', color: '#5eced1', gradientId: 'visitors' },
+    { name: 'Unknown', value: 4.6, percentage: '4.6%', color: '#7dd3d8', gradientId: 'unknown' },
+    { name: 'Alerts', value: 3.8, percentage: '3.8%', color: '#9ecccf', gradientId: 'alerts' },
+    { name: 'VIP', value: 2.4, percentage: '2.4%', color: '#b8d4da', gradientId: 'vip' },
+    { name: 'Unauthorized', value: 1.4, percentage: '1.4%', color: '#d1e7ea', gradientId: 'unauthorized' },
+    { name: 'Incidents', value: 1.0, percentage: '1.0%', color: '#eaf4f4', gradientId: 'incidents' }
   ];
 
   // Detection summary - expanded
@@ -336,7 +336,7 @@ export default function PersonnelDashboard() {
         {personnelMetrics.map((metric, index) => (
           <Card key={index} className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 shadow-sm relative overflow-hidden">
             {/* Indigo left accent border */}
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-indigo-600"></div>
+            <div className="absolute left-0 top-0 bottom-0 w-1" style={{backgroundColor: '#3fb5b5'}}></div>
             <CardContent className="p-4 pl-6">
               <div className="flex items-start justify-between">
                 <div className="flex flex-col">
@@ -351,7 +351,7 @@ export default function PersonnelDashboard() {
                   </div>
                 </div>
                 <div className="ml-4">
-                  <metric.icon className="w-8 h-8 text-indigo-600" />
+                  <metric.icon className="w-8 h-8" style={{color: '#3fb5b5'}} />
                 </div>
               </div>
             </CardContent>
@@ -370,7 +370,8 @@ export default function PersonnelDashboard() {
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className="bg-indigo-600 border-indigo-600 text-white hover:bg-indigo-700 h-8 px-4 text-xs"
+                  className="text-white h-8 px-4 text-xs hover:opacity-90"
+                  style={{backgroundColor: '#3fb5b5', borderColor: '#3fb5b5'}}
                 >
                   Weekly
                 </Button>
@@ -412,11 +413,11 @@ export default function PersonnelDashboard() {
                       <Radar
                         name="Current Week"
                         dataKey="currentWeek"
-                        stroke="#3f51b5"
-                        fill="#3f51b5"
+                        stroke="#3fb5b5"
+                        fill="#3fb5b5"
                         fillOpacity={0.2}
                         strokeWidth={3}
-                        dot={{ fill: '#3f51b5', strokeWidth: 3, r: 6 }}
+                        dot={{ fill: '#3fb5b5', strokeWidth: 3, r: 6 }}
                       />
                       <Radar
                         name="Previous Week"
@@ -432,7 +433,7 @@ export default function PersonnelDashboard() {
                 </div>
                 <div className="flex items-center justify-center gap-6 text-sm mb-6">
                   <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-indigo-600 rounded-full"></div>
+                    <div className="w-3 h-3 rounded-full" style={{backgroundColor: '#3fb5b5'}}></div>
                     <span className="text-gray-600 dark:text-gray-300 font-medium">Current Week</span>
                   </div>
                   <div className="flex items-center gap-2">
@@ -440,10 +441,10 @@ export default function PersonnelDashboard() {
                     <span className="text-gray-600 dark:text-gray-300 font-medium">Previous Week</span>
                   </div>
                 </div>
-                <div className="bg-gradient-to-r from-indigo-50 to-indigo-100 dark:from-indigo-900/20 dark:to-indigo-800/20 p-4 rounded-xl border border-indigo-200 dark:border-indigo-700/50">
+                <div className="p-4 rounded-xl border" style={{background: 'linear-gradient(to right, #f0fdfa, #e6fffa)', borderColor: '#a7f3d0'}} data-dark-style="background: linear-gradient(to right, rgba(63, 181, 181, 0.1), rgba(63, 181, 181, 0.15)); border-color: rgba(63, 181, 181, 0.3)">
                   <div className="text-center">
                     <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">Personnel Score</h4>
-                    <div className="text-3xl font-bold text-indigo-600 dark:text-indigo-400">87</div>
+                    <div className="text-3xl font-bold" style={{color: '#3fb5b5'}}>87</div>
                     <div className="text-xs text-gray-600 dark:text-gray-300 mt-1">out of 100</div>
                   </div>
                 </div>
@@ -453,7 +454,7 @@ export default function PersonnelDashboard() {
                 <div className="h-96 overflow-y-scroll scrollbar-hide space-y-3 pr-2">
                   {personnelRecommendations.map((recommendation, index) => (
                     <div key={index} className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                      <div className="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center">
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{backgroundColor: '#3fb5b5'}}>
                         <recommendation.icon className="w-4 h-4 text-white" />
                       </div>
                       <div>
@@ -526,7 +527,7 @@ export default function PersonnelDashboard() {
                         {detection.severity}
                       </div>
                       {/* Process - Button style for action */}
-                      <Button size="sm" className="h-8 px-4 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-md border border-indigo-700 shadow-sm transition-all duration-200 hover:shadow-md">
+                      <Button size="sm" className="h-8 px-4 text-white text-xs font-semibold rounded-md shadow-sm transition-all duration-200 hover:shadow-md hover:opacity-90" style={{backgroundColor: '#3fb5b5', borderColor: '#3fb5b5'}}>
                         <Settings className="w-3 h-3 mr-1" />
                         Process
                       </Button>
@@ -585,7 +586,7 @@ export default function PersonnelDashboard() {
                       fontSize: '12px'
                     }}
                   />
-                  <Bar dataKey="violations" fill="#3f51b5" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="violations" fill="#3fb5b5" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -633,11 +634,11 @@ export default function PersonnelDashboard() {
                     }}
                   />
                   <Legend />
-                  <Line type="monotone" dataKey="employees" stroke="#3f51b5" strokeWidth={3} dot={{ fill: '#3f51b5', r: 4 }} />
-                  <Line type="monotone" dataKey="visitors" stroke="#5c6bc0" strokeWidth={2} dot={{ fill: '#5c6bc0', r: 3 }} />
-                  <Line type="monotone" dataKey="vip" stroke="#7986cb" strokeWidth={2} dot={{ fill: '#7986cb', r: 3 }} />
+                  <Line type="monotone" dataKey="employees" stroke="#3fb5b5" strokeWidth={3} dot={{ fill: '#3fb5b5', r: 4 }} />
+                  <Line type="monotone" dataKey="visitors" stroke="#5eced1" strokeWidth={2} dot={{ fill: '#5eced1', r: 3 }} />
+                  <Line type="monotone" dataKey="vip" stroke="#7dd3d8" strokeWidth={2} dot={{ fill: '#7dd3d8', r: 3 }} />
                   <Line type="monotone" dataKey="unauthorized" stroke="#f44336" strokeWidth={2} dot={{ fill: '#f44336', r: 3 }} />
-                  <Line type="monotone" dataKey="unknown" stroke="#9fa8da" strokeWidth={2} dot={{ fill: '#9fa8da', r: 3 }} />
+                  <Line type="monotone" dataKey="unknown" stroke="#9ecccf" strokeWidth={2} dot={{ fill: '#9ecccf', r: 3 }} />
                   <Line type="monotone" dataKey="alerts" stroke="#ff9800" strokeWidth={2} dot={{ fill: '#ff9800', r: 3 }} />
                 </LineChart>
               </ResponsiveContainer>
@@ -727,7 +728,7 @@ export default function PersonnelDashboard() {
             <div className="grid grid-cols-2 gap-4 h-80">
               {detectionSummary.map((item, index) => (
                 <div key={index} className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                  <div className="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{backgroundColor: '#3fb5b5'}}>
                     <item.icon className="w-5 h-5 text-white" />
                   </div>
                   <div>
@@ -752,7 +753,7 @@ export default function PersonnelDashboard() {
               {camerasData.map((camera, index) => (
                 <div key={index} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
                   <div className="flex items-center gap-3">
-                    <Camera className="w-5 h-5 text-indigo-600" />
+                    <Camera className="w-5 h-5" style={{color: '#3fb5b5'}} />
                     <div>
                       <div className="text-sm font-medium text-gray-900 dark:text-gray-100">{camera.name}</div>
                       <div className="text-xs text-gray-600 dark:text-gray-300">{camera.zone}</div>
