@@ -18,6 +18,7 @@ import {
   Search,
   TrendingUp,
   ChevronDown,
+  UserCheck,
 } from "lucide-react";
 
 const navigationItems = [
@@ -70,6 +71,16 @@ const navigationItems = [
       {
         name: "Analyse Client",
         icon: "TrendingUp",
+        isActive: false,
+      },
+      {
+        name: "Attendance",
+        icon: "UserCheck",
+        isActive: false,
+      },
+      {
+        name: "Contrôle d'Accès",
+        icon: "Shield",
         isActive: false,
       },
     ],
@@ -208,6 +219,8 @@ const renderIcon = (iconName: string, className: string) => {
       return <Search {...iconProps} />;
     case "TrendingUp":
       return <TrendingUp {...iconProps} />;
+    case "UserCheck":
+      return <UserCheck {...iconProps} />;
     default:
       return <LayoutDashboard {...iconProps} />;
   }
@@ -224,7 +237,9 @@ export const EventSummarySection = ({
       currentPage === "reconnaissance" ||
       currentPage === "persons" ||
       currentPage === "personnesDashboard" ||
-      currentPage === "clientAnalysis"
+      currentPage === "clientAnalysis" ||
+      currentPage === "attendance" ||
+      currentPage === "accessControl"
       ? "Personnes"
       : currentPage === "vehicles" || currentPage === "vehicleCapture"
         ? "Vehicules"
@@ -253,7 +268,9 @@ export const EventSummarySection = ({
       currentPage === "reconnaissance" ||
       currentPage === "persons" ||
       currentPage === "personnesDashboard" ||
-      currentPage === "clientAnalysis"
+      currentPage === "clientAnalysis" ||
+      currentPage === "attendance" ||
+      currentPage === "accessControl"
     ) {
       setOpenDropdown("Personnes");
     } else if (currentPage === "vehicles" || currentPage === "vehicleCapture") {
@@ -298,7 +315,9 @@ export const EventSummarySection = ({
                 currentPage === "capture" ||
                 currentPage === "reconnaissance" ||
                 currentPage === "personnesDashboard" ||
-                currentPage === "clientAnalysis");
+                currentPage === "clientAnalysis" ||
+                currentPage === "attendance" ||
+                currentPage === "accessControl");
             const isEventCenterActive =
               item.name === "Event Center" && currentPage === "eventCenter";
             const isVehiclesActive =
@@ -423,6 +442,12 @@ export const EventSummarySection = ({
                                 : item.name === "Personnes" &&
                                     subItem.name === "Analyse Client"
                                   ? "clientAnalysis"
+                                  : item.name === "Personnes" &&
+                                      subItem.name === "Attendance"
+                                    ? "attendance"
+                                    : item.name === "Personnes" &&
+                                        subItem.name === "Contrôle d'Accès"
+                                      ? "accessControl"
                                   : item.name === "Safety" &&
                                       subItem.name === "Dashboard"
                                     ? "safetyDashboard"
