@@ -1,587 +1,657 @@
-import React, { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
+import React, { useState, useMemo } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { EventDetailModal } from "@/components/EventDetailModal";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Slider } from "@/components/ui/slider";
+import { Search, Filter, Calendar, Camera, MapPin, User, Users, Eye, UserCheck, UserX, Shield } from "lucide-react";
 
-// Import des images générées
+// Import personnel images
 import businessmanPhoto from "@assets/generated_images/Security_capture_businessman_photo_2feb92d4.png";
 import womanPhoto from "@assets/generated_images/Security_capture_woman_photo_e17e3828.png";
 import casualManPhoto from "@assets/generated_images/Security_capture_casual_man_eb27432b.png";
 import elderlyWomanPhoto from "@assets/generated_images/Security_capture_elderly_woman_37bac27b.png";
 import youngManPhoto from "@assets/generated_images/Security_capture_young_man_e6e7c093.png";
 
-// Données des personnes reconnues
-const recognitionData = [
-  {
-    id: 1,
-    name: "Marc Dubois",
-    status: "Reconnu",
-    confidence: 92,
-    lastSeen: "Il y a 32 min",
-    location: "Chemin bleu",
-    details: "Parution noir",
-    badge: "Sortie",
-    image: businessmanPhoto,
-    color: "teal"
-  },
-  {
-    id: 2,
-    name: "Personne inconnue",
-    status: "Inconnue",
-    confidence: 45,
-    lastSeen: "Il y a 45 min",
-    location: "Zone grise",
-    details: "Visite rouge",
-    badge: "Jean bleu",
-    image: womanPhoto,
-    color: "orange"
-  },
-  {
-    id: 3,
-    name: "Pierre Martin",
-    status: "Reconnu",
-    confidence: 88,
-    lastSeen: "Il y a 48 min",
-    location: "Zone grise",
-    details: "Parution noir",
-    badge: "Lunettes",
-    image: casualManPhoto,
-    color: "teal"
-  },
-  {
-    id: 4,
-    name: "Personne suspecte",
-    status: "Suspect",
-    confidence: 27,
-    lastSeen: "Il y a 1h",
-    location: "Zone rouge",
-    details: "Sweat noir",
-    badge: "Jean bleu",
-    image: youngManPhoto,
-    color: "red"
-  },
-  {
-    id: 5,
-    name: "Jean Dupont",
-    status: "Reconnu",
-    confidence: 85,
-    lastSeen: "Il y a 38 min",
-    location: "Chemin bleu",
-    details: "T-shirt blanc",
-    badge: "Jean bleu",
-    image: businessmanPhoto,
-    color: "teal"
-  },
-  {
-    id: 6,
-    name: "Sophie Bernard",
-    status: "Reconnu",
-    confidence: 90,
-    lastSeen: "Il y a 30 min",
-    location: "Zone verte",
-    details: "Robe jaune",
-    badge: "Parution noir",
-    image: elderlyWomanPhoto,
-    color: "teal"
-  },
-  {
-    id: 7,
-    name: "Personne inconnue",
-    status: "Inconnu",
-    confidence: 35,
-    lastSeen: "Il y a 38 min",
-    location: "Zone orange",
-    details: "Chemise bleue",
-    badge: "Parution beige",
-    image: casualManPhoto,
-    color: "orange"
-  },
-  {
-    id: 8,
-    name: "Marie Leroy",
-    status: "Reconnu",
-    confidence: 93,
-    lastSeen: "Il y a 28 min",
-    location: "Zone verte",
-    details: "Blouse jaune",
-    badge: "Parution noir",
-    image: womanPhoto,
-    color: "teal"
-  },
-  {
-    id: 9,
-    name: "Paul Dupont",
-    status: "Reconnu",
-    confidence: 87,
-    lastSeen: "Il y a 44 min",
-    location: "Chemin blanc",
-    details: "Chemise bleue",
-    badge: "Parution noir",
-    image: businessmanPhoto,
-    color: "teal"
-  },
-  {
-    id: 10,
-    name: "Marie Dupont",
-    status: "Reconnu",
-    confidence: 89,
-    lastSeen: "Il y a 28 min",
-    location: "Zone verte",
-    details: "Visite rouge",
-    badge: "Jean bleu",
-    image: elderlyWomanPhoto,
-    color: "teal"
-  },
-  {
-    id: 11,
-    name: "Sophie Dupont",
-    status: "Reconnu",
-    confidence: 91,
-    lastSeen: "Il y a 22 min",
-    location: "Zone verte",
-    details: "Blouse jaune",
-    badge: "Parution noir",
-    image: womanPhoto,
-    color: "teal"
-  },
-  {
-    id: 12,
-    name: "Paul Dupont",
-    status: "Reconnu",
-    confidence: 86,
-    lastSeen: "Il y a 54 min",
-    location: "Chemin blanc",
-    details: "Chemise bleue",
-    badge: "Parution noir",
-    image: youngManPhoto,
-    color: "teal"
-  }
-];
-
 export const ReconnaissancePage = (): JSX.Element => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeTab, setActiveTab] = useState("suggestions");
-  const [scoreFilter, setScoreFilter] = useState("all");
-  const [eventFilter, setEventFilter] = useState("all");
-  const [periodFilter, setPeriodFilter] = useState("all");
-  const [ageFilter, setAgeFilter] = useState("all");
-  const [sexFilter, setSexFilter] = useState("all");
-  const [cameraFilter, setCameraFilter] = useState("all");
-  const [siteFilter, setSiteFilter] = useState("all");
-  const [zoneFilter, setZoneFilter] = useState("all");
-  const [confidenceRange, setConfidenceRange] = useState([0]);
+  const [selectedStatus, setSelectedStatus] = useState("all");
+  const [selectedCamera, setSelectedCamera] = useState("all");
+  const [selectedSite, setSelectedSite] = useState("all");
+  const [selectedZone, setSelectedZone] = useState("all");
+  const [selectedConfidence, setSelectedConfidence] = useState("all");
+  const [selectedGender, setSelectedGender] = useState("all");
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
+  const [selectedRecognitionDetail, setSelectedRecognitionDetail] = useState<any>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const filteredData = recognitionData.filter(person => {
-    if (activeTab === "low-score") return person.confidence < 50;
-    if (activeTab === "intrusions") return person.status === "Suspect" || person.status === "Inconnu" || person.status === "Inconnue";
-    if (activeTab === "authorized") return person.status === "Reconnu" && person.confidence > 80;
-    return true;
-  });
+  // Handle search functionality
+  const handleSearch = () => {
+    console.log("Search triggered for:", searchQuery);
+  };
 
-  const recognizedCount = recognitionData.filter(p => p.status === "Reconnu").length;
-  const lowScoreCount = recognitionData.filter(p => p.confidence < 50).length;
-  const intrusionCount = recognitionData.filter(p => p.status === "Suspect" || p.status === "Inconnu" || p.status === "Inconnue").length;
+  // Handle suggestion clicks
+  const handleSuggestionClick = (suggestion: string) => {
+    setSearchQuery(suggestion);
+  };
+
+  // Apply filters functionality
+  const applyFilters = () => {
+    console.log("Filters applied:", { selectedStatus, selectedCamera, selectedSite, selectedZone, selectedConfidence, selectedGender, dateFrom, dateTo });
+  };
+
+  // Reset filters functionality
+  const resetFilters = () => {
+    setSelectedStatus("all");
+    setSelectedCamera("all");
+    setSelectedSite("all");
+    setSelectedZone("all");
+    setSelectedConfidence("all");
+    setSelectedGender("all");
+    setDateFrom("");
+    setDateTo("");
+    setSearchQuery("");
+  };
+
+  // Create array of personnel images for rotation
+  const personnelImages = [businessmanPhoto, womanPhoto, casualManPhoto, elderlyWomanPhoto, youngManPhoto];
+
+  // Sample recognition data matching the design
+  const recognitionData = [
+    {
+      id: 1,
+      name: "Marc Dubois",
+      status: "Reconnu",
+      confidence: 92,
+      camera: "Caméra 01",
+      zone: "Entrée principale",
+      timestamp: "27 Jan 2025, 14:32",
+      severity: "SUCCESS",
+      location: "Chemin bleu",
+      details: "Parution noir",
+      badge: "Sortie",
+      image: businessmanPhoto,
+      description: "Personnel autorisé identifié"
+    },
+    {
+      id: 2,
+      name: "Personne inconnue",
+      status: "Inconnue",
+      confidence: 45,
+      camera: "Caméra 03",
+      zone: "Zone de stockage",
+      timestamp: "27 Jan 2025, 14:15",
+      severity: "WARNING",
+      location: "Zone grise",
+      details: "Visite rouge",
+      badge: "Jean bleu",
+      image: womanPhoto,
+      description: "Personne non identifiée détectée"
+    },
+    {
+      id: 3,
+      name: "Pierre Martin",
+      status: "Reconnu",
+      confidence: 88,
+      camera: "Caméra 02",
+      zone: "Bureau administratif",
+      timestamp: "27 Jan 2025, 14:28",
+      severity: "SUCCESS",
+      location: "Zone grise",
+      details: "Parution noir",
+      badge: "Lunettes",
+      image: casualManPhoto,
+      description: "Employé vérifié avec succès"
+    },
+    {
+      id: 4,
+      name: "Personne suspecte",
+      status: "Suspect",
+      confidence: 27,
+      camera: "Caméra 05",
+      zone: "Zone restreinte",
+      timestamp: "27 Jan 2025, 13:30",
+      severity: "CRITICAL",
+      location: "Zone rouge",
+      details: "Sweat noir",
+      badge: "Jean bleu",
+      image: youngManPhoto,
+      description: "Individu suspect identifié en zone interdite"
+    },
+    {
+      id: 5,
+      name: "Jean Dupont",
+      status: "Reconnu",
+      confidence: 85,
+      camera: "Caméra 04",
+      zone: "Parking visiteurs",
+      timestamp: "27 Jan 2025, 14:22",
+      severity: "SUCCESS",
+      location: "Chemin bleu",
+      details: "T-shirt blanc",
+      badge: "Jean bleu",
+      image: businessmanPhoto,
+      description: "Visiteur autorisé confirmé"
+    },
+    {
+      id: 6,
+      name: "Sophie Bernard",
+      status: "Reconnu",
+      confidence: 90,
+      camera: "Caméra 06",
+      zone: "Réception",
+      timestamp: "27 Jan 2025, 14:20",
+      severity: "SUCCESS",
+      location: "Zone verte",
+      details: "Robe jaune",
+      badge: "Parution noir",
+      image: elderlyWomanPhoto,
+      description: "Personnel d'accueil identifié"
+    },
+    {
+      id: 7,
+      name: "Personne inconnue",
+      status: "Inconnu",
+      confidence: 35,
+      camera: "Caméra 07",
+      zone: "Couloir niveau 2",
+      timestamp: "27 Jan 2025, 14:12",
+      severity: "WARNING",
+      location: "Zone orange",
+      details: "Chemise bleue",
+      badge: "Parution beige",
+      image: casualManPhoto,
+      description: "Individu non répertorié détecté"
+    },
+    {
+      id: 8,
+      name: "Marie Leroy",
+      status: "Reconnu",
+      confidence: 93,
+      camera: "Caméra 01",
+      zone: "Laboratoire",
+      timestamp: "27 Jan 2025, 14:18",
+      severity: "SUCCESS",
+      location: "Zone verte",
+      details: "Blouse jaune",
+      badge: "Parution noir",
+      image: womanPhoto,
+      description: "Technicienne autorisée"
+    }
+  ];
+
+  // Filter the data based on search query and filters
+  const filteredRecognitions = useMemo(() => {
+    return recognitionData.filter((recognition) => {
+      const matchesSearch = !searchQuery || 
+        recognition.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        recognition.status.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        recognition.camera.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        recognition.zone.toLowerCase().includes(searchQuery.toLowerCase());
+      
+      const matchesStatus = selectedStatus === "all" || recognition.status === selectedStatus;
+      const matchesCamera = selectedCamera === "all" || recognition.camera === selectedCamera;
+      const matchesSite = selectedSite === "all" || recognition.zone.includes(selectedSite);
+      const matchesZone = selectedZone === "all" || recognition.zone === selectedZone;
+      const matchesConfidence = selectedConfidence === "all" || 
+        (selectedConfidence === "high" && recognition.confidence >= 80) ||
+        (selectedConfidence === "medium" && recognition.confidence >= 50 && recognition.confidence < 80) ||
+        (selectedConfidence === "low" && recognition.confidence < 50);
+      
+      return matchesSearch && matchesStatus && matchesCamera && matchesSite && matchesZone && matchesConfidence;
+    });
+  }, [searchQuery, selectedStatus, selectedCamera, selectedSite, selectedZone, selectedConfidence]);
+
+  // Get counts for status badges
+  const getStatusCount = (status: string) => {
+    return recognitionData.filter(r => r.status === status).length;
+  };
+
+  // Handle clicking on a recognition card
+  const handleRecognitionClick = (recognition: any) => {
+    setSelectedRecognitionDetail({
+      ...recognition,
+      type: "Personnel",
+      eventType: "Reconnaissance faciale",
+      cameraAngle: "Vue frontale",
+      recordingAvailable: true,
+      aiAnalysis: `Analyse IA : Reconnaissance avec ${recognition.confidence}% de confiance. ${
+        recognition.status === "Reconnu" ? "Personne autorisée identifiée avec succès." :
+        recognition.status === "Suspect" ? "Individu potentiellement dangereux détecté." :
+        "Personne non identifiée nécessitant vérification."
+      }`,
+      relatedEvents: [],
+      evidence: [
+        {
+          type: "Image",
+          description: "Capture du visage",
+          timestamp: recognition.timestamp,
+          url: recognition.image
+        }
+      ]
+    });
+    setIsModalOpen(true);
+  };
 
   return (
-    <div className="w-full min-h-screen relative dark:bg-gray-900">
-      <div className="px-8 py-6">
-        {/* Section Recherche Intelligente */}
-        <Card className="mb-6 bg-cyan-50/50 dark:bg-cyan-900/20 border-cyan-200 dark:border-cyan-800">
-          <CardContent className="p-6">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-teal-500 rounded-lg flex items-center justify-center">
-                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{background: 'none'}}>
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-              </div>
-              <h2 className="text-lg font-semibold text-slate-800 [font-family:'Inter',Helvetica]">
-                Recherche intelligente
-              </h2>
-            </div>
-            <div className="space-y-3">
-              <textarea
-                placeholder="Décrivez ce que vous cherchez en langage naturel...&#10;Exemples:&#10;• 'Personnes avec score &lt; 80%'&#10;• 'Intrusions cette semaine'"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-4 py-3 bg-white border border-cyan-200 rounded-lg text-slate-700 placeholder:text-slate-400 placeholder:text-xs min-h-[80px] resize-none [font-family:'Inter',Helvetica] text-sm"
-              />
-              <div className="flex gap-3">
-                <Badge variant="outline" className="text-xs text-slate-600">
-                  Suggestions
-                </Badge>
-                <Badge variant="outline" className="text-xs text-slate-600">
-                  Score faible
-                </Badge>
-                <Badge variant="outline" className="text-xs text-slate-600">
-                  Intrusions récentes
-                </Badge>
-                <Badge variant="outline" className="text-xs text-slate-600">
-                  Personnel autorisé
-                </Badge>
-              </div>
-              <Button className="bg-teal-500 hover:bg-teal-600 text-white">
-                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{background: 'none'}}>
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-                Rechercher
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Statistiques et filtres */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex gap-4">
-            <Button
-              variant={activeTab === "suggestions" ? "default" : "outline"}
-              onClick={() => setActiveTab("suggestions")}
-              className={activeTab === "suggestions" ? "bg-teal-500 hover:bg-teal-600" : ""}
-            >
-              ✅ Reconnus ({recognizedCount})
-            </Button>
-            <Button
-              variant={activeTab === "low-score" ? "default" : "outline"}
-              onClick={() => setActiveTab("low-score")}
-              className={activeTab === "low-score" ? "bg-orange-500 hover:bg-orange-600" : ""}
-            >
-              ⚠️ Score Faible ({lowScoreCount})
-            </Button>
-            <Button
-              variant={activeTab === "intrusions" ? "default" : "outline"}
-              onClick={() => setActiveTab("intrusions")}
-              className={activeTab === "intrusions" ? "bg-red-500 hover:bg-red-600" : ""}
-            >
-              🚨 Intrusions ({intrusionCount})
-            </Button>
+    <div className="w-full min-h-screen bg-gray-50 dark:bg-gray-900 p-6">
+      {/* Header Section */}
+      <div className="mb-6">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="flex items-center justify-center w-10 h-10 bg-teal-500 rounded-lg">
+            <Eye className="w-5 h-5 text-white" />
           </div>
-          <Button variant="outline">
-            📋 Tous ({recognitionData.length})
-          </Button>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          {/* Filtres avancés */}
-          <div className="lg:col-span-1">
-            <Card className="bg-white/90">
-              <CardContent className="p-6">
-                <h3 className="font-semibold text-slate-800 [font-family:'Inter',Helvetica] mb-4">
-                  🔍 Filtres de recherche
-                </h3>
-                
-                <div className="space-y-4">
-                  <Input
-                    placeholder="Nom, prénom..."
-                    className="w-full"
-                  />
-
-                  <div>
-                    <label className="text-sm text-slate-600 [font-family:'Inter',Helvetica] mb-2 block">
-                      Score de confiance
-                    </label>
-                    <Select value={scoreFilter} onValueChange={setScoreFilter}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Tous les scores" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">Tous les scores</SelectItem>
-                        <SelectItem value="high">Score élevé (80%+)</SelectItem>
-                        <SelectItem value="medium">Score moyen (50-80%)</SelectItem>
-                        <SelectItem value="low">Score faible (&lt;50%)</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div>
-                    <label className="text-sm text-slate-600 [font-family:'Inter',Helvetica] mb-2 block">
-                      Type d'événement
-                    </label>
-                    <Select value={eventFilter} onValueChange={setEventFilter}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Tous les événements" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">Tous les événements</SelectItem>
-                        <SelectItem value="entry">Entrée</SelectItem>
-                        <SelectItem value="exit">Sortie</SelectItem>
-                        <SelectItem value="intrusion">Intrusion</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div>
-                    <label className="text-sm text-slate-600 [font-family:'Inter',Helvetica] mb-2 block">
-                      Période
-                    </label>
-                    <Select value={periodFilter} onValueChange={setPeriodFilter}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Toutes les périodes" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">Toutes les périodes</SelectItem>
-                        <SelectItem value="today">Aujourd'hui</SelectItem>
-                        <SelectItem value="week">Cette semaine</SelectItem>
-                        <SelectItem value="month">Ce mois</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <h4 className="font-medium text-slate-700 [font-family:'Inter',Helvetica] mt-6 mb-3">
-                    Filtres Avancés
-                  </h4>
-
-                  <div>
-                    <label className="text-sm text-slate-600 [font-family:'Inter',Helvetica] mb-2 block">
-                      Attributs Faciaux
-                    </label>
-                    <Select>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Tous" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">Tous</SelectItem>
-                        <SelectItem value="glasses">Avec lunettes</SelectItem>
-                        <SelectItem value="beard">Avec barbe</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div>
-                    <label className="text-sm text-slate-600 [font-family:'Inter',Helvetica] mb-2 block">
-                      Âge estimé
-                    </label>
-                    <Select value={ageFilter} onValueChange={setAgeFilter}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Tous les âges" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">Tous les âges</SelectItem>
-                        <SelectItem value="young">18-30 ans</SelectItem>
-                        <SelectItem value="middle">30-50 ans</SelectItem>
-                        <SelectItem value="senior">50+ ans</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div>
-                    <label className="text-sm text-slate-600 [font-family:'Inter',Helvetica] mb-2 block">
-                      Sexe
-                    </label>
-                    <Select value={sexFilter} onValueChange={setSexFilter}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Tous" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">Tous</SelectItem>
-                        <SelectItem value="male">Homme</SelectItem>
-                        <SelectItem value="female">Femme</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div>
-                    <label className="text-sm text-slate-600 [font-family:'Inter',Helvetica] mb-2 block">
-                      Sites
-                    </label>
-                    <Select value={siteFilter} onValueChange={setSiteFilter}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Tous les sites" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">Tous les sites</SelectItem>
-                        <SelectItem value="site1">Site Principal</SelectItem>
-                        <SelectItem value="site2">Site Secondaire</SelectItem>
-                        <SelectItem value="site3">Site Est</SelectItem>
-                        <SelectItem value="site4">Site Ouest</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div>
-                    <label className="text-sm text-slate-600 [font-family:'Inter',Helvetica] mb-2 block">
-                      Caméra
-                    </label>
-                    <Select value={cameraFilter} onValueChange={setCameraFilter}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Toutes caméras" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">Toutes caméras</SelectItem>
-                        <SelectItem value="cam1">Caméra 01</SelectItem>
-                        <SelectItem value="cam2">Caméra 02</SelectItem>
-                        <SelectItem value="cam3">Caméra 03</SelectItem>
-                        <SelectItem value="cam4">Caméra 04</SelectItem>
-                        <SelectItem value="cam5">Caméra 05</SelectItem>
-                        <SelectItem value="cam6">Caméra 06</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div>
-                    <label className="text-sm text-slate-600 [font-family:'Inter',Helvetica] mb-2 block">
-                      Zones
-                    </label>
-                    <Select value={zoneFilter} onValueChange={setZoneFilter}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Toutes les zones" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">Toutes les zones</SelectItem>
-                        <SelectItem value="entrance">Zone d'entrée</SelectItem>
-                        <SelectItem value="lobby">Hall d'accueil</SelectItem>
-                        <SelectItem value="parking">Parking</SelectItem>
-                        <SelectItem value="corridor">Couloirs</SelectItem>
-                        <SelectItem value="exit">Zone de sortie</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="pt-4 space-y-2">
-                    <Button className="w-full bg-teal-500 hover:bg-teal-600 text-white">
-                      🔍 Appliquer les filtres
-                    </Button>
-                    <Button variant="outline" className="w-full">
-                      ↻ Réinitialiser
-                    </Button>
-                  </div>
-
-                  <div className="mt-6 pt-6 border-t">
-                    <p className="text-center text-slate-500 [font-family:'Inter',Helvetica] text-sm">
-                      {filteredData.length} reconnaissances trouvées
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Grille de cartes */}
-          <div className="lg:col-span-3">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {filteredData.map((person) => (
-                <Card key={person.id} className="bg-white hover:shadow-lg transition-shadow cursor-pointer">
-                  <CardContent className="p-4">
-                    <div className="relative mb-3">
-                      <Badge 
-                        className={`absolute top-2 right-2 ${
-                          person.color === "teal" ? "bg-teal-500" :
-                          person.color === "orange" ? "bg-orange-500" :
-                          "bg-red-500"
-                        } text-white text-xs`}
-                      >
-                        {person.status}
-                      </Badge>
-                      <img
-                        src={person.image}
-                        alt={person.name}
-                        className="w-full h-40 object-cover rounded-lg"
-                      />
-                      <div className={`absolute bottom-2 left-2 px-2 py-1 rounded text-xs text-white ${
-                        person.status === "Reconnu" ? "bg-teal-500" :
-                        person.status === "Suspect" ? "bg-red-500" :
-                        "bg-orange-500"
-                      }`}>
-                        Caméra {String(person.id).padStart(2, '0')}
-                      </div>
-                    </div>
-                    
-                    <h4 className="font-semibold text-slate-800 [font-family:'Inter',Helvetica] text-sm mb-1">
-                      {person.name}
-                    </h4>
-                    
-                    <p className="text-xs text-slate-500 [font-family:'Inter',Helvetica] mb-2">
-                      {person.lastSeen}
-                    </p>
-                    
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-xs text-slate-600">Score:</span>
-                      <div className="flex items-center gap-1">
-                        <div className="w-16 bg-gray-200 rounded-full h-2">
-                          <div 
-                            className={`h-2 rounded-full ${
-                              person.confidence > 80 ? "bg-teal-500" :
-                              person.confidence > 50 ? "bg-orange-500" :
-                              "bg-red-500"
-                            }`}
-                            style={{ width: `${person.confidence}%` }}
-                          />
-                        </div>
-                        <span className="text-xs font-semibold">{person.confidence}%</span>
-                      </div>
-                    </div>
-                    
-                    <div className="flex flex-wrap gap-1">
-                      {person.details && (
-                        <Badge variant="outline" className="text-xs">
-                          {person.details}
-                        </Badge>
-                      )}
-                      {person.badge && (
-                        <Badge variant="outline" className="text-xs">
-                          {person.badge}
-                        </Badge>
-                      )}
-                    </div>
-                    
-                    <div className="mt-3 flex justify-between">
-                      <p className="text-xs text-slate-500">
-                        Aujourd'hui {person.lastSeen.replace("Il y a ", "")}
-                      </p>
-                      <div className="flex gap-2">
-                        <div className={`w-2 h-2 rounded-full ${
-                          person.confidence > 80 ? "bg-teal-500" :
-                          person.confidence > 50 ? "bg-orange-500" :
-                          "bg-red-500"
-                        }`} />
-                        <div className={`w-2 h-2 rounded-full ${
-                          person.status === "Reconnu" ? "bg-green-500" :
-                          person.status === "Suspect" ? "bg-red-500" :
-                          "bg-gray-400"
-                        }`} />
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-
-            {/* Section Woman with... */}
-            <div className="mt-6">
-              <h3 className="text-lg font-semibold text-slate-800 [font-family:'Inter',Helvetica] mb-4">
-                Woman with...
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {[
-                  { label: "Woman with sunglasses", status: "Reconnu", color: "teal" },
-                  { label: "Woman with hat", status: "Reconnu", color: "teal" },
-                  { label: "Woman with scarf", status: "Reconnu", color: "teal" },
-                  { label: "Woman with bag", status: "Reconnu", color: "teal" }
-                ].map((item, index) => (
-                  <Card key={index} className="bg-gray-100">
-                    <CardContent className="p-4">
-                      <div className="h-32 bg-gray-200 rounded-lg mb-3 flex items-center justify-center">
-                        <div className="text-gray-400">
-                          <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                          </svg>
-                        </div>
-                      </div>
-                      <Badge className={`${item.color === "teal" ? "bg-teal-500" : "bg-gray-500"} text-white text-xs`}>
-                        {item.status}
-                      </Badge>
-                      <p className="text-sm text-slate-700 [font-family:'Inter',Helvetica] mt-2">
-                        {item.label}
-                      </p>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Reconnaissance Faciale</h1>
+            <p className="text-gray-600 dark:text-gray-400">Système de reconnaissance et d'identification du personnel</p>
           </div>
         </div>
       </div>
+
+      {/* Search Section */}
+      <Card className="mb-6">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-lg">
+            <Search className="w-5 h-5 text-teal-500" />
+            Recherche et Filtres
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {/* AI Search */}
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              Recherche intelligente IA
+            </label>
+            <Textarea
+              placeholder="Décrivez ce que vous cherchez... (ex: 'Personnel avec faible confiance', 'Suspects détectés aujourd'hui', 'Reconnaissances en zone restreinte')"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="min-h-[80px] resize-none"
+              data-testid="input-ai-search"
+            />
+          </div>
+
+          {/* Quick Suggestions */}
+          <div className="flex flex-wrap gap-2">
+            <span className="text-sm text-gray-600 dark:text-gray-400">Suggestions rapides:</span>
+            {[
+              "Personnel reconnu",
+              "Faible confiance",
+              "Zone restreinte",
+              "Suspects détectés"
+            ].map((suggestion) => (
+              <Button
+                key={suggestion}
+                variant="outline"
+                size="sm"
+                onClick={() => handleSuggestionClick(suggestion)}
+                className="text-xs h-7"
+                data-testid={`button-suggestion-${suggestion.toLowerCase().replace(/\s+/g, '-')}`}
+              >
+                {suggestion}
+              </Button>
+            ))}
+          </div>
+
+          <div className="flex gap-4">
+            <Button 
+              onClick={handleSearch}
+              className="bg-teal-500 hover:bg-teal-600 text-white"
+              data-testid="button-search"
+            >
+              <Search className="w-4 h-4 mr-2" />
+              Rechercher
+            </Button>
+            <Button 
+              variant="outline" 
+              onClick={resetFilters}
+              data-testid="button-reset-filters"
+            >
+              Réinitialiser
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Stats and Filters Row */}
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-6">
+        {/* Status Stats */}
+        <div className="lg:col-span-1">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-base">
+                <Filter className="w-4 h-4 text-teal-500" />
+                Statuts
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <Button
+                variant={selectedStatus === "all" ? "default" : "outline"}
+                onClick={() => setSelectedStatus("all")}
+                className={`w-full justify-start ${
+                  selectedStatus === "all" ? "bg-teal-500 hover:bg-teal-600" : ""
+                }`}
+                data-testid="button-filter-all-status"
+              >
+                <Users className="w-4 h-4 mr-2" />
+                Tous ({recognitionData.length})
+              </Button>
+              <Button
+                variant={selectedStatus === "Reconnu" ? "default" : "outline"}
+                onClick={() => setSelectedStatus("Reconnu")}
+                className={`w-full justify-start ${
+                  selectedStatus === "Reconnu" ? "bg-green-500 hover:bg-green-600" : ""
+                }`}
+                data-testid="button-filter-recognized"
+              >
+                <UserCheck className="w-4 h-4 mr-2" />
+                Reconnus ({getStatusCount("Reconnu")})
+              </Button>
+              <Button
+                variant={selectedStatus === "Inconnue" || selectedStatus === "Inconnu" ? "default" : "outline"}
+                onClick={() => setSelectedStatus("Inconnue")}
+                className={`w-full justify-start ${
+                  selectedStatus === "Inconnue" || selectedStatus === "Inconnu" ? "bg-yellow-500 hover:bg-yellow-600" : ""
+                }`}
+                data-testid="button-filter-unknown"
+              >
+                <User className="w-4 h-4 mr-2" />
+                Inconnus ({getStatusCount("Inconnue") + getStatusCount("Inconnu")})
+              </Button>
+              <Button
+                variant={selectedStatus === "Suspect" ? "default" : "outline"}
+                onClick={() => setSelectedStatus("Suspect")}
+                className={`w-full justify-start ${
+                  selectedStatus === "Suspect" ? "bg-red-500 hover:bg-red-600" : ""
+                }`}
+                data-testid="button-filter-suspect"
+              >
+                <UserX className="w-4 h-4 mr-2" />
+                Suspects ({getStatusCount("Suspect")})
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Filters Panel */}
+        <div className="lg:col-span-3">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-base">
+                <Filter className="w-4 h-4 text-teal-500" />
+                Filtres détaillés
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {/* Confidence Filter */}
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                    Niveau de confiance
+                  </label>
+                  <Select value={selectedConfidence} onValueChange={setSelectedConfidence}>
+                    <SelectTrigger data-testid="select-confidence">
+                      <SelectValue placeholder="Tous niveaux" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Tous niveaux</SelectItem>
+                      <SelectItem value="high">Élevé (80%+)</SelectItem>
+                      <SelectItem value="medium">Moyen (50-80%)</SelectItem>
+                      <SelectItem value="low">Faible (&lt;50%)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Camera Filter */}
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                    Caméra
+                  </label>
+                  <Select value={selectedCamera} onValueChange={setSelectedCamera}>
+                    <SelectTrigger data-testid="select-camera">
+                      <SelectValue placeholder="Toutes caméras" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Toutes caméras</SelectItem>
+                      <SelectItem value="Caméra 01">Caméra 01</SelectItem>
+                      <SelectItem value="Caméra 02">Caméra 02</SelectItem>
+                      <SelectItem value="Caméra 03">Caméra 03</SelectItem>
+                      <SelectItem value="Caméra 04">Caméra 04</SelectItem>
+                      <SelectItem value="Caméra 05">Caméra 05</SelectItem>
+                      <SelectItem value="Caméra 06">Caméra 06</SelectItem>
+                      <SelectItem value="Caméra 07">Caméra 07</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Site Filter */}
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                    Site
+                  </label>
+                  <Select value={selectedSite} onValueChange={setSelectedSite}>
+                    <SelectTrigger data-testid="select-site">
+                      <SelectValue placeholder="Tous sites" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Tous sites</SelectItem>
+                      <SelectItem value="Principal">Site principal</SelectItem>
+                      <SelectItem value="Annexe">Site annexe</SelectItem>
+                      <SelectItem value="Entrepôt">Entrepôt</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Zone Filter */}
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                    Zone
+                  </label>
+                  <Select value={selectedZone} onValueChange={setSelectedZone}>
+                    <SelectTrigger data-testid="select-zone">
+                      <SelectValue placeholder="Toutes zones" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Toutes zones</SelectItem>
+                      <SelectItem value="Entrée principale">Entrée principale</SelectItem>
+                      <SelectItem value="Zone de stockage">Zone de stockage</SelectItem>
+                      <SelectItem value="Bureau administratif">Bureau administratif</SelectItem>
+                      <SelectItem value="Zone restreinte">Zone restreinte</SelectItem>
+                      <SelectItem value="Parking visiteurs">Parking visiteurs</SelectItem>
+                      <SelectItem value="Réception">Réception</SelectItem>
+                      <SelectItem value="Laboratoire">Laboratoire</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              {/* Date Range */}
+              <div className="grid grid-cols-2 gap-4 mt-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <Calendar className="w-4 h-4 inline mr-1" />
+                    Date de début
+                  </label>
+                  <Input
+                    type="date"
+                    value={dateFrom}
+                    onChange={(e) => setDateFrom(e.target.value)}
+                    data-testid="input-date-from"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <Calendar className="w-4 h-4 inline mr-1" />
+                    Date de fin
+                  </label>
+                  <Input
+                    type="date"
+                    value={dateTo}
+                    onChange={(e) => setDateTo(e.target.value)}
+                    data-testid="input-date-to"
+                  />
+                </div>
+              </div>
+
+              <div className="flex gap-2 mt-4">
+                <Button 
+                  onClick={applyFilters}
+                  className="bg-teal-500 hover:bg-teal-600 text-white"
+                  data-testid="button-apply-filters"
+                >
+                  <Filter className="w-4 h-4 mr-2" />
+                  Appliquer filtres
+                </Button>
+                <span className="text-sm text-gray-500 dark:text-gray-400 flex items-center">
+                  {filteredRecognitions.length} résultat(s) trouvé(s)
+                </span>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+
+      {/* Results Grid */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Shield className="w-5 h-5 text-teal-500" />
+            Résultats de reconnaissance ({filteredRecognitions.length})
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {filteredRecognitions.map((recognition) => (
+              <Card
+                key={recognition.id}
+                className="cursor-pointer hover:shadow-lg transition-all duration-200 border-l-4 border-l-teal-500"
+                onClick={() => handleRecognitionClick(recognition)}
+                data-testid={`card-recognition-${recognition.id}`}
+              >
+                <CardContent className="p-4">
+                  {/* Status Badge */}
+                  <div className="flex items-center justify-between mb-3">
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                      recognition.status === "Reconnu" ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200" :
+                      recognition.status === "Suspect" ? "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200" :
+                      "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200"
+                    }`}>
+                      {recognition.status}
+                    </span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                      ID: {recognition.id.toString().padStart(4, '0')}
+                    </span>
+                  </div>
+
+                  {/* Image */}
+                  <div className="relative mb-3">
+                    <img
+                      src={recognition.image}
+                      alt={recognition.name}
+                      className="w-full h-32 object-cover rounded-lg border"
+                    />
+                    {/* Confidence overlay */}
+                    <div className="absolute bottom-2 left-2 bg-black/75 text-white px-2 py-1 rounded text-xs">
+                      {recognition.confidence}%
+                    </div>
+                    {/* Camera overlay */}
+                    <div className="absolute bottom-2 right-2 bg-teal-500 text-white px-2 py-1 rounded text-xs">
+                      <Camera className="w-3 h-3 inline mr-1" />
+                      {recognition.camera.replace("Caméra ", "")}
+                    </div>
+                  </div>
+
+                  {/* Person Info */}
+                  <div className="space-y-2">
+                    <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-sm" data-testid={`text-name-${recognition.id}`}>
+                      {recognition.name}
+                    </h3>
+                    
+                    <div className="flex items-center gap-1 text-xs text-gray-600 dark:text-gray-400">
+                      <MapPin className="w-3 h-3" />
+                      <span data-testid={`text-zone-${recognition.id}`}>{recognition.zone}</span>
+                    </div>
+                    
+                    <div className="text-xs text-gray-500 dark:text-gray-400" data-testid={`text-timestamp-${recognition.id}`}>
+                      {recognition.timestamp}
+                    </div>
+
+                    {/* Confidence Bar */}
+                    <div className="space-y-1">
+                      <div className="flex justify-between text-xs">
+                        <span className="text-gray-600 dark:text-gray-400">Confiance</span>
+                        <span className={`font-medium ${
+                          recognition.confidence >= 80 ? "text-green-600" :
+                          recognition.confidence >= 50 ? "text-yellow-600" :
+                          "text-red-600"
+                        }`}>
+                          {recognition.confidence}%
+                        </span>
+                      </div>
+                      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                        <div
+                          className={`h-2 rounded-full transition-all duration-300 ${
+                            recognition.confidence >= 80 ? "bg-green-500" :
+                            recognition.confidence >= 50 ? "bg-yellow-500" :
+                            "bg-red-500"
+                          }`}
+                          style={{ width: `${recognition.confidence}%` }}
+                        />
+                      </div>
+                    </div>
+                    
+                    {/* Details */}
+                    <div className="flex flex-wrap gap-1">
+                      {recognition.details && (
+                        <span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-xs rounded">
+                          {recognition.details}
+                        </span>
+                      )}
+                      {recognition.badge && (
+                        <span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-xs rounded">
+                          {recognition.badge}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {/* Empty State */}
+          {filteredRecognitions.length === 0 && (
+            <div className="text-center py-12">
+              <Eye className="w-12 h-12 text-gray-400 dark:text-gray-600 mx-auto mb-4" />
+              <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">
+                Aucune reconnaissance trouvée
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-4">
+                Aucun résultat ne correspond à vos critères de recherche.
+              </p>
+              <Button 
+                onClick={resetFilters}
+                variant="outline"
+                data-testid="button-reset-empty-state"
+              >
+                Réinitialiser les filtres
+              </Button>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Recognition Detail Modal */}
+      <EventDetailModal
+        event={selectedRecognitionDetail}
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+          setSelectedRecognitionDetail(null);
+        }}
+      />
     </div>
   );
 };
