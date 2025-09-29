@@ -718,7 +718,7 @@ export default function PersonnelDashboard() {
         </Card>
 
         {/* Detection Summary */}
-        <Card className="col-span-6 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+        <Card className="col-span-4 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
           <CardHeader>
             <CardTitle className="text-gray-900 dark:text-gray-100 text-lg font-semibold flex items-center gap-2">
               📋 Detection Summary
@@ -742,7 +742,7 @@ export default function PersonnelDashboard() {
         </Card>
 
         {/* Detections per Camera */}
-        <Card className="col-span-6 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+        <Card className="col-span-4 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
           <CardHeader>
             <CardTitle className="text-gray-900 dark:text-gray-100 text-lg font-semibold flex items-center gap-2">
               📹 Detections per Camera
@@ -763,7 +763,8 @@ export default function PersonnelDashboard() {
                     <div className="text-sm font-bold text-gray-900 dark:text-gray-100">{camera.violations}</div>
                     <Button
                       size="sm"
-                      className="h-7 px-3 bg-indigo-600 hover:bg-indigo-700 text-white text-xs"
+                      className="h-7 px-3 text-white text-xs hover:opacity-90"
+                      style={{backgroundColor: '#3fb5b5'}}
                       onClick={() => {
                         setSelectedCamera(camera);
                         setIsCameraModalOpen(true);
@@ -779,7 +780,7 @@ export default function PersonnelDashboard() {
         </Card>
 
         {/* Detections per Site */}
-        <Card className="col-span-6 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+        <Card className="col-span-4 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
           <CardHeader>
             <CardTitle className="text-gray-900 dark:text-gray-100 text-lg font-semibold flex items-center gap-2">
               🏢 Detections per Site
@@ -790,7 +791,7 @@ export default function PersonnelDashboard() {
               {sitesData.map((site, index) => (
                 <div key={index} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
                   <div className="flex items-center gap-3">
-                    <MapPin className="w-5 h-5 text-indigo-600" />
+                    <MapPin className="w-5 h-5" style={{color: '#3fb5b5'}} />
                     <div>
                       <div className="text-sm font-medium text-gray-900 dark:text-gray-100">{site.name}</div>
                       <div className="text-xs text-gray-600 dark:text-gray-300">{site.zone}</div>
