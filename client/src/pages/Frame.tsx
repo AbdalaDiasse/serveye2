@@ -17,6 +17,8 @@ import SafetyEventsPage from "./SafetyEventsPage";
 import BehaviorDashboard from "./BehaviorDashboard";
 import BehaviorEventsPage from "./BehaviorEventsPage";
 import PersonnelDashboard from "./PersonnelDashboard";
+import { AttendancePage } from "./AttendancePage";
+import { AccessControlPage } from "./AccessControlPage";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from "recharts";
@@ -55,6 +57,10 @@ export const Frame = (): JSX.Element => {
         return { title: "Personnel Dashboard", subtitle: "Personnel monitoring and management" };
       case "clientAnalysis":
         return { title: "Analyse Client", subtitle: "Client analysis and insights" };
+      case "attendance":
+        return { title: "Attendance", subtitle: "Personnel attendance monitoring" };
+      case "accessControl":
+        return { title: "Contrôle d'Accès", subtitle: "Access control management" };
       case "events":
         return { title: "Event Center", subtitle: "Aggregated event management across all modules" };
       case "eventCenter":
@@ -141,6 +147,10 @@ export const Frame = (): JSX.Element => {
         return <VehicleCapturePage />;
       case "clientAnalysis":
         return <ClientAnalysisPage />;
+      case "attendance":
+        return <AttendancePage />;
+      case "accessControl":
+        return <AccessControlPage />;
       case "vssAgent":
         return <VSSAgentPage />;
       case "vssSummarize":
