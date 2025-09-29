@@ -57,6 +57,8 @@ export const Frame = (): JSX.Element => {
         return { title: "Analyse Client", subtitle: "Client analysis and insights" };
       case "events":
         return { title: "Event Center", subtitle: "Aggregated event management across all modules" };
+      case "eventCenter":
+        return { title: "Event Center", subtitle: "Aggregated event management across all modules" };
       case "vehicles":
         return { title: "Vehicules", subtitle: "Vehicle monitoring system" };
       case "vehicleCapture":
@@ -130,6 +132,8 @@ export const Frame = (): JSX.Element => {
       case "personnesDashboard":
         return <PersonnelDashboard />;
       case "events":
+        return <EventCenterPage />;
+      case "eventCenter":
         return <EventCenterPage />;
       case "vehicles":
         return <VehiclesDashboard />;

@@ -337,7 +337,7 @@ export const EventSummarySection = ({
                     isPersonnesActive
                       ? "shadow-md bg-gradient-to-r from-teal-500 to-cyan-500"
                       : isEventCenterActive
-                        ? "shadow-md bg-gradient-to-r from-red-500 to-red-600"
+                        ? "shadow-md bg-gradient-to-r from-[#FF9800] to-[#F57C00]"
                         : isVehiclesActive
                           ? "shadow-md bg-gradient-to-r from-orange-500 to-orange-600"
                           : isSafetyActive
