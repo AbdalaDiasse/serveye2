@@ -373,37 +373,63 @@ export const EventCenterPage = (): JSX.Element => {
         </div>
 
         {/* Key Metrics */}
-        <div className="grid grid-cols-7 gap-4 mb-6">
+        <div className="grid grid-cols-5 gap-6 mb-6">
           {[
-            { label: 'Événements Critiques', value: allEvents.filter(e => e.severity === "Critical").length, icon: AlertTriangle, change: '+12%', period: 'today' },
-            { label: 'Événements Actifs', value: allEvents.filter(e => e.status === "Active").length, icon: Activity, change: '+8%', period: 'today' },
-            { label: 'Modules Safety', value: moduleStats.Safety.total, icon: Shield, change: '+15%', period: 'today' },
-            { label: 'Modules Behavior', value: moduleStats.Behavior.total, icon: Eye, change: '+5%', period: 'today' },
-            { label: 'Modules Personnel', value: moduleStats.Personnel.total, icon: Users, change: '+3%', period: 'today' },
-            { label: 'Modules Vehicles', value: moduleStats.Vehicle.total, icon: Car, change: '+7%', period: 'today' },
-            { label: 'Modules Zones', value: moduleStats.Zone.total, icon: MapPin, change: '+10%', period: 'today' }
+            {
+              title: allEvents.filter(e => e.status === "Active").length.toString(),
+              subtitle: "Événements Actifs",
+              badge: "Live",
+              gradient: "bg-gradient-to-r from-blue-500 to-blue-700",
+              icon: <Activity className="w-7 h-8 text-white" />
+            },
+            {
+              title: allEvents.filter(e => e.severity === "Critical").length.toString(),
+              subtitle: "Événements Critiques",
+              badge: "Urgent",
+              gradient: "bg-gradient-to-r from-orange-500 to-red-500",
+              icon: <AlertTriangle className="w-7 h-8 text-white" />
+            },
+            {
+              title: moduleStats.Safety.total.toString(),
+              subtitle: "Modules Safety",
+              badge: "Today",
+              gradient: "bg-gradient-to-r from-red-500 to-red-700",
+              icon: <Shield className="w-7 h-8 text-white" />
+            },
+            {
+              title: moduleStats.Personnel.total.toString(),
+              subtitle: "Modules Personnel",
+              badge: "Active",
+              gradient: "bg-gradient-to-r from-teal-500 to-cyan-500",
+              icon: <Users className="w-7 h-8 text-white" />
+            },
+            {
+              title: (moduleStats.Behavior.total + moduleStats.Vehicle.total + moduleStats.Zone.total).toString(),
+              subtitle: "Autres Modules",
+              badge: "Total",
+              gradient: "bg-gradient-to-r from-violet-500 to-purple-600",
+              icon: <Eye className="w-7 h-8 text-white" />
+            }
           ].map((metric, index) => (
-            <Card key={index} className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 shadow-sm relative overflow-hidden">
-              {/* Orange left accent border */}
-              <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#FF9800]"></div>
-              <CardContent className="p-4 pl-6">
-                <div className="flex items-start justify-between">
-                  <div className="flex flex-col">
-                    <div className="text-xs text-gray-500 dark:text-gray-400 mb-2">{metric.label}</div>
-                    <div className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">{metric.value}</div>
-                    <div className="flex items-center gap-1">
-                      <svg className={`w-3 h-3 ${metric.change.startsWith('+') ? 'text-green-500' : 'text-red-500'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={metric.change.startsWith('+') ? "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" : "M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"} />
-                      </svg>
-                      <span className={`text-xs font-medium ${metric.change.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>{metric.change}</span>
-                      <span className="text-xs text-gray-500 dark:text-gray-400">{metric.period}</span>
+            <Card key={index} className="relative overflow-hidden border-0 shadow-lg">
+              <div className={`${metric.gradient} h-full`}>
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between text-white">
+                    <div className="flex flex-col">
+                      <div className="text-3xl font-bold mb-1">{metric.title}</div>
+                      <div className="text-sm opacity-90 mb-2">{metric.subtitle}</div>
+                      <div className="inline-block">
+                        <span className="bg-white/20 text-white text-xs px-2 py-1 rounded-full font-medium">
+                          {metric.badge}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="ml-4">
+                      {metric.icon}
                     </div>
                   </div>
-                  <div className="ml-4">
-                    <metric.icon className="w-8 h-8 text-[#FF9800]" />
-                  </div>
-                </div>
-              </CardContent>
+                </CardContent>
+              </div>
             </Card>
           ))}
         </div>
