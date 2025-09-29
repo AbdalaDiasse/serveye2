@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, Filter, Calendar, Camera, MapPin, Eye, User, UserCheck, UserX, Shield } from "lucide-react";
+import { Slider } from "@/components/ui/slider";
+import { Search, Filter, Calendar, Camera, MapPin, Eye, User, UserCheck, UserX, Shield, Upload, FileText } from "lucide-react";
 
 // Import personnel images
 import businessmanPhoto from "@assets/generated_images/Security_capture_businessman_photo_2feb92d4.png";
@@ -27,10 +28,47 @@ export const ReconnaissancePage = (): JSX.Element => {
   const [selectedRecognitionDetail, setSelectedRecognitionDetail] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchMode, setSearchMode] = useState("text"); // "text" or "face"
+  const [similarity, setSimilarity] = useState([80]);
+  const [selectedPeriod, setSelectedPeriod] = useState("24h");
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [isDragOver, setIsDragOver] = useState(false);
+
+  // Handle file upload
+  const handleFileUpload = (file: File) => {
+    setUploadedFile(file);
+  };
+
+  // Handle drag and drop
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragOver(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragOver(false);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragOver(false);
+    const files = e.dataTransfer.files;
+    if (files.length > 0 && files[0].type.startsWith('image/')) {
+      handleFileUpload(files[0]);
+    }
+  };
+
+  // Handle file input change
+  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      handleFileUpload(files[0]);
+    }
+  };
 
   // Handle search functionality
   const handleSearch = () => {
-    console.log("Search triggered for:", searchQuery, "Mode:", searchMode);
+    console.log("Search triggered for:", searchQuery, "Mode:", searchMode, "File:", uploadedFile, "Similarity:", similarity[0]);
   };
 
   // Handle suggestion clicks
@@ -55,6 +93,9 @@ export const ReconnaissancePage = (): JSX.Element => {
     setDateTo("");
     setSearchQuery("");
     setSearchMode("text");
+    setSimilarity([80]);
+    setSelectedPeriod("24h");
+    setUploadedFile(null);
   };
 
   // Create array of personnel images for rotation
@@ -311,12 +352,12 @@ export const ReconnaissancePage = (): JSX.Element => {
               <Search className="w-4 h-4 text-white" />
             </div>
             <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-              Recherche intelligente
+              Recherche Intelligente
             </h3>
           </div>
           
           {/* Search Mode Toggle */}
-          <div className="flex gap-2 mb-4">
+          <div className="flex gap-2 mb-6">
             <Button
               variant={searchMode === "text" ? "default" : "outline"}
               size="sm"
@@ -324,8 +365,8 @@ export const ReconnaissancePage = (): JSX.Element => {
               className={searchMode === "text" ? "bg-[#3fb5b5] hover:bg-[#3fb5b5]/90" : ""}
               data-testid="button-search-text"
             >
-              <Search className="w-4 h-4 mr-2" />
-              Recherche textuelle
+              <FileText className="w-4 h-4 mr-2" />
+              Texte
             </Button>
             <Button
               variant={searchMode === "face" ? "default" : "outline"}
@@ -335,68 +376,170 @@ export const ReconnaissancePage = (): JSX.Element => {
               data-testid="button-search-face"
             >
               <Eye className="w-4 h-4 mr-2" />
-              Recherche faciale
+              Visage
             </Button>
           </div>
           
-          <div className="relative">
-            <Textarea
-              placeholder={searchMode === "text" ? 
-                `Décrivez ce que vous cherchez en langage naturel...
+          {searchMode === "text" ? (
+            <div className="relative">
+              <Textarea
+                placeholder={`Décrivez ce que vous cherchez en langage naturel...
 Exemples:
 • 'Montre-moi toutes les personnes reconnues aujourd'hui'
 • 'Suspects détectés cette semaine'
-• 'Personnel avec faible score de confiance'` :
-                `Recherche par reconnaissance faciale...
-Exemples:
-• Glissez une photo pour identifier une personne
-• Recherchez par attributs faciaux (âge, sexe, lunettes)
-• Trouvez des personnes similaires dans la base`
-              }
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="min-h-[120px] resize-none text-base bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 focus:border-[#3fb5b5] focus:ring-2 focus:ring-[#3fb5b5]/20 placeholder:text-gray-400 dark:placeholder:text-gray-500 rounded-lg px-4 py-3 pr-32"
-              data-testid="input-search-recognitions"
-            />
-            <Button 
-              className="absolute bottom-3 right-3 bg-[#3fb5b5] hover:bg-[#3fb5b5]/90 text-white px-6 py-2 rounded-md" 
-              data-testid="button-search"
-              onClick={handleSearch}
-            >
-              <Search className="w-4 h-4 mr-2" />
-              Rechercher
-            </Button>
-          </div>
+• 'Personnel avec faible score de confiance'`}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="min-h-[120px] resize-none text-base bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 focus:border-[#3fb5b5] focus:ring-2 focus:ring-[#3fb5b5]/20 placeholder:text-gray-400 dark:placeholder:text-gray-500 rounded-lg px-4 py-3 pr-32"
+                data-testid="input-search-recognitions"
+              />
+              <Button 
+                className="absolute bottom-3 right-3 bg-[#3fb5b5] hover:bg-[#3fb5b5]/90 text-white px-6 py-2 rounded-md" 
+                data-testid="button-search"
+                onClick={handleSearch}
+              >
+                <Search className="w-4 h-4 mr-2" />
+                Rechercher
+              </Button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 gap-6">
+              {/* File Upload Section */}
+              <div className="space-y-4">
+                <div
+                  className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
+                    isDragOver 
+                      ? 'border-[#3fb5b5] bg-cyan-50 dark:bg-cyan-900/30' 
+                      : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800'
+                  }`}
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onDrop={handleDrop}
+                  data-testid="file-upload-area"
+                >
+                  <div className="flex flex-col items-center">
+                    <div className="w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mb-4">
+                      <Upload className="w-6 h-6 text-gray-400 dark:text-gray-500" />
+                    </div>
+                    <div className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">
+                      Glissez une photo ici
+                    </div>
+                    <div className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                      ou cliquez pour parcourir
+                    </div>
+                    <div className="text-xs text-gray-500 dark:text-gray-500">
+                      JPG, PNG jusqu'à 10MB
+                    </div>
+                  </div>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileInputChange}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                    data-testid="file-input"
+                  />
+                </div>
+                {uploadedFile && (
+                  <div className="text-sm text-gray-600 dark:text-gray-400">
+                    Fichier sélectionné: {uploadedFile.name}
+                  </div>
+                )}
+              </div>
 
-          <div className="flex gap-2 mt-4 text-sm">
+              {/* Search Controls */}
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                    Similarité
+                  </label>
+                  <div className="px-3">
+                    <Slider
+                      value={similarity}
+                      onValueChange={setSimilarity}
+                      max={100}
+                      min={0}
+                      step={1}
+                      className="w-full"
+                      data-testid="similarity-slider"
+                    />
+                    <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-1">
+                      <span>0%</span>
+                      <span className="font-medium text-[#3fb5b5]">{similarity[0]}%</span>
+                      <span>100%</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                    Période
+                  </label>
+                  <Select value={selectedPeriod} onValueChange={setSelectedPeriod}>
+                    <SelectTrigger className="bg-white dark:bg-gray-700" data-testid="select-period">
+                      <SelectValue placeholder="Sélectionner une période" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="24h">Dernières 24h</SelectItem>
+                      <SelectItem value="7d">7 derniers jours</SelectItem>
+                      <SelectItem value="30d">30 derniers jours</SelectItem>
+                      <SelectItem value="all">Toute la période</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                    Caméras
+                  </label>
+                  <Select value={selectedCamera} onValueChange={setSelectedCamera}>
+                    <SelectTrigger className="bg-white dark:bg-gray-700" data-testid="select-cameras-search">
+                      <SelectValue placeholder="Sélectionner les caméras" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Toutes les caméras</SelectItem>
+                      <SelectItem value="cam-a">Caméra A</SelectItem>
+                      <SelectItem value="cam-b">Caméra B</SelectItem>
+                      <SelectItem value="cam-c">Caméra C</SelectItem>
+                      <SelectItem value="cam-d">Caméra D</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <Button 
+                  className="w-full bg-[#3fb5b5] hover:bg-[#3fb5b5]/90 text-white py-3 mt-6" 
+                  data-testid="button-search-face"
+                  onClick={handleSearch}
+                  disabled={!uploadedFile}
+                >
+                  <Search className="w-4 h-4 mr-2" />
+                  Rechercher ce visage
+                </Button>
+              </div>
+            </div>
+          )}
+
+          <div className="flex gap-2 mt-6 text-sm">
             <span className="text-gray-500 dark:text-gray-400">Suggestions:</span>
             <button 
-              className="text-[#3fb5b5] hover:underline" 
-              data-testid="button-suggestion-reconnus"
-              onClick={() => handleSuggestionClick("reconnu")}
-            >
-              Personnel reconnu
-            </button>
-            <button 
-              className="text-[#3fb5b5] hover:underline" 
+              className="px-3 py-1 bg-[#3fb5b5] text-white rounded-full text-xs hover:bg-[#3fb5b5]/90" 
               data-testid="button-suggestion-suspects"
               onClick={() => handleSuggestionClick("suspect")}
             >
-              Suspects
+              Personnes suspectes
             </button>
             <button 
-              className="text-[#3fb5b5] hover:underline" 
-              data-testid="button-suggestion-inconnus"
-              onClick={() => handleSuggestionClick("inconnu")}
+              className="px-3 py-1 bg-[#3fb5b5] text-white rounded-full text-xs hover:bg-[#3fb5b5]/90" 
+              data-testid="button-suggestion-recurrents"
+              onClick={() => handleSuggestionClick("récurrent")}
             >
-              Inconnus
+              Visiteurs récurrents
             </button>
             <button 
-              className="text-[#3fb5b5] hover:underline" 
-              data-testid="button-suggestion-confiance"
-              onClick={() => handleSuggestionClick("faible confiance")}
+              className="px-3 py-1 bg-[#3fb5b5] text-white rounded-full text-xs hover:bg-[#3fb5b5]/90" 
+              data-testid="button-suggestion-autorise"
+              onClick={() => handleSuggestionClick("autorisé")}
             >
-              Faible confiance
+              Personnel autorisé
             </button>
           </div>
         </CardContent>
