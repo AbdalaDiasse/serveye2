@@ -5,7 +5,7 @@ import { CapturePage } from "./CapturePage";
 import { ReconnaissancePage } from "./ReconnaissancePage";
 import { PersonsDashboard } from "./PersonsDashboard";
 import { PersonnesDashboardPage } from "./PersonnesDashboardPage";
-import { EventsPage } from "./EventsPage";
+import { EventCenterPage } from "./EventCenterPage";
 import { VehiclesDashboard } from "./VehiclesDashboard";
 import { VehicleCapturePage } from "./VehicleCapturePage";
 import ClientAnalysisPage from "./ClientAnalysisPage";
@@ -56,7 +56,7 @@ export const Frame = (): JSX.Element => {
       case "clientAnalysis":
         return { title: "Analyse Client", subtitle: "Client analysis and insights" };
       case "events":
-        return { title: "Événements", subtitle: "Event management and tracking" };
+        return { title: "Event Center", subtitle: "Aggregated event management across all modules" };
       case "vehicles":
         return { title: "Vehicules", subtitle: "Vehicle monitoring system" };
       case "vehicleCapture":
@@ -130,7 +130,7 @@ export const Frame = (): JSX.Element => {
       case "personnesDashboard":
         return <PersonnelDashboard />;
       case "events":
-        return <EventsPage />;
+        return <EventCenterPage />;
       case "vehicles":
         return <VehiclesDashboard />;
       case "vehicleCapture":
