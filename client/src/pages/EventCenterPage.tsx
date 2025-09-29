@@ -27,7 +27,10 @@ import {
   UserX,
   Camera,
   Bell,
-  TrendingUp
+  TrendingUp,
+  LayoutGrid,
+  List,
+  Grid3X3
 } from "lucide-react";
 
 // Import personnel images
@@ -48,6 +51,8 @@ export const EventCenterPage = (): JSX.Element => {
   const [dateTo, setDateTo] = useState("");
   const [selectedEvent, setSelectedEvent] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [viewMode, setViewMode] = useState<"list" | "grid">("list");
+  const [gridSize, setGridSize] = useState<"small" | "medium" | "large">("medium");
 
   // Comprehensive event data from all modules
   const allEvents = [
@@ -489,8 +494,93 @@ Exemples:
                 Filtres Avancés
               </h3>
             </div>
-            <div className="text-sm text-gray-500 dark:text-gray-400">
-              {filteredEvents.length} événements trouvés
+            <div className="flex items-center gap-4">
+              {/* View Mode Toggle */}
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-gray-600 dark:text-gray-400">Vue:</span>
+                <div className="flex bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
+                  <Button
+                    variant={viewMode === "list" ? "default" : "ghost"}
+                    size="sm"
+                    onClick={() => setViewMode("list")}
+                    className={`px-3 py-1 text-xs ${
+                      viewMode === "list" 
+                        ? "bg-[#FF9800] hover:bg-[#FF9800]/90 text-white" 
+                        : "text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
+                    }`}
+                    data-testid="button-view-list"
+                  >
+                    <List className="w-3 h-3 mr-1" />
+                    Liste
+                  </Button>
+                  <Button
+                    variant={viewMode === "grid" ? "default" : "ghost"}
+                    size="sm"
+                    onClick={() => setViewMode("grid")}
+                    className={`px-3 py-1 text-xs ${
+                      viewMode === "grid" 
+                        ? "bg-[#FF9800] hover:bg-[#FF9800]/90 text-white" 
+                        : "text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
+                    }`}
+                    data-testid="button-view-grid"
+                  >
+                    <LayoutGrid className="w-3 h-3 mr-1" />
+                    Grille
+                  </Button>
+                </div>
+              </div>
+
+              {/* Grid Size Options */}
+              {viewMode === "grid" && (
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-gray-600 dark:text-gray-400">Taille:</span>
+                  <div className="flex bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
+                    <Button
+                      variant={gridSize === "small" ? "default" : "ghost"}
+                      size="sm"
+                      onClick={() => setGridSize("small")}
+                      className={`px-2 py-1 text-xs ${
+                        gridSize === "small" 
+                          ? "bg-[#FF9800] hover:bg-[#FF9800]/90 text-white" 
+                          : "text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
+                      }`}
+                      data-testid="button-grid-small"
+                    >
+                      S
+                    </Button>
+                    <Button
+                      variant={gridSize === "medium" ? "default" : "ghost"}
+                      size="sm"
+                      onClick={() => setGridSize("medium")}
+                      className={`px-2 py-1 text-xs ${
+                        gridSize === "medium" 
+                          ? "bg-[#FF9800] hover:bg-[#FF9800]/90 text-white" 
+                          : "text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
+                      }`}
+                      data-testid="button-grid-medium"
+                    >
+                      M
+                    </Button>
+                    <Button
+                      variant={gridSize === "large" ? "default" : "ghost"}
+                      size="sm"
+                      onClick={() => setGridSize("large")}
+                      className={`px-2 py-1 text-xs ${
+                        gridSize === "large" 
+                          ? "bg-[#FF9800] hover:bg-[#FF9800]/90 text-white" 
+                          : "text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
+                      }`}
+                      data-testid="button-grid-large"
+                    >
+                      L
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              <div className="text-sm text-gray-500 dark:text-gray-400">
+                {filteredEvents.length} événements trouvés
+              </div>
             </div>
           </div>
           
@@ -623,55 +713,56 @@ Exemples:
             Événements Tous Modules ({filteredEvents.length})
           </CardTitle>
         </CardHeader>
-        <CardContent className="p-0">
-          <div className="space-y-0">
-            {filteredEvents.map((event, index) => {
-              const IconComponent = event.icon;
-              return (
-                <div 
-                  key={event.id}
-                  className={`p-4 border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer transition-colors ${
-                    index === filteredEvents.length - 1 ? 'border-b-0' : ''
-                  }`}
-                  onClick={() => handleEventClick(event)}
-                  data-testid={`event-card-${event.id}`}
-                >
-                  <div className="flex items-center gap-4">
-                    <img 
-                      src={event.thumbnail} 
-                      alt="Event"
-                      className="w-16 h-16 object-cover rounded-lg"
-                    />
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <Badge 
-                          className={`text-xs text-white px-2 py-1 ${event.severityColor}`}
-                          data-testid={`badge-severity-${event.id}`}
-                        >
-                          {event.severity}
-                        </Badge>
-                        <Badge 
-                          variant="outline"
-                          className="text-xs px-2 py-1"
-                          style={{ borderColor: moduleStats[event.module as keyof typeof moduleStats]?.color, color: moduleStats[event.module as keyof typeof moduleStats]?.color }}
-                          data-testid={`badge-module-${event.id}`}
-                        >
-                          {event.module}
-                        </Badge>
-                        <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
-                          <IconComponent className="w-3 h-3" />
-                          <span>{event.type}</span>
+        <CardContent className={viewMode === "list" ? "p-0" : "p-6"}>
+          {viewMode === "list" ? (
+            <div className="space-y-0">
+              {filteredEvents.map((event, index) => {
+                const IconComponent = event.icon;
+                return (
+                  <div 
+                    key={event.id}
+                    className={`p-4 border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer transition-colors ${
+                      index === filteredEvents.length - 1 ? 'border-b-0' : ''
+                    }`}
+                    onClick={() => handleEventClick(event)}
+                    data-testid={`event-card-${event.id}`}
+                  >
+                    <div className="flex items-center gap-4">
+                      <img 
+                        src={event.thumbnail} 
+                        alt="Event"
+                        className="w-16 h-16 object-cover rounded-lg"
+                      />
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <Badge 
+                            className={`text-xs text-white px-2 py-1 ${event.severityColor}`}
+                            data-testid={`badge-severity-${event.id}`}
+                          >
+                            {event.severity}
+                          </Badge>
+                          <Badge 
+                            variant="outline"
+                            className="text-xs px-2 py-1"
+                            style={{ borderColor: moduleStats[event.module as keyof typeof moduleStats]?.color, color: moduleStats[event.module as keyof typeof moduleStats]?.color }}
+                            data-testid={`badge-module-${event.id}`}
+                          >
+                            {event.module}
+                          </Badge>
+                          <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+                            <IconComponent className="w-3 h-3" />
+                            <span>{event.type}</span>
+                          </div>
                         </div>
-                      </div>
-                      <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">
-                        {event.title}
-                      </h4>
-                      <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">
-                        {event.description}
-                      </p>
-                      <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
-                        <div className="flex items-center gap-1">
-                          <MapPin className="w-3 h-3" />
+                        <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">
+                          {event.title}
+                        </h4>
+                        <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">
+                          {event.description}
+                        </p>
+                        <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
+                          <div className="flex items-center gap-1">
+                            <MapPin className="w-3 h-3" />
                           <span>{event.location}</span>
                         </div>
                         <div className="flex items-center gap-1">
@@ -709,6 +800,126 @@ Exemples:
               );
             })}
           </div>
+          ) : (
+            <div className={`grid gap-4 ${
+              gridSize === "small" 
+                ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5" 
+                : gridSize === "medium" 
+                  ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" 
+                  : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+            }`}>
+              {filteredEvents.map((event) => {
+                const IconComponent = event.icon;
+                return (
+                  <Card 
+                    key={event.id}
+                    className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:shadow-lg hover:border-[#FF9800]/30 cursor-pointer transition-all duration-200"
+                    onClick={() => handleEventClick(event)}
+                    data-testid={`event-card-${event.id}`}
+                  >
+                    <CardContent className={`p-3 ${gridSize === "small" ? "p-2" : gridSize === "large" ? "p-4" : "p-3"}`}>
+                      <div className="space-y-3">
+                        {/* Header */}
+                        <div className="flex items-start justify-between">
+                          <div className="flex items-center gap-2">
+                            <Badge 
+                              className={`text-xs text-white px-2 py-1 ${event.severityColor}`}
+                              data-testid={`badge-severity-${event.id}`}
+                            >
+                              {event.severity}
+                            </Badge>
+                            <Badge 
+                              variant="outline"
+                              className="text-xs px-2 py-1"
+                              style={{ borderColor: moduleStats[event.module as keyof typeof moduleStats]?.color, color: moduleStats[event.module as keyof typeof moduleStats]?.color }}
+                              data-testid={`badge-module-${event.id}`}
+                            >
+                              {event.module}
+                            </Badge>
+                          </div>
+                          <Badge 
+                            className={`text-xs text-white px-2 py-1 ${event.statusColor}`}
+                            data-testid={`badge-status-${event.id}`}
+                          >
+                            {event.status}
+                          </Badge>
+                        </div>
+
+                        {/* Image */}
+                        <div className="relative">
+                          <img 
+                            src={event.thumbnail} 
+                            alt="Event"
+                            className={`w-full object-cover rounded-lg ${
+                              gridSize === "small" ? "h-20" : gridSize === "large" ? "h-32" : "h-24"
+                            }`}
+                          />
+                          <div className="absolute top-2 left-2 bg-black/60 backdrop-blur-sm rounded-full p-1">
+                            <IconComponent className="w-3 h-3 text-white" />
+                          </div>
+                        </div>
+
+                        {/* Content */}
+                        <div className="space-y-2">
+                          <h4 className={`font-medium text-gray-900 dark:text-gray-100 leading-tight ${
+                            gridSize === "small" ? "text-xs" : "text-sm"
+                          }`}>
+                            {event.title}
+                          </h4>
+                          {gridSize !== "small" && (
+                            <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed line-clamp-2">
+                              {event.description}
+                            </p>
+                          )}
+                          
+                          {/* Event Type */}
+                          <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+                            <span className="truncate">{event.type}</span>
+                          </div>
+
+                          {/* Metadata */}
+                          <div className="space-y-1">
+                            <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+                              <MapPin className="w-3 h-3 flex-shrink-0" />
+                              <span className="truncate">{event.location}</span>
+                            </div>
+                            
+                            {gridSize === "large" && (
+                              <>
+                                <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+                                  <Camera className="w-3 h-3 flex-shrink-0" />
+                                  <span className="truncate">{event.camera}</span>
+                                </div>
+                                <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+                                  <Clock className="w-3 h-3 flex-shrink-0" />
+                                  <span className="truncate">{event.timestamp}</span>
+                                </div>
+                              </>
+                            )}
+                            
+                            <div className="flex items-center justify-between text-xs">
+                              <div className="flex items-center gap-1 text-gray-500 dark:text-gray-400">
+                                <Activity className="w-3 h-3" />
+                                <span>{event.confidence}%</span>
+                              </div>
+                              <div className={`px-2 py-1 rounded text-xs ${
+                                event.priority === 'Critical' ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' :
+                                event.priority === 'High' ? 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200' :
+                                event.priority === 'Medium' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' :
+                                'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                              }`}>
+                                {event.priority}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          )}
         </CardContent>
       </Card>
 
