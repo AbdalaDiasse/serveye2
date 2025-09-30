@@ -98,12 +98,38 @@ The following files are included in the project:
 
 ### 2. Environment Configuration
 
-Before running, update the `SESSION_SECRET` in `docker-compose.yml`:
+Before running, you need to generate and set a `SESSION_SECRET` in `docker-compose.yml`. This secret is used to encrypt and sign user session data.
+
+#### Generating a SESSION_SECRET
+
+Choose one of these methods to generate a secure random key:
+
+**Option 1: Using Node.js**
+```bash
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+```
+
+**Option 2: Using OpenSSL**
+```bash
+openssl rand -hex 32
+```
+
+**Option 3: Using a Password Generator**
+Use any secure password generator to create a random string of at least 32 characters.
+
+#### Updating docker-compose.yml
+
+Copy the generated key and replace `your-secret-key-here` in `docker-compose.yml`:
 
 ```yaml
 environment:
-  SESSION_SECRET: your-secure-random-key-here
+  SESSION_SECRET: your-generated-secret-key-here
 ```
+
+**Important:** 
+- Keep this secret secure and never commit it to version control
+- Use a different secret for production vs development
+- Make it at least 32 characters long
 
 ### 3. Build and Run
 
