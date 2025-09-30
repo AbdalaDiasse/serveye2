@@ -58,6 +58,7 @@ export const VehiclesDashboard = (): JSX.Element => {
   const [selectedPeriod, setSelectedPeriod] = useState('today');
   const [selectedCamera, setSelectedCamera] = useState<any>(null);
   const [isCameraModalOpen, setIsCameraModalOpen] = useState(false);
+  const [vehicleTypeTimePeriod, setVehicleTypeTimePeriod] = useState('today');
 
   // Key vehicle metrics - matching Safety Dashboard pattern
   const vehicleMetrics = [
@@ -393,6 +394,38 @@ export const VehiclesDashboard = (): JSX.Element => {
       location: 'Autoroute'
     }
   ];
+
+  // Vehicle type distribution data by time period
+  const vehicleTypeDistribution = {
+    today: [
+      { type: 'Voiture', count: 567 },
+      { type: 'Camion', count: 234 },
+      { type: 'Moto', count: 189 },
+      { type: 'Bus', count: 78 },
+      { type: 'Vélo', count: 179 }
+    ],
+    week: [
+      { type: 'Voiture', count: 3845 },
+      { type: 'Camion', count: 1567 },
+      { type: 'Moto', count: 1234 },
+      { type: 'Bus', count: 456 },
+      { type: 'Vélo', count: 987 }
+    ],
+    month: [
+      { type: 'Voiture', count: 16234 },
+      { type: 'Camion', count: 6789 },
+      { type: 'Moto', count: 5432 },
+      { type: 'Bus', count: 1876 },
+      { type: 'Vélo', count: 4123 }
+    ],
+    year: [
+      { type: 'Voiture', count: 198456 },
+      { type: 'Camion', count: 82345 },
+      { type: 'Moto', count: 65789 },
+      { type: 'Bus', count: 23456 },
+      { type: 'Vélo', count: 51234 }
+    ]
+  };
 
   // Live license plate recognition
   const livePlateRecognition = [
@@ -909,6 +942,40 @@ export const VehiclesDashboard = (): JSX.Element => {
                   labelStyle={{ color: '#f3f4f6' }}
                 />
                 <Bar dataKey="violations" fill="#10b981" radius={[8, 8, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+
+        {/* Vehicle Type Distribution */}
+        <Card className="col-span-6 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-gray-900 dark:text-gray-100 text-base font-medium">Distribution par Type de Véhicule</CardTitle>
+              <Select value={vehicleTypeTimePeriod} onValueChange={setVehicleTypeTimePeriod}>
+                <SelectTrigger className="w-32 h-8 text-xs" data-testid="select-time-period">
+                  <SelectValue placeholder="Période" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="today">Aujourd'hui</SelectItem>
+                  <SelectItem value="week">Semaine</SelectItem>
+                  <SelectItem value="month">Mois</SelectItem>
+                  <SelectItem value="year">Année</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={vehicleTypeDistribution[vehicleTypeTimePeriod as keyof typeof vehicleTypeDistribution]}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                <XAxis dataKey="type" tick={{ fill: '#9ca3af', fontSize: 12 }} />
+                <YAxis tick={{ fill: '#9ca3af', fontSize: 12 }} />
+                <Tooltip 
+                  contentStyle={{ backgroundColor: '#1f2937', border: 'none', borderRadius: '8px' }}
+                  labelStyle={{ color: '#f3f4f6' }}
+                />
+                <Bar dataKey="count" fill="#059669" radius={[8, 8, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
