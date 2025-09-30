@@ -12,7 +12,10 @@ RUN npm ci
 COPY . .
 
 # Build the application
-RUN npm run build
+# Build client with Vite
+RUN npx vite build
+# Build server with bundled dependencies (no external packages for Docker)
+RUN npx esbuild server/index.ts --platform=node --bundle --format=esm --outdir=dist
 
 # Production image
 FROM node:20-alpine
