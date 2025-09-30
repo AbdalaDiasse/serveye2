@@ -318,6 +318,182 @@ export const VehiclesDashboard = (): JSX.Element => {
     { name: 'Zone H', area: 'Route Nationale', violations: 89, total: 'total violations' }
   ];
 
+  // Live vehicle captures with detailed metadata
+  const liveVehicleCaptures = [
+    {
+      id: 1,
+      image: vehicleImage1,
+      color: 'Bleu',
+      type: 'Berline',
+      brand: 'Toyota',
+      model: 'Camry',
+      time: '2 mins ago',
+      camera: 'CAM-05',
+      confidence: '98%',
+      location: 'Avenue Principale'
+    },
+    {
+      id: 2,
+      image: vehicleImage2,
+      color: 'Noir',
+      type: 'SUV',
+      brand: 'Mercedes',
+      model: 'GLE',
+      time: '5 mins ago',
+      camera: 'CAM-02',
+      confidence: '95%',
+      location: 'Intersection Centre'
+    },
+    {
+      id: 3,
+      image: vehicleImage3,
+      color: 'Blanc',
+      type: 'Sedan',
+      brand: 'BMW',
+      model: '320i',
+      time: '8 mins ago',
+      camera: 'CAM-07',
+      confidence: '97%',
+      location: 'Rue Commerciale'
+    },
+    {
+      id: 4,
+      image: vehicleImage4,
+      color: 'Gris',
+      type: 'Berline',
+      brand: 'Audi',
+      model: 'A4',
+      time: '12 mins ago',
+      camera: 'CAM-03',
+      confidence: '96%',
+      location: 'Boulevard Nord'
+    },
+    {
+      id: 5,
+      image: vehicleImage1,
+      color: 'Rouge',
+      type: 'Coupé',
+      brand: 'Honda',
+      model: 'Civic',
+      time: '15 mins ago',
+      camera: 'CAM-08',
+      confidence: '94%',
+      location: 'Route Principale'
+    },
+    {
+      id: 6,
+      image: vehicleImage2,
+      color: 'Argent',
+      type: 'SUV',
+      brand: 'Nissan',
+      model: 'Qashqai',
+      time: '18 mins ago',
+      camera: 'CAM-12',
+      confidence: '99%',
+      location: 'Autoroute'
+    }
+  ];
+
+  // Live license plate recognition
+  const livePlateRecognition = [
+    {
+      id: 1,
+      plate: 'ABC-123-XY',
+      image: vehicleImage1,
+      time: '1 min ago',
+      camera: 'CAM-05',
+      confidence: '99.2%',
+      status: 'Valide',
+      statusColor: 'bg-green-500',
+      country: 'France',
+      region: 'Île-de-France'
+    },
+    {
+      id: 2,
+      plate: 'XYZ-789-AB',
+      image: vehicleImage2,
+      time: '3 mins ago',
+      camera: 'CAM-02',
+      confidence: '98.7%',
+      status: 'Valide',
+      statusColor: 'bg-green-500',
+      country: 'France',
+      region: 'Provence'
+    },
+    {
+      id: 3,
+      plate: 'MNO-456-CD',
+      image: vehicleImage3,
+      time: '6 mins ago',
+      camera: 'CAM-07',
+      confidence: '97.5%',
+      status: 'Recherchée',
+      statusColor: 'bg-red-500',
+      country: 'France',
+      region: 'Normandie'
+    },
+    {
+      id: 4,
+      plate: 'DEF-789-EF',
+      image: vehicleImage4,
+      time: '9 mins ago',
+      camera: 'CAM-03',
+      confidence: '96.8%',
+      status: 'Valide',
+      statusColor: 'bg-green-500',
+      country: 'France',
+      region: 'Bretagne'
+    },
+    {
+      id: 5,
+      plate: 'GHI-012-GH',
+      image: vehicleImage1,
+      time: '11 mins ago',
+      camera: 'CAM-08',
+      confidence: '99.5%',
+      status: 'Volée',
+      statusColor: 'bg-orange-500',
+      country: 'France',
+      region: 'Alsace'
+    },
+    {
+      id: 6,
+      plate: 'JKL-345-IJ',
+      image: vehicleImage2,
+      time: '14 mins ago',
+      camera: 'CAM-12',
+      confidence: '98.9%',
+      status: 'Valide',
+      statusColor: 'bg-green-500',
+      country: 'France',
+      region: 'Aquitaine'
+    },
+    {
+      id: 7,
+      plate: 'PQR-678-KL',
+      image: vehicleImage3,
+      time: '17 mins ago',
+      camera: 'CAM-04',
+      confidence: '95.3%',
+      status: 'Valide',
+      statusColor: 'bg-green-500',
+      country: 'France',
+      region: 'Bourgogne'
+    },
+    {
+      id: 8,
+      plate: 'STU-901-MN',
+      image: vehicleImage4,
+      time: '20 mins ago',
+      camera: 'CAM-09',
+      confidence: '97.1%',
+      status: 'Expirée',
+      statusColor: 'bg-yellow-500',
+      country: 'France',
+      region: 'Lorraine'
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 p-6">
 
@@ -617,6 +793,124 @@ export const VehiclesDashboard = (): JSX.Element => {
                 <Bar dataKey="violations" fill="#10b981" radius={[8, 8, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
+          </CardContent>
+        </Card>
+
+        {/* Live Vehicle Captures */}
+        <Card className="col-span-6 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Car className="w-5 h-5 text-emerald-600" />
+                <CardTitle className="text-gray-900 dark:text-gray-100 text-base font-medium">Captures Véhicules en Direct</CardTitle>
+              </div>
+              <Button size="sm" variant="ghost" className="h-8 px-3">
+                <RefreshCw className="w-4 h-4" />
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="h-[400px] overflow-y-scroll scrollbar-hide space-y-3 pr-2">
+              {liveVehicleCaptures.map((vehicle) => (
+                <div key={vehicle.id} className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors cursor-pointer">
+                  <div className="flex items-start gap-4">
+                    <img 
+                      src={vehicle.image} 
+                      alt={`${vehicle.brand} ${vehicle.model}`}
+                      className="w-32 h-24 object-cover rounded-lg flex-shrink-0"
+                      data-testid={`img-vehicle-${vehicle.id}`}
+                    />
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="font-bold text-base text-gray-900 dark:text-gray-100">{vehicle.brand} {vehicle.model}</div>
+                        <Badge className="bg-emerald-600 text-white text-xs px-2 py-1">
+                          {vehicle.confidence}
+                        </Badge>
+                      </div>
+                      <div className="grid grid-cols-2 gap-2 mb-2">
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs text-gray-500 dark:text-gray-400">Couleur:</span>
+                          <span className="text-xs font-medium text-gray-900 dark:text-gray-100">{vehicle.color}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs text-gray-500 dark:text-gray-400">Type:</span>
+                          <span className="text-xs font-medium text-gray-900 dark:text-gray-100">{vehicle.type}</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-300 mb-1">
+                        <MapPin className="w-3 h-3" />
+                        <span>{vehicle.location}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+                        <Camera className="w-3 h-3" />
+                        <span>{vehicle.camera}</span>
+                        <span>•</span>
+                        <span>{vehicle.time}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Live License Plate Recognition */}
+        <Card className="col-span-6 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Shield className="w-5 h-5 text-emerald-600" />
+                <CardTitle className="text-gray-900 dark:text-gray-100 text-base font-medium">Reconnaissance Plaques en Direct</CardTitle>
+              </div>
+              <Button size="sm" variant="ghost" className="h-8 px-3">
+                <RefreshCw className="w-4 h-4" />
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="h-[400px] overflow-y-scroll scrollbar-hide space-y-3 pr-2">
+              {livePlateRecognition.map((plate) => (
+                <div key={plate.id} className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors cursor-pointer">
+                  <div className="flex items-start gap-4">
+                    <img 
+                      src={plate.image} 
+                      alt={plate.plate}
+                      className="w-32 h-24 object-cover rounded-lg flex-shrink-0"
+                      data-testid={`img-plate-${plate.id}`}
+                    />
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="font-bold text-lg text-gray-900 dark:text-gray-100 font-mono tracking-wider">{plate.plate}</div>
+                        <Badge className={`${plate.statusColor} text-white text-xs px-2 py-1`}>
+                          {plate.status}
+                        </Badge>
+                      </div>
+                      <div className="grid grid-cols-2 gap-2 mb-2">
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs text-gray-500 dark:text-gray-400">Confiance:</span>
+                          <span className="text-xs font-medium text-emerald-600 dark:text-emerald-400">{plate.confidence}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs text-gray-500 dark:text-gray-400">Région:</span>
+                          <span className="text-xs font-medium text-gray-900 dark:text-gray-100">{plate.region}</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-300 mb-1">
+                        <MapPin className="w-3 h-3" />
+                        <span>{plate.country}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+                        <Camera className="w-3 h-3" />
+                        <span>{plate.camera}</span>
+                        <span>•</span>
+                        <span>{plate.time}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </CardContent>
         </Card>
       </div>
