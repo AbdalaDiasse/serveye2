@@ -48,6 +48,12 @@ import {
 } from 'lucide-react';
 import { CameraPerformanceModal } from '@/components/CameraPerformanceModal';
 
+// Import vehicle detection images
+import vehicleImage1 from '@assets/stock_images/traffic_camera_view__8e4e968a.jpg';
+import vehicleImage2 from '@assets/stock_images/traffic_camera_view__d984fc58.jpg';
+import vehicleImage3 from '@assets/stock_images/traffic_camera_view__57548b28.jpg';
+import vehicleImage4 from '@assets/stock_images/traffic_camera_view__5759916c.jpg';
+
 export const VehiclesDashboard = (): JSX.Element => {
   const [selectedPeriod, setSelectedPeriod] = useState('today');
   const [selectedCamera, setSelectedCamera] = useState<any>(null);
@@ -145,7 +151,8 @@ export const VehiclesDashboard = (): JSX.Element => {
       severity: 'Critical',
       severityColor: 'bg-red-500',
       speed: '92 km/h',
-      vehicleType: 'Voiture'
+      vehicleType: 'Voiture',
+      thumbnail: vehicleImage1
     },
     {
       id: 2,
@@ -160,7 +167,8 @@ export const VehiclesDashboard = (): JSX.Element => {
       severity: 'High',
       severityColor: 'bg-orange-500',
       speed: '45 km/h',
-      vehicleType: 'Camion'
+      vehicleType: 'Camion',
+      thumbnail: vehicleImage2
     },
     {
       id: 3,
@@ -175,7 +183,8 @@ export const VehiclesDashboard = (): JSX.Element => {
       severity: 'Medium',
       severityColor: 'bg-blue-500',
       speed: '0 km/h',
-      vehicleType: 'Voiture'
+      vehicleType: 'Voiture',
+      thumbnail: vehicleImage3
     },
     {
       id: 4,
@@ -190,7 +199,8 @@ export const VehiclesDashboard = (): JSX.Element => {
       severity: 'High',
       severityColor: 'bg-orange-500',
       speed: '38 km/h',
-      vehicleType: 'Moto'
+      vehicleType: 'Moto',
+      thumbnail: vehicleImage4
     },
     {
       id: 5,
@@ -205,7 +215,8 @@ export const VehiclesDashboard = (): JSX.Element => {
       severity: 'Medium',
       severityColor: 'bg-blue-500',
       speed: '55 km/h',
-      vehicleType: 'Bus'
+      vehicleType: 'Bus',
+      thumbnail: vehicleImage1
     },
     {
       id: 6,
@@ -220,7 +231,8 @@ export const VehiclesDashboard = (): JSX.Element => {
       severity: 'Critical',
       severityColor: 'bg-red-600',
       speed: '145 km/h',
-      vehicleType: 'Voiture'
+      vehicleType: 'Voiture',
+      thumbnail: vehicleImage2
     },
     {
       id: 7,
@@ -235,7 +247,8 @@ export const VehiclesDashboard = (): JSX.Element => {
       severity: 'High',
       severityColor: 'bg-orange-500',
       speed: '42 km/h',
-      vehicleType: 'Voiture'
+      vehicleType: 'Voiture',
+      thumbnail: vehicleImage3
     },
     {
       id: 8,
@@ -250,7 +263,8 @@ export const VehiclesDashboard = (): JSX.Element => {
       severity: 'Alert',
       severityColor: 'bg-yellow-400',
       speed: '28 km/h',
-      vehicleType: 'Camion'
+      vehicleType: 'Camion',
+      thumbnail: vehicleImage4
     }
   ];
 
@@ -462,9 +476,12 @@ export const VehiclesDashboard = (): JSX.Element => {
               {liveDetections.map((detection) => (
                 <div key={detection.id} className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors cursor-pointer">
                   <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 bg-emerald-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <Car className="w-5 h-5 text-white" />
-                    </div>
+                    <img 
+                      src={detection.thumbnail} 
+                      alt={detection.type}
+                      className="w-24 h-20 object-cover rounded-lg flex-shrink-0"
+                      data-testid={`img-detection-${detection.id}`}
+                    />
                     <div className="flex-1">
                       <div className="flex items-center justify-between mb-1">
                         <div className="font-semibold text-sm text-gray-900 dark:text-gray-100">{detection.plate}</div>
