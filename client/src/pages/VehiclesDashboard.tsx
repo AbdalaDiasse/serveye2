@@ -437,6 +437,21 @@ export const VehiclesDashboard = (): JSX.Element => {
     { time: '20:00', Voiture: 56, Camion: 19, Moto: 16, Bus: 7, Vélo: 24 }
   ];
 
+  // Vehicle violation trends over time
+  const violationTrendsData = [
+    { time: '08:00', speeding: 3, parking: 2, redLine: 1, wrongWay: 1, noEntry: 1, overweight: 0 },
+    { time: '09:00', speeding: 5, parking: 3, redLine: 2, wrongWay: 1, noEntry: 1, overweight: 1 },
+    { time: '10:00', speeding: 8, parking: 5, redLine: 3, wrongWay: 2, noEntry: 2, overweight: 1 },
+    { time: '11:00', speeding: 10, parking: 6, redLine: 4, wrongWay: 2, noEntry: 2, overweight: 1 },
+    { time: '12:00', speeding: 15, parking: 8, redLine: 5, wrongWay: 3, noEntry: 3, overweight: 2 },
+    { time: '13:00', speeding: 12, parking: 10, redLine: 5, wrongWay: 3, noEntry: 3, overweight: 2 },
+    { time: '14:00', speeding: 17, parking: 12, redLine: 6, wrongWay: 4, noEntry: 3, overweight: 2 },
+    { time: '15:00', speeding: 18, parking: 15, redLine: 7, wrongWay: 4, noEntry: 3, overweight: 2 },
+    { time: '16:00', speeding: 15, parking: 16, redLine: 8, wrongWay: 3, noEntry: 2, overweight: 1 },
+    { time: '17:00', speeding: 12, parking: 18, redLine: 7, wrongWay: 3, noEntry: 3, overweight: 2 },
+    { time: '18:00', speeding: 9, parking: 20, redLine: 6, wrongWay: 3, noEntry: 3, overweight: 2 }
+  ];
+
   // Live license plate recognition
   const livePlateRecognition = [
     {
@@ -1112,6 +1127,77 @@ export const VehiclesDashboard = (): JSX.Element => {
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
                 <span className="text-gray-600 dark:text-gray-300">Vélo</span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Vehicle Violation Detection Trend */}
+        <Card className="col-span-12 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+          <CardHeader>
+            <CardTitle className="text-gray-900 dark:text-gray-100 text-base font-medium">Tendance des Détections par violation</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="h-52">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={violationTrendsData}>
+                  <CartesianGrid strokeDasharray="1 1" stroke="#e5e7eb" className="dark:stroke-gray-600" />
+                  <XAxis 
+                    dataKey="time" 
+                    axisLine={false} 
+                    tickLine={false} 
+                    tick={{ fill: '#6b7280', fontSize: 11 }}
+                    className="dark:fill-gray-300"
+                  />
+                  <YAxis 
+                    domain={[0, 20]}
+                    ticks={[0, 5, 10, 15, 20]}
+                    axisLine={false} 
+                    tickLine={false} 
+                    tick={{ fill: '#6b7280', fontSize: 11 }}
+                    className="dark:fill-gray-300"
+                  />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'white', 
+                      border: '1px solid #e0e0e0',
+                      borderRadius: '8px',
+                      fontSize: '12px'
+                    }}
+                  />
+                  <Area type="monotone" dataKey="speeding" stroke="#059669" fill="#05966910" strokeWidth={2} />
+                  <Area type="monotone" dataKey="parking" stroke="#f59e0b" fill="#f59e0b10" strokeWidth={2} />
+                  <Line type="monotone" dataKey="redLine" stroke="#3b82f6" strokeWidth={2} dot={false} />
+                  <Line type="monotone" dataKey="wrongWay" stroke="#ef4444" strokeWidth={2} dot={false} />
+                  <Line type="monotone" dataKey="noEntry" stroke="#8b5cf6" strokeWidth={2} dot={false} />
+                  <Line type="monotone" dataKey="overweight" stroke="#ec4899" strokeWidth={2} dot={false} />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="mt-4 grid grid-cols-3 gap-x-6 gap-y-2 text-xs">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-emerald-600 rounded-full"></div>
+                <span className="text-gray-600 dark:text-gray-300">Excès de vitesse</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
+                <span className="text-gray-600 dark:text-gray-300">Stationnement interdit</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                <span className="text-gray-600 dark:text-gray-300">Franchissement ligne</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                <span className="text-gray-600 dark:text-gray-300">Sens interdit</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                <span className="text-gray-600 dark:text-gray-300">Accès interdit</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-pink-500 rounded-full"></div>
+                <span className="text-gray-600 dark:text-gray-300">Surcharge</span>
               </div>
             </div>
           </CardContent>
