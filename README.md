@@ -86,90 +86,23 @@ The application will be available at:
 
 ## Running with Docker
 
-### 1. Using Docker Compose
+The project includes `docker-compose.yml` and `Dockerfile` for easy Docker deployment.
 
-Create a `docker-compose.yml` file:
+### 1. Docker Files Overview
+
+The following files are included in the project:
+
+- **docker-compose.yml**: Orchestrates PostgreSQL and the application containers
+- **Dockerfile**: Multi-stage build for optimized production image
+- **.dockerignore**: Excludes unnecessary files from Docker build
+
+### 2. Environment Configuration
+
+Before running, update the `SESSION_SECRET` in `docker-compose.yml`:
 
 ```yaml
-version: '3.8'
-
-services:
-  postgres:
-    image: postgres:16-alpine
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: surveillance_db
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-  app:
-    build: .
-    ports:
-      - "5000:5000"
-    environment:
-      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/surveillance_db
-      NODE_ENV: production
-      SESSION_SECRET: your-secret-key-here
-    depends_on:
-      postgres:
-        condition: service_healthy
-    volumes:
-      - ./attached_assets:/app/attached_assets
-
-volumes:
-  postgres_data:
-```
-
-### 2. Create a Dockerfile
-
-Create a `Dockerfile` in the root directory:
-
-```dockerfile
-FROM node:20-alpine AS builder
-
-WORKDIR /app
-
-# Copy package files
-COPY package*.json ./
-
-# Install dependencies
-RUN npm ci
-
-# Copy source code
-COPY . .
-
-# Build the application
-RUN npm run build
-
-# Production image
-FROM node:20-alpine
-
-WORKDIR /app
-
-# Copy package files
-COPY package*.json ./
-
-# Install production dependencies only
-RUN npm ci --only=production
-
-# Copy built application
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/client/dist ./client/dist
-COPY --from=builder /app/attached_assets ./attached_assets
-
-# Expose port
-EXPOSE 5000
-
-# Start the application
-CMD ["node", "dist/index.js"]
+environment:
+  SESSION_SECRET: your-secure-random-key-here
 ```
 
 ### 3. Build and Run
@@ -296,6 +229,90 @@ docker-compose down -v
 # Rebuild from scratch
 docker-compose build --no-cache
 docker-compose up
+```
+
+## Docker Configuration Reference
+
+### docker-compose.yml
+
+```yaml
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: surveillance_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/surveillance_db
+      NODE_ENV: production
+      SESSION_SECRET: your-secret-key-here
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./attached_assets:/app/attached_assets
+
+volumes:
+  postgres_data:
+```
+
+### Dockerfile
+
+```dockerfile
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies
+RUN npm ci
+
+# Copy source code
+COPY . .
+
+# Build the application
+RUN npm run build
+
+# Production image
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install production dependencies only
+RUN npm ci --only=production
+
+# Copy built application
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/client/dist ./client/dist
+COPY --from=builder /app/attached_assets ./attached_assets
+
+# Expose port
+EXPOSE 5000
+
+# Start the application
+CMD ["node", "dist/index.js"]
 ```
 
 ## License
