@@ -429,12 +429,12 @@ export const VehiclesDashboard = (): JSX.Element => {
 
   // Vehicle type detection trend over time
   const vehicleDetectionTrend = [
-    { time: '00:00', Voiture: 45, Camion: 12, Moto: 8, Bus: 3, Vélo: 15 },
-    { time: '04:00', Voiture: 23, Camion: 8, Moto: 5, Bus: 2, Vélo: 7 },
-    { time: '08:00', Voiture: 89, Camion: 34, Moto: 28, Bus: 12, Vélo: 42 },
-    { time: '12:00', Voiture: 67, Camion: 28, Moto: 22, Bus: 9, Vélo: 31 },
-    { time: '16:00', Voiture: 78, Camion: 31, Moto: 25, Bus: 11, Vélo: 36 },
-    { time: '20:00', Voiture: 56, Camion: 19, Moto: 16, Bus: 7, Vélo: 24 }
+    { time: '00:00', Voiture: 45, Camion: 38, Moto: 32, Bus: 25, Vélo: 28 },
+    { time: '04:00', Voiture: 23, Camion: 18, Moto: 15, Bus: 12, Vélo: 20 },
+    { time: '08:00', Voiture: 89, Camion: 72, Moto: 65, Bus: 58, Vélo: 75 },
+    { time: '12:00', Voiture: 67, Camion: 55, Moto: 48, Bus: 42, Vélo: 60 },
+    { time: '16:00', Voiture: 78, Camion: 65, Moto: 58, Bus: 52, Vélo: 68 },
+    { time: '20:00', Voiture: 56, Camion: 45, Moto: 38, Bus: 32, Vélo: 48 }
   ];
 
   // Vehicle violation trends over time
