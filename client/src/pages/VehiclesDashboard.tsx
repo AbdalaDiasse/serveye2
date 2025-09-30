@@ -997,23 +997,61 @@ export const VehiclesDashboard = (): JSX.Element => {
             <CardTitle className="text-gray-900 dark:text-gray-100 text-base font-medium">Tendance des Détections par Type de Véhicule</CardTitle>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={350}>
-              <LineChart data={vehicleDetectionTrend}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                <XAxis dataKey="time" tick={{ fill: '#9ca3af', fontSize: 12 }} />
-                <YAxis tick={{ fill: '#9ca3af', fontSize: 12 }} />
-                <Tooltip 
-                  contentStyle={{ backgroundColor: '#1f2937', border: 'none', borderRadius: '8px' }}
-                  labelStyle={{ color: '#f3f4f6' }}
-                />
-                <Legend wrapperStyle={{ color: '#9ca3af', fontSize: 12 }} />
-                <Line type="monotone" dataKey="Voiture" stroke="#059669" strokeWidth={2} dot={{ fill: '#059669', r: 4 }} />
-                <Line type="monotone" dataKey="Camion" stroke="#f59e0b" strokeWidth={2} dot={{ fill: '#f59e0b', r: 4 }} />
-                <Line type="monotone" dataKey="Moto" stroke="#3b82f6" strokeWidth={2} dot={{ fill: '#3b82f6', r: 4 }} />
-                <Line type="monotone" dataKey="Bus" stroke="#ef4444" strokeWidth={2} dot={{ fill: '#ef4444', r: 4 }} />
-                <Line type="monotone" dataKey="Vélo" stroke="#8b5cf6" strokeWidth={2} dot={{ fill: '#8b5cf6', r: 4 }} />
-              </LineChart>
-            </ResponsiveContainer>
+            <div className="h-64">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={vehicleDetectionTrend}>
+                  <CartesianGrid strokeDasharray="1 1" stroke="#e5e7eb" className="dark:stroke-gray-600" />
+                  <XAxis 
+                    dataKey="time" 
+                    axisLine={false} 
+                    tickLine={false} 
+                    tick={{ fill: '#6b7280', fontSize: 11 }}
+                    className="dark:fill-gray-300"
+                  />
+                  <YAxis 
+                    axisLine={false} 
+                    tickLine={false} 
+                    tick={{ fill: '#6b7280', fontSize: 11 }}
+                    className="dark:fill-gray-300"
+                  />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'white', 
+                      border: '1px solid #e0e0e0',
+                      borderRadius: '8px',
+                      fontSize: '12px'
+                    }}
+                  />
+                  <Area type="monotone" dataKey="Voiture" stroke="#059669" fill="#05966910" strokeWidth={2} />
+                  <Area type="monotone" dataKey="Camion" stroke="#f59e0b" fill="#f59e0b10" strokeWidth={2} />
+                  <Line type="monotone" dataKey="Moto" stroke="#3b82f6" strokeWidth={2} dot={false} />
+                  <Line type="monotone" dataKey="Bus" stroke="#ef4444" strokeWidth={2} dot={false} />
+                  <Line type="monotone" dataKey="Vélo" stroke="#8b5cf6" strokeWidth={2} dot={false} />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="mt-4 grid grid-cols-5 gap-x-6 gap-y-2 text-xs">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-emerald-600 rounded-full"></div>
+                <span className="text-gray-600 dark:text-gray-300">Voiture</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
+                <span className="text-gray-600 dark:text-gray-300">Camion</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                <span className="text-gray-600 dark:text-gray-300">Moto</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                <span className="text-gray-600 dark:text-gray-300">Bus</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                <span className="text-gray-600 dark:text-gray-300">Vélo</span>
+              </div>
+            </div>
           </CardContent>
         </Card>
       </div>
