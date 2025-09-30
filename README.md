@@ -316,10 +316,7 @@ RUN npm ci
 COPY . .
 
 # Build the application
-# Build client with Vite
-RUN npx vite build
-# Build server with bundled dependencies (no external packages for Docker)
-RUN npx esbuild server/index.ts --platform=node --bundle --format=esm --outdir=dist
+RUN npm run build
 
 # Production image
 FROM node:20-alpine
@@ -329,8 +326,8 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install production dependencies only
-RUN npm ci --only=production
+# Install all dependencies (needed for externalized packages)
+RUN npm ci
 
 # Copy built application (dist contains both server and client/public files)
 COPY --from=builder /app/dist ./dist

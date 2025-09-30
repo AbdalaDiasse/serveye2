@@ -1,0 +1,35 @@
+ => ERROR [builder 7/7] RUN npx esbuild server/index.ts --platform=node --bundle --format=esm --outdir=dist                      1.4s
+------
+ > [builder 7/7] RUN npx esbuild server/index.ts --platform=node --bundle --format=esm --outdir=dist:
+1.061 ✘ [ERROR] Could not resolve "@babel/preset-typescript/package.json"
+1.061 
+1.061     node_modules/@babel/core/lib/config/files/module-types.js:151:40:
+1.061       151 │ ...t packageJson = require("@babel/preset-typescript/package.json");
+1.061           ╵                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1.061 
+1.061   You can mark the path "@babel/preset-typescript/package.json" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle. You can also surround this "require" call with a try/catch block to handle this failure at run-time instead of bundle-time.
+1.061 
+1.274 ✘ [ERROR] Could not resolve "../pkg"
+1.274 
+1.274     node_modules/lightningcss/node/index.js:17:27:
+1.274       17 │   module.exports = require(`../pkg`);
+1.274          ╵                            ~~~~~~~~
+1.274 
+1.282 ▲ [WARNING] The glob pattern require("../lightningcss.*.node") did not match any files [empty-glob]
+1.282 
+1.282     node_modules/lightningcss/node/index.js:22:29:
+1.282       22 │ ...dule.exports = require(`../lightningcss.${parts.join('-')}.node`);
+1.282          ╵                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1.282 
+1.364 1 warning and 2 errors
+------
+Dockerfile:18
+--------------------
+  16 |     RUN npx vite build
+  17 |     # Build server with bundled dependencies (no external packages for Docker)
+  18 | >>> RUN npx esbuild server/index.ts --platform=node --bundle --format=esm --outdir=dist
+  19 |     
+  20 |     # Production image
+--------------------
+ERROR: failed to solve: process "/bin/sh -c npx esbuild server/index.ts --platform=node --bundle --format=esm --outdir=dist" did not complete successfully: exit code: 1
+ERROR: Service 'app' failed to build : Build failed
