@@ -439,17 +439,17 @@ export const VehiclesDashboard = (): JSX.Element => {
 
   // Vehicle violation trends over time
   const violationTrendsData = [
-    { time: '08:00', speeding: 3, parking: 2, redLine: 1, wrongWay: 1, noEntry: 1, overweight: 0 },
-    { time: '09:00', speeding: 5, parking: 3, redLine: 2, wrongWay: 1, noEntry: 1, overweight: 1 },
-    { time: '10:00', speeding: 8, parking: 5, redLine: 3, wrongWay: 2, noEntry: 2, overweight: 1 },
-    { time: '11:00', speeding: 10, parking: 6, redLine: 4, wrongWay: 2, noEntry: 2, overweight: 1 },
-    { time: '12:00', speeding: 15, parking: 8, redLine: 5, wrongWay: 3, noEntry: 3, overweight: 2 },
-    { time: '13:00', speeding: 12, parking: 10, redLine: 5, wrongWay: 3, noEntry: 3, overweight: 2 },
-    { time: '14:00', speeding: 17, parking: 12, redLine: 6, wrongWay: 4, noEntry: 3, overweight: 2 },
-    { time: '15:00', speeding: 18, parking: 15, redLine: 7, wrongWay: 4, noEntry: 3, overweight: 2 },
-    { time: '16:00', speeding: 15, parking: 16, redLine: 8, wrongWay: 3, noEntry: 2, overweight: 1 },
-    { time: '17:00', speeding: 12, parking: 18, redLine: 7, wrongWay: 3, noEntry: 3, overweight: 2 },
-    { time: '18:00', speeding: 9, parking: 20, redLine: 6, wrongWay: 3, noEntry: 3, overweight: 2 }
+    { time: '08:00', speeding: 4, parking: 3, redLine: 2, wrongWay: 2, noEntry: 2, overweight: 1 },
+    { time: '09:00', speeding: 6, parking: 4, redLine: 3, wrongWay: 3, noEntry: 3, overweight: 2 },
+    { time: '10:00', speeding: 9, parking: 6, redLine: 4, wrongWay: 4, noEntry: 4, overweight: 3 },
+    { time: '11:00', speeding: 11, parking: 7, redLine: 5, wrongWay: 5, noEntry: 5, overweight: 4 },
+    { time: '12:00', speeding: 16, parking: 9, redLine: 7, wrongWay: 6, noEntry: 6, overweight: 5 },
+    { time: '13:00', speeding: 13, parking: 11, redLine: 8, wrongWay: 7, noEntry: 7, overweight: 6 },
+    { time: '14:00', speeding: 18, parking: 13, redLine: 9, wrongWay: 8, noEntry: 8, overweight: 7 },
+    { time: '15:00', speeding: 19, parking: 16, redLine: 10, wrongWay: 9, noEntry: 9, overweight: 6 },
+    { time: '16:00', speeding: 16, parking: 17, redLine: 11, wrongWay: 7, noEntry: 7, overweight: 5 },
+    { time: '17:00', speeding: 13, parking: 19, redLine: 9, wrongWay: 6, noEntry: 6, overweight: 4 },
+    { time: '18:00', speeding: 10, parking: 20, redLine: 8, wrongWay: 5, noEntry: 5, overweight: 3 }
   ];
 
   // Live license plate recognition
