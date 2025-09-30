@@ -427,6 +427,16 @@ export const VehiclesDashboard = (): JSX.Element => {
     ]
   };
 
+  // Vehicle type detection trend over time
+  const vehicleDetectionTrend = [
+    { time: '00:00', Voiture: 45, Camion: 12, Moto: 8, Bus: 3, Vélo: 15 },
+    { time: '04:00', Voiture: 23, Camion: 8, Moto: 5, Bus: 2, Vélo: 7 },
+    { time: '08:00', Voiture: 89, Camion: 34, Moto: 28, Bus: 12, Vélo: 42 },
+    { time: '12:00', Voiture: 67, Camion: 28, Moto: 22, Bus: 9, Vélo: 31 },
+    { time: '16:00', Voiture: 78, Camion: 31, Moto: 25, Bus: 11, Vélo: 36 },
+    { time: '20:00', Voiture: 56, Camion: 19, Moto: 16, Bus: 7, Vélo: 24 }
+  ];
+
   // Live license plate recognition
   const livePlateRecognition = [
     {
@@ -977,6 +987,32 @@ export const VehiclesDashboard = (): JSX.Element => {
                 />
                 <Bar dataKey="count" fill="#059669" radius={[8, 8, 0, 0]} />
               </BarChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+
+        {/* Vehicle Type Detection Trend */}
+        <Card className="col-span-12 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+          <CardHeader>
+            <CardTitle className="text-gray-900 dark:text-gray-100 text-base font-medium">Tendance des Détections par Type de Véhicule</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={350}>
+              <LineChart data={vehicleDetectionTrend}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                <XAxis dataKey="time" tick={{ fill: '#9ca3af', fontSize: 12 }} />
+                <YAxis tick={{ fill: '#9ca3af', fontSize: 12 }} />
+                <Tooltip 
+                  contentStyle={{ backgroundColor: '#1f2937', border: 'none', borderRadius: '8px' }}
+                  labelStyle={{ color: '#f3f4f6' }}
+                />
+                <Legend wrapperStyle={{ color: '#9ca3af', fontSize: 12 }} />
+                <Line type="monotone" dataKey="Voiture" stroke="#059669" strokeWidth={2} dot={{ fill: '#059669', r: 4 }} />
+                <Line type="monotone" dataKey="Camion" stroke="#f59e0b" strokeWidth={2} dot={{ fill: '#f59e0b', r: 4 }} />
+                <Line type="monotone" dataKey="Moto" stroke="#3b82f6" strokeWidth={2} dot={{ fill: '#3b82f6', r: 4 }} />
+                <Line type="monotone" dataKey="Bus" stroke="#ef4444" strokeWidth={2} dot={{ fill: '#ef4444', r: 4 }} />
+                <Line type="monotone" dataKey="Vélo" stroke="#8b5cf6" strokeWidth={2} dot={{ fill: '#8b5cf6', r: 4 }} />
+              </LineChart>
             </ResponsiveContainer>
           </CardContent>
         </Card>
