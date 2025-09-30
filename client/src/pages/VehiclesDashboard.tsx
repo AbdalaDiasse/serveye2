@@ -1,597 +1,615 @@
-import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { 
-  Car, 
-  Truck, 
-  Bike, 
+  BarChart, 
+  Bar, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  Tooltip, 
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  Area,
+  AreaChart,
+  PieChart,
+  Pie,
+  Cell,
+  RadarChart,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
+  Radar,
+  Legend
+} from 'recharts';
+import { 
+  Car,
+  Truck,
+  Bike,
   Bus,
-  Activity,
+  Gauge,
   AlertTriangle,
   Camera,
-  Gauge,
-  Clock,
-  Shield,
-  TrendingUp,
-  Info,
-  ChevronRight,
-  CheckCircle,
-  XCircle,
-  AlertCircle
-} from "lucide-react";
-import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, Legend } from "recharts";
+  MapPin,
+  Settings,
+  Bell,
+  Search,
+  Maximize2,
+  RefreshCw,
+  Filter,
+  CircleCheck,
+  CircleX,
+  Activity,
+  Shield
+} from 'lucide-react';
+import { CameraPerformanceModal } from '@/components/CameraPerformanceModal';
 
 export const VehiclesDashboard = (): JSX.Element => {
-  // Données pour les métriques principales
-  const metrics = [
+  const [selectedPeriod, setSelectedPeriod] = useState('today');
+  const [selectedCamera, setSelectedCamera] = useState<any>(null);
+  const [isCameraModalOpen, setIsCameraModalOpen] = useState(false);
+
+  // Key vehicle metrics - matching Safety Dashboard pattern
+  const vehicleMetrics = [
+    { label: 'Véhicules Détectés', value: 1247, icon: Car, change: '+15%', period: 'today' },
+    { label: 'Plaques Reconnues', value: 892, icon: Camera, change: '+8%', period: 'today' },
+    { label: 'Excès de Vitesse', value: 52, icon: Gauge, change: '+12%', period: 'today' },
+    { label: 'Feux Rouges', value: 34, icon: AlertTriangle, change: '+5%', period: 'today' },
+    { label: 'Stationnements', value: 67, icon: MapPin, change: '+18%', period: 'today' },
+    { label: 'Sens Interdit', value: 23, icon: Shield, change: '+3%', period: 'today' },
+    { label: 'Violations Total', value: 89, icon: AlertTriangle, change: '+23%', period: 'today' }
+  ];
+
+  // Radar chart data for Vehicle Module Performance
+  const radarData = [
+    { subject: 'Détection Plaques', currentWeek: 92, previousWeek: 88, fullMark: 100 },
+    { subject: 'Vitesse Monitoring', currentWeek: 78, previousWeek: 75, fullMark: 100 },
+    { subject: 'Type Recognition', currentWeek: 85, previousWeek: 82, fullMark: 100 },
+    { subject: 'Violation Detection', currentWeek: 88, previousWeek: 85, fullMark: 100 },
+    { subject: 'Zone Coverage', currentWeek: 75, previousWeek: 70, fullMark: 100 },
+    { subject: 'False Positive Rate', currentWeek: 30, previousWeek: 38, fullMark: 100 },
+    { subject: 'Response Time', currentWeek: 90, previousWeek: 87, fullMark: 100 },
+    { subject: 'Alert Accuracy', currentWeek: 82, previousWeek: 80, fullMark: 100 }
+  ];
+
+  // Vehicle recommendations data
+  const vehicleRecommendations = [
     {
-      value: "1,247",
-      label: "Véhicules Détectés",
-      icon: <Car className="w-6 h-6 text-white" />,
-      bgColor: "bg-gradient-to-br from-blue-500 to-blue-600",
-      trend: "+15%"
+      title: 'Améliorer Caméras',
+      description: 'Installer nouvelles caméras haute résolution',
+      icon: Camera
     },
     {
-      value: "892",
-      label: "Plaques Reconnues",
-      icon: <Camera className="w-6 h-6 text-white" />,
-      bgColor: "bg-gradient-to-br from-green-500 to-green-600",
-      trend: "+8%"
+      title: 'Zones à Risque',
+      description: 'Augmenter surveillance intersections',
+      icon: MapPin
     },
     {
-      value: "52",
-      label: "Seuils Vitesse Max",
-      icon: <Gauge className="w-6 h-6 text-white" />,
-      bgColor: "bg-gradient-to-br from-orange-500 to-orange-600",
-      trend: "-12%"
+      title: 'Réduction Violations',
+      description: 'Optimiser signalisation routière',
+      icon: AlertTriangle
     },
     {
-      value: "67",
-      label: "Violations Détectées",
-      icon: <AlertTriangle className="w-6 h-6 text-white" />,
-      bgColor: "bg-gradient-to-br from-red-500 to-red-600",
-      trend: "+23%"
+      title: 'Système d\'Alerte',
+      description: 'Améliorer temps de réponse',
+      icon: Bell
+    },
+    {
+      title: 'Calibration Vitesse',
+      description: 'Ajuster seuils de détection',
+      icon: Gauge
+    },
+    {
+      title: 'Formation Personnel',
+      description: 'Training système reconnaissance',
+      icon: Settings
+    },
+    {
+      title: 'Analyse Trafic',
+      description: 'Optimiser flux de circulation',
+      icon: Activity
+    },
+    {
+      title: 'Maintenance Équipement',
+      description: 'Inspection caméras régulière',
+      icon: Settings
+    },
+    {
+      title: 'Protocoles Sécurité',
+      description: 'Mise à jour procédures',
+      icon: Shield
+    },
+    {
+      title: 'Rapports Incidents',
+      description: 'Streamliner processus reporting',
+      icon: AlertTriangle
     }
   ];
 
-  // Données pour la détection en temps réel (courbe)
-  const realTimeData = [
-    { time: "00:00", vehicles: 45 },
-    { time: "04:00", vehicles: 38 },
-    { time: "08:00", vehicles: 125 },
-    { time: "12:00", vehicles: 187 },
-    { time: "16:00", vehicles: 210 },
-    { time: "20:00", vehicles: 156 },
-    { time: "24:00", vehicles: 67 }
-  ];
-
-  // Données pour la distribution des véhicules par type (pie chart)
-  const vehicleTypeData = [
-    { name: "Voitures", value: 567, color: "#3b82f6" },
-    { name: "Camions", value: 234, color: "#f97316" },
-    { name: "Motos", value: 189, color: "#10b981" },
-    { name: "Bus", value: 78, color: "#8b5cf6" },
-    { name: "Vélos", value: 179, color: "#06b6d4" }
-  ];
-
-  // Données pour les violations (histogram)
-  const violationsData = [
-    { type: "Excès vitesse", count: 89 },
-    { type: "Feu rouge", count: 45 },
-    { type: "Stationnement", count: 67 },
-    { type: "Sens interdit", count: 23 },
-    { type: "Stop", count: 34 },
-    { type: "Ligne continue", count: 19 }
-  ];
-
-  // Données pour les captures de véhicules
-  const vehicleCaptures = [
+  // Live vehicle detections
+  const liveDetections = [
     {
-      plate: "ABC-123",
-      time: "Il y a 2 minutes",
-      speed: "42 km/h",
-      location: "CAM-02",
-      status: "normal",
-      vehicleType: "Voiture",
-      image: "https://images.unsplash.com/photo-1549924231-f129b911e442?w=400&h=300&fit=crop&auto=format"
+      id: 1,
+      plate: 'ABC-123',
+      type: 'Excès de Vitesse',
+      location: 'Avenue Principale',
+      area: 'Zone A',
+      time: '2 mins ago',
+      camera: 'CAM-05',
+      status: 'New',
+      statusColor: 'bg-green-500',
+      severity: 'Critical',
+      severityColor: 'bg-red-500',
+      speed: '92 km/h',
+      vehicleType: 'Voiture'
     },
     {
-      plate: "XYZ-789",
-      time: "Il y a 5 minutes",
-      speed: "82 km/h",
-      location: "CAM-05",
-      status: "warning",
-      vehicleType: "Voiture",
-      image: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=400&h=300&fit=crop&auto=format"
+      id: 2,
+      plate: 'XYZ-789',
+      type: 'Feu Rouge',
+      location: 'Intersection Centre',
+      area: 'Zone B',
+      time: '5 mins ago',
+      camera: 'CAM-02',
+      status: 'In Review',
+      statusColor: 'bg-yellow-500',
+      severity: 'High',
+      severityColor: 'bg-orange-500',
+      speed: '45 km/h',
+      vehicleType: 'Camion'
     },
     {
-      plate: "MN-456",
-      time: "Il y a 8 minutes",
-      speed: "38 km/h",
-      location: "CAM-01",
-      status: "normal",
-      vehicleType: "Moto",
-      image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop&auto=format"
+      id: 3,
+      plate: 'MNO-456',
+      type: 'Stationnement Interdit',
+      location: 'Rue Commerciale',
+      area: 'Zone C',
+      time: '8 mins ago',
+      camera: 'CAM-07',
+      status: 'Confirmed',
+      statusColor: 'bg-gray-400',
+      severity: 'Medium',
+      severityColor: 'bg-blue-500',
+      speed: '0 km/h',
+      vehicleType: 'Voiture'
     },
     {
-      plate: "DEF-456",
-      time: "Il y a 12 minutes",
-      speed: "55 km/h",
-      location: "CAM-03",
-      status: "normal",
-      vehicleType: "Camion",
-      image: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=400&h=300&fit=crop&auto=format"
+      id: 4,
+      plate: 'DEF-789',
+      type: 'Sens Interdit',
+      location: 'Boulevard Nord',
+      area: 'Zone A',
+      time: '12 mins ago',
+      camera: 'CAM-03',
+      status: 'Resolved',
+      statusColor: 'bg-gray-500',
+      severity: 'High',
+      severityColor: 'bg-orange-500',
+      speed: '38 km/h',
+      vehicleType: 'Moto'
     },
     {
-      plate: "GHI-789",
-      time: "Il y a 15 minutes",
-      speed: "78 km/h",
-      location: "CAM-04",
-      status: "warning",
-      vehicleType: "Voiture",
-      image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400&h=300&fit=crop&auto=format"
+      id: 5,
+      plate: 'GHI-012',
+      type: 'Ligne Continue',
+      location: 'Route Principale',
+      area: 'Zone B',
+      time: '15 mins ago',
+      camera: 'CAM-08',
+      status: 'New',
+      statusColor: 'bg-green-500',
+      severity: 'Medium',
+      severityColor: 'bg-blue-500',
+      speed: '55 km/h',
+      vehicleType: 'Bus'
     },
     {
-      plate: "JKL-012",
-      time: "Il y a 18 minutes",
-      speed: "45 km/h",
-      location: "CAM-06",
-      status: "normal",
-      vehicleType: "Voiture",
-      image: "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=400&h=300&fit=crop&auto=format"
+      id: 6,
+      plate: 'JKL-345',
+      type: 'Excès de Vitesse',
+      location: 'Autoroute',
+      area: 'Zone D',
+      time: '18 mins ago',
+      camera: 'CAM-12',
+      status: 'Critical',
+      statusColor: 'bg-red-500',
+      severity: 'Critical',
+      severityColor: 'bg-red-600',
+      speed: '145 km/h',
+      vehicleType: 'Voiture'
     },
     {
-      plate: "MNO-345",
-      time: "Il y a 22 minutes",
-      speed: "35 km/h",
-      location: "CAM-01",
-      status: "normal",
-      vehicleType: "Moto",
-      image: "https://images.unsplash.com/photo-1609630875171-b1321377ee65?w=400&h=300&fit=crop&auto=format"
+      id: 7,
+      plate: 'PQR-678',
+      type: 'Stop Non Respecté',
+      location: 'Intersection Sud',
+      area: 'Zone C',
+      time: '22 mins ago',
+      camera: 'CAM-04',
+      status: 'Confirmed',
+      statusColor: 'bg-gray-400',
+      severity: 'High',
+      severityColor: 'bg-orange-500',
+      speed: '42 km/h',
+      vehicleType: 'Voiture'
     },
     {
-      plate: "PQR-678",
-      time: "Il y a 25 minutes",
-      speed: "89 km/h",
-      location: "CAM-07",
-      status: "warning",
-      vehicleType: "Voiture",
-      image: "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=400&h=300&fit=crop&auto=format"
-    },
-    {
-      plate: "STU-901",
-      time: "Il y a 28 minutes",
-      speed: "62 km/h",
-      location: "CAM-02",
-      status: "normal",
-      vehicleType: "Bus",
-      image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400&h=300&fit=crop&auto=format"
-    },
-    {
-      plate: "VWX-234",
-      time: "Il y a 32 minutes",
-      speed: "48 km/h",
-      location: "CAM-08",
-      status: "normal",
-      vehicleType: "Voiture",
-      image: "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=400&h=300&fit=crop&auto=format"
-    },
-    {
-      plate: "YZA-567",
-      time: "Il y a 35 minutes",
-      speed: "75 km/h",
-      location: "CAM-03",
-      status: "warning",
-      vehicleType: "Camion",
-      image: "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=400&h=300&fit=crop&auto=format"
-    },
-    {
-      plate: "BCD-890",
-      time: "Il y a 38 minutes",
-      speed: "52 km/h",
-      location: "CAM-05",
-      status: "normal",
-      vehicleType: "Voiture",
-      image: "https://images.unsplash.com/photo-1617788138017-80ad40651399?w=400&h=300&fit=crop&auto=format"
+      id: 8,
+      plate: 'STU-901',
+      type: 'Zone Restreinte',
+      location: 'Zone Industrielle',
+      area: 'Zone E',
+      time: '25 mins ago',
+      camera: 'CAM-09',
+      status: 'New',
+      statusColor: 'bg-green-500',
+      severity: 'Alert',
+      severityColor: 'bg-yellow-400',
+      speed: '28 km/h',
+      vehicleType: 'Camion'
     }
   ];
 
-  // Données pour les plaques d'immatriculation
-  const licensePlates = [
-    { plate: "ABC-123-FR", location: "Entrée A", time: "09:45", status: "registered" },
-    { plate: "XYZ-789-FR", location: "Sortie B", time: "09:43", status: "warning" },
-    { plate: "MN-456-FR", location: "Zone 3", time: "09:41", status: "registered" },
-    { plate: "BUS-901-FR", location: "Parking", time: "09:39", status: "registered" }
+  // Violation distribution
+  const violationDistribution = [
+    { name: 'Excès Vitesse', value: 32.5, percentage: '32.5%', color: '#059669', gradientId: 'speed' },
+    { name: 'Feu Rouge', value: 24.3, percentage: '24.3%', color: '#10b981', gradientId: 'red' },
+    { name: 'Stationnement', value: 18.7, percentage: '18.7%', color: '#34d399', gradientId: 'parking' },
+    { name: 'Sens Interdit', value: 12.8, percentage: '12.8%', color: '#6ee7b7', gradientId: 'direction' },
+    { name: 'Stop', value: 7.2, percentage: '7.2%', color: '#a7f3d0', gradientId: 'stop' },
+    { name: 'Ligne Continue', value: 4.5, percentage: '4.5%', color: '#d1fae5', gradientId: 'line' }
+  ];
+
+  // Detection summary
+  const detectionSummary = [
+    { type: 'Violations Critiques', count: 89, icon: AlertTriangle },
+    { type: 'Priorité Haute', count: 67, icon: Gauge },
+    { type: 'Priorité Moyenne', count: 45, icon: Shield },
+    { type: 'Priorité Basse', count: 23, icon: Car },
+    { type: 'En Révision', count: 34, icon: RefreshCw },
+    { type: 'Résolues Aujourd\'hui', count: 156, icon: CircleCheck },
+    { type: 'Caméras Actives', count: 24, icon: Camera },
+    { type: 'Zones Surveillées', count: 12, icon: MapPin }
+  ];
+
+  // Detections per camera
+  const camerasData = [
+    { name: 'CAM-05', zone: 'Avenue Principale', violations: 52 },
+    { name: 'CAM-02', zone: 'Intersection Centre', violations: 48 },
+    { name: 'CAM-03', zone: 'Boulevard Nord', violations: 39 },
+    { name: 'CAM-07', zone: 'Rue Commerciale', violations: 35 },
+    { name: 'CAM-01', zone: 'Entrée Principale', violations: 28 },
+    { name: 'CAM-04', zone: 'Intersection Sud', violations: 44 },
+    { name: 'CAM-06', zone: 'Route Nationale', violations: 51 },
+    { name: 'CAM-08', zone: 'Route Principale', violations: 25 },
+    { name: 'CAM-09', zone: 'Zone Industrielle', violations: 37 },
+    { name: 'CAM-10', zone: 'Centre Ville', violations: 19 },
+    { name: 'CAM-11', zone: 'Parking', violations: 15 },
+    { name: 'CAM-12', zone: 'Autoroute', violations: 42 }
+  ];
+
+  // Detections per zone
+  const zonesData = [
+    { name: 'Zone A', area: 'Avenue Principale', violations: 134, total: 'total violations' },
+    { name: 'Zone B', area: 'Intersection Centre', violations: 98, total: 'total violations' },
+    { name: 'Zone C', area: 'Rue Commerciale', violations: 76, total: 'total violations' },
+    { name: 'Zone D', area: 'Autoroute', violations: 112, total: 'total violations' },
+    { name: 'Zone E', area: 'Zone Industrielle', violations: 54, total: 'total violations' },
+    { name: 'Zone F', area: 'Centre Ville', violations: 41, total: 'total violations' },
+    { name: 'Zone G', area: 'Boulevard Nord', violations: 67, total: 'total violations' },
+    { name: 'Zone H', area: 'Route Nationale', violations: 89, total: 'total violations' }
   ];
 
   return (
-    <div className="w-full p-6 space-y-6 bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 p-6">
 
-      {/* Métriques principales */}
-      <div className="grid grid-cols-4 gap-4">
-        {metrics.map((metric, index) => (
-          <Card key={index} className={`${metric.bgColor} border-0 text-white`}>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div className="p-3 bg-white/20 rounded-lg">
-                  {metric.icon}
+      {/* Key Metrics */}
+      <div className="grid grid-cols-7 gap-4 mb-6">
+        {vehicleMetrics.map((metric, index) => (
+          <Card key={index} className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 shadow-sm relative overflow-hidden">
+            {/* Green left accent border */}
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-emerald-500"></div>
+            <CardContent className="p-4 pl-6">
+              <div className="flex items-start justify-between">
+                <div className="flex flex-col">
+                  <div className="text-xs text-gray-500 dark:text-gray-400 mb-2">{metric.label}</div>
+                  <div className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">{metric.value}</div>
+                  <div className="flex items-center gap-1">
+                    <svg className="w-3 h-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                    </svg>
+                    <span className="text-xs text-green-500 font-medium">{metric.change}</span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">{metric.period}</span>
+                  </div>
                 </div>
-                <Badge className="bg-white/20 text-white border-0">
-                  {metric.trend}
-                </Badge>
+                <div className="ml-4">
+                  <metric.icon className="w-8 h-8 text-emerald-500" />
+                </div>
               </div>
-              <div className="text-3xl font-bold mb-1">{metric.value}</div>
-              <p className="text-sm text-white/90">{metric.label}</p>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      {/* Statistiques principales */}
-      <div className="grid grid-cols-3 gap-6">
-        {/* Vitesse moyenne */}
-        <Card className="bg-white">
-          <CardHeader className="pb-3">
+      {/* Main Content Grid */}
+      <div className="grid grid-cols-12 gap-6">
+        {/* Vehicle Module Performance */}
+        <Card className="col-span-7 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+          <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle className="text-base font-semibold flex items-center gap-2">
-                <Gauge className="w-5 h-5 text-orange-500" />
-                Vitesse moyenne
-              </CardTitle>
-              <Info className="w-4 h-4 text-gray-400" />
+              <CardTitle className="text-gray-900 dark:text-gray-100 text-base font-medium">Performance Module Véhicules</CardTitle>
+              <div className="flex gap-2">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="bg-emerald-600 border-emerald-600 text-white hover:bg-emerald-700 h-8 px-4 text-xs"
+                >
+                  Hebdomadaire
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="bg-transparent border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 h-8 px-4 text-xs"
+                >
+                  Mensuel
+                </Button>
+              </div>
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-center py-4">
-              <div className="text-4xl font-bold text-orange-600 mb-2">52.4</div>
-              <p className="text-sm text-gray-500">km/h sur la période sélectionnée</p>
-              <div className="mt-4 p-3 bg-orange-50 rounded-lg">
-                <div className="flex items-center justify-center gap-2">
-                  <TrendingUp className="w-4 h-4 text-orange-600" />
-                  <span className="text-sm font-medium text-orange-600">+3.2 km/h vs hier</span>
+            <div className="grid grid-cols-2 gap-8">
+              <div className="flex flex-col items-center">
+                <div className="radar-card h-80 mb-4 w-full max-w-md">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <RadarChart data={radarData}>
+                      <PolarGrid 
+                        gridType="polygon" 
+                        radialLines={true}
+                        stroke="#9ca3af"
+                        strokeWidth={1}
+                        strokeOpacity={0.5}
+                      />
+                      <PolarAngleAxis 
+                        dataKey="subject" 
+                        tick={{ fill: '#6b7280', fontSize: 11, fontWeight: 500 }}
+                        tickFormatter={(value) => value}
+                      />
+                      <PolarRadiusAxis 
+                        angle={90} 
+                        domain={[0, 100]} 
+                        tick={{ fill: '#9ca3af', fontSize: 10 }}
+                        tickCount={5}
+                        axisLine={false}
+                      />
+                      <Radar
+                        name="Semaine Actuelle"
+                        dataKey="currentWeek"
+                        stroke="#059669"
+                        fill="#059669"
+                        fillOpacity={0.2}
+                        strokeWidth={3}
+                        dot={{ fill: '#059669', strokeWidth: 3, r: 6 }}
+                      />
+                      <Radar
+                        name="Semaine Précédente"
+                        dataKey="previousWeek"
+                        stroke="#6b7280"
+                        fill="#6b7280"
+                        fillOpacity={0.1}
+                        strokeWidth={2}
+                        dot={{ fill: '#6b7280', strokeWidth: 2, r: 4 }}
+                      />
+                    </RadarChart>
+                  </ResponsiveContainer>
+                </div>
+                <div className="flex items-center justify-center gap-6 text-sm mb-6">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 bg-emerald-600 rounded-full"></div>
+                    <span className="text-gray-600 dark:text-gray-300 font-medium">Semaine Actuelle</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 bg-gray-400 rounded-full"></div>
+                    <span className="text-gray-600 dark:text-gray-300 font-medium">Semaine Précédente</span>
+                  </div>
+                </div>
+                <div className="bg-gradient-to-r from-emerald-50 to-emerald-100 dark:from-emerald-900/20 dark:to-emerald-800/20 p-4 rounded-xl border border-emerald-200 dark:border-emerald-700/50">
+                  <div className="text-center">
+                    <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">Score Véhicules</h4>
+                    <div className="text-3xl font-bold text-emerald-600 dark:text-emerald-400">88</div>
+                    <div className="text-xs text-gray-600 dark:text-gray-300 mt-1">sur 100</div>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col">
+                <h3 className="text-base font-medium text-gray-900 dark:text-gray-100 mb-4">Recommandations Véhicules</h3>
+                <div className="h-96 overflow-y-scroll scrollbar-hide space-y-3 pr-2">
+                  {vehicleRecommendations.map((recommendation, index) => (
+                    <div key={index} className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                      <div className="w-8 h-8 bg-emerald-600 rounded-full flex items-center justify-center">
+                        <recommendation.icon className="w-4 h-4 text-white" />
+                      </div>
+                      <div>
+                        <div className="text-sm font-medium text-gray-900 dark:text-gray-100">{recommendation.title}</div>
+                        <div className="text-xs text-gray-600 dark:text-gray-300">{recommendation.description}</div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        {/* Densité */}
-        <Card className="bg-white">
-          <CardHeader className="pb-3">
+        {/* Live Detections */}
+        <Card className="col-span-5 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+          <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle className="text-base font-semibold flex items-center gap-2">
-                <Activity className="w-5 h-5 text-green-500" />
-                Densité
-              </CardTitle>
-              <Info className="w-4 h-4 text-gray-400" />
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="text-center py-4">
-              <div className="text-4xl font-bold text-green-600 mb-2">24.7</div>
-              <p className="text-sm text-gray-500">véhicules/segment sélectionné</p>
-              <div className="mt-4 p-3 bg-green-50 rounded-lg">
-                <div className="flex items-center justify-center gap-2">
-                  <Activity className="w-4 h-4 text-green-600" />
-                  <span className="text-sm font-medium text-green-600">Trafic modéré</span>
-                </div>
+              <div className="flex items-center gap-2">
+                <Activity className="w-5 h-5 text-emerald-600" />
+                <CardTitle className="text-gray-900 dark:text-gray-100 text-base font-medium">Détections En Direct</CardTitle>
               </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Décompte en temps réel */}
-        <Card className="bg-white">
-          <CardHeader className="pb-3">
-            <div className="flex items-center justify-between">
-              <CardTitle className="text-base font-semibold flex items-center gap-2">
-                <Clock className="w-5 h-5 text-blue-500" />
-                Décompte en temps réel
-              </CardTitle>
-              <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+              <Button size="sm" variant="ghost" className="h-8 px-3">
+                <RefreshCw className="w-4 h-4" />
+              </Button>
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-center py-4">
-              <div className="text-4xl font-bold text-blue-600 mb-2">127</div>
-              <p className="text-sm text-gray-500">véhicules actuellement</p>
-              <div className="mt-4 grid grid-cols-2 gap-2">
-                <div className="p-2 bg-blue-50 rounded">
-                  <div className="text-sm font-semibold text-blue-600">↑ 89</div>
-                  <div className="text-xs text-gray-500">Entrées</div>
+            <div className="h-[500px] overflow-y-scroll scrollbar-hide space-y-3 pr-2">
+              {liveDetections.map((detection) => (
+                <div key={detection.id} className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors cursor-pointer">
+                  <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 bg-emerald-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Car className="w-5 h-5 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between mb-1">
+                        <div className="font-semibold text-sm text-gray-900 dark:text-gray-100">{detection.plate}</div>
+                        <div className="flex items-center gap-1">
+                          <Badge className={`${detection.statusColor} text-white text-xs px-2 py-0.5`}>
+                            {detection.status}
+                          </Badge>
+                        </div>
+                      </div>
+                      <div className="text-sm text-gray-900 dark:text-gray-100 font-medium mb-1">{detection.type}</div>
+                      <div className="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-300 mb-2">
+                        <MapPin className="w-3 h-3" />
+                        <span>{detection.location}</span>
+                        <span>•</span>
+                        <span>{detection.area}</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+                          <Camera className="w-3 h-3" />
+                          <span>{detection.camera}</span>
+                          <span>•</span>
+                          <span>{detection.speed}</span>
+                        </div>
+                        <Badge className={`${detection.severityColor} text-white text-xs px-2 py-0.5`}>
+                          {detection.severity}
+                        </Badge>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="p-2 bg-orange-50 rounded">
-                  <div className="text-sm font-semibold text-orange-600">↓ 38</div>
-                  <div className="text-xs text-gray-500">Sorties</div>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Graphiques d'analyse */}
-      <div className="grid grid-cols-3 gap-6">
-        {/* Détection en temps réel - Courbe */}
-        <Card className="bg-white">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-base font-semibold text-gray-800">
-              Détection en temps réel
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="h-[250px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={realTimeData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                  <XAxis 
-                    dataKey="time" 
-                    axisLine={false}
-                    tickLine={false}
-                    tick={{ fontSize: 11, fill: '#64748b' }}
-                  />
-                  <YAxis 
-                    axisLine={false}
-                    tickLine={false}
-                    tick={{ fontSize: 11, fill: '#64748b' }}
-                  />
-                  <Tooltip 
-                    formatter={(value) => [`${value}`, 'Véhicules']}
-                    labelStyle={{ color: '#1f2937' }}
-                    contentStyle={{ 
-                      backgroundColor: 'white', 
-                      border: '1px solid #e5e7eb', 
-                      borderRadius: '8px',
-                      fontSize: '12px'
-                    }}
-                  />
-                  <Line 
-                    type="monotone" 
-                    dataKey="vehicles" 
-                    stroke="#f97316" 
-                    strokeWidth={3}
-                    dot={{ fill: '#f97316', strokeWidth: 2, r: 4 }}
-                    activeDot={{ r: 6, stroke: '#f97316', strokeWidth: 2 }}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
+              ))}
             </div>
           </CardContent>
         </Card>
 
-        {/* Distribution des véhicules par type - Pie Chart */}
-        <Card className="bg-white">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-base font-semibold text-gray-800">
-              Véhicules par type
-            </CardTitle>
+        {/* Violation Distribution */}
+        <Card className="col-span-6 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+          <CardHeader>
+            <CardTitle className="text-gray-900 dark:text-gray-100 text-base font-medium">Distribution des Violations</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="h-[250px]">
-              <ResponsiveContainer width="100%" height="100%">
+            <div className="flex items-center justify-center">
+              <ResponsiveContainer width="100%" height={300}>
                 <PieChart>
+                  <defs>
+                    {violationDistribution.map((entry) => (
+                      <linearGradient key={entry.gradientId} id={entry.gradientId} x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor={entry.color} stopOpacity={1} />
+                        <stop offset="100%" stopColor={entry.color} stopOpacity={0.6} />
+                      </linearGradient>
+                    ))}
+                  </defs>
                   <Pie
-                    data={vehicleTypeData}
+                    data={violationDistribution}
                     cx="50%"
-                    cy="45%"
-                    innerRadius={40}
-                    outerRadius={80}
-                    paddingAngle={2}
+                    cy="50%"
+                    labelLine={false}
+                    label={({ name, percentage }) => `${name}: ${percentage}`}
+                    outerRadius={100}
+                    fill="#8884d8"
                     dataKey="value"
                   >
-                    {vehicleTypeData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    {violationDistribution.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={`url(#${entry.gradientId})`} />
                     ))}
                   </Pie>
-                  <Tooltip 
-                    formatter={(value, name) => [`${value}`, name]}
-                    labelStyle={{ color: '#1f2937' }}
-                    contentStyle={{ 
-                      backgroundColor: 'white', 
-                      border: '1px solid #e5e7eb', 
-                      borderRadius: '8px',
-                      fontSize: '12px'
-                    }}
-                  />
+                  <Tooltip />
+                  <Legend />
                 </PieChart>
               </ResponsiveContainer>
-              <div className="grid grid-cols-3 gap-2 mt-2">
-                {vehicleTypeData.map((item, index) => (
-                  <div key={index} className="flex items-center gap-1">
-                    <div 
-                      className="w-2 h-2 rounded-full" 
-                      style={{ backgroundColor: item.color }}
-                    />
-                    <span className="text-xs text-gray-600">{item.name}</span>
-                  </div>
-                ))}
-              </div>
             </div>
           </CardContent>
         </Card>
 
-        {/* Infractions par type - Histogram */}
-        <Card className="bg-white">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-base font-semibold text-gray-800">
-              Infractions par type
-            </CardTitle>
+        {/* Detection Summary */}
+        <Card className="col-span-6 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+          <CardHeader>
+            <CardTitle className="text-gray-900 dark:text-gray-100 text-base font-medium">Résumé des Détections</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="h-[250px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={violationsData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                  <XAxis 
-                    dataKey="type" 
-                    axisLine={false}
-                    tickLine={false}
-                    tick={{ fontSize: 9, fill: '#64748b' }}
-                    angle={-45}
-                    textAnchor="end"
-                    height={60}
-                  />
-                  <YAxis 
-                    axisLine={false}
-                    tickLine={false}
-                    tick={{ fontSize: 11, fill: '#64748b' }}
-                  />
-                  <Tooltip 
-                    formatter={(value) => [`${value}`, 'Violations']}
-                    labelStyle={{ color: '#1f2937' }}
-                    contentStyle={{ 
-                      backgroundColor: 'white', 
-                      border: '1px solid #e5e7eb', 
-                      borderRadius: '8px',
-                      fontSize: '12px'
-                    }}
-                  />
-                  <Bar 
-                    dataKey="count" 
-                    fill="#ef4444"
-                    radius={[4, 4, 0, 0]}
-                  />
-                </BarChart>
-              </ResponsiveContainer>
+            <div className="grid grid-cols-2 gap-3">
+              {detectionSummary.map((item, index) => (
+                <div key={index} className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                  <div className="w-10 h-10 bg-emerald-600 rounded-lg flex items-center justify-center">
+                    <item.icon className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <div className="text-xs text-gray-600 dark:text-gray-300">{item.type}</div>
+                    <div className="text-xl font-bold text-gray-900 dark:text-gray-100">{item.count}</div>
+                  </div>
+                </div>
+              ))}
             </div>
+          </CardContent>
+        </Card>
+
+        {/* Violations per Camera */}
+        <Card className="col-span-6 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+          <CardHeader>
+            <CardTitle className="text-gray-900 dark:text-gray-100 text-base font-medium">Violations par Caméra</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={camerasData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                <XAxis dataKey="name" tick={{ fill: '#9ca3af', fontSize: 12 }} />
+                <YAxis tick={{ fill: '#9ca3af', fontSize: 12 }} />
+                <Tooltip 
+                  contentStyle={{ backgroundColor: '#1f2937', border: 'none', borderRadius: '8px' }}
+                  labelStyle={{ color: '#f3f4f6' }}
+                />
+                <Bar dataKey="violations" fill="#059669" radius={[8, 8, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+
+        {/* Violations per Zone */}
+        <Card className="col-span-6 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+          <CardHeader>
+            <CardTitle className="text-gray-900 dark:text-gray-100 text-base font-medium">Violations par Zone</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={zonesData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                <XAxis dataKey="name" tick={{ fill: '#9ca3af', fontSize: 12 }} />
+                <YAxis tick={{ fill: '#9ca3af', fontSize: 12 }} />
+                <Tooltip 
+                  contentStyle={{ backgroundColor: '#1f2937', border: 'none', borderRadius: '8px' }}
+                  labelStyle={{ color: '#f3f4f6' }}
+                />
+                <Bar dataKey="violations" fill="#10b981" radius={[8, 8, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
           </CardContent>
         </Card>
       </div>
 
-      {/* Captures et plaques */}
-      <div className="grid grid-cols-2 gap-6">
-        {/* Captures de véhicules */}
-        <Card className="bg-white">
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <CardTitle className="text-lg font-semibold text-gray-900">
-                Captures de Véhicules
-              </CardTitle>
-              <Badge className="bg-blue-100 text-blue-700 border-0">
-                <div className="w-2 h-2 bg-blue-500 rounded-full mr-1 animate-pulse" />
-                Live
-              </Badge>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <ScrollArea className="h-[400px]">
-              <div className="space-y-3 pr-2">
-                {vehicleCaptures.map((capture, index) => (
-                  <div key={index} className="border rounded-lg p-3 hover:bg-gray-50 transition-colors">
-                    <div className="flex items-start gap-3">
-                      <div className="w-20 h-14 bg-gray-100 rounded overflow-hidden flex-shrink-0">
-                        <img 
-                          src={capture.image} 
-                          alt={`${capture.vehicleType} ${capture.plate}`}
-                          className="w-full h-full object-cover"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            target.style.display = 'none';
-                            target.nextElementSibling?.classList.remove('hidden');
-                          }}
-                        />
-                        <div className="hidden w-full h-full flex items-center justify-center bg-gray-200">
-                          <Car className="w-8 h-8 text-gray-400" />
-                        </div>
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between mb-1">
-                          <div className="flex items-center gap-2">
-                            <span className="font-semibold text-gray-900 text-sm">{capture.plate}</span>
-                            <Badge className={
-                              capture.status === 'warning' 
-                                ? 'bg-orange-100 text-orange-700 border-0 text-xs' 
-                                : 'bg-green-100 text-green-700 border-0 text-xs'
-                            }>
-                              {capture.vehicleType}
-                            </Badge>
-                          </div>
-                          {capture.status === 'warning' ? (
-                            <AlertCircle className="w-4 h-4 text-orange-500 flex-shrink-0" />
-                          ) : (
-                            <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
-                          )}
-                        </div>
-                        <div className="flex items-center gap-4 text-xs text-gray-500">
-                          <span className="flex items-center gap-1">
-                            <Gauge className="w-3 h-3" />
-                            {capture.speed}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <Camera className="w-3 h-3" />
-                            {capture.location}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <Clock className="w-3 h-3" />
-                            {capture.time}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </ScrollArea>
-          </CardContent>
-        </Card>
-
-        {/* Plaques d'immatriculation */}
-        <Card className="bg-white">
-          <CardHeader>
-            <CardTitle className="text-lg font-semibold text-gray-900">
-              Plaques d'Immatriculation
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ScrollArea className="h-[300px]">
-              <div className="space-y-2">
-                {licensePlates.map((plate, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50">
-                    <div className="flex items-center gap-3">
-                      <div className="font-mono font-semibold text-gray-900">{plate.plate}</div>
-                      <Badge className={
-                        plate.status === 'warning' 
-                          ? 'bg-orange-100 text-orange-700 border-0' 
-                          : 'bg-green-100 text-green-700 border-0'
-                      }>
-                        {plate.status === 'warning' ? 'Alerte' : 'Enregistré'}
-                      </Badge>
-                    </div>
-                    <div className="flex items-center gap-4 text-xs text-gray-500">
-                      <span>{plate.location}</span>
-                      <span>{plate.time}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </ScrollArea>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Système Actif */}
-      <Card className="bg-gradient-to-r from-orange-500 to-orange-600 text-white border-0">
-        <CardContent className="p-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Shield className="w-6 h-6" />
-              <div>
-                <p className="font-semibold">Système Actif</p>
-                <p className="text-sm text-white/80">Surveillance en cours</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="flex items-center gap-1">
-                <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
-                <span className="text-sm">12 caméras actives</span>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Camera Performance Modal */}
+      <CameraPerformanceModal
+        isOpen={isCameraModalOpen}
+        onClose={() => setIsCameraModalOpen(false)}
+        camera={selectedCamera}
+      />
     </div>
   );
 };
