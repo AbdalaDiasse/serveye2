@@ -25,9 +25,8 @@ COPY package*.json ./
 # Install production dependencies only
 RUN npm ci --only=production
 
-# Copy built application
+# Copy built application (dist contains both server and client/public files)
 COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/client/dist ./client/dist
 COPY --from=builder /app/attached_assets ./attached_assets
 
 # Expose port
