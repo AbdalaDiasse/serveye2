@@ -855,40 +855,102 @@ export const VehiclesDashboard = (): JSX.Element => {
         </Card>
 
         {/* Violation Distribution */}
-        <Card className="col-span-6 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+        <Card className="col-span-6 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 overflow-hidden">
           <CardHeader>
             <CardTitle className="text-gray-900 dark:text-gray-100 text-base font-medium">Distribution des Violations</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex items-center justify-center">
-              <ResponsiveContainer width="100%" height={300}>
+            <div className="h-72">
+              <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <defs>
                     {violationDistribution.map((entry) => (
-                      <linearGradient key={entry.gradientId} id={entry.gradientId} x1="0" y1="0" x2="0" y2="1">
+                      <linearGradient key={entry.gradientId} id={entry.gradientId} x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stopColor={entry.color} stopOpacity={1} />
-                        <stop offset="100%" stopColor={entry.color} stopOpacity={0.6} />
+                        <stop offset="100%" stopColor={entry.color} stopOpacity={0.8} />
                       </linearGradient>
                     ))}
+                    <filter id="vehiclePieShadow" x="-50%" y="-50%" width="200%" height="200%">
+                      <feDropShadow dx="0" dy="4" stdDeviation="8" floodColor="#059669" floodOpacity="0.15"/>
+                    </filter>
                   </defs>
                   <Pie
                     data={violationDistribution}
                     cx="50%"
                     cy="50%"
-                    labelLine={false}
-                    label={({ name, percentage }) => `${name}: ${percentage}`}
-                    outerRadius={100}
-                    fill="#8884d8"
+                    outerRadius={105}
+                    innerRadius={30}
                     dataKey="value"
+                    startAngle={90}
+                    endAngle={450}
+                    paddingAngle={2}
+                    filter="url(#vehiclePieShadow)"
+                    label={({ name, percentage, x, y }) => (
+                      <text 
+                        x={x} 
+                        y={y} 
+                        fill="#6b7280" 
+                        textAnchor={x > 200 ? 'start' : 'end'} 
+                        dominantBaseline="central"
+                        fontSize="11"
+                        fontWeight="600"
+                      >
+                        {percentage}
+                      </text>
+                    )}
+                    labelLine={{
+                      stroke: '#6b7280', 
+                      strokeWidth: 1.5,
+                      strokeDasharray: '2 2'
+                    }}
                   >
                     {violationDistribution.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={`url(#${entry.gradientId})`} />
+                      <Cell 
+                        key={`cell-${index}`} 
+                        fill={`url(#${entry.gradientId})`}
+                        stroke="#ffffff"
+                        strokeWidth={2}
+                        style={{
+                          filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))',
+                          transition: 'all 0.3s ease'
+                        }}
+                      />
                     ))}
                   </Pie>
-                  <Tooltip />
-                  <Legend />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'rgba(255,255,255,0.95)', 
+                      border: '1px solid #e5e7eb',
+                      borderRadius: '12px',
+                      fontSize: '12px',
+                      fontWeight: '500',
+                      boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
+                      backdropFilter: 'blur(8px)'
+                    }}
+                    formatter={(value, name) => [`${value}%`, name]}
+                    labelFormatter={(label) => `Violation: ${label}`}
+                  />
                 </PieChart>
               </ResponsiveContainer>
+            </div>
+            <div className="mt-4">
+              <div className="grid grid-cols-2 gap-3">
+                {violationDistribution.slice(0, 4).map((item, index) => (
+                  <div key={index} className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div 
+                        className="w-3 h-3 rounded-full"
+                        style={{ background: `linear-gradient(135deg, ${item.color}, ${item.color}88)` }}
+                      ></div>
+                      <span className="text-xs text-gray-600 dark:text-gray-300 font-medium">{item.name}</span>
+                    </div>
+                    <span className="text-xs font-semibold text-gray-900 dark:text-gray-100">{item.percentage}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700 text-center">
+                <div className="text-xs text-gray-500 dark:text-gray-400">Total violations: <span className="font-semibold text-emerald-600">1,247</span> incidents</div>
+              </div>
             </div>
           </CardContent>
         </Card>
